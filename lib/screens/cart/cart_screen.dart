@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class AccountScreen extends StatelessWidget {
-  const AccountScreen({Key key}) : super(key: key);
+class CartScreen extends StatelessWidget {
+  const CartScreen({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Page 3")),
+        appBar: AppBar(title: Text("Cart")),
         body: Align(
             alignment: Alignment.center,
             child: FlatButton(

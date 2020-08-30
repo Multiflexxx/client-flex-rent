@@ -1,87 +1,104 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/tab_navigator.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+
+import 'screens/account/account_screen.dart';
+import 'screens/category/category_screen.dart';
+import 'screens/discovery/discovery_screen.dart';
+import 'package:rent/screens/cart/cart_screen.dart';
+import 'package:rent/screens/search/search_screen.dart';
 
 class App extends StatefulWidget {
+  final titles = ['Home', 'Category', 'Cart', 'Search', 'Account'];
+  final icons = [
+    Icon(
+      Feather.home,
+      size: 22,
+    ),
+    Icon(
+      Feather.grid,
+      size: 22,
+    ),
+    Icon(
+      Feather.shopping_cart,
+      size: 22,
+    ),
+    Icon(
+      Feather.search,
+      size: 22,
+    ),
+    Icon(
+      Feather.user,
+      size: 22,
+    )
+  ];
+
+  App({Key key}) : super(key: key);
+
   @override
-  State<StatefulWidget> createState() => AppState();
+  State<StatefulWidget> createState() => _AppState();
 }
 
-class AppState extends State<App> {
-  String _currentPage = "Discovery";
-  List<String> pageKeys = ["Discovery", "Category", "Account"];
-  Map<String, GlobalKey<NavigatorState>> _navigatorKeys = {
-    "Discovery": GlobalKey<NavigatorState>(),
-    "Category": GlobalKey<NavigatorState>(),
-    "Account": GlobalKey<NavigatorState>(),
-  };
-  int _selectedIndex = 0;
+class _AppState extends State<App> {
+  PersistentTabController _controller;
+  bool _hideNavBar;
 
-  void _selectTab(String tabItem, int index) {
-    if (tabItem == _currentPage) {
-      _navigatorKeys[tabItem].currentState.popUntil((route) => route.isFirst);
-    } else {
-      setState(() {
-        _currentPage = pageKeys[index];
-        _selectedIndex = index;
-      });
-    }
+  @override
+  void initState() {
+    super.initState();
+    _controller = PersistentTabController(initialIndex: 0);
+    _hideNavBar = false;
+  }
+
+  List<Widget> _buildScreens() {
+    return [
+      DiscoveryScreen(),
+      CategoryScreen(),
+      CartScreen(),
+      SearchScreen(),
+      AccountScreen()
+    ];
+  }
+
+  List<PersistentBottomNavBarItem> _navBarsItems() {
+    return widget.titles.map((title) {
+      int index = widget.titles.indexOf(title);
+      return PersistentBottomNavBarItem(
+        icon: widget.icons[index],
+        title: title,
+        activeColor: Colors.purple,
+        inactiveColor: Colors.grey,
+      );
+    }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () async {
-        final isFirstRouteInCurrentTab =
-            !await _navigatorKeys[_currentPage].currentState.maybePop();
-        if (isFirstRouteInCurrentTab) {
-          if (_currentPage != "Discovery") {
-            _selectTab("Discovery", 1);
-
-            return false;
-          }
-        }
-        // let system handle back button if we're on the first route
-        return isFirstRouteInCurrentTab;
-      },
-      child: Scaffold(
-        body: Stack(children: <Widget>[
-          _buildOffstageNavigator("Discovery"),
-          _buildOffstageNavigator("Category"),
-          _buildOffstageNavigator("Account"),
-        ]),
-        bottomNavigationBar: BottomNavigationBar(
-          selectedItemColor: Colors.blueAccent,
-          onTap: (int index) {
-            _selectTab(pageKeys[index], index);
-          },
-          currentIndex: _selectedIndex,
-          items: [
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.home),
-              title: new Text('Page'),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.category),
-              title: new Text('Page2'),
-            ),
-            BottomNavigationBarItem(
-              icon: new Icon(Icons.person),
-              title: new Text('Page3'),
-            ),
-          ],
-          type: BottomNavigationBarType.fixed,
-        ),
+    return PersistentTabView(
+      controller: _controller,
+      screens: _buildScreens(),
+      items: _navBarsItems(),
+      confineInSafeArea: true,
+      backgroundColor: Colors.black,
+      handleAndroidBackButtonPress: true,
+      resizeToAvoidBottomInset: true,
+      stateManagement: true,
+      hideNavigationBarWhenKeyboardShows: true,
+      hideNavigationBar: _hideNavBar,
+      decoration: NavBarDecoration(colorBehindNavBar: Colors.indigo),
+      popAllScreensOnTapOfSelectedTab: true,
+      itemAnimationProperties: ItemAnimationProperties(
+        duration: Duration(milliseconds: 400),
+        curve: Curves.ease,
       ),
-    );
-  }
-
-  Widget _buildOffstageNavigator(String tabItem) {
-    return Offstage(
-      offstage: _currentPage != tabItem,
-      child: TabNavigator(
-        navigatorKey: _navigatorKeys[tabItem],
-        tabItem: tabItem,
+      screenTransitionAnimation: ScreenTransitionAnimation(
+        animateTabTransition: true,
+        curve: Curves.ease,
+        duration: Duration(milliseconds: 200),
       ),
+      navBarStyle:
+          NavBarStyle.style5, // Choose the nav bar style with this property
     );
   }
 }

@@ -11,23 +11,22 @@ class DiscoveryScreen extends StatefulWidget {
 class _DiscoveryScreen extends State<DiscoveryScreen> {
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-        child: Scaffold(
-            appBar: AppBar(title: Text("Page 1")),
-            body: Align(
-                alignment: Alignment.center,
-                child: FlatButton(
-                    color: Colors.blue,
-                    textColor: Colors.white,
-                    onPressed: () {
-                      Navigator.of(context).push(_createRoute());
-                      // Navigator.push(
-                      //     context,
-                      //     new MaterialPageRoute(
-                      //         builder: (BuildContext context) =>
-                      //             new ListViewPage()));
-                    },
-                    child: Text("Switch Page - Subscribe")))));
+    return Scaffold(
+        appBar: AppBar(title: Text("Page 1")),
+        body: Align(
+            alignment: Alignment.center,
+            child: FlatButton(
+                color: Colors.blue,
+                textColor: Colors.white,
+                onPressed: () {
+                  Navigator.of(context).push(_createRoute());
+                  // Navigator.push(
+                  //     context,
+                  //     new MaterialPageRoute(
+                  //         builder: (BuildContext context) =>
+                  //             new ListViewPage()));
+                },
+                child: Text("Switch Page - Subscribe"))));
   }
 }
 
