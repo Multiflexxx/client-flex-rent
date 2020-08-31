@@ -10,9 +10,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flex Rent',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.purple,
+        primaryColor: Colors.purple,
+        accentColor: Color(0xFFD8ECF1),
+        textTheme: TextTheme(bodyText2: TextStyle(color: Colors.grey)),
         scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
