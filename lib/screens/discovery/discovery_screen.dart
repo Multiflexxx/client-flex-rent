@@ -32,16 +32,16 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
         width: 60.0,
         decoration: BoxDecoration(
           color: _selectedIndex == index
-              ? Theme.of(context).accentColor
-              : Color(0xFFE7EBEE),
+              ? Theme.of(context).primaryColor
+              : Colors.black,
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: Icon(
           _icons[index],
           size: 25.0,
           color: _selectedIndex == index
-              ? Theme.of(context).primaryColor
-              : Color(0xFFB4C1C4),
+              ? Colors.white
+              : Theme.of(context).primaryColor,
         ),
       ),
     );
