@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/suggestion_model.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+import 'package:rent/models/product_model.dart';
 
 class SuggestionCarouselLess extends StatelessWidget {
   @override
@@ -38,7 +39,7 @@ class SuggestionCarouselLess extends StatelessWidget {
             scrollDirection: Axis.horizontal,
             itemCount: suggestions.length,
             itemBuilder: (BuildContext context, int index) {
-              Suggestion suggestion = suggestions[index];
+              Product suggestion = suggestions[index];
               return Container(
                 margin: EdgeInsets.all(10.0),
                 width: 210.0,
@@ -63,11 +64,32 @@ class SuggestionCarouselLess extends StatelessWidget {
                               Text(
                                 '${suggestion.title}',
                                 style: TextStyle(
-                                    fontSize: 22.0,
-                                    fontWeight: FontWeight.w600,
+                                    color: Colors.white,
+                                    fontSize: 21.0,
+                                    fontWeight: FontWeight.w500,
                                     letterSpacing: 1.2),
                               ),
-                              Text('${suggestion.description}')
+                              Row(
+                                children: [
+                                  Icon(
+                                    Feather.smartphone,
+                                    size: 16.0,
+                                    color: Colors.white70,
+                                  ),
+                                  SizedBox(
+                                    width: 5.0,
+                                  ),
+                                  Text(
+                                    suggestion.producttyp,
+                                    style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w500,
+                                      letterSpacing: 1.2,
+                                    ),
+                                  ),
+                                ],
+                              ),
                             ],
                           ),
                         ),

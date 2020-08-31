@@ -35,7 +35,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   ],
                 ),
                 child: Hero(
-                  tag: widget.product.imageUrl,
+                  tag: widget.product.productId,
                   child: ClipRRect(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(30.0),
@@ -59,7 +59,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     IconButton(
                       icon: Icon(Icons.arrow_back),
                       iconSize: 30.0,
-                      color: Colors.black,
+                      color: Colors.white,
                       onPressed: () => Navigator.pop(context),
                     ),
                     Row(
@@ -67,7 +67,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         IconButton(
                           icon: Icon(Feather.share),
                           iconSize: 30.0,
-                          color: Colors.black,
+                          color: Colors.white,
                           onPressed: () => print(widget.product),
                         ),
                       ],
@@ -86,7 +86,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         Text(
                           widget.product.title,
                           style: TextStyle(
-                            color: Colors.white70,
+                            color: Colors.white,
                             fontSize: 21.0,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1.2,
@@ -108,7 +108,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         Text(
                           '${widget.product.price} €',
                           style: TextStyle(
-                            color: Colors.white70,
+                            color: Colors.white,
                             fontSize: 21.0,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1.2,

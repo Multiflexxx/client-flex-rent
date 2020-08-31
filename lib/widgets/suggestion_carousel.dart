@@ -72,11 +72,20 @@ class SuggestionCarousel extends StatelessWidget {
                                 Text(
                                   '${suggestion.title}',
                                   style: TextStyle(
-                                      fontSize: 22.0,
-                                      fontWeight: FontWeight.w600,
+                                      color: Colors.white,
+                                      fontSize: 21.0,
+                                      fontWeight: FontWeight.w500,
                                       letterSpacing: 1.2),
                                 ),
-                                Text('${suggestion.description}')
+                                Text(
+                                  '${suggestion.description}',
+                                  style: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: 12,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                )
                               ],
                             ),
                           ),
@@ -96,43 +105,16 @@ class SuggestionCarousel extends StatelessWidget {
                         ),
                         child: Stack(
                           children: <Widget>[
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: Image(
-                                height: 180.0,
-                                width: 180.0,
-                                image: AssetImage(suggestion.imageUrl),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Positioned(
-                              left: 10.0,
-                              bottom: 10.0,
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: [
-                                      Icon(
-                                        Feather.smartphone,
-                                        size: 14.0,
-                                        color: Colors.white,
-                                      ),
-                                      SizedBox(
-                                        width: 5.0,
-                                      ),
-                                      Text(
-                                        suggestion.producttyp,
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w600,
-                                          letterSpacing: 1.2,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ],
+                            Hero(
+                              tag: suggestion.productId,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(20.0),
+                                child: Image(
+                                  height: 180.0,
+                                  width: 180.0,
+                                  image: AssetImage(suggestion.imageUrl),
+                                  fit: BoxFit.cover,
+                                ),
                               ),
                             ),
                           ],
