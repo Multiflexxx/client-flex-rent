@@ -14,112 +14,223 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Stack(
-            children: <Widget>[
-              Container(
-                height: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(30.0),
-                    bottomRight: Radius.circular(30.0),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black26,
-                      offset: Offset(0.0, 2.0),
-                      blurRadius: 6.0,
-                    ),
-                  ],
-                ),
-                child: Hero(
-                  tag: widget.product.productId,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(30.0),
-                      bottomRight: Radius.circular(30.0),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 50.0),
-                      child: Image(
-                        image: AssetImage(widget.product.imageUrl),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                ),
+      body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: <Widget>[
+          SliverAppBar(
+            stretch: true,
+            onStretchTrigger: () {
+              return;
+            },
+            floating: false,
+            pinned: true,
+            leading: IconButton(
+              icon: Icon(Feather.arrow_left),
+              iconSize: 30.0,
+              color: Colors.white,
+              onPressed: () => Navigator.pop(context),
+            ),
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Feather.share),
+                iconSize: 30.0,
+                color: Colors.white,
+                onPressed: () => Navigator.pop(context),
               ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 40.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    IconButton(
-                      icon: Icon(Icons.arrow_back),
-                      iconSize: 30.0,
-                      color: Colors.white,
-                      onPressed: () => Navigator.pop(context),
-                    ),
-                    Row(
-                      children: <Widget>[
-                        IconButton(
-                          icon: Icon(Feather.share),
-                          iconSize: 30.0,
-                          color: Colors.white,
-                          onPressed: () => print(widget.product),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                left: 20.0,
-                bottom: 10.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          widget.product.title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 21.0,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.2,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-              Positioned(
-                right: 20.0,
-                bottom: 10.0,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Row(
-                      children: [
-                        Text(
-                          '${widget.product.price} €',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 21.0,
-                            fontWeight: FontWeight.w500,
-                            letterSpacing: 1.2,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              )
             ],
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20))),
+            expandedHeight: MediaQuery.of(context).size.width,
+            flexibleSpace: FlexibleSpaceBar(
+              title: Text(
+                widget.product.title,
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 21.0,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1.2,
+                ),
+              ),
+              // title: Column(
+              //   crossAxisAlignment: CrossAxisAlignment.start,
+              //   children: <Widget>[
+              //     Row(
+              //       children: <Widget>[
+              //         Text(
+              //           widget.product.title,
+              //           style: TextStyle(
+              //             color: Colors.white,
+              //             fontSize: 21.0,
+              //             fontWeight: FontWeight.w500,
+              //             letterSpacing: 1.2,
+              //           ),
+              //         ),
+              //       ],
+              //     ),
+              //   ],
+              // ),
+              background: Column(
+                children: <Widget>[
+                  Stack(
+                    children: <Widget>[
+                      Container(
+                        height: MediaQuery.of(context).size.width,
+                        child: Hero(
+                          tag: widget.product.productId,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(30.0),
+                              bottomRight: Radius.circular(30.0),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(vertical: 50.0),
+                              child: Image(
+                                image: AssetImage(widget.product.imageUrl),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          SliverList(
+            delegate: SliverChildListDelegate([
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Sunday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+              ListTile(
+                leading: Icon(Icons.wb_sunny),
+                title: Text(
+                  'Monday',
+                  style: TextStyle(color: Colors.white),
+                ),
+                subtitle: Text('sunny, h: 80, l: 65'),
+              ),
+            ]),
           ),
         ],
       ),
