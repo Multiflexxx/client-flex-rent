@@ -82,17 +82,17 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
             SizedBox(
               height: 20.0,
             ),
-            DiscoveryCarousel(
-              widget.productSuggestionList,
-              'Suggestions for you',
-            ),
-            SizedBox(
-              height: 20.0,
-            ),
-            DiscoveryCarousel(
-              widget.productSuggestionList,
-              'New shit',
-            ),
+            // DiscoveryCarousel(
+            //   widget.productSuggestionList,
+            //   'Suggestions for you',
+            // ),
+            // SizedBox(
+            //   height: 20.0,
+            // ),
+            // DiscoveryCarousel(
+            //   widget.productSuggestionList,
+            //   'New shit',
+            // ),
           ],
         ),
       ),

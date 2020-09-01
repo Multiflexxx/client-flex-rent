@@ -127,13 +127,16 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                             ),
                           ],
                         ),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image(
-                            height: 180.0,
-                            width: 180.0,
-                            image: AssetImage(product.imageUrl),
-                            fit: BoxFit.cover,
+                        child: Hero(
+                          tag: product.productId,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image(
+                              height: 180.0,
+                              width: 180.0,
+                              image: AssetImage(product.imageUrl),
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       )
