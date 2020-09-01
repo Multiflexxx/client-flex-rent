@@ -44,6 +44,11 @@ class _ProductScreenState extends State<ProductScreen> {
                     bottomRight: Radius.circular(20))),
             expandedHeight: MediaQuery.of(context).size.width,
             flexibleSpace: FlexibleSpaceBar(
+              stretchModes: <StretchMode>[
+                StretchMode.zoomBackground,
+                StretchMode.fadeTitle,
+              ],
+              centerTitle: true,
               title: Text(
                 widget.product.title,
                 style: TextStyle(
@@ -53,48 +58,21 @@ class _ProductScreenState extends State<ProductScreen> {
                   letterSpacing: 1.2,
                 ),
               ),
-              // title: Column(
-              //   crossAxisAlignment: CrossAxisAlignment.start,
-              //   children: <Widget>[
-              //     Row(
-              //       children: <Widget>[
-              //         Text(
-              //           widget.product.title,
-              //           style: TextStyle(
-              //             color: Colors.white,
-              //             fontSize: 21.0,
-              //             fontWeight: FontWeight.w500,
-              //             letterSpacing: 1.2,
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ],
-              // ),
-              background: Column(
+              background: Stack(
+                fit: StackFit.expand,
                 children: <Widget>[
-                  Stack(
-                    children: <Widget>[
-                      Container(
-                        height: MediaQuery.of(context).size.width,
-                        child: Hero(
-                          tag: widget.product.productId,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(30.0),
-                              bottomRight: Radius.circular(30.0),
-                            ),
-                            child: Padding(
-                              padding: EdgeInsets.symmetric(vertical: 50.0),
-                              child: Image(
-                                image: AssetImage(widget.product.imageUrl),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
+                  Hero(
+                    tag: widget.product.productId,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.0),
+                        bottomRight: Radius.circular(20.0),
                       ),
-                    ],
+                      child: Image(
+                        image: AssetImage(widget.product.imageUrl),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ],
               ),
