@@ -6,19 +6,96 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Page 3")),
-        body: Align(
-            alignment: Alignment.center,
-            child: FlatButton(
-                color: Colors.blue,
-                textColor: Colors.white,
-                onPressed: () {
-                  // Navigator.push(
-                  //     context,
-                  //     new MaterialPageRoute(
-                  //         builder: (BuildContext context) =>
-                  //             new ListViewPage()));
-                },
-                child: Text("Switch Page - Comment"))));
+        appBar: AppBar(title: Text("Account")),
+        body: ListView(
+          children: [
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+              style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+            ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),ListTile(
+              leading: FlutterLogo(),
+              title: Text(
+                'One-line with leading widget',
+                style: TextStyle(color: Colors.white),
+              ),
+            ),
+
+
+          ],
+
+        )
+        );
   }
 }
