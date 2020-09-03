@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rent/models/product_model.dart';
 import 'package:rent/widgets/discovery_carousel.dart';
+import 'package:rent/widgets/search_bar.dart';
 
 class DiscoveryScreen extends StatefulWidget {
   final List<Product> productSuggestionList;
@@ -53,8 +54,11 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
     return Scaffold(
       body: SafeArea(
         child: ListView(
-          padding: EdgeInsets.symmetric(vertical: 30.0),
           children: <Widget>[
+            SearchBar(),
+            SizedBox(
+              height: 20.0,
+            ),
             Padding(
               padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 120.0),
               child: Text(
@@ -72,9 +76,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
             //           (MapEntry map) => _buildIcon(map.key),
             //         )
             //         .toList()),
-            // SizedBox(
-            //   height: 20.0,
-            // ),
             DiscoveryCarousel(
               widget.productSuggestionList,
               'Topseller',

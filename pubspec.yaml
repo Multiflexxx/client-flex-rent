@@ -30,7 +30,6 @@ dependencies:
   cupertino_icons: ^0.1.3
   persistent_bottom_nav_bar: ^2.0.5
   flutter_icons: ^1.1.0
-  flappy_search_bar: ^1.7.2
 
 dev_dependencies:
   flutter_test:
