@@ -10,30 +10,30 @@ class AccountScreen extends StatelessWidget {
         body: ListView(
           children: [
             ListTile(
-              leading: FlutterLogo(),
+              leading: Icon(IconData(59486, fontFamily: 'MaterialIcons'), color: Colors.white),
               title: Text(
-                'One-line with leading widget',
+                'Meine Informationen',
               style: TextStyle(color: Colors.white),
               ),
             ),
             ListTile(
               leading: FlutterLogo(),
               title: Text(
-                'One-line with leading widget',
+                'Einstellungen',
                 style: TextStyle(color: Colors.white),
               ),
             ),
             ListTile(
               leading: FlutterLogo(),
               title: Text(
-                'One-line with leading widget',
+                'Meine Produkte',
                 style: TextStyle(color: Colors.white),
               ),
             ),
             ListTile(
               leading: FlutterLogo(),
               title: Text(
-                'One-line with leading widget',
+                'Abmelden',
                 style: TextStyle(color: Colors.white),
               ),
             ),
