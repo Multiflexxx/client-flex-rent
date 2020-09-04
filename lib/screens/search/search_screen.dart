@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:rent/screens/category/category_detail_screen.dart';
+import 'package:rent/widgets/divider_with_text.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -9,40 +11,54 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = new TextEditingController();
 
-  var queryResultSet = [];
-  var tempSearchStore = [];
+  final _searchResult = [
+    'Berlin',
+    'Paris',
+    'Wien',
+    'Madrid',
+    'Prag',
+    'Amsterdam',
+    'Rom',
+    'München',
+    'Athen',
+    'Lissabon',
+    'London',
+    'New York',
+  ];
 
-  initiateSearch(value) {
-    if (value.length == 0) {
+  final _suggestedList = [
+    'Wien',
+    'Amsterdam',
+    'München',
+    'London',
+  ];
+
+  String _heading;
+  var _resultList = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _heading = 'Vorschläge';
+    _resultList = _suggestedList;
+    print(_resultList);
+  }
+
+  var suggestionList = [];
+
+  void initiateSearch(String query) {
+    if (query.isEmpty) {
       setState(() {
-        queryResultSet = [];
-        tempSearchStore = [];
+        _heading = 'Vorschläge';
+        _resultList = _suggestedList;
       });
+      return;
     }
-
-    if (queryResultSet.length == 0 && value.length == 1) {
-      queryResultSet = [
-        'Berlin',
-        'Paris',
-        'Wien',
-        'Madrid',
-        'Prag',
-        'Amsterdam',
-        'Rom',
-        'München',
-        'Athen',
-        'Lissabon',
-        'London',
-        'New York',
-      ];
-    } else {
-      tempSearchStore = [
-        'Wien',
-        'Amsterdam',
-        'München',
-        'London',
-      ];
-    }
+    //TODO API Call
+    setState(() {
+      _heading = 'Ergebnisse';
+      _resultList = _searchResult;
+    });
   }
 
   @override
@@ -52,22 +68,28 @@ class _SearchScreenState extends State<SearchScreen> {
     });
     return Scaffold(
       body: SafeArea(
-        child: ListView(
+        child: Column(
           children: <Widget>[
             Padding(
               padding: EdgeInsets.all(12.0),
               child: TextField(
                 controller: _searchController,
                 autofocus: true,
+                cursorColor: Colors.purple,
                 style: TextStyle(
-                    color: Colors.white70,
-                    fontWeight: FontWeight.w500,
-                    letterSpacing: 1.25),
+                  color: Colors.white70,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1.25,
+                ),
                 onChanged: (query) {
-                  print(query);
                   initiateSearch(query);
                 },
                 decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.black,
+                  hintStyle: TextStyle(color: Colors.white70),
+                  hintText: "Search",
+                  contentPadding: EdgeInsets.symmetric(vertical: 0.0),
                   prefixIcon: BackButton(
                     color: Colors.white70,
                     onPressed: () {
@@ -81,14 +103,14 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           color: Colors.white70,
                           onPressed: () {
-                            _searchController.clear();
+                            setState(() {
+                              _searchController.clear();
+                              _heading = 'Vorschläge';
+                              _resultList = _suggestedList;
+                            });
                           },
                         )
                       : null,
-                  filled: true,
-                  fillColor: Colors.black,
-                  hintStyle: TextStyle(color: Colors.white70),
-                  hintText: "Search",
                   enabledBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(15.0),
                     borderSide: BorderSide(
@@ -109,16 +131,18 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(
               height: 15.0,
             ),
-            GridView.count(
+            Padding(
               padding: EdgeInsets.only(left: 10.0, right: 10.0),
-              crossAxisCount: 2,
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0,
-              primary: false,
-              shrinkWrap: true,
-              children: tempSearchStore.map((element) {
-                return buildResultCard(element);
-              }).toList(),
+              child: DividerWithText(
+                dividerText: _heading,
+              ),
+            ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: _resultList.length,
+                itemBuilder: (context, index) =>
+                    buildResultCard(_resultList[index]),
+              ),
             ),
           ],
         ),
@@ -127,18 +151,59 @@ class _SearchScreenState extends State<SearchScreen> {
   }
 
   Widget buildResultCard(data) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0)),
-      elevation: 2.0,
+    return GestureDetector(
+      onTap: () => Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (BuildContext context) => new ListViewPage2(),
+        ),
+      ),
       child: Container(
-        child: Center(
-          child: Text(
-            data,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20.0,
+        // width: MediaQuery.of(context).size.width,
+        height: 0.075 * MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              width: 0.2,
+              color: Colors.purple,
             ),
+          ),
+        ),
+        child: Padding(
+          padding: EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Icons.location_city,
+                    size: 40.0,
+                    color: Colors.white70,
+                  ),
+                  SizedBox(
+                    width: 25.0,
+                  ),
+                  Text(
+                    data,
+                    style: TextStyle(
+                        fontSize: 21.0,
+                        fontWeight: FontWeight.w300,
+                        color: Colors.white70,
+                        letterSpacing: 1.2),
+                  ),
+                ],
+              ),
+              Row(
+                children: <Widget>[
+                  Icon(
+                    Ionicons.ios_arrow_forward,
+                    size: 30.0,
+                    color: Colors.white70,
+                  ),
+                ],
+              ),
+            ],
           ),
         ),
       ),

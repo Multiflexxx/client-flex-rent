@@ -25,14 +25,15 @@ class _SearchBarState extends State<SearchBar> {
           );
         },
         decoration: InputDecoration(
-          prefixIcon: Icon(
-            Icons.search,
-            color: Colors.white70,
-          ),
           filled: true,
           fillColor: Colors.black,
           hintStyle: TextStyle(color: Colors.white70),
           hintText: "Search",
+          contentPadding: EdgeInsets.symmetric(vertical: 0.0),
+          prefixIcon: Icon(
+            Icons.search,
+            color: Colors.white70,
+          ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.0),
             borderSide: BorderSide(
