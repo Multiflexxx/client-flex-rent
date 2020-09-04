@@ -13,9 +13,7 @@ class AccountScreen extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 40.0),
-                child: Container(
+              Container(
                   margin: EdgeInsets.all(20),
                   width: 100,
                   height: 100,
@@ -26,7 +24,7 @@ class AccountScreen extends StatelessWidget {
                         fit: BoxFit.fill),
                   ),
                 ),
-              ),
+              
 
               Padding(
                 padding: EdgeInsets.only(right:150.0),
