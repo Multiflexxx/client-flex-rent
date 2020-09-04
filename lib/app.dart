@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/models/product_model.dart';
+import 'package:rent/models/offer_model.dart';
 
 import 'screens/account/account_screen.dart';
 import 'screens/category/category_screen.dart';

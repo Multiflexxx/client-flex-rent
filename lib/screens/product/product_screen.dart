@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:rent/models/product_model.dart';
+import 'package:rent/models/offer_model.dart';
 
-class ProductScreen extends StatefulWidget {
-  final Product product;
+class OfferScreen extends StatefulWidget {
+  final Offer product;
 
-  ProductScreen({this.product});
+  OfferScreen({this.product});
   @override
-  _ProductScreenState createState() => _ProductScreenState();
+  _OfferScreenState createState() => _OfferScreenState();
 }
 
-class _ProductScreenState extends State<ProductScreen> {
+class _OfferScreenState extends State<OfferScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,7 +62,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Hero(
-                    tag: widget.product.productId,
+                    tag: widget.product.offerId,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
@@ -79,136 +79,108 @@ class _ProductScreenState extends State<ProductScreen> {
             ),
           ),
           SliverList(
-            delegate: SliverChildListDelegate([
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
+            delegate: SliverChildListDelegate(
+              <Widget>[
+                SizedBox(
+                  height: 10.0,
                 ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
+                // Price tile
+                Container(
+                  margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  height: 80,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF202020),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: <Widget>[
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      '${widget.product.price}',
+                                      style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 21.0,
+                                          fontWeight: FontWeight.w600),
+                                    ),
+                                    Text(
+                                      ' € / Tag',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 21.0,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  'Preisübersicht',
+                                  style: TextStyle(
+                                      color: Colors.white70,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w300),
+                                ),
+                              ],
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                print('reserverien');
+                              },
+                              child: Container(
+                                width: 0.4 * MediaQuery.of(context).size.width,
+                                height: 50.0,
+                                decoration: BoxDecoration(
+                                    color: Colors.purple,
+                                    borderRadius: BorderRadius.circular(10.0)),
+                                child: Center(
+                                  child: Text(
+                                    'Reservieren',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w300),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
+                // Description
+                Container(
+                  margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  // height: 80,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF202020),
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(12.0),
+                    child: Text(
+                      widget.product.description,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 21.0,
+                        height: 1.35,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Sunday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-              ListTile(
-                leading: Icon(Icons.wb_sunny),
-                title: Text(
-                  'Monday',
-                  style: TextStyle(color: Colors.white),
-                ),
-                subtitle: Text('sunny, h: 80, l: 65'),
-              ),
-            ]),
+              ],
+            ),
           ),
         ],
       ),

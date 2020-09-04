@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/product_model.dart';
+import 'package:rent/models/offer_model.dart';
 import 'package:rent/widgets/discovery_carousel.dart';
 import 'package:rent/widgets/search_bar.dart';
 
 class DiscoveryScreen extends StatefulWidget {
-  final List<Product> productSuggestionList;
+  final List<Offer> productSuggestionList;
 
   DiscoveryScreen(this.productSuggestionList);
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/product_model.dart';
+import 'package:rent/models/offer_model.dart';
 import 'package:rent/screens/product/product_screen.dart';
 
 class DiscoveryCarousel extends StatefulWidget {
-  final List<Product> productList;
+  final List<Offer> productList;
   final String carouselTitle;
 
   DiscoveryCarousel(this.productList, this.carouselTitle);
@@ -49,12 +49,12 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
             scrollDirection: Axis.horizontal,
             itemCount: widget.productList.length,
             itemBuilder: (BuildContext context, int index) {
-              Product product = widget.productList[index];
+              Offer product = widget.productList[index];
               return GestureDetector(
                 onTap: () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => ProductScreen(product: product),
+                    builder: (context) => OfferScreen(product: product),
                   ),
                 ),
                 child: Container(
@@ -128,7 +128,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           ],
                         ),
                         child: Hero(
-                          tag: product.productId,
+                          tag: product.offerId,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: Image(
