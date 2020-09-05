@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/models/offer_model.dart';
 import 'package:rent/screens/product/product_screen.dart';
 
@@ -51,12 +52,18 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
             itemBuilder: (BuildContext context, int index) {
               Offer product = widget.productList[index];
               return GestureDetector(
-                onTap: () => Navigator.push(
+                onTap: () => pushNewScreen(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => OfferScreen(product: product),
-                  ),
+                  screen: OfferScreen(product: product),
+                  withNavBar: false,
                 ),
+
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //     builder: (context) => OfferScreen(product: product),
+                //   ),
+                // ),
                 child: Container(
                   margin: EdgeInsets.all(10.0),
                   width: 210.0,

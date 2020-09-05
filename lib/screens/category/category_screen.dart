@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:rent/models/category_model.dart';
@@ -25,7 +26,7 @@ class CategoryScreen extends StatelessWidget {
                     return GestureDetector(
                       onTap: () => Navigator.push(
                         context,
-                        new MaterialPageRoute(
+                        new CupertinoPageRoute(
                           builder: (BuildContext context) =>
                               new ListViewPage2(),
                         ),
