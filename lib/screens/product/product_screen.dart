@@ -289,7 +289,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                 height: 75,
                                 image: AssetImage('assets/images/jett.jpg'),
                               ),
-                            )
+                            ),
                           ],
                         ),
                         Row(
