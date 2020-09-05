@@ -56,87 +56,47 @@ class ListViewPage2 extends StatelessWidget {
                   Row(
                     children: <Widget>[
                       ClipRRect(
-                        borderRadius: BorderRadius.circular(10.0),
+                        borderRadius: BorderRadius.circular(20.0),
                         child: Image(
-                          height: 175,
-                          width: 175,
+                          height: 150,
+                          width: 150,
                           image: AssetImage(offer.imageUrl),
+                          fit: BoxFit.cover,
                         ),
                       ),
-                      // Flexible(
-                      //   child: Text(
-                      //     '${offer.title}',
-                      //     style: TextStyle(
-                      //       color: Colors.white,
-                      //       fontSize: 18.0,
-                      //       letterSpacing: 1.2,
-                      //     ),
-                      //     maxLines: 1,
-                      //     overflow: TextOverflow.ellipsis,
-                      //   ),
-                      // ),
                       Flexible(
-                        child: Text(
-                          '${offer.description}',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 16.0,
-                            letterSpacing: 1.2,
-                          ),
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              '${offer.title}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18.0,
+                                letterSpacing: 1.2,
+                              ),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                            Text(
+                              '${offer.description}',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 16.0,
+                                letterSpacing: 1.2,
+                              ),
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  )
+                  ),
                 ],
               ),
             ),
           );
-
-          // child: Row(
-          //   children: <Widget>[
-          //     Padding(
-          //       padding: const EdgeInsets.all(10.0),
-          //       child: Image(
-          //         height: 170.0,
-          //         width: 170.0,
-          //         image: AssetImage(product.imageUrl),
-          //       ),
-          //     ),
-          //     Padding(
-          //       padding: const EdgeInsets.all(8.0),
-          //       child: Column(
-          //         children: <Widget>[
-          //           Text(
-          //             '${product.title}',
-
-          //             style: TextStyle(
-          //               color: Colors.white,
-          //               fontSize: 17.0,
-          //               fontWeight: FontWeight.w500,
-          //               letterSpacing: 1.2,
-          //             ),
-          //             maxLines: 3,
-          //                overflow: TextOverflow.ellipsis,
-
-          //           ),
-          //           Text(
-          //             '${product.description}',
-
-          //             style: TextStyle(
-          //               color: Colors.white,
-          //               fontSize: 14.0,
-          //               letterSpacing: 1.2,
-          //             ),
-          //             maxLines: 1,
-          //             overflow: TextOverflow.ellipsis,
-          //           ),
-          //         ],
-          //       ),
-          //     ),
-          //   ],
-          // ),
         },
       ),
     );
