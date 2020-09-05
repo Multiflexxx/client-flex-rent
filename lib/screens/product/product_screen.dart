@@ -2,14 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/models/offer_model.dart';
-
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/screens/category/category_detail_screen.dart';
+import 'package:rent/widgets/data_range_picker.dart';
+import 'package:rent/widgets/price_overview.dart';
 
 class OfferScreen extends StatefulWidget {
-  final Offer product;
+  final Offer offer;
 
-  OfferScreen({this.product});
+  OfferScreen({this.offer});
   @override
   _OfferScreenState createState() => _OfferScreenState();
 }
@@ -43,9 +42,11 @@ class _OfferScreenState extends State<OfferScreen> {
               ),
             ],
             shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20))),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
             expandedHeight: MediaQuery.of(context).size.width,
             flexibleSpace: FlexibleSpaceBar(
               stretchModes: <StretchMode>[
@@ -54,10 +55,10 @@ class _OfferScreenState extends State<OfferScreen> {
               ],
               centerTitle: true,
               title: Text(
-                widget.product.title,
+                widget.offer.title,
                 style: TextStyle(
                   color: Colors.white,
-                  fontSize: 21.0,
+                  fontSize: 18.0,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 1.2,
                 ),
@@ -66,14 +67,14 @@ class _OfferScreenState extends State<OfferScreen> {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Hero(
-                    tag: widget.product.offerId,
+                    tag: widget.offer.offerId,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0),
                       ),
                       child: Image(
-                        image: AssetImage(widget.product.imageUrl),
+                        image: AssetImage(widget.offer.imageUrl),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -109,17 +110,17 @@ class _OfferScreenState extends State<OfferScreen> {
                                 Row(
                                   children: [
                                     Text(
-                                      '${widget.product.price}',
+                                      '${widget.offer.price}',
                                       style: TextStyle(
                                           color: Colors.purple,
-                                          fontSize: 21.0,
+                                          fontSize: 18.0,
                                           fontWeight: FontWeight.w600),
                                     ),
                                     Text(
                                       ' € / Tag',
                                       style: TextStyle(
                                           color: Colors.white,
-                                          fontSize: 21.0,
+                                          fontSize: 18.0,
                                           fontWeight: FontWeight.w300),
                                     ),
                                   ],
@@ -128,15 +129,17 @@ class _OfferScreenState extends State<OfferScreen> {
                                   onTap: () => showCupertinoModalBottomSheet(
                                     expand: false,
                                     context: context,
-                                    backgroundColor: Colors.red,
+                                    barrierColor: Colors.black45,
                                     builder: (context, scrollController) =>
-                                        Container(),
+                                        PriceOverview(
+                                            offer: widget.offer,
+                                            scrollController: scrollController),
                                   ),
                                   child: Text(
                                     'Preisübersicht',
                                     style: TextStyle(
                                       color: Colors.white70,
-                                      fontSize: 16.0,
+                                      fontSize: 14.0,
                                       fontWeight: FontWeight.w300,
                                     ),
                                   ),
@@ -181,10 +184,10 @@ class _OfferScreenState extends State<OfferScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: Text(
-                      widget.product.description,
+                      widget.offer.description,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 21.0,
+                        fontSize: 18.0,
                         height: 1.35,
                         fontWeight: FontWeight.w300,
                       ),
@@ -193,12 +196,16 @@ class _OfferScreenState extends State<OfferScreen> {
                     ),
                   ),
                 ),
+                // Availabilty
                 GestureDetector(
                   onTap: () {
-                    pushNewScreen(
-                      context,
-                      screen: ListViewPage2(),
-                      withNavBar: false,
+                    showCupertinoModalBottomSheet(
+                      expand: true,
+                      context: context,
+                      backgroundColor: Colors.purple,
+                      barrierColor: Colors.black45,
+                      builder: (context, scrollController) =>
+                          DateRangePicker(scrollController),
                     );
                   },
                   child: Container(
@@ -225,7 +232,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                 'Verfügbarkeit',
                                 style: TextStyle(
                                   color: Colors.white,
-                                  fontSize: 21.0,
+                                  fontSize: 18.0,
                                   height: 1.35,
                                   fontWeight: FontWeight.w300,
                                 ),
@@ -256,7 +263,7 @@ class _OfferScreenState extends State<OfferScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: <Widget>[
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
@@ -267,7 +274,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                   'Vermieter/in: Tristan',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 21.0,
+                                    fontSize: 18.0,
                                     height: 1.35,
                                     fontWeight: FontWeight.w300,
                                   ),
@@ -305,7 +312,7 @@ class _OfferScreenState extends State<OfferScreen> {
                               '69 Bewertungen',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 21.0,
+                                fontSize: 18.0,
                                 height: 1.35,
                                 fontWeight: FontWeight.w300,
                               ),
@@ -329,7 +336,7 @@ class _OfferScreenState extends State<OfferScreen> {
                               'Identität verifiziert',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 21.0,
+                                fontSize: 18.0,
                                 height: 1.35,
                                 fontWeight: FontWeight.w300,
                               ),
@@ -355,7 +362,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                   'Vermieter kontaktieren',
                                   style: TextStyle(
                                       color: Colors.white,
-                                      fontSize: 20.0,
+                                      fontSize: 18.0,
                                       fontWeight: FontWeight.w300),
                                 ),
                               ),

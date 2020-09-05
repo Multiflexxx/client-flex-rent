@@ -4,10 +4,10 @@ import 'package:rent/models/offer_model.dart';
 import 'package:rent/screens/product/product_screen.dart';
 
 class DiscoveryCarousel extends StatefulWidget {
-  final List<Offer> productList;
+  final List<Offer> offerList;
   final String carouselTitle;
 
-  DiscoveryCarousel(this.productList, this.carouselTitle);
+  DiscoveryCarousel(this.offerList, this.carouselTitle);
 
   @override
   _DiscoveryCarouselState createState() => _DiscoveryCarouselState();
@@ -48,20 +48,20 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
           height: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: widget.productList.length,
+            itemCount: widget.offerList.length,
             itemBuilder: (BuildContext context, int index) {
-              Offer product = widget.productList[index];
+              Offer offer = widget.offerList[index];
               return GestureDetector(
                 onTap: () => pushNewScreen(
                   context,
-                  screen: OfferScreen(product: product),
+                  screen: OfferScreen(offer: offer),
                   withNavBar: false,
                 ),
 
                 // Navigator.push(
                 //   context,
                 //   MaterialPageRoute(
-                //     builder: (context) => OfferScreen(product: product),
+                //     builder: (context) => OfferScreen(offer: offer),
                 //   ),
                 // ),
                 child: Container(
@@ -86,7 +86,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  '${product.title}',
+                                  '${offer.title}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 21.0,
@@ -99,7 +99,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                 Row(
                                   children: [
                                     Icon(
-                                      product.category.icon,
+                                      offer.category.icon,
                                       size: 16.0,
                                       color: Colors.white70,
                                     ),
@@ -107,7 +107,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                       width: 5.0,
                                     ),
                                     Text(
-                                      product.category.name,
+                                      offer.category.name,
                                       style: TextStyle(
                                         color: Colors.white70,
                                         fontSize: 16.0,
@@ -135,13 +135,13 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           ],
                         ),
                         child: Hero(
-                          tag: product.offerId,
+                          tag: offer.offerId,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: Image(
                               height: 180.0,
                               width: 180.0,
-                              image: AssetImage(product.imageUrl),
+                              image: AssetImage(offer.imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
