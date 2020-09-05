@@ -51,49 +51,108 @@ class ListViewPage2 extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(5.0),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20.0),
-                        child: Image(
-                          height: 150,
+                // crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                 
+                  SizedBox(
+                    
+                    child: Stack(
+                      alignment: Alignment.centerLeft,
+                      children: <Widget>[
+                        
+                        Container(
+                          width: 300,
+                          height: 200,
+                          color: Colors.purple,
+                          child: Flexible(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  '${offer.title}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 18.0,
+                                    letterSpacing: 1.2,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                Text(
+                                  '${offer.description}',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 16.0,
+                                    letterSpacing: 1.2,
+                                  ),
+                                  maxLines: 2,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Container(
                           width: 150,
-                          image: AssetImage(offer.imageUrl),
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      Flexible(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              '${offer.title}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                letterSpacing: 1.2,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
+                          height: 150,
+                          color: Colors.white,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image(
+                              height: 150,
+                              width: 150,
+                              image: AssetImage(offer.imageUrl),
+                              fit: BoxFit.cover,
                             ),
-                            Text(
-                              '${offer.description}',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16.0,
-                                letterSpacing: 1.2,
-                              ),
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
+
+                // children: <Widget>[
+                //   Row(
+                //     children: <Widget>[
+                //       ClipRRect(
+                //         borderRadius: BorderRadius.circular(20.0),
+                //         child: Image(
+                //           height: 150,
+                //           width: 150,
+                //           image: AssetImage(offer.imageUrl),
+                //           fit: BoxFit.cover,
+                //         ),
+                //       ),
+                //       Flexible(
+                //         child: Column(
+                //           crossAxisAlignment: CrossAxisAlignment.start,
+                //           children: <Widget>[
+                //             Text(
+                //               '${offer.title}',
+                //               style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontSize: 18.0,
+                //                 letterSpacing: 1.2,
+                //               ),
+                //               maxLines: 1,
+                //               overflow: TextOverflow.ellipsis,
+                //             ),
+                //             Text(
+                //               '${offer.description}',
+                //               style: TextStyle(
+                //                 color: Colors.white,
+                //                 fontSize: 16.0,
+                //                 letterSpacing: 1.2,
+                //               ),
+                //               maxLines: 2,
+                //               overflow: TextOverflow.ellipsis,
+                //             ),
+                //           ],
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // ],
               ),
             ),
           );
