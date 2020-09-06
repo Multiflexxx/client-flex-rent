@@ -43,111 +43,104 @@ class ListViewPage2 extends StatelessWidget {
           Offer offer = productSuggestionList[index];
 
           return Container(
-            
-              
-              child: Column(
-                // crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    width: double.infinity,
-                    height: 240,
-                    child: Stack(
-                      alignment: Alignment.centerLeft,
-                      children: <Widget>[
-                        Positioned(
-                          
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            
-                            child: Container(
-                            margin: EdgeInsets.fromLTRB(70.0, 0, 10, 2),
-                              width: double.infinity,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                border: Border.all(width: 1.0, color: Colors.purple),
-                                color: Color(0xFF202020),
-                                borderRadius: BorderRadius.circular(20),
-                              ),
-                              child: Flexible(
-                                child: Padding(
-                                  padding: EdgeInsets.fromLTRB(
-                                      100.0, 20.0, 20.0, 20.0),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceAround,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        '${offer.title}',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 20.0,
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 1.2,
-                                        ),
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
+            child: Column(
+              // crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: double.infinity,
+                  height: 240,
+                  child: Stack(
+                    alignment: Alignment.centerLeft,
+                    children: <Widget>[
+                      Positioned(
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Container(
+                            margin: EdgeInsets.fromLTRB(100.0, 0, 10, 0),
+                            width: double.infinity,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              color: Color(0xFF202020),
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            child: Flexible(
+                              child: Padding(
+                                padding: EdgeInsets.fromLTRB(
+                                    100.0, 20.0, 20.0, 20.0),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Text(
+                                      '${offer.title}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 1.2,
                                       ),
-                                      Text(
-                                        '${offer.description}',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16.0,
-                                          letterSpacing: 1.2,
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      '${offer.description}',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        letterSpacing: 1.2,
                                       ),
-                                      Text(
-                                        '${offer.price}',
-                                        style: TextStyle(
-                                          color: Colors.purple,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w700,
-                                          letterSpacing: 1.2,
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      '${offer.price}',
+                                      style: TextStyle(
+                                        color: Colors.purple,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w700,
+                                        letterSpacing: 1.2,
                                       ),
-                                      Text(
-                                        'Bewertung',
-                                        style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 16.0,
-                                          letterSpacing: 1.2,
-                                        ),
-                                        maxLines: 2,
-                                        overflow: TextOverflow.ellipsis,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                    Text(
+                                      'Bewertung',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 16.0,
+                                        letterSpacing: 1.2,
                                       ),
-                                    ],
-                                  ),
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),
                           ),
                         ),
-                        Container(
-                          width: 150,
-                          height: 170,
-                          margin: EdgeInsets.fromLTRB(15.0, 0.0 ,0, 0),
-                          // color: Colors.white,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.circular(20.0),
-                            child: Image(
-                              height: 100,
-                              width: 200,
-                              image: AssetImage(offer.imageUrl),
-                              fit: BoxFit.cover,
-                            ),
+                      ),
+                      Container(
+                        width: 170,
+                        height: 200,
+                        margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
+                        // color: Colors.white,
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20.0),
+                          child: Image(
+                            height: 100,
+                            width: 200,
+                            image: AssetImage(offer.imageUrl),
+                            fit: BoxFit.cover,
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            
+                ),
+              ],
+            ),
           );
         },
       ),
