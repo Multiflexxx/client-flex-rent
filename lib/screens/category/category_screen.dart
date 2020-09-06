@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:rent/models/category_model.dart';
-import 'package:rent/screens/category/category_detail_screen.dart';
+import 'package:rent/screens/product/product_list_screen.dart';
 import 'package:rent/widgets/search_bar.dart';
 
 class CategoryScreen extends StatelessWidget {
@@ -28,7 +28,7 @@ class CategoryScreen extends StatelessWidget {
                         context,
                         new CupertinoPageRoute(
                           builder: (BuildContext context) =>
-                              new ListViewPage2(),
+                              new ProductListScreen(category.name),
                         ),
                       ),
                       child: Container(

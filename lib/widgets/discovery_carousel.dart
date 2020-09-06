@@ -57,13 +57,6 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                   screen: OfferScreen(offer: offer),
                   withNavBar: false,
                 ),
-
-                // Navigator.push(
-                //   context,
-                //   MaterialPageRoute(
-                //     builder: (context) => OfferScreen(offer: offer),
-                //   ),
-                // ),
                 child: Container(
                   margin: EdgeInsets.all(10.0),
                   width: 210.0,
@@ -77,7 +70,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           width: 200.0,
                           decoration: BoxDecoration(
                             border:
-                            Border.all(width: 1.0, color: Colors.purple),
+                                Border.all(width: 1.0, color: Colors.purple),
                             color: Color(0xFF202020),
                             borderRadius: BorderRadius.circular(10.0),
                           ),

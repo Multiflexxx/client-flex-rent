@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:rent/screens/category/category_detail_screen.dart';
+import 'package:rent/screens/product/product_list_screen.dart';
 import 'package:rent/widgets/divider_with_text.dart';
 
 class SearchScreen extends StatefulWidget {
@@ -155,7 +155,7 @@ class _SearchScreenState extends State<SearchScreen> {
       onTap: () => Navigator.push(
         context,
         new MaterialPageRoute(
-          builder: (BuildContext context) => new ListViewPage2(),
+          builder: (BuildContext context) => new ProductListScreen('Penis'),
         ),
       ),
       child: Container(

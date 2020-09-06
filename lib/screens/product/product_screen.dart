@@ -4,6 +4,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/models/offer_model.dart';
 import 'package:rent/widgets/data_range_picker.dart';
 import 'package:rent/widgets/price_overview.dart';
+import 'package:rent/widgets/price_tag.dart';
 
 class OfferScreen extends StatefulWidget {
   final Offer offer;
@@ -107,24 +108,7 @@ class _OfferScreenState extends State<OfferScreen> {
                           children: <Widget>[
                             Column(
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      '${widget.offer.price}',
-                                      style: TextStyle(
-                                          color: Colors.purple,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w600),
-                                    ),
-                                    Text(
-                                      ' € / Tag',
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18.0,
-                                          fontWeight: FontWeight.w300),
-                                    ),
-                                  ],
-                                ),
+                                PriceTag(widget.offer.price),
                                 GestureDetector(
                                   onTap: () => showCupertinoModalBottomSheet(
                                     expand: false,
