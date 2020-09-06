@@ -1,10 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/models/offer_model.dart';
-import 'package:rent/widgets/data_range_picker.dart';
+import 'package:rent/widgets/dateRangePicker.dart/date_range_picker.dart';
 import 'package:rent/widgets/price_overview.dart';
 import 'package:rent/widgets/price_tag.dart';
+
+import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
 class OfferScreen extends StatefulWidget {
   final Offer offer;
@@ -15,6 +19,17 @@ class OfferScreen extends StatefulWidget {
 }
 
 class _OfferScreenState extends State<OfferScreen> {
+  DateTime _startDate;
+  DateTime _endDate;
+
+  @override
+  void initState() {
+    _startDate = DateTime.now().add(Duration(days: 1));
+    _endDate = DateTime.now().add(const Duration(days: 2));
+    print(_startDate);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,15 +197,27 @@ class _OfferScreenState extends State<OfferScreen> {
                 ),
                 // Availabilty
                 GestureDetector(
-                  onTap: () {
-                    showCupertinoModalBottomSheet(
+                  onTap: () async {
+                    final result = await showCupertinoModalBottomSheet<dynamic>(
                       expand: true,
                       context: context,
                       backgroundColor: Colors.purple,
                       barrierColor: Colors.black45,
-                      builder: (context, scrollController) =>
-                          DateRangePicker(scrollController),
+                      builder: (context, scrollController) => DateRangePicker(
+                        scrollController,
+                        date: null,
+                        range: _picker.PickerDateRange(
+                          _startDate,
+                          _endDate,
+                        ),
+                        displayDate: _startDate,
+                        minDate: DateTime.now(),
+                      ),
                     );
+                    if (result != null) {
+                      print('Hallo');
+                      inspect(result);
+                    }
                   },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),

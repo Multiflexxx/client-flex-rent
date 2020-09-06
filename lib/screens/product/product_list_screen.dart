@@ -30,7 +30,7 @@ class ProductListScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     width: double.infinity,
-                    height: 240,
+                    height: 220,
                     child: Stack(
                       alignment: Alignment.centerLeft,
                       children: <Widget>[
