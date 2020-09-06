@@ -76,7 +76,9 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           height: 120.0,
                           width: 200.0,
                           decoration: BoxDecoration(
-                            color: Colors.purple,
+                            border:
+                            Border.all(width: 1.0, color: Colors.purple),
+                            color: Color(0xFF202020),
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
@@ -101,7 +103,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                     Icon(
                                       product.category.icon,
                                       size: 16.0,
-                                      color: Colors.white70,
+                                      color: Colors.purple,
                                     ),
                                     SizedBox(
                                       width: 5.0,
@@ -109,7 +111,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                     Text(
                                       product.category.name,
                                       style: TextStyle(
-                                        color: Colors.white70,
+                                        color: Colors.purple,
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         letterSpacing: 1.2,
