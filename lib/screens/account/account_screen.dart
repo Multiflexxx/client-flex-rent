@@ -18,17 +18,15 @@ class AccountScreen extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 flex: 1,
-                child: Container(
-                  margin: EdgeInsets.all(20),
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/jett.jpg'),
-                        fit: BoxFit.fill),
+                child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(
+                      child: CircleAvatar(
+                        backgroundImage: AssetImage('assets/images/jett.jpg'),
+                        radius: 50.0,
+                      ),
+                    ),
                   ),
-                ),
               ),
 
               Expanded(
@@ -58,6 +56,10 @@ class AccountScreen extends StatelessWidget {
                 ),
               )
             ],
+          ),
+          Divider(
+            height: 20.0,
+            color: Colors.purple,
           ),
           Expanded(
               child: ListView.builder(
