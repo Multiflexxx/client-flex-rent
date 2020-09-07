@@ -7,14 +7,17 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Account")),
+      appBar: AppBar(
+          title: Text("Account"),
+        centerTitle: true,
+      ),
       body: Column(
         children: <Widget>[
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(right: 40.0),
+              Expanded(
+                flex: 1,
                 child: Container(
                   margin: EdgeInsets.all(20),
                   width: 100,
@@ -28,16 +31,30 @@ class AccountScreen extends StatelessWidget {
                 ),
               ),
 
-              Padding(
-                padding: EdgeInsets.only(right:150.0),
-                child: Column(
-                  children: [
-                    Text(
-                        'Kim 19',
-                      textAlign: TextAlign.left,
-                      style: TextStyle(color: Colors.white,fontSize: 20),
-                    ),
-                    Text('Mannheim')],
+              Expanded(
+                flex: 2,
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                              'Kim 19',
+                            style: TextStyle(color: Colors.white,fontSize: 20),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 5.0),
+                            child: Icon(
+                              Icons.verified_user,
+                              color: Colors.purple,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text('Mannheim')],
+                  ),
                 ),
               )
             ],
