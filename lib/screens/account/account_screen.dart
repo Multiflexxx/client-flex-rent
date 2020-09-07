@@ -1,5 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/models/profile_options_model.dart';
+import 'package:rent/screens/account/personal_info.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key key}) : super(key: key);
@@ -77,7 +79,15 @@ class _AccountScreenState extends State<AccountScreen> {
                   itemBuilder: (context, index) {
                     ProfileOption option = profileOptions[index];
                     return ListTile(
-                        onTap: null,
+                        onTap:
+                              () => Navigator.push(
+                              context,
+                              new CupertinoPageRoute(
+                              builder: (BuildContext context) =>
+                          new PersonalInfo(),
+                          )
+                              ),
+
                         leading: Icon(
                           option.icon,
                           color: Colors.white,
