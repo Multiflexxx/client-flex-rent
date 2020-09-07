@@ -1,7 +1,7 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/models/offer_model.dart';
 import 'package:rent/widgets/dateRangePicker.dart/date_range_picker.dart';
@@ -12,8 +12,8 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
 class OfferScreen extends StatefulWidget {
   final Offer offer;
-
   OfferScreen({this.offer});
+
   @override
   _OfferScreenState createState() => _OfferScreenState();
 }
@@ -24,10 +24,33 @@ class _OfferScreenState extends State<OfferScreen> {
 
   @override
   void initState() {
-    _startDate = DateTime.now().add(Duration(days: 1));
-    _endDate = DateTime.now().add(const Duration(days: 2));
-    print(_startDate);
+    _startDate = null;
+    _endDate = null;
+    initializeDateFormatting('de_DE', null);
+    _getRentDuration();
     super.initState();
+  }
+
+  void _onSelectedRangeChanged(_picker.PickerDateRange dateRange) {
+    final DateTime startDateValue = dateRange.startDate;
+    DateTime endDateValue = dateRange.endDate;
+    endDateValue ??= startDateValue;
+    setState(() {
+      if (startDateValue.isAfter(endDateValue)) {
+        _startDate = endDateValue;
+        _endDate = startDateValue;
+      } else {
+        _startDate = startDateValue;
+        _endDate = endDateValue;
+      }
+    });
+  }
+
+  int _getRentDuration() {
+    if (_endDate == null || _startDate == null) {
+      return 1;
+    }
+    return (_endDate.difference(_startDate).inDays + 1);
   }
 
   @override
@@ -131,8 +154,10 @@ class _OfferScreenState extends State<OfferScreen> {
                                     barrierColor: Colors.black45,
                                     builder: (context, scrollController) =>
                                         PriceOverview(
-                                            offer: widget.offer,
-                                            scrollController: scrollController),
+                                      offer: widget.offer,
+                                      scrollController: scrollController,
+                                      duration: _getRentDuration(),
+                                    ),
                                   ),
                                   child: Text(
                                     'Preisübersicht',
@@ -140,6 +165,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                       color: Colors.white70,
                                       fontSize: 14.0,
                                       fontWeight: FontWeight.w300,
+                                      decoration: TextDecoration.underline,
                                     ),
                                   ),
                                 ),
@@ -198,10 +224,9 @@ class _OfferScreenState extends State<OfferScreen> {
                 // Availabilty
                 GestureDetector(
                   onTap: () async {
-                    final result = await showCupertinoModalBottomSheet<dynamic>(
+                    final range = await showCupertinoModalBottomSheet<dynamic>(
                       expand: true,
                       context: context,
-                      backgroundColor: Colors.purple,
                       barrierColor: Colors.black45,
                       builder: (context, scrollController) => DateRangePicker(
                         scrollController,
@@ -210,47 +235,91 @@ class _OfferScreenState extends State<OfferScreen> {
                           _startDate,
                           _endDate,
                         ),
-                        displayDate: _startDate,
                         minDate: DateTime.now(),
+                        maxDate: DateTime.now().add(
+                          Duration(days: 90),
+                        ),
+                        displayDate: _startDate,
                       ),
                     );
-                    if (result != null) {
-                      print('Hallo');
-                      inspect(result);
+                    if (range != null) {
+                      _onSelectedRangeChanged(range);
                     }
                   },
                   child: Container(
                     margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
-                    decoration: BoxDecoration(
+                    padding: EdgeInsets.only(top: 8, bottom: 8),
+                    decoration: new BoxDecoration(
                       color: Color(0xFF202020),
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              Icon(
-                                Feather.calendar,
-                                color: Colors.purple,
-                              ),
-                              SizedBox(
-                                width: 10.0,
-                              ),
-                              Text(
-                                'Verfügbarkeit',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 18.0,
-                                  height: 1.35,
-                                  fontWeight: FontWeight.w300,
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(
+                                      Feather.calendar,
+                                      color: Colors.purple,
+                                    ),
+                                    SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Text(
+                                      'Verfügbarkeit',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        height: 1.35,
+                                        fontWeight: FontWeight.w300,
+                                      ),
+                                      maxLines: 6,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ],
                                 ),
-                                maxLines: 6,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
+                                _startDate != null
+                                    ? Column(
+                                        children: [
+                                          SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Text(
+                                                '${DateFormat('yMd', 'de').format(_startDate)}',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 16.0,
+                                                  height: 1.15,
+                                                  fontWeight: FontWeight.w300,
+                                                ),
+                                              ),
+                                              _endDate != null &&
+                                                      _startDate != _endDate
+                                                  ? Text(
+                                                      ' bis ${DateFormat('yMd', 'de').format(_endDate)}',
+                                                      style: TextStyle(
+                                                        color: Colors.white,
+                                                        fontSize: 16.0,
+                                                        height: 1.15,
+                                                        fontWeight:
+                                                            FontWeight.w300,
+                                                      ),
+                                                    )
+                                                  : Container(),
+                                            ],
+                                          ),
+                                        ],
+                                      )
+                                    : Container(),
+                              ],
+                            ),
                           ),
                           Icon(
                             Ionicons.ios_arrow_forward,

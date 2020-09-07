@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rent/widgets/slide_bar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
@@ -43,25 +44,34 @@ class _DataRangePickerState extends State<DateRangePicker> {
     _controller.selectedDate = date;
     _controller.selectedRange = range;
     return Material(
+      color: Color(0xFF202020),
       child: SafeArea(
         top: false,
         child: Column(
           children: [
+            SlideBar(),
             Flexible(
               child: SfDateRangePicker(
                 controller: _controller,
                 view: DateRangePickerView.month,
                 selectionMode: DateRangePickerSelectionMode.range,
-                // selectionShape: DateRangePickerSelectionShape.rectangle,
                 showNavigationArrow: false,
                 initialDisplayDate: widget.date,
                 minDate: widget.minDate,
                 maxDate: widget.maxDate,
-                // todayHighlightColor: Colors.purple,
                 enablePastDates: false,
 
                 navigationDirection:
                     DateRangePickerNavigationDirection.vertical,
+
+                headerStyle: DateRangePickerHeaderStyle(
+                  textStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 1.2,
+                  ),
+                ),
                 headerHeight: 100,
 
                 monthViewSettings: DateRangePickerMonthViewSettings(
@@ -115,7 +125,15 @@ class _DataRangePickerState extends State<DateRangePicker> {
                 },
               ),
             ),
-            DateRangeButtonBar(date: date, range: range),
+            DateRangeButtonBar(
+              pickerContext: context,
+              date: date,
+              range: range,
+              blackoutDates: List<DateTime>()
+                ..add(
+                  DateTime(2020, 09, 26),
+                ),
+            ),
           ],
         ),
       ),

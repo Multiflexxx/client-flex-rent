@@ -1,15 +1,24 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 import 'package:rent/models/offer_model.dart';
+import 'package:rent/widgets/slide_bar.dart';
 
 class PriceOverview extends StatelessWidget {
   final Offer offer;
   final ScrollController scrollController;
   final bool reverse;
+  final int duration;
 
   PriceOverview(
-      {Key key, this.offer, this.scrollController, this.reverse = false})
+      {Key key,
+      this.offer,
+      this.scrollController,
+      this.reverse = false,
+      this.duration})
       : super(key: key);
+
+  final currenyFormat = new NumberFormat("#,##0.00", "de_DE");
 
   @override
   Widget build(BuildContext context) {
@@ -20,17 +29,7 @@ class PriceOverview extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                height: 7.0,
-                width: 75.0,
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                  borderRadius: BorderRadius.circular(5.0),
-                ),
-              ),
+              SlideBar(),
               SizedBox(
                 height: 10.0,
               ),
@@ -40,7 +39,7 @@ class PriceOverview extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      '${offer.price}€ x 2 Tage',
+                      '${currenyFormat.format(offer.price)} € x $duration Tage',
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.white,
@@ -49,7 +48,7 @@ class PriceOverview extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${offer.price * 2} €',
+                      '${currenyFormat.format(offer.price * duration)} €',
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.white,
@@ -75,7 +74,7 @@ class PriceOverview extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${offer.price * 0.2} €',
+                      '${currenyFormat.format(offer.price * 0.2)} €',
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.white,
@@ -87,8 +86,8 @@ class PriceOverview extends StatelessWidget {
                 ),
               ),
               Divider(
-                height: 10.0,
-                thickness: 1.25,
+                height: 14.0,
+                thickness: 1.0,
                 indent: 15.0,
                 endIndent: 15.0,
                 color: Colors.purple,
@@ -108,7 +107,7 @@ class PriceOverview extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '${(offer.price * 2) + (offer.price * 0.2)} €',
+                      '${currenyFormat.format((offer.price * duration) + (offer.price * 0.2))} €',
                       style: TextStyle(
                         fontSize: 18.0,
                         color: Colors.white,
