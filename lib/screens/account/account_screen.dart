@@ -9,6 +9,11 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+
+  String Name = "Kim 19";
+  String City = "Mannheim";
+  bool verified = true;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,19 +49,19 @@ class _AccountScreenState extends State<AccountScreen> {
                       Row(
                         children: [
                           Text(
-                              'Kim 19',
+                              '$Name',
                             style: TextStyle(color: Colors.white,fontSize: 20),
                           ),
-                          Padding(
+                          Padding (
                             padding: const EdgeInsets.only(left: 5.0),
-                            child: Icon(
+                            child: verified ? Icon(
                               Icons.verified_user,
                               color: Colors.purple,
-                            ),
+                            ): null
                           ),
                         ],
                       ),
-                      Text('Mannheim')],
+                      Text('$City')],
                   ),
                 ),
               )
