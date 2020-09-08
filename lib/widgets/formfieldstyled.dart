@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class FormFieldStyled extends StatefulWidget {
   final Widget child;
   final hintText;
-  final obscureText;
+  bool obscureText;
   final validator;
   final helperText;
   final icon;
@@ -32,6 +33,12 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
          icon: widget.icon ?? null,
+        suffixIcon: widget.type == TextInputType.visiblePassword ? IconButton(icon:Icon(!widget.obscureText ? Icons.visibility : Icons.visibility_off, color: Colors.grey), onPressed: () {
+          setState(() {
+            widget.obscureText = !widget.obscureText;
+          });
+        },) : null,
+
         helperStyle: TextStyle(color: Colors.white60, height: 1.25),
         helperMaxLines: 3,
         helperText: widget.helperText,

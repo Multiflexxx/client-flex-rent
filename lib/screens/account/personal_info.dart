@@ -123,6 +123,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     hintText: 'Passwort',
                     type: TextInputType.visiblePassword,
                     obscureText: true,
+
                   ),
                 ),
                 Padding(
