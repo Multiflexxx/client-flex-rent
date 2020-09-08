@@ -31,28 +31,35 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         CircleAvatar(
                           backgroundImage: AssetImage('assets/images/jett.jpg'),
                           radius: 50.0,
-                          //child: Text('JJ'),
+                          child: Icon(Icons.edit, size: 40.0)
                         ),
-                        FlatButton(
-                          onPressed: null,
-                          child: Text(
-                            'Edit',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        )
                       ],
                     ),
                   ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: FormFieldStyled(
-                    icon: Icon(
-                      Icons.person,
-                      color: Colors.white,
-                    ),
-                    hintText: 'Name',
-                    type: TextInputType.name,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child:
+                          FormFieldStyled(
+                            icon: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Vorname',
+                            type: TextInputType.name,
+                          ),
+                      ),
+                      Expanded(
+                        child:
+                        FormFieldStyled(
+                          hintText: 'Nachname',
+                          type: TextInputType.name,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 Padding(
