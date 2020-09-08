@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
@@ -7,6 +8,7 @@ import 'package:rent/models/offer_model.dart';
 import 'package:rent/widgets/dateRangePicker.dart/date_range_picker.dart';
 import 'package:rent/widgets/price_overview.dart';
 import 'package:rent/widgets/price_tag.dart';
+import 'package:rent/widgets/product_description.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
@@ -201,23 +203,60 @@ class _OfferScreenState extends State<OfferScreen> {
                 // Description
                 Container(
                   margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
-                  // height: 80,
                   decoration: BoxDecoration(
                     color: Color(0xFF202020),
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
-                    child: Text(
+                    child: AutoSizeText(
                       widget.offer.description,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 18.0,
+                        fontSize: 16.0,
                         height: 1.35,
                         fontWeight: FontWeight.w300,
                       ),
+                      minFontSize: 16.0,
                       maxLines: 6,
-                      overflow: TextOverflow.ellipsis,
+                      overflowReplacement: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            widget.offer.description,
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 16.0,
+                              height: 1.25,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            maxLines: 6,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: 5.0,
+                          ),
+                          GestureDetector(
+                            onTap: () => showCupertinoModalBottomSheet(
+                              expand: false,
+                              context: context,
+                              barrierColor: Colors.black45,
+                              builder: (context, scrollController) =>
+                                  ProductDescription(
+                                offer: widget.offer,
+                                scrollController: scrollController,
+                              ),
+                            ),
+                            child: Text(
+                              "Show more",
+                              style: TextStyle(
+                                color: Colors.purple,
+                                fontSize: 16.0,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
