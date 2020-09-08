@@ -90,18 +90,24 @@ class _DataRangePickerState extends State<DateRangePicker> {
                 // Style
                 backgroundColor: Color(0xFF202020),
                 monthCellStyle: DateRangePickerMonthCellStyle(
-                    textStyle: TextStyle(color: Colors.white),
-                    todayTextStyle: TextStyle(color: Colors.white),
-                    todayCellDecoration: BoxDecoration(
+                  textStyle: TextStyle(color: Colors.white),
+                  todayTextStyle: TextStyle(color: Colors.white),
+                  todayCellDecoration: BoxDecoration(
+                    color: Colors.red,
+                    border: Border.all(
                       color: Colors.red,
-                      border: Border.all(
-                        color: Colors.red,
-                        width: 1.0,
-                      ),
-                      shape: BoxShape.circle,
+                      width: 1.0,
                     ),
-                    weekendTextStyle: TextStyle(color: Colors.red),
-                    disabledDatesTextStyle: TextStyle(color: Colors.white38)),
+                    shape: BoxShape.circle,
+                  ),
+                  weekendTextStyle: TextStyle(color: Colors.red),
+                  disabledDatesTextStyle: TextStyle(color: Colors.white38),
+                  blackoutDateTextStyle: TextStyle(
+                    color: Colors.white38,
+                    decoration: TextDecoration.lineThrough,
+                    decorationThickness: 2.0,
+                  ),
+                ),
 
                 selectionTextStyle: const TextStyle(color: Colors.white),
                 selectionColor: Colors.blue,

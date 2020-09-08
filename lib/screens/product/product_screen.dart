@@ -1,10 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flushbar/flushbar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/models/offer_model.dart';
+import 'package:rent/models/offer_request_model.dart';
+import 'package:rent/screens/booking/confiramtion_payment_screen.dart';
 import 'package:rent/widgets/dateRangePicker.dart/date_range_picker.dart';
 import 'package:rent/widgets/price_overview.dart';
 import 'package:rent/widgets/price_tag.dart';
@@ -175,7 +179,41 @@ class _OfferScreenState extends State<OfferScreen> {
                             ),
                             GestureDetector(
                               onTap: () {
-                                print('reserverien');
+                                if (_startDate != null) {
+                                  Navigator.push(
+                                    context,
+                                    new CupertinoPageRoute(
+                                      builder: (BuildContext context) =>
+                                          new ConfirmationPaymentScreen(
+                                        offerRequest: OfferRequest(
+                                            offer: widget.offer,
+                                            startDate: _startDate,
+                                            endDate: _endDate),
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  Flushbar(
+                                    messageText: Text(
+                                      "Du musst einen Zeitraum auswählen.",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 18.0,
+                                        letterSpacing: 1.2,
+                                      ),
+                                    ),
+                                    icon: Icon(
+                                      Icons.info_outline,
+                                      size: 28.0,
+                                      color: Colors.purple,
+                                    ),
+                                    duration: Duration(seconds: 3),
+                                    margin: EdgeInsets.all(10.0),
+                                    padding: EdgeInsets.all(16.0),
+                                    // flushbarPosition: FlushbarPosition.TOP,
+                                    borderRadius: 8,
+                                  )..show(context);
+                                }
                               },
                               child: Container(
                                 width: 0.4 * MediaQuery.of(context).size.width,

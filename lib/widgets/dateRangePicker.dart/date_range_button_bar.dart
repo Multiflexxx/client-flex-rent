@@ -54,7 +54,7 @@ class DateRangeButtonBar extends StatelessWidget {
                         correctRange = false;
                         Flushbar(
                           messageText: Text(
-                            "Deine Zeitraum muss zusammenhängend sein.",
+                            "Dein Zeitraum muss zusammenhängend sein.",
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 18.0,

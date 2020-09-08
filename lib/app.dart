@@ -22,7 +22,7 @@ class App extends StatefulWidget {
       size: 22,
     ),
     Icon(
-      Feather.shopping_cart,
+      Feather.shopping_bag,
       size: 22,
     ),
     Icon(
