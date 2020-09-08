@@ -8,6 +8,7 @@ class FormFieldStyled extends StatefulWidget {
   final validator;
   final helperText;
   final icon;
+  final TextInputType type;
 
   FormFieldStyled(
       {Key key,
@@ -16,7 +17,8 @@ class FormFieldStyled extends StatefulWidget {
       this.obscureText,
       this.validator,
       this.helperText,
-      this.icon})
+      this.icon,
+      this.type})
       : super(key: key);
 
   _FormFieldStyledState createState() => _FormFieldStyledState();
@@ -26,6 +28,7 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: widget.type,
       style: TextStyle(color: Colors.white),
       decoration: InputDecoration(
          icon: widget.icon ?? null,
