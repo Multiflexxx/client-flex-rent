@@ -9,10 +9,10 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/models/offer_model.dart';
 import 'package:rent/models/offer_request_model.dart';
 import 'package:rent/screens/booking/confiramtion_payment_screen.dart';
-import 'package:rent/widgets/dateRangePicker.dart/date_range_picker.dart';
-import 'package:rent/widgets/price_overview.dart';
-import 'package:rent/widgets/price_tag.dart';
-import 'package:rent/widgets/product_description.dart';
+import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
+import 'package:rent/widgets/price/price_overview.dart';
+import 'package:rent/widgets/price/price_tag.dart';
+import 'package:rent/widgets/product/product_description.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
@@ -33,7 +33,6 @@ class _OfferScreenState extends State<OfferScreen> {
     _startDate = null;
     _endDate = null;
     initializeDateFormatting('de_DE', null);
-    _getRentDuration();
     super.initState();
   }
 
@@ -50,13 +49,6 @@ class _OfferScreenState extends State<OfferScreen> {
         _endDate = endDateValue;
       }
     });
-  }
-
-  int _getRentDuration() {
-    if (_endDate == null || _startDate == null) {
-      return 1;
-    }
-    return (_endDate.difference(_startDate).inDays + 1);
   }
 
   @override
@@ -136,7 +128,8 @@ class _OfferScreenState extends State<OfferScreen> {
                 ),
                 // Price tile
                 Container(
-                  margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  margin:
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
                   height: 80,
                   decoration: BoxDecoration(
                     color: Color(0xFF202020),
@@ -162,7 +155,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                         PriceOverview(
                                       offer: widget.offer,
                                       scrollController: scrollController,
-                                      duration: _getRentDuration(),
+                                      startDate: _startDate,
+                                      endDate: _endDate,
                                     ),
                                   ),
                                   child: Text(
@@ -240,7 +234,8 @@ class _OfferScreenState extends State<OfferScreen> {
                 ),
                 // Description
                 Container(
-                  margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  margin:
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
                   decoration: BoxDecoration(
                     color: Color(0xFF202020),
                     borderRadius: BorderRadius.circular(10.0),
@@ -324,7 +319,8 @@ class _OfferScreenState extends State<OfferScreen> {
                     }
                   },
                   child: Container(
-                    margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                    margin:
+                        EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
                     padding: EdgeInsets.only(top: 8, bottom: 8),
                     decoration: new BoxDecoration(
                       color: Color(0xFF202020),
@@ -411,7 +407,8 @@ class _OfferScreenState extends State<OfferScreen> {
 
                 // User
                 Container(
-                  margin: EdgeInsets.fromLTRB(18.0, 12.0, 18.0, 12.0),
+                  margin:
+                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
                   decoration: BoxDecoration(
                     color: Color(0xFF202020),
                     borderRadius: BorderRadius.circular(10.0),
