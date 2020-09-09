@@ -16,6 +16,8 @@ class ProfileOption {
 List<ProfileOption> profileOptions = [
     ProfileOption('personalInfo', 'Meine Informationen', MaterialIcons.perm_identity),
     ProfileOption('myitems', 'Meine Mietgegenstände', MaterialIcons.drafts),
+    ProfileOption('paymentinfo', 'Zahlungsinformationen', MaterialIcons.credit_card),
+    ProfileOption('karmainfos', 'Mein Karma-Score', MaterialIcons.stars),
     ProfileOption('settings','Einstellungen', MaterialIcons.settings),
     ProfileOption('logout', 'Abmelden', MaterialIcons.exit_to_app),
 ];
