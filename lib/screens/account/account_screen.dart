@@ -11,16 +11,15 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-
-  String Name = "Kim 19";
-  String City = "Mannheim";
+  String name = "Kim 19";
+  String city = "Mannheim";
   bool verified = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          title: Text("Account"),
+        title: Text("Account"),
         centerTitle: true,
       ),
       body: Column(
@@ -31,16 +30,15 @@ class _AccountScreenState extends State<AccountScreen> {
               Expanded(
                 flex: 1,
                 child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Center(
-                      child: CircleAvatar(
-                        backgroundImage: AssetImage('assets/images/jett.jpg'),
-                        radius: 50.0,
-                      ),
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(
+                    child: CircleAvatar(
+                      backgroundImage: AssetImage('assets/images/jett.jpg'),
+                      radius: 50.0,
                     ),
                   ),
+                ),
               ),
-
               Expanded(
                 flex: 2,
                 child: Padding(
@@ -51,19 +49,21 @@ class _AccountScreenState extends State<AccountScreen> {
                       Row(
                         children: [
                           Text(
-                              '$Name',
-                            style: TextStyle(color: Colors.white,fontSize: 20),
+                            '$name',
+                            style: TextStyle(color: Colors.white, fontSize: 20),
                           ),
-                          Padding (
-                            padding: const EdgeInsets.only(left: 5.0),
-                            child: verified ? Icon(
-                              Icons.verified_user,
-                              color: Colors.purple,
-                            ): null
-                          ),
+                          Padding(
+                              padding: const EdgeInsets.only(left: 5.0),
+                              child: verified
+                                  ? Icon(
+                                      Icons.verified_user,
+                                      color: Colors.purple,
+                                    )
+                                  : null),
                         ],
                       ),
-                      Text('$City')],
+                      Text('$city')
+                    ],
                   ),
                 ),
               )
@@ -79,15 +79,12 @@ class _AccountScreenState extends State<AccountScreen> {
                   itemBuilder: (context, index) {
                     ProfileOption option = profileOptions[index];
                     return ListTile(
-                        onTap:
-                              () => Navigator.push(
-                              context,
-                              new CupertinoPageRoute(
+                        onTap: () => Navigator.push(
+                            context,
+                            new CupertinoPageRoute(
                               builder: (BuildContext context) =>
-                          new PersonalInfo(),
-                          )
-                              ),
-
+                                  new PersonalInfo(),
+                            )),
                         leading: Icon(
                           option.icon,
                           color: Colors.white,
