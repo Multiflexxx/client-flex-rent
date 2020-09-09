@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/models/profile_options_model.dart';
+import 'package:rent/screens/404.dart';
 import 'package:rent/screens/account/personal_info.dart';
+import 'package:rent/screens/account/settings.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key key}) : super(key: key);
@@ -82,8 +84,15 @@ class _AccountScreenState extends State<AccountScreen> {
                         onTap: () => Navigator.push(
                             context,
                             new CupertinoPageRoute(
-                              builder: (BuildContext context) =>
-                                  new PersonalInfo(),
+                              builder: (BuildContext context) {
+                                if (option.optionId == 'personalInfo') {
+                                  return new PersonalInfo();
+                                } else if (option.optionId == 'settings') {
+                                  return new AppSettings();
+                                } else {
+                                  return new PageNotFound();
+                                }
+                              }
                             )),
                         leading: Icon(
                           option.icon,
