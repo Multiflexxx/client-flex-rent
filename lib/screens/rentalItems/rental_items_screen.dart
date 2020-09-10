@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:rent/widgets/circle_tab_indicator.dart';
 
-class CartScreen extends StatefulWidget {
-  CartScreen({Key key}) : super(key: key);
+class RentalItemsScreen extends StatefulWidget {
+  RentalItemsScreen({Key key}) : super(key: key);
 
   @override
-  _CartScreenState createState() => _CartScreenState();
+  _RentalItemsScreenState createState() => _RentalItemsScreenState();
 }
 
-class _CartScreenState extends State<CartScreen> {
+class _RentalItemsScreenState extends State<RentalItemsScreen> {
   final List<String> _tabs = <String>[
     "Ausstehende",
     "Gemietete",
@@ -27,15 +28,33 @@ class _CartScreenState extends State<CartScreen> {
                 sliver: SliverSafeArea(
                   top: false,
                   sliver: SliverAppBar(
-                    title: const Text('Books'),
+                    title: const Text(
+                      'Mietgegenstände',
+                      style: TextStyle(
+                        fontSize: 21.0,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    backgroundColor: Colors.transparent,
                     floating: true,
                     pinned: true,
                     snap: false,
                     primary: true,
                     forceElevated: innerBoxIsScrolled,
+                    toolbarHeight: 0.3 * MediaQuery.of(context).size.height,
                     bottom: TabBar(
-                      tabs:
-                          _tabs.map((String name) => Tab(text: name)).toList(),
+                      indicator:
+                          CircleTabIndicator(color: Colors.purple, radius: 3.0),
+                      tabs: _tabs
+                          .map(
+                            (String name) => Tab(
+                              child: Text(
+                                name,
+                                style: TextStyle(fontSize: 18.0),
+                              ),
+                            ),
+                          )
+                          .toList(),
                     ),
                   ),
                 ),
@@ -59,15 +78,19 @@ class _CartScreenState extends State<CartScreen> {
                         ),
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
-                          sliver: SliverFixedExtentList(
-                            itemExtent: 60.0,
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                return Container(
-                                  color: Colors.red,
-                                  child: Text('$index'),
-                                );
-                              },
+                          sliver: SliverList(
+                            delegate: SliverChildListDelegate(
+                              <Widget>[
+                                name == 'Ausstehende'
+                                    ? Container(
+                                        color: Colors.red,
+                                        child: Text('Hallo'),
+                                      )
+                                    : Container(
+                                        color: Colors.green,
+                                        child: Text('Tschau'),
+                                      )
+                              ],
                             ),
                           ),
                         ),
