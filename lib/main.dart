@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:rent/app.dart';
+import 'package:rent/screens/404.dart';
+import 'package:rent/screens/account/account_screen.dart';
+import 'package:rent/screens/account/personal_info.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,9 +22,17 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: App(),
       routes: {
-      }
+        '/': (context) => App(),
+        '/account' : (context) => AccountScreen(),
+        '/personalInfo': (context) => PersonalInfo(),
+      },
+      onUnknownRoute: (RouteSettings settings) {
+        return MaterialPageRoute<void>(
+          settings: settings,
+          builder: (BuildContext context) => PageNotFound(),
+        );
+      },
     );
   }
 }
