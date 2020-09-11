@@ -14,7 +14,7 @@ class RentProductCard extends StatelessWidget {
         children: [
           SizedBox(
             width: double.infinity,
-            height: 220,
+            height: 240,
             child: Stack(
               alignment: Alignment.centerLeft,
               children: <Widget>[
@@ -24,7 +24,7 @@ class RentProductCard extends StatelessWidget {
                     child: Container(
                       margin: EdgeInsets.fromLTRB(100.0, 0, 10, 0),
                       width: double.infinity,
-                      height: 190,
+                      height: 220,
                       decoration: BoxDecoration(
                         color: Color(0xFF202020),
                         borderRadius: BorderRadius.circular(20),
@@ -52,12 +52,10 @@ class RentProductCard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   
-                                  PriceTag(rentProduct.price),
+                                  // PriceTag(rentProduct.price),
                                    RichText(
                                       text: TextSpan(
-                                    text: rentProduct.rent == true
-                                        ? 'Miete'
-                                        : 'ausleihe2',
+                                    text: 'Ausgeliehen',
                                     style: TextStyle(
                                       color: Colors.purple,
                                       fontSize: 20.0,
@@ -85,6 +83,18 @@ class RentProductCard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
+                                       rentProduct.rating == ''
+                                        ? ' Du hast den Gegenstand noch nicht bewertet'
+                                        : '${rentProduct.rating}',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                    maxLines: 3,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                   Text(
                                     'Show more',
                                     style: TextStyle(
                                       color: Colors.purple,
@@ -94,6 +104,7 @@ class RentProductCard extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
+                                  
                                  
                                 ],
                               ),
@@ -106,7 +117,7 @@ class RentProductCard extends StatelessWidget {
                 ),
                 Container(
                   width: 160,
-                  height: 190,
+                  height: 220,
                   margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),

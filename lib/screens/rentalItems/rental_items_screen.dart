@@ -105,7 +105,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                         );
                                       },
                                       childCount:
-                                          rentProductSuggestionList.length - 3,
+                                          rentProductSuggestionList.length,
                                     )),
                         ),
                       ],

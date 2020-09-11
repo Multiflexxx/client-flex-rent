@@ -9,7 +9,7 @@ class RentProduct {
   double price;
   int offerId;
   String rating;
-  bool rent;
+
 
   RentProduct(
       {this.imageUrl,
@@ -19,8 +19,8 @@ class RentProduct {
       this.description,
       this.price,
       this.offerId,
-      this.rating,
-      this.rent});
+      this.rating
+      });
 }
 
 List<RentProduct> rentProductSuggestionList = [
@@ -33,7 +33,7 @@ List<RentProduct> rentProductSuggestionList = [
         'Bluetooth Teufel Box eigent sich gut für Studentenpartys! Bei mir kommt sie in regelmäßigen Abständen auf Hauspartys zum Einsatz. Der Nachbar hat sich trotz des starken Basses und der lauten Musik noch nie beschwert. Die Box kann aufgeladen werden und überall hin mitgenommen werden.',
     price: 10.00,
 
-    rent: true,
+  
      rating: 'Lieferung echt super!',
     offerId: 0,
   ),
@@ -44,7 +44,7 @@ List<RentProduct> rentProductSuggestionList = [
     category: categoryList[2],
     description: 'Zu warm? - Dann miete mich!',
     price: 20.00,
-    rent: true,
+ 
      rating: 'Das Produkt war schon ok',
     offerId: 1,
   ),
@@ -55,7 +55,7 @@ List<RentProduct> rentProductSuggestionList = [
     category: categoryList[5],
     description: 'Noch nie benutzte Fahrradpumpe!',
     price: 5.00,
-    rent: false,
+    
     rating: 'Das Produkt ist eigentlich ganz baba',
     offerId: 2,
   ),
@@ -66,7 +66,7 @@ List<RentProduct> rentProductSuggestionList = [
     category: categoryList[3],
     description: 'Top Smartphone 2019 from Apple',
     price: 749.99,
-    rent: true,
+   
      rating: '',
     offerId: 3,
   ),
