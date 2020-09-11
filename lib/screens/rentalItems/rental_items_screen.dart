@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:rent/models/rent_product_model.dart';
 import 'package:rent/widgets/circle_tab_indicator.dart';
+import 'package:rent/widgets/product/future_product_card.dart';
+import 'package:rent/widgets/product/rent_product_card.dart';
+import 'package:rent/models/offer_model.dart';
+import 'package:rent/models/future_product_model.dart';
+
 
 class RentalItemsScreen extends StatefulWidget {
   RentalItemsScreen({Key key}) : super(key: key);
@@ -79,20 +85,28 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                         SliverPadding(
                           padding: const EdgeInsets.all(8.0),
                           sliver: SliverList(
-                            delegate: SliverChildListDelegate(
-                              <Widget>[
-                                name == 'Ausstehende'
-                                    ? Container(
-                                        color: Colors.red,
-                                        child: Text('Hallo'),
-                                      )
-                                    : Container(
-                                        color: Colors.green,
-                                        child: Text('Tschau'),
-                                      )
-                              ],
-                            ),
-                          ),
+                              delegate: name == 'Ausstehende'
+                                  ? SliverChildBuilderDelegate(
+                                      (BuildContext context, int index) {
+                                        FutureProduct futureProduct =
+                                            futureProductSuggestionList[index];
+                                        return FutureProductCard(
+                                          futureProduct: futureProduct,
+                                        );
+                                      },
+                                      childCount: productSuggestionList.length,
+                                    )
+                                  : SliverChildBuilderDelegate(
+                                      (BuildContext context, int index) {
+                                        RentProduct rentProduct =
+                                            rentProductSuggestionList[index];
+                                        return RentProductCard(
+                                          rentProduct: rentProduct,
+                                        );
+                                      },
+                                      childCount:
+                                          rentProductSuggestionList.length - 3,
+                                    )),
                         ),
                       ],
                     );
