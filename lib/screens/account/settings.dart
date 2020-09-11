@@ -7,13 +7,12 @@ class AppSettings extends StatefulWidget {
 }
 
 class _AppSettingsState extends State<AppSettings> {
+  bool darkmode = true;
+
   @override
-
-  bool Darkmode = true;
-
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Darkmode ? Colors.black : Colors.white,
+      backgroundColor: darkmode ? Colors.black : Colors.white,
       appBar: AppBar(
         title: Text('Einstellungen'),
         centerTitle: true,
@@ -26,12 +25,15 @@ class _AppSettingsState extends State<AppSettings> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text('Darkmode'),
-                Switch(onChanged: (bool){
-                  setState(() {
-                    Darkmode = bool;
-                  });
-                }, value: Darkmode,)
+                Text('darkmode'),
+                Switch(
+                  onChanged: (bool) {
+                    setState(() {
+                      darkmode = bool;
+                    });
+                  },
+                  value: darkmode,
+                )
               ],
             )
           ],

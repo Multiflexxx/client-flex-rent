@@ -4,7 +4,6 @@ import 'package:rent/models/profile_options_model.dart';
 import 'package:rent/screens/404.dart';
 import 'package:rent/screens/account/personal_info.dart';
 import 'package:rent/screens/account/settings.dart';
-import 'package:rent/main.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key key}) : super(key: key);
@@ -18,12 +17,12 @@ class _AccountScreenState extends State<AccountScreen> {
   String city = "Mannheim";
   bool verified = true;
   final routes = {
-    'personalInfo' : PersonalInfo(),
-    'myitems' : PageNotFound(),
-    'paymentinfos' : PageNotFound(),
-    'karmainfo' : PageNotFound(),
-    'settings' : AppSettings(),
-    'logout' : PageNotFound(),
+    'personalInfo': PersonalInfo(),
+    'myitems': PageNotFound(),
+    'paymentinfos': PageNotFound(),
+    'karmainfo': PageNotFound(),
+    'settings': AppSettings(),
+    'logout': PageNotFound(),
   };
 
   @override
@@ -91,16 +90,10 @@ class _AccountScreenState extends State<AccountScreen> {
                     ProfileOption option = profileOptions[index];
                     return ListTile(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              new CupertinoPageRoute(
-                                  builder:
-
-                                      (BuildContext context) {
-
-                                        return routes[option.optionId] ?? PageNotFound();
-                                      }
-                              ));
+                          Navigator.push(context, new CupertinoPageRoute(
+                              builder: (BuildContext context) {
+                            return routes[option.optionId] ?? PageNotFound();
+                          }));
                         },
                         leading: Icon(
                           option.icon,
