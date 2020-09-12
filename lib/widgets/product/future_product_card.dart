@@ -101,7 +101,7 @@ class FutureProductCard extends StatelessWidget {
                                   Text(
                                     'Show more',
                                     style: TextStyle(
-                                      color: Colors.purple,
+                                      color: Colors.white,
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w700,
                                     ),
