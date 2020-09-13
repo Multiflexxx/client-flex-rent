@@ -1,4 +1,8 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/models/offer_model.dart';
 import 'package:rent/widgets/discovery_carousel.dart';
 import 'package:rent/widgets/search_bar.dart';
@@ -51,6 +55,14 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AuthenticationBloc _authenticationBloc =
+        BlocProvider.of<AuthenticationBloc>(context);
+
+    inspect(_authenticationBloc);
+
+    final state = _authenticationBloc.state as AuthenticationAuthenticated;
+    inspect(state.user);
+
     return Scaffold(
       body: SafeArea(
         child: ListView(

@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/models/profile_options_model.dart';
 import 'package:rent/screens/404.dart';
 import 'package:rent/screens/account/personal_info.dart';
@@ -90,10 +92,20 @@ class _AccountScreenState extends State<AccountScreen> {
                     ProfileOption option = profileOptions[index];
                     return ListTile(
                         onTap: () {
-                          Navigator.push(context, new CupertinoPageRoute(
-                              builder: (BuildContext context) {
-                            return routes[option.optionId] ?? PageNotFound();
-                          }));
+                          if (index < profileOptions.length - 1) {
+                            Navigator.push(
+                              context,
+                              new CupertinoPageRoute(
+                                builder: (BuildContext context) {
+                                  return routes[option.optionId] ??
+                                      PageNotFound();
+                                },
+                              ),
+                            );
+                          } else {
+                            BlocProvider.of<AuthenticationBloc>(context)
+                                .add(UserLoggedOut());
+                          }
                         },
                         leading: Icon(
                           option.icon,

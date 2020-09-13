@@ -41,15 +41,15 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
         helperMaxLines: 3,
         helperText: widget.helperText,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(5.0),
         ),
         hintText: widget.hintText,
         labelStyle: TextStyle(color: Colors.white),

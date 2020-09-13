@@ -35,6 +35,10 @@ dependencies:
   modal_bottom_sheet: ^0.2.0+1
   persistent_bottom_nav_bar: ^2.0.5
   syncfusion_flutter_datepicker: 18.2.56-beta 
+  bloc: ^6.0.0
+  flutter_bloc: ^6.0.5
+  equatable: ^1.0.2
+  flutter_secure_storage: ^3.3.3
                     
 dev_dependencies:
   flutter_test:
