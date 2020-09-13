@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/offer_model.dart';
-import 'package:rent/widgets/price/price_tag.dart';
 import 'package:rent/models/rent_product_model.dart';
+
 class RentProductCard extends StatelessWidget {
   final RentProduct rentProduct;
 
@@ -51,9 +50,9 @@ class RentProductCard extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  
+
                                   // PriceTag(rentProduct.price),
-                                   RichText(
+                                  RichText(
                                       text: TextSpan(
                                     text: 'Ausgeliehen',
                                     style: TextStyle(
@@ -71,7 +70,7 @@ class RentProductCard extends StatelessWidget {
                                               fontSize: 16)),
                                     ],
                                   )),
-                                   Text(
+                                  Text(
                                     '11.05.20 - 11.10.20',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -83,7 +82,7 @@ class RentProductCard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                       rentProduct.rating == ''
+                                    rentProduct.rating == ''
                                         ? ' Du hast den Gegenstand noch nicht bewertet'
                                         : '${rentProduct.rating}',
                                     style: TextStyle(
@@ -94,7 +93,7 @@ class RentProductCard extends StatelessWidget {
                                     maxLines: 3,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                   Text(
+                                  Text(
                                     'Show more',
                                     style: TextStyle(
                                       color: Colors.white,
@@ -104,8 +103,6 @@ class RentProductCard extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  
-                                 
                                 ],
                               ),
                             ),

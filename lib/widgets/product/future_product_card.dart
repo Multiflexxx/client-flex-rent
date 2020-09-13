@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/offer_model.dart';
 import 'package:rent/models/future_product_model.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
@@ -66,8 +65,8 @@ class FutureProductCard extends StatelessWidget {
                                     children: <TextSpan>[
                                       TextSpan(
                                           text: futureProduct.rent == true
-                                        ? ' vom'
-                                        : ' beginnt am',
+                                              ? ' vom'
+                                              : ' beginnt am',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.normal,
