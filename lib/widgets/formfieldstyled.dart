@@ -8,6 +8,8 @@ class FormFieldStyled extends StatefulWidget {
   final validator;
   final helperText;
   final icon;
+  final controller;
+  final autocorrector;
   final TextInputType type;
     final length;
 
@@ -20,7 +22,10 @@ class FormFieldStyled extends StatefulWidget {
       this.helperText,
       this.icon,
       this.type,
-      this.length})
+      this.length,
+      this.controller,
+      this.autocorrector
+      })
       : super(key: key);
 
   _FormFieldStyledState createState() => _FormFieldStyledState();
@@ -30,8 +35,9 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
+      autocorrect: widget.autocorrector,
       keyboardType: widget.type,
+      controller: widget.controller,
       style: TextStyle(color: Colors.white),
       maxLength: widget.length,
       decoration: InputDecoration(
