@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.purple,
         accentColor: Color(0xFFD8ECF1),
         textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
-        scaffoldBackgroundColor: Colors.blue,
+        scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(

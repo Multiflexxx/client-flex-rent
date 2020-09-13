@@ -21,7 +21,7 @@ class ApiAuthenticationService extends AuthenticationService {
   Future<User> signInWithEmailAndPassword(String email, String password) async {
     await Future.delayed(Duration(seconds: 1)); // simulate a network delay
 
-    if (email.toLowerCase() != 'test' || password != 'test') {
+    if (email.toLowerCase() != 'test@test.com' || password != 'test') {
       throw AuthenticationException(message: 'Wrong username or password');
     }
 

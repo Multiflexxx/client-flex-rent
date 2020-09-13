@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
+// ignore: must_be_immutable
 class FormFieldStyled extends StatefulWidget {
   final Widget child;
   final hintText;
@@ -9,9 +10,9 @@ class FormFieldStyled extends StatefulWidget {
   final helperText;
   final icon;
   final controller;
-  final autocorrector;
+  final autocorrect;
   final TextInputType type;
-    final length;
+  final length;
 
   FormFieldStyled(
       {Key key,
@@ -24,8 +25,7 @@ class FormFieldStyled extends StatefulWidget {
       this.type,
       this.length,
       this.controller,
-      this.autocorrector
-      })
+      this.autocorrect})
       : super(key: key);
 
   _FormFieldStyledState createState() => _FormFieldStyledState();
@@ -35,17 +35,16 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      autocorrect: widget.autocorrector,
+      autocorrect: widget.autocorrect,
       keyboardType: widget.type,
       controller: widget.controller,
       style: TextStyle(color: Colors.white),
       maxLength: widget.length,
       decoration: InputDecoration(
-         counter: Offstage(),
+        counter: Offstage(),
         icon: widget.icon ?? null,
         suffixIcon: widget.type == TextInputType.visiblePassword
             ? IconButton(
-             
                 icon: Icon(
                     !widget.obscureText
                         ? Icons.visibility
@@ -62,15 +61,15 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
         helperMaxLines: 3,
         helperText: widget.helperText,
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.white),
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         errorBorder: OutlineInputBorder(
           borderSide: BorderSide(color: Colors.red),
-          borderRadius: BorderRadius.circular(25.0),
+          borderRadius: BorderRadius.circular(10.0),
         ),
         hintText: widget.hintText ?? '',
         labelStyle: TextStyle(color: Colors.white),

@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/login/login.dart';
 import 'package:rent/logic/services/services.dart';
+import 'package:rent/widgets/formfieldstyled.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -49,13 +50,26 @@ class _AuthForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = RepositoryProvider.of<AuthenticationService>(context);
 
-    return Container(
-      alignment: Alignment.center,
-      child: BlocProvider<LoginBloc>(
-        create: (context) => LoginBloc(
-            BlocProvider.of<AuthenticationBloc>(context), authService),
-        child: _SignInForm(),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: [
+        Text(
+          'Logo von FlexRent',
+          style: TextStyle(
+              color: Colors.white,
+              fontSize: 26,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2),
+        ),
+        Container(
+          alignment: Alignment.center,
+          child: BlocProvider<LoginBloc>(
+            create: (context) => LoginBloc(
+                BlocProvider.of<AuthenticationBloc>(context), authService),
+            child: _SignInForm(),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -104,35 +118,31 @@ class __SignInFormState extends State<_SignInForm> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Email address',
-                      filled: true,
-                      // isDense: true,
-                    ),
+                  FormFieldStyled(
                     controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
                     autocorrect: false,
-                    validator: (value) {
-                      if (value == '') {
-                        return 'Email is required.';
+                    hintText: "Enter your Emailaddress",
+                    type: TextInputType.emailAddress,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'A Email is required';
+                      } else if (!RegExp(
+                              r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
+                          .hasMatch(value)) {
+                        return 'Please use a valid email';
                       }
-                      return null;
                     },
                   ),
                   SizedBox(
                     height: 12,
                   ),
-                  TextFormField(
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      filled: true,
-                      isDense: true,
-                    ),
-                    obscureText: true,
+                  FormFieldStyled(
                     controller: _passwordController,
-                    validator: (value) {
-                      if (value == '') {
+                    autocorrect: false,
+                    hintText: "Enter your Password",
+                    obscureText: true,
+                    validator: (String value) {
+                      if (value.isEmpty) {
                         return 'Password is required.';
                       }
                       return null;
