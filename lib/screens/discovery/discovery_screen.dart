@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
+import 'package:rent/logic/models/models.dart';
 import 'package:rent/models/offer_model.dart';
 import 'package:rent/widgets/discovery_carousel.dart';
 import 'package:rent/widgets/search_bar.dart';
@@ -55,26 +56,20 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final AuthenticationBloc _authenticationBloc =
-        BlocProvider.of<AuthenticationBloc>(context);
-
-    inspect(_authenticationBloc);
-
-    final state = _authenticationBloc.state as AuthenticationAuthenticated;
-    inspect(state.user);
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+        as AuthenticationAuthenticated;
+    final User user = state.user;
+    inspect(user);
 
     return Scaffold(
       body: SafeArea(
         child: ListView(
           children: <Widget>[
             SearchBar(),
-            SizedBox(
-              height: 20.0,
-            ),
             Padding(
               padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 120.0),
               child: Text(
-                'rent or rent?',
+                'Hello ${user.firstName} ${user.lastName}',
                 style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
               ),
             ),
@@ -95,17 +90,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
             SizedBox(
               height: 20.0,
             ),
-            // DiscoveryCarousel(
-            //   widget.productSuggestionList,
-            //   'Suggestions for you',
-            // ),
-            // SizedBox(
-            //   height: 20.0,
-            // ),
-            // DiscoveryCarousel(
-            //   widget.productSuggestionList,
-            //   'New shit',
-            // ),
           ],
         ),
       ),
