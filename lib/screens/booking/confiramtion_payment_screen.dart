@@ -216,7 +216,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                     ),
                   ),
                   DetailPriceOverview(
-                    offer: widget.offerRequest.offer,
+                    price: widget.offerRequest.offer.price,
                     startDate: widget.offerRequest.startDate,
                     endDate: widget.offerRequest.endDate,
                   ),
