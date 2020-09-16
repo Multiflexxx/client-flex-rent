@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/product_model.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/models/offer_model.dart';
 import 'package:rent/screens/product/product_screen.dart';
 
 class DiscoveryCarousel extends StatefulWidget {
-  final List<Product> productList;
+  final List<Offer> offerList;
   final String carouselTitle;
 
-  DiscoveryCarousel(this.productList, this.carouselTitle);
+  DiscoveryCarousel(this.offerList, this.carouselTitle);
 
   @override
   _DiscoveryCarouselState createState() => _DiscoveryCarouselState();
@@ -47,15 +48,14 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
           height: 300.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
-            itemCount: widget.productList.length,
+            itemCount: widget.offerList.length,
             itemBuilder: (BuildContext context, int index) {
-              Product product = widget.productList[index];
+              Offer offer = widget.offerList[index];
               return GestureDetector(
-                onTap: () => Navigator.push(
+                onTap: () => pushNewScreen(
                   context,
-                  MaterialPageRoute(
-                    builder: (context) => ProductScreen(product: product),
-                  ),
+                  screen: OfferScreen(offer: offer),
+                  withNavBar: false,
                 ),
                 child: Container(
                   margin: EdgeInsets.all(10.0),
@@ -69,7 +69,9 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           height: 120.0,
                           width: 200.0,
                           decoration: BoxDecoration(
-                            color: Colors.purple,
+                            border:
+                                Border.all(width: 1.0, color: Colors.purple),
+                            color: Color(0xFF202020),
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
@@ -79,7 +81,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  '${product.title}',
+                                  '${offer.title}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 21.0,
@@ -92,17 +94,17 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                 Row(
                                   children: [
                                     Icon(
-                                      product.category.icon,
+                                      offer.category.icon,
                                       size: 16.0,
-                                      color: Colors.white70,
+                                      color: Colors.purple,
                                     ),
                                     SizedBox(
                                       width: 5.0,
                                     ),
                                     Text(
-                                      product.category.name,
+                                      offer.category.name,
                                       style: TextStyle(
-                                        color: Colors.white70,
+                                        color: Colors.purple,
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w500,
                                         letterSpacing: 1.2,
@@ -128,13 +130,13 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           ],
                         ),
                         child: Hero(
-                          tag: product.productId,
+                          tag: offer.offerId,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: Image(
                               height: 180.0,
                               width: 180.0,
-                              image: AssetImage(product.imageUrl),
+                              image: AssetImage(offer.imageUrl),
                               fit: BoxFit.cover,
                             ),
                           ),
