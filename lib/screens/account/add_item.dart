@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
@@ -20,11 +22,12 @@ class _AddItemState extends State<AddItem> {
         onPressed: () async{
           barcodeResult = await FlutterBarcodeScanner.scanBarcode('#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
           String url = 'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
+          String differentUrl = 'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
           apiResult = await http.get(url);
-          product = decodeApiResponse(apiResult);
           setState((){
             barcodeResult= barcodeResult;
             print(barcodeResult);
+            product = apiResult.body;
           });
         },
         child: Text('Scan'),
@@ -65,8 +68,12 @@ class _AddItemState extends State<AddItem> {
     print(error);
     switch (error) {
       case '0':{
-        result.split('---');
-        decoded = result[1];
+        decoded = result;
+        //result.split('---');
+        //decoded = result[1];
+        LineSplitter ls = new LineSplitter();
+        List<String> lines = ls.convert(result);
+
       } break;
       case '1':{ decoded = 'Artikel nicht gefunden'; } break;
       case '2':{ decoded = 'Fehler bei der Übertragung'; } break;
