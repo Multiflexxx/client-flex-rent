@@ -153,7 +153,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                     barrierColor: Colors.black45,
                                     builder: (context, scrollController) =>
                                         PriceOverview(
-                                      offer: widget.offer,
+                                      price: widget.offer.price,
                                       scrollController: scrollController,
                                       startDate: _startDate,
                                       endDate: _endDate,

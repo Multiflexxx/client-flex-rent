@@ -3,13 +3,13 @@ import 'package:intl/intl.dart';
 import 'package:rent/models/offer_model.dart';
 
 class DetailPriceOverview extends StatelessWidget {
-  final Offer offer;
+  final double price;
   final DateTime startDate;
   final DateTime endDate;
 
   final currenyFormat = new NumberFormat("#,##0.00", "de_DE");
 
-  DetailPriceOverview({Key key, this.offer, this.startDate, this.endDate})
+  DetailPriceOverview({Key key, this.price, this.startDate, this.endDate})
       : super(key: key);
 
   int _getRentDuration() {
@@ -29,7 +29,7 @@ class DetailPriceOverview extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                '${currenyFormat.format(offer.price)} € x ${_getRentDuration()} Tage',
+                '${currenyFormat.format(price)} € x ${_getRentDuration()} Tage',
                 style: TextStyle(
                   fontSize: 18.0,
                   color: Colors.white,
@@ -38,7 +38,7 @@ class DetailPriceOverview extends StatelessWidget {
                 ),
               ),
               Text(
-                '${currenyFormat.format(offer.price * _getRentDuration())} €',
+                '${currenyFormat.format(price * _getRentDuration())} €',
                 style: TextStyle(
                   fontSize: 18.0,
                   color: Colors.white,
@@ -64,7 +64,7 @@ class DetailPriceOverview extends StatelessWidget {
                 ),
               ),
               Text(
-                '${currenyFormat.format(offer.price * 0.2)} €',
+                '${currenyFormat.format(price * 0.2)} €',
                 style: TextStyle(
                   fontSize: 18.0,
                   color: Colors.white,
@@ -97,7 +97,7 @@ class DetailPriceOverview extends StatelessWidget {
                 ),
               ),
               Text(
-                '${currenyFormat.format((offer.price * _getRentDuration()) + (offer.price * 0.2))} €',
+                '${currenyFormat.format((price * _getRentDuration()) + (price * 0.2))} €',
                 style: TextStyle(
                   fontSize: 18.0,
                   color: Colors.white,

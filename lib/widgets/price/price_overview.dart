@@ -5,7 +5,7 @@ import 'package:rent/widgets/price/detail_price_overview.dart';
 import 'package:rent/widgets/slide_bar.dart';
 
 class PriceOverview extends StatelessWidget {
-  final Offer offer;
+  final double price;
   final ScrollController scrollController;
   final bool reverse;
   final DateTime startDate;
@@ -13,7 +13,7 @@ class PriceOverview extends StatelessWidget {
 
   PriceOverview({
     Key key,
-    this.offer,
+    this.price,
     this.scrollController,
     this.reverse = false,
     this.startDate,
@@ -34,7 +34,7 @@ class PriceOverview extends StatelessWidget {
               height: 10.0,
             ),
             DetailPriceOverview(
-              offer: offer,
+              price: price,
               startDate: startDate,
               endDate: endDate,
             ),

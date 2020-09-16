@@ -1,0 +1,58 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:rent/screens/account/add_item.dart';
+
+class MyItems extends StatefulWidget {
+  @override
+  _MyItemsState createState() => _MyItemsState();
+}
+
+class _MyItemsState extends State<MyItems> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Meine Mietgegenstände'),
+        centerTitle: true,
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Card(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: FlatButton(
+                  onPressed: (){
+                    Navigator.push(context, new CupertinoPageRoute(
+                        builder: (BuildContext context) {
+                          return AddItem();
+                        }));
+                  },
+                  child: Text(
+                    '+',
+                    style: TextStyle(color: Colors.white, fontSize: 40.0),
+                  ),
+                ),
+              ),
+              shadowColor: Colors.purple,
+              color: Colors.black,
+            ),
+            Card(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Test',
+                  style: TextStyle(color: Colors.white, fontSize: 40.0),
+                ),
+              ),
+              shadowColor: Colors.purple,
+              color: Colors.grey,
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}
