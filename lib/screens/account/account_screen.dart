@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/models/profile_options_model.dart';
 import 'package:rent/screens/404.dart';
+import 'package:rent/screens/account/my_items.dart';
 import 'package:rent/screens/account/personal_info.dart';
 import 'package:rent/screens/account/settings.dart';
 
@@ -20,7 +21,7 @@ class _AccountScreenState extends State<AccountScreen> {
   bool verified = true;
   final routes = {
     'personalInfo': PersonalInfo(),
-    'myitems': PageNotFound(),
+    'myitems': MyItems(),
     'paymentinfos': PageNotFound(),
     'karmainfo': PageNotFound(),
     'settings': AppSettings(),
