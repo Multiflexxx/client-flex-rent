@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:rent/models/offer_model.dart';
 
 class DetailPriceOverview extends StatelessWidget {
   final double price;

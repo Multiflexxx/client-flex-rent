@@ -161,87 +161,86 @@ class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Register")),
-        body: Align(
-          alignment: Alignment.center,
-          child: Form(
-            // alignment: Alignment.center,
-
-            child: ListView(
-              padding: const EdgeInsets.all(8),
-              children: <Widget>[
-                Text(
-                  'Logo von FlexRent',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(flex: 3, child: _buildFirstNameField()),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(flex: 2, child: _buildNameField()),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildEMailField(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(flex: 3, child: _buildStreetField()),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(flex: 1, child: _buildHouseNrField()),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(flex: 2, child: _buildPlzField()),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(flex: 3, child: _buildCityField()),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildPasswordField(),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildPasswordAgainField(),
-                SizedBox(
-                  height: 10,
-                ),
-                FlatButton(
-                  child: Text('Login'),
-                  color: Colors.purple,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(18),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
+        body: SafeArea(
+      child: Align(
+        alignment: Alignment.center,
+        child: Form(
+          child: ListView(
+            padding: const EdgeInsets.all(8),
+            children: <Widget>[
+              Text(
+                'Logo von FlexRent',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 26,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.2),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Row(
+                children: [
+                  Expanded(flex: 3, child: _buildFirstNameField()),
+                  SizedBox(
+                    width: 10,
                   ),
-                  onPressed: () {},
-                )
-              ],
-            ),
+                  Expanded(flex: 2, child: _buildNameField()),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _buildEMailField(),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(flex: 3, child: _buildStreetField()),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(flex: 1, child: _buildHouseNrField()),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              Row(
+                children: [
+                  Expanded(flex: 2, child: _buildPlzField()),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Expanded(flex: 3, child: _buildCityField()),
+                ],
+              ),
+              SizedBox(
+                height: 10,
+              ),
+              _buildPasswordField(),
+              SizedBox(
+                height: 10,
+              ),
+              _buildPasswordAgainField(),
+              SizedBox(
+                height: 10,
+              ),
+              FlatButton(
+                child: Text('Login'),
+                color: Colors.purple,
+                textColor: Colors.white,
+                padding: EdgeInsets.all(18),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                onPressed: () {},
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    ));
   }
 }

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/app.dart';
 import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
-import 'package:rent/screens/authentication/login.dart';
+import 'package:rent/screens/authentication/login/login.dart';
 
 import 'logic/services/services.dart';
 
