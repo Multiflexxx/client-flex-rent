@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/login/register.dart';
+import 'package:rent/screens/authentication/registration/register_form.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class PhoneScreen extends StatefulWidget {
@@ -12,6 +12,7 @@ class PhoneScreen extends StatefulWidget {
 class _PhoneScreenState extends State<PhoneScreen> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
+  bool _autoValidate = false;
   bool _agbCheckBox;
 
   @override
@@ -34,6 +35,8 @@ class _PhoneScreenState extends State<PhoneScreen> {
             margin: EdgeInsets.all(20),
             height: 380,
             child: Form(
+              key: _key,
+              autovalidate: _autoValidate,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: <Widget>[
@@ -94,7 +97,9 @@ class _PhoneScreenState extends State<PhoneScreen> {
                         context,
                         new CupertinoPageRoute(
                           builder: (BuildContext context) {
-                            return RegisterScreen();
+                            return RegisterForm(
+                              phoneNumber: _phoneController.text,
+                            );
                           },
                         ),
                       );
@@ -111,14 +116,14 @@ class _PhoneScreenState extends State<PhoneScreen> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                            text: 'Einloggen',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pop(context);
-                              }),
+                          text: 'Einloggen',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pop(context);
+                            },
+                        ),
                       ],
                     ),
                   ),
