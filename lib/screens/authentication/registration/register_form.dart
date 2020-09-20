@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:intl/intl.dart';
+import 'package:rent/logic/blocs/register/bloc/register_bloc.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/register_service.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
@@ -195,111 +198,154 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: Align(
-          alignment: Alignment.center,
-          child: Form(
-            key: _key,
-            autovalidate: _autoValidate,
-            child: ListView(
-              padding: const EdgeInsets.all(8),
-              children: <Widget>[
-                Text(
-                  'Logo von FlexRent',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 26,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2),
-                ),
-                SizedBox(
-                  height: 20,
-                ),
-                Row(
-                  children: [
-                    Expanded(flex: 3, child: _buildFirstNameField()),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(flex: 2, child: _buildNameField()),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildEMailField(),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(flex: 3, child: _buildStreetField()),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(flex: 1, child: _buildHouseNrField()),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(flex: 2, child: _buildPlzField()),
-                    SizedBox(
-                      width: 10,
-                    ),
-                    Expanded(flex: 3, child: _buildCityField()),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildPasswordField(),
-                SizedBox(
-                  height: 10,
-                ),
-                _buildPasswordAgainField(),
-                SizedBox(
-                  height: 10,
-                ),
-                FlatButton(
-                  child: Text('Register'),
-                  color: Colors.purple,
-                  textColor: Colors.white,
-                  padding: EdgeInsets.all(18),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  onPressed: () {
-                    User user = User(
-                      userId: '',
-                      firstName: _firstNameController.text,
-                      lastName: _lastNameController.text,
-                      email: _emailController.text,
-                      phoneNumber: widget.phoneNumber,
-                      passwordHash: _passwordController.text,
-                      verified: 0,
-                      postCode: _zipController.text,
-                      city: _cityController.text,
-                      street: _streetController.text,
-                      houseNumber: _numberController.text,
-                      lesseeRating: 0,
-                      numberOfLesseeRatings: 0,
-                      lessorRating: 0,
-                      numberOfLessorRatings: 0,
-                      dateOfBirth: DateTime.now(),
-                    );
+    _onRegisterButtonPressed() {
+      final f = new DateFormat('yyyy-MM-dd');
+      User logUser = User(
+        userId: '',
+        firstName: 'Test',
+        lastName: 'Test',
+        email: 'test7@test.com',
+        phoneNumber: '01234567896',
+        passwordHash: 'test',
+        verified: true,
+        postCode: '68165',
+        city: 'Mannheim',
+        street: 'Wasserturm',
+        houseNumber: '4',
+        lesseeRating: 0,
+        numberOfLesseeRatings: 0,
+        lessorRating: 0,
+        numberOfLessorRatings: 0,
+        dateOfBirth: f.format(DateTime.now().subtract(Duration(days: 100))),
+      );
+      // if (_key.currentState.validate())
+      BlocProvider.of<RegisterBloc>(context)
+          .add(RegisterButtonPressed(user: logUser));
+    }
 
-                    ApiRegisterService().registerUser(user);
-                  },
-                )
-              ],
+    return BlocListener<RegisterBloc, RegisterState>(
+      listener: (context, state) {
+        if (state is RegisterFailure) {
+          _showError(state.error);
+        }
+      },
+      child: BlocBuilder<RegisterBloc, RegisterState>(
+        builder: (context, state) {
+          if (state is RegisterLoading) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
+          return Align(
+            alignment: Alignment.center,
+            child: Form(
+              key: _key,
+              autovalidate: _autoValidate,
+              child: ListView(
+                padding: const EdgeInsets.all(8),
+                children: <Widget>[
+                  Text(
+                    'Logo von FlexRent',
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 26,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2),
+                  ),
+                  SizedBox(
+                    height: 20,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(flex: 3, child: _buildFirstNameField()),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(flex: 2, child: _buildNameField()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildEMailField(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(flex: 3, child: _buildStreetField()),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(flex: 1, child: _buildHouseNrField()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    children: [
+                      Expanded(flex: 2, child: _buildPlzField()),
+                      SizedBox(
+                        width: 10,
+                      ),
+                      Expanded(flex: 3, child: _buildCityField()),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildPasswordField(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  _buildPasswordAgainField(),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  FlatButton(
+                    child: Text('Register'),
+                    color: Colors.purple,
+                    textColor: Colors.white,
+                    padding: EdgeInsets.all(18),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25),
+                    ),
+                    onPressed: () {
+                      // User user = User(
+                      //   userId: '',
+                      //   firstName: _firstNameController.text,
+                      //   lastName: _lastNameController.text,
+                      //   email: _emailController.text,
+                      //   phoneNumber: widget.phoneNumber,
+                      //   passwordHash: _passwordController.text,
+                      //   verified: false,
+                      //   postCode: _zipController.text,
+                      //   city: _cityController.text,
+                      //   street: _streetController.text,
+                      //   houseNumber: _numberController.text,
+                      //   lesseeRating: 0,
+                      //   numberOfLesseeRatings: 0,
+                      //   lessorRating: 0,
+                      //   numberOfLessorRatings: 0,
+                      //   dateOfBirth: DateTime.now(),
+                      // );
+                      _onRegisterButtonPressed();
+                    },
+                  )
+                ],
+              ),
             ),
-          ),
-        ),
+          );
+        },
       ),
     );
+  }
+
+  void _showError(String error) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(error),
+      backgroundColor: Theme.of(context).errorColor,
+    ));
   }
 }

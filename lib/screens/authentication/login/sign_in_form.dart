@@ -21,7 +21,7 @@ class _SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     _onLoginButtonPressed() {
       if (_key.currentState.validate()) {
-        BlocProvider.of<LoginBloc>(context).add(LoginInWithEmailButtonPressed(
+        BlocProvider.of<LoginBloc>(context).add(LoginWithEmailButtonPressed(
             email: _emailController.text, password: _passwordController.text));
       } else {
         setState(() {

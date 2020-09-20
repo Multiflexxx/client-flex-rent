@@ -10,7 +10,7 @@ class User {
   final String email;
   final String phoneNumber;
   final String passwordHash;
-  final int verified;
+  final bool verified;
   final int placeId;
   final String postCode;
   final String city;
