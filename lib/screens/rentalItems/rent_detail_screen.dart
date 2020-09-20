@@ -5,6 +5,8 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:rent/widgets/price/price_overview.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:rent/widgets/product_detail/description_box.dart';
+
 
 
 
@@ -16,8 +18,8 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 import 'package:flutter/cupertino.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
-
+import 'package:rent/widgets/product_detail/user_box.dart';
+import 'package:rent/widgets/product_detail/rating_box.dart';
 
 
 
@@ -239,66 +241,12 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                   ),
                 ),
                 // Description
-                Container(
-                  margin:
-                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF202020),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: AutoSizeText(
-                      widget.rentProduct.description,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        height: 1.35,
-                        fontWeight: FontWeight.w300,
-                      ),
-                      minFontSize: 16.0,
-                      maxLines: 6,
-                      overflowReplacement: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            widget.rentProduct.description,
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 16.0,
-                              height: 1.25,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            maxLines: 6,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          // GestureDetector(
-                          //   onTap: () => showCupertinoModalBottomSheet(
-                          //     expand: false,
-                          //     context: context,
-                          //     barrierColor: Colors.black45,
-                          //     builder: (context, scrollController) =>
-                          //         ProductDescription(
-                          //       offer: widget.rentProduct,
-                          //       scrollController: scrollController,
-                          //     ),
-                          //   ),
-                          //   child: Text(
-                          //     "Show more",
-                          //     style: TextStyle(
-                          //       color: Colors.purple,
-                          //       fontSize: 16.0,
-                          //     ),
-                          //   ),
-                          // )
-                        ],
-                      ),
-                    ),
-                  ),
-                ),
+              DescriptionBox(
+                description: widget.rentProduct.description,
+                title: widget.rentProduct.title,
+                
+                
+              ),
                 // Availabilty
                 // GestureDetector(
                 //   onTap: () async {
@@ -412,238 +360,14 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                 // ),
 
                 // User
-                Container(
-                  margin:
-                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF202020),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  'Vermieter/in: Tristan',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18.0,
-                                    height: 1.35,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                                Text(
-                                  'Flexer seit August 2020',
-                                  style: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20.0),
-                              child: Image(
-                                width: 75,
-                                height: 75,
-                                image: AssetImage('assets/images/jett.jpg'),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.star,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(
-                              '69 Bewertungen',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                height: 1.35,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        // Verification
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.verified_user,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                            Text(
-                              'Identität verifiziert',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 18.0,
-                                height: 1.35,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              print('kontaktieren');
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.purple,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Center(
-                                child: Text(
-                                  'Vermieter kontaktieren',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                UserBox(),
 
 
                 //Bewertung 
-                Container(
-                   margin:
-                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
-                  decoration: BoxDecoration(
-                    color: Color(0xFF202020),
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-
-                child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          'Deine Bewertung:',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18.0,
-                            height: 1.34,
-                            fontWeight: FontWeight.w300
-                          ),
-                        ),
-                          SizedBox(
-                          height: 10.0,
-                        ),
-                        // StarRating(widget.rentProduct.stars),
-                        Row(
-                          children: <Widget>[
-                            Icon(
-                              Icons.star,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                              Icon(
-                              Icons.star,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                              Icon(
-                              Icons.star,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                              Icon(
-                              Icons.star,
-                              color: Colors.purple,
-                            ),
-                            SizedBox(
-                              width: 10.0,
-                            ),
-                              Icon(
-                              Icons.star,
-                              color: Colors.white,
-                            ),
-                          
-                          ],
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        // Verification
-                        Text( 
-                          widget.rentProduct.rating == '' ?  'Bewerte das Produkt' : widget.rentProduct.rating,
-                          style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16.0,
-                        height: 1.35,
-                        fontWeight: FontWeight.w300,
-                      ),
-                        ),
-                        SizedBox(
-                          height: 20.0,
-                        ),
-                        Center(
-                          child: GestureDetector(
-                            onTap: () {
-                              print('Ändern');
-                            },
-                            child: Container(
-                              width: MediaQuery.of(context).size.width,
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.purple,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Center(
-                                child: Text(
-                                  'Bewertung Anpassen',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 18.0,
-                                      fontWeight: FontWeight.w300),
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-
-
-                )
+                RatingBox(
+                  recession: widget.rentProduct.rating,
+                ),
+               
               ],
             ),
           ),
