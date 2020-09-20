@@ -37,6 +37,7 @@ class ApiRegisterService extends RegisterService {
       return user;
     } else {
       inspect(response);
+      return null;
     }
   }
 }
