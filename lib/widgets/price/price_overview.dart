@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/models/offer_model.dart';
 import 'package:rent/widgets/price/detail_price_overview.dart';
 import 'package:rent/widgets/slide_bar.dart';
 

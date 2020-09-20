@@ -20,7 +20,7 @@ class User {
   final int numberOfLesseeRatings;
   final double lessorRating;
   final int numberOfLessorRatings;
-  final DateTime dateOfBirth;
+  final dynamic dateOfBirth;
 
   User(
       {@required this.userId,

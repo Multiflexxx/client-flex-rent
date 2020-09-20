@@ -5,20 +5,19 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:rent/widgets/price/price_overview.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:rent/widgets/product_detail/star_rating.dart';
+
 
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
 
 
-import 'package:flushbar/flushbar.dart';
+
 import 'package:flutter/cupertino.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
-import 'package:rent/models/offer_request_model.dart';
-import 'package:rent/screens/booking/confiramtion_payment_screen.dart';
+
 
 
 
@@ -27,7 +26,7 @@ class RentDetailScreen extends StatefulWidget {
   final RentProduct rentProduct;
   RentDetailScreen({this.rentProduct});
 
- @override
+  @override
   _RentDetailScreen createState() => _RentDetailScreen();
 }
 
@@ -61,8 +60,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
- body: CustomScrollView(
+      body: CustomScrollView(
         physics: BouncingScrollPhysics(),
         slivers: <Widget>[
           SliverAppBar(
@@ -651,7 +649,6 @@ class _RentDetailScreen extends State<RentDetailScreen> {
           ),
         ],
       ),
-
     );
   }
 }
