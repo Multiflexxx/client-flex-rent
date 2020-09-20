@@ -27,13 +27,13 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
   @override
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
-    if (event is LoginInWithEmailButtonPressed) {
+    if (event is LoginWithEmailButtonPressed) {
       yield* _mapLoginWithEmailToState(event);
     }
   }
 
   Stream<LoginState> _mapLoginWithEmailToState(
-      LoginInWithEmailButtonPressed event) async* {
+      LoginWithEmailButtonPressed event) async* {
     yield LoginLoading();
     try {
       final user = await _authenticationService.signInWithEmailAndPassword(

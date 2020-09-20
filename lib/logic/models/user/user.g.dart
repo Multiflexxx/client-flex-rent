@@ -14,7 +14,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     phoneNumber: json['phone_number'] as String,
     passwordHash: json['password_hash'] as String,
-    verified: json['verified'] as int,
+    verified: json['verified'] as bool,
     placeId: json['place_id'] as int,
     postCode: json['post_code'] as String,
     city: json['city'] as String,
