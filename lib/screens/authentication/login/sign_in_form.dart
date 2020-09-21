@@ -4,8 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/login/login.dart';
-import 'package:rent/screens/authentication/registration/phone_form.dart';
-import 'package:rent/screens/authentication/registration/register.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class SignInForm extends StatefulWidget {

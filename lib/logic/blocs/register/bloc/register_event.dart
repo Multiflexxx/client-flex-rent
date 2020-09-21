@@ -7,10 +7,14 @@ abstract class RegisterEvent extends Equatable {
 
 class RegisterPhoneForm extends RegisterEvent {}
 
-class RegisterPersonalForm extends RegisterEvent {}
+class RegisterNextPressed extends RegisterEvent {
+  final String phoneNumber;
 
-class RegisterButtonPressed extends RegisterEvent {
+  RegisterNextPressed({@required this.phoneNumber});
+}
+
+class RegisterSubmitPressed extends RegisterEvent {
   final User user;
 
-  RegisterButtonPressed({@required this.user});
+  RegisterSubmitPressed({@required this.user});
 }

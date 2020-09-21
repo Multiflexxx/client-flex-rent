@@ -60,8 +60,12 @@ class _AuthForm extends StatelessWidget {
                 BlocProvider.of<AuthenticationBloc>(context), registerService),
             child: BlocBuilder<RegisterBloc, RegisterState>(
               builder: (context, state) {
-                if (state is RegisterPersonal || state is RegisterFailure) {
-                  return PersonalForm();
+                if (state is RegisterPhoneSuccess) {
+                  return PersonalForm(phoneNumber: state.phoneNumber);
+                } else if (state is RegisterPersonalLoading) {
+                  return PersonalForm(phoneNumber: state.phoneNumber);
+                } else if (state is RegisterPersonalFailure) {
+                  return PersonalForm(phoneNumber: state.phoneNumber);
                 }
                 return PhoneForm();
               },

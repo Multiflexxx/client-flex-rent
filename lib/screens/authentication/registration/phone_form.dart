@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/register/register.dart';
-import 'package:rent/screens/authentication/registration/personal_form.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class PhoneForm extends StatefulWidget {
@@ -26,6 +25,15 @@ class _PhoneFormState extends State<PhoneForm> {
 
   @override
   Widget build(BuildContext context) {
+    _onNextPressed() {
+      if (_key.currentState.validate()) {
+        BlocProvider.of<RegisterBloc>(context)
+            .add(RegisterNextPressed(phoneNumber: _phoneController.text));
+      } else {
+        _autoValidate = true;
+      }
+    }
+
     return BlocBuilder<RegisterBloc, RegisterState>(
       builder: (context, state) {
         return Form(
@@ -77,20 +85,8 @@ class _PhoneFormState extends State<PhoneForm> {
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0)),
                 child: Text('Weiter'),
-                onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   new CupertinoPageRoute(
-                  //     builder: (BuildContext context) {
-                  //       return PersonalForm(
-                  //         phoneNumber: _phoneController.text,
-                  //       );
-                  //     },
-                  //   ),
-                  // );
-                  BlocProvider.of<RegisterBloc>(context)
-                      .add(RegisterPersonalForm());
-                },
+                onPressed:
+                    state is RegisterPhoneLoading ? () {} : _onNextPressed,
               ),
               SizedBox(
                 height: 16,

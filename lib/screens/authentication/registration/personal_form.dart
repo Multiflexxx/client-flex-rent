@@ -178,7 +178,7 @@ class _PersonalFormState extends State<PersonalForm> {
 
   @override
   Widget build(BuildContext context) {
-    _onRegisterButtonPressed() {
+    _onRegisterSubmitPressed() {
       final f = new DateFormat('yyyy-MM-dd');
 
       User user = User(
@@ -186,8 +186,8 @@ class _PersonalFormState extends State<PersonalForm> {
         firstName: _firstNameController.text,
         lastName: _lastNameController.text,
         email: _emailController.text,
-        // phoneNumber: widget.phoneNumber,
-        phoneNumber: '1234578',
+        phoneNumber: widget.phoneNumber,
+        // phoneNumber: '1234578699',
         passwordHash: _passwordController.text,
         verified: false,
         postCode: _zipController.text,
@@ -203,7 +203,7 @@ class _PersonalFormState extends State<PersonalForm> {
 
       if (_key.currentState.validate()) {
         BlocProvider.of<RegisterBloc>(context)
-            .add(RegisterButtonPressed(user: user));
+            .add(RegisterSubmitPressed(user: user));
       } else {
         _autoValidate = true;
       }
@@ -211,7 +211,7 @@ class _PersonalFormState extends State<PersonalForm> {
 
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
-        if (state is RegisterFailure) {
+        if (state is RegisterPersonalFailure) {
           _showError(state.error);
         }
       },
@@ -289,7 +289,7 @@ class _PersonalFormState extends State<PersonalForm> {
                     child: Text('Register'),
                     onPressed: state is RegisterLoading
                         ? () {}
-                        : _onRegisterButtonPressed,
+                        : _onRegisterSubmitPressed,
                   ),
                   SizedBox(
                     height: 16,
