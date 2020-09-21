@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/login/login.dart';
 import 'package:rent/screens/authentication/registration/phone_form.dart';
+import 'package:rent/screens/authentication/registration/register.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class SignInForm extends StatefulWidget {
@@ -104,21 +106,15 @@ class _SignInFormState extends State<SignInForm> {
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                            text: 'Registrieren',
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white),
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  new CupertinoPageRoute(
-                                    builder: (BuildContext context) {
-                                      return PhoneScreen();
-                                    },
-                                  ),
-                                );
-                              }),
+                          text: 'Registrieren',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(UserSignUp());
+                            },
+                        ),
                       ],
                     ),
                   ),

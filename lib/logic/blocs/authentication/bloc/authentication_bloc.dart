@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
@@ -32,6 +30,14 @@ class AuthenticationBloc
       yield* _mapUserLoggedInToState(event);
     }
 
+    if (event is UserSignUp) {
+      yield* _mapUserSignUpToState(event);
+    }
+
+    if (event is UserSignIn) {
+      yield* _mapUserSignInToState(event);
+    }
+
     if (event is UserLoggedOut) {
       yield* _mapUserLoggedOutToState(event);
     }
@@ -56,6 +62,14 @@ class AuthenticationBloc
   Stream<AuthenticationState> _mapUserLoggedInToState(
       UserLoggedIn event) async* {
     yield AuthenticationAuthenticated(user: event.user);
+  }
+
+  Stream<AuthenticationState> _mapUserSignUpToState(UserSignUp event) async* {
+    yield AuthenticationSignUp();
+  }
+
+  Stream<AuthenticationState> _mapUserSignInToState(UserSignIn event) async* {
+    yield AuthenticationSignIn();
   }
 
   Stream<AuthenticationState> _mapUserLoggedOutToState(

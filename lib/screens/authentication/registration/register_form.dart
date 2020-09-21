@@ -1,9 +1,10 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/register/bloc/register_bloc.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/register_service.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class RegisterForm extends StatefulWidget {
@@ -202,10 +203,10 @@ class _RegisterFormState extends State<RegisterForm> {
       final f = new DateFormat('yyyy-MM-dd');
       User logUser = User(
         userId: '',
-        firstName: 'Test',
-        lastName: 'Test',
-        email: 'test7@test.com',
-        phoneNumber: '01234567896',
+        firstName: 'Marcel',
+        lastName: 'Tizian',
+        email: 'tizian@test.com',
+        phoneNumber: '9876543220',
         passwordHash: 'test',
         verified: true,
         postCode: '68165',
@@ -236,22 +237,13 @@ class _RegisterFormState extends State<RegisterForm> {
               child: CircularProgressIndicator(),
             );
           }
-          return Align(
-            alignment: Alignment.center,
-            child: Form(
-              key: _key,
-              autovalidate: _autoValidate,
-              child: ListView(
-                padding: const EdgeInsets.all(8),
+          return Form(
+            key: _key,
+            autovalidate: _autoValidate,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text(
-                    'Logo von FlexRent',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2),
-                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -303,36 +295,59 @@ class _RegisterFormState extends State<RegisterForm> {
                   SizedBox(
                     height: 10,
                   ),
-                  FlatButton(
-                    child: Text('Register'),
-                    color: Colors.purple,
+                  RaisedButton(
+                    color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
-                    padding: EdgeInsets.all(18),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+                    padding: const EdgeInsets.all(16),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(8.0)),
+                    child: Text('Register'),
+                    onPressed: state is RegisterLoading
+                        ? () {}
+                        : _onRegisterButtonPressed,
+                  ),
+
+                  // User user = User(
+                  //   userId: '',
+                  //   firstName: _firstNameController.text,
+                  //   lastName: _lastNameController.text,
+                  //   email: _emailController.text,
+                  //   phoneNumber: widget.phoneNumber,
+                  //   passwordHash: _passwordController.text,
+                  //   verified: false,
+                  //   postCode: _zipController.text,
+                  //   city: _cityController.text,
+                  //   street: _streetController.text,
+                  //   houseNumber: _numberController.text,
+                  //   lesseeRating: 0,
+                  //   numberOfLesseeRatings: 0,
+                  //   lessorRating: 0,
+                  //   numberOfLessorRatings: 0,
+                  //   dateOfBirth: DateTime.now(),
+                  // );
+                  SizedBox(
+                    height: 16,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Du hast noch kein Konto? ',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Login',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(UserSignIn());
+                            },
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      // User user = User(
-                      //   userId: '',
-                      //   firstName: _firstNameController.text,
-                      //   lastName: _lastNameController.text,
-                      //   email: _emailController.text,
-                      //   phoneNumber: widget.phoneNumber,
-                      //   passwordHash: _passwordController.text,
-                      //   verified: false,
-                      //   postCode: _zipController.text,
-                      //   city: _cityController.text,
-                      //   street: _streetController.text,
-                      //   houseNumber: _numberController.text,
-                      //   lesseeRating: 0,
-                      //   numberOfLesseeRatings: 0,
-                      //   lessorRating: 0,
-                      //   numberOfLessorRatings: 0,
-                      //   dateOfBirth: DateTime.now(),
-                      // );
-                      _onRegisterButtonPressed();
-                    },
-                  )
+                  ),
                 ],
               ),
             ),

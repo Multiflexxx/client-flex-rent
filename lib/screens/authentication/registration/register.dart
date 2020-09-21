@@ -1,11 +1,12 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/blocs/login/login.dart';
-import 'package:rent/logic/services/services.dart';
-import 'package:rent/screens/authentication/login/sign_in_form.dart';
+import 'package:rent/logic/blocs/register/register.dart';
+import 'package:rent/logic/services/register_service.dart';
+import 'package:rent/screens/authentication/registration/register_form.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,27 +19,8 @@ class LoginScreen extends StatelessWidget {
           minimum: const EdgeInsets.all(16),
           child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
-              if (state is AuthenticationNotAuthenticated ||
-                  state is AuthenticationSignIn) {
+              if (state is AuthenticationSignUp) {
                 return _AuthForm();
-              }
-              if (state is AuthenticationFailure) {
-                return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(state.message),
-                    FlatButton(
-                      textColor: Theme.of(context).primaryColor,
-                      child: Text('Retry'),
-                      onPressed: () {
-                        BlocProvider.of<AuthenticationBloc>(context)
-                            .add(AppLoaded());
-                      },
-                    )
-                  ],
-                ));
               }
               return Center(
                 child: CircularProgressIndicator(
@@ -56,7 +38,7 @@ class LoginScreen extends StatelessWidget {
 class _AuthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authService = RepositoryProvider.of<AuthenticationService>(context);
+    final registerService = RepositoryProvider.of<RegisterService>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -71,10 +53,10 @@ class _AuthForm extends StatelessWidget {
         ),
         Container(
           alignment: Alignment.center,
-          child: BlocProvider<LoginBloc>(
-            create: (context) => LoginBloc(
-                BlocProvider.of<AuthenticationBloc>(context), authService),
-            child: SignInForm(),
+          child: BlocProvider<RegisterBloc>(
+            create: (context) => RegisterBloc(
+                BlocProvider.of<AuthenticationBloc>(context), registerService),
+            child: (RegisterForm()),
           ),
         ),
       ],

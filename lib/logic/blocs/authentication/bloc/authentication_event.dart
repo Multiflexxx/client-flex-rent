@@ -19,4 +19,8 @@ class UserLoggedIn extends AuthenticationEvent {
   List<Object> get props => [user];
 }
 
+class UserSignUp extends AuthenticationEvent {}
+
+class UserSignIn extends AuthenticationEvent {}
+
 class UserLoggedOut extends AuthenticationEvent {}

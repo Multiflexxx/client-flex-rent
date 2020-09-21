@@ -23,6 +23,10 @@ class AuthenticationAuthenticated extends AuthenticationState {
   List<Object> get props => [user];
 }
 
+class AuthenticationSignIn extends AuthenticationState {}
+
+class AuthenticationSignUp extends AuthenticationState {}
+
 class AuthenticationFailure extends AuthenticationState {
   final String message;
 
