@@ -18,7 +18,10 @@ class FutureProduct {
       this.description,
       this.price,
       this.offerId,
-      this.rent});
+      this.rent
+      //true Ausleihe vom ist gerade am laufen
+      //false Miete beginnt am ist noch ausstehend
+      });
 }
 
 List<FutureProduct> futureProductSuggestionList = [

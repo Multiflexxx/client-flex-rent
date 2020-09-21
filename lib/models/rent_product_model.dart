@@ -9,6 +9,7 @@ class RentProduct {
   double price;
   int offerId;
   String rating;
+  int stars;
 
 
   RentProduct(
@@ -19,7 +20,8 @@ class RentProduct {
       this.description,
       this.price,
       this.offerId,
-      this.rating
+      this.rating,
+      this.stars,
       });
 }
 
@@ -36,6 +38,7 @@ List<RentProduct> rentProductSuggestionList = [
   
      rating: 'Lieferung echt super!',
     offerId: 0,
+    stars: 3,
   ),
   RentProduct(
     imageUrl: 'assets/images/dyson.jpg',
@@ -47,6 +50,7 @@ List<RentProduct> rentProductSuggestionList = [
  
      rating: 'Das Produkt war schon ok',
     offerId: 1,
+    stars: 5,
   ),
   RentProduct(
     imageUrl: 'assets/images/pumpe.jpg',
