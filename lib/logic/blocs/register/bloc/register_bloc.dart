@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import 'package:rent/logic/blocs/authentication/authentication.dart';
+import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/register_service.dart';
 
@@ -27,9 +28,26 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
+    if (event is RegisterPhoneForm) {
+      yield* _mapPhoneFormToState(event);
+    }
+
+    if (event is RegisterPersonalForm) {
+      yield* _mapPersonalFormToState(event);
+    }
+
     if (event is RegisterButtonPressed) {
       yield* _mapRegisterToState(event);
     }
+  }
+
+  Stream<RegisterState> _mapPhoneFormToState(RegisterPhoneForm event) async* {
+    yield RegisterInitial();
+  }
+
+  Stream<RegisterState> _mapPersonalFormToState(
+      RegisterPersonalForm event) async* {
+    yield RegisterPersonal();
   }
 
   Stream<RegisterState> _mapRegisterToState(
@@ -44,6 +62,8 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } else {
         yield RegisterFailure(error: 'Das war ein Schuss in den ...');
       }
+    } on RegisterException catch (e) {
+      yield RegisterFailure(error: e.message);
     } catch (err) {
       yield RegisterFailure(error: err.message ?? 'An unknown error occured');
     }

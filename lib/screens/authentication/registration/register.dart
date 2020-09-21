@@ -4,7 +4,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/register/register.dart';
 import 'package:rent/logic/services/register_service.dart';
-import 'package:rent/screens/authentication/registration/register_form.dart';
+import 'package:rent/screens/authentication/registration/personal_form.dart';
+
+import 'phone_form.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -56,7 +58,14 @@ class _AuthForm extends StatelessWidget {
           child: BlocProvider<RegisterBloc>(
             create: (context) => RegisterBloc(
                 BlocProvider.of<AuthenticationBloc>(context), registerService),
-            child: (RegisterForm()),
+            child: BlocBuilder<RegisterBloc, RegisterState>(
+              builder: (context, state) {
+                if (state is RegisterPersonal || state is RegisterFailure) {
+                  return PersonalForm();
+                }
+                return PhoneForm();
+              },
+            ),
           ),
         ),
       ],

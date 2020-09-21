@@ -5,6 +5,10 @@ abstract class RegisterEvent extends Equatable {
   List<Object> get props => [];
 }
 
+class RegisterPhoneForm extends RegisterEvent {}
+
+class RegisterPersonalForm extends RegisterEvent {}
+
 class RegisterButtonPressed extends RegisterEvent {
   final User user;
 
