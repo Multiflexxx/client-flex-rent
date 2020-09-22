@@ -1,21 +1,22 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/register/bloc/register_bloc.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/register_service.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
-class RegisterForm extends StatefulWidget {
+class PersonalForm extends StatefulWidget {
   final String phoneNumber;
 
-  RegisterForm({this.phoneNumber});
+  PersonalForm({this.phoneNumber});
 
   @override
-  _RegisterFormState createState() => _RegisterFormState();
+  _PersonalFormState createState() => _PersonalFormState();
 }
 
-class _RegisterFormState extends State<RegisterForm> {
+class _PersonalFormState extends State<PersonalForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final _firstNameController = TextEditingController();
   final _lastNameController = TextEditingController();
@@ -36,10 +37,10 @@ class _RegisterFormState extends State<RegisterForm> {
         Icons.person,
         color: Colors.white,
       ),
-      hintText: "Enter your Firstname",
+      hintText: "Vorname",
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Is required';
+          return 'Vorname notwendig';
         }
       },
     );
@@ -49,13 +50,10 @@ class _RegisterFormState extends State<RegisterForm> {
     return FormFieldStyled(
       controller: _lastNameController,
       autocorrect: false,
-      hintText: "Enter your Name",
+      hintText: "Nachname",
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Your Password is required';
-        } else if (!RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
-            .hasMatch(value)) {
-          return 'Please use a valid name';
+          return 'Nachname notwendig';
         }
       },
     );
@@ -69,15 +67,11 @@ class _RegisterFormState extends State<RegisterForm> {
         Icons.email,
         color: Colors.white,
       ),
-      hintText: "Enter your Emailaddress",
+      hintText: "Email",
       type: TextInputType.emailAddress,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'A Email is required';
-        } else if (!RegExp(
-                r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
-            .hasMatch(value)) {
-          return 'Please use a valid email';
+          return 'Email notwendig';
         }
       },
     );
@@ -91,10 +85,10 @@ class _RegisterFormState extends State<RegisterForm> {
         Icons.location_city,
         color: Colors.white,
       ),
-      hintText: "Enter your Street",
+      hintText: "Straße",
       validator: (String value) {
         if (value.isEmpty) {
-          return 'A Street is required';
+          return 'Straße notwendig';
         } else if (!RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
             .hasMatch(value)) {}
       },
@@ -108,7 +102,7 @@ class _RegisterFormState extends State<RegisterForm> {
       hintText: "Nr.",
       validator: (String value) {
         if (value.isEmpty) {
-          return 'A House number is required';
+          return '';
         }
       },
     );
@@ -118,13 +112,10 @@ class _RegisterFormState extends State<RegisterForm> {
     return FormFieldStyled(
       controller: _cityController,
       autocorrect: false,
-      hintText: "City",
+      hintText: "Stadt",
       validator: (String value) {
         if (value.isEmpty) {
-          return 'A City is required';
-        } else if (!RegExp(r"^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$")
-            .hasMatch(value)) {
-          return 'Your Password needs 8 Characters';
+          return 'Stadt notwendig';
         }
       },
     );
@@ -143,10 +134,7 @@ class _RegisterFormState extends State<RegisterForm> {
       type: TextInputType.number,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'A PLZ is required';
-        } else if (!RegExp(r"^([0]{1}[1-9]{1}|[1-9]{1}[0-9]{1})[0-9]{3}$")
-            .hasMatch(value)) {
-          return 'Your Password needs 8 Characters';
+          return 'PLZ notwendig';
         }
       },
     );
@@ -160,14 +148,11 @@ class _RegisterFormState extends State<RegisterForm> {
         Icons.vpn_key,
         color: Colors.white,
       ),
-      hintText: "Enter a Password",
+      hintText: "Passwort",
       obscureText: true,
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Your Password is required';
-        } else if (!RegExp(r"^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
-            .hasMatch(value)) {
-          return 'Please use a valid Password';
+          return 'Passwort notwendig';
         }
       },
     );
@@ -182,15 +167,10 @@ class _RegisterFormState extends State<RegisterForm> {
         color: Colors.white,
       ),
       obscureText: true,
-      helperText:
-          "The Password must contain at least one letter, one number and be longer than six.",
-      hintText: "Enter the Password again",
+      hintText: "Passwortverifizierung",
       validator: (String value) {
         if (value.isEmpty) {
-          return 'Your Password is required';
-        } else if (!RegExp(r"^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$")
-            .hasMatch(value)) {
-          return 'Please use a valid Password';
+          return '';
         }
       },
     );
@@ -198,34 +178,40 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
-    _onRegisterButtonPressed() {
+    _onRegisterSubmitPressed() {
       final f = new DateFormat('yyyy-MM-dd');
-      User logUser = User(
+
+      User user = User(
         userId: '',
-        firstName: 'Test',
-        lastName: 'Test',
-        email: 'test7@test.com',
-        phoneNumber: '01234567896',
-        passwordHash: 'test',
-        verified: true,
-        postCode: '68165',
-        city: 'Mannheim',
-        street: 'Wasserturm',
-        houseNumber: '4',
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        email: _emailController.text,
+        phoneNumber: widget.phoneNumber,
+        // phoneNumber: '1234578699',
+        passwordHash: _passwordController.text,
+        verified: false,
+        postCode: _zipController.text,
+        city: _cityController.text,
+        street: _streetController.text,
+        houseNumber: _numberController.text,
         lesseeRating: 0,
         numberOfLesseeRatings: 0,
         lessorRating: 0,
         numberOfLessorRatings: 0,
         dateOfBirth: f.format(DateTime.now().subtract(Duration(days: 100))),
       );
-      // if (_key.currentState.validate())
-      BlocProvider.of<RegisterBloc>(context)
-          .add(RegisterButtonPressed(user: logUser));
+
+      if (_key.currentState.validate()) {
+        BlocProvider.of<RegisterBloc>(context)
+            .add(RegisterSubmitPressed(user: user));
+      } else {
+        _autoValidate = true;
+      }
     }
 
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
-        if (state is RegisterFailure) {
+        if (state is RegisterPersonalFailure) {
           _showError(state.error);
         }
       },
@@ -236,22 +222,13 @@ class _RegisterFormState extends State<RegisterForm> {
               child: CircularProgressIndicator(),
             );
           }
-          return Align(
-            alignment: Alignment.center,
-            child: Form(
-              key: _key,
-              autovalidate: _autoValidate,
-              child: ListView(
-                padding: const EdgeInsets.all(8),
+          return Form(
+            key: _key,
+            autovalidate: _autoValidate,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  Text(
-                    'Logo von FlexRent',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 26,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: 1.2),
-                  ),
                   SizedBox(
                     height: 20,
                   ),
@@ -303,36 +280,42 @@ class _RegisterFormState extends State<RegisterForm> {
                   SizedBox(
                     height: 10,
                   ),
-                  FlatButton(
-                    child: Text('Register'),
-                    color: Colors.purple,
+                  RaisedButton(
+                    color: Theme.of(context).primaryColor,
                     textColor: Colors.white,
-                    padding: EdgeInsets.all(18),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+                    padding: const EdgeInsets.all(16),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(8.0)),
+                    child: Text('Register'),
+                    onPressed: state is RegisterLoading
+                        ? () {}
+                        : _onRegisterSubmitPressed,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Du hast noch kein Konto? ',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Login',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              BlocProvider.of<RegisterBloc>(context)
+                                  .add(RegisterPhoneForm());
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(UserSignIn());
+                            },
+                        ),
+                      ],
                     ),
-                    onPressed: () {
-                      // User user = User(
-                      //   userId: '',
-                      //   firstName: _firstNameController.text,
-                      //   lastName: _lastNameController.text,
-                      //   email: _emailController.text,
-                      //   phoneNumber: widget.phoneNumber,
-                      //   passwordHash: _passwordController.text,
-                      //   verified: false,
-                      //   postCode: _zipController.text,
-                      //   city: _cityController.text,
-                      //   street: _streetController.text,
-                      //   houseNumber: _numberController.text,
-                      //   lesseeRating: 0,
-                      //   numberOfLesseeRatings: 0,
-                      //   lessorRating: 0,
-                      //   numberOfLessorRatings: 0,
-                      //   dateOfBirth: DateTime.now(),
-                      // );
-                      _onRegisterButtonPressed();
-                    },
-                  )
+                  ),
                 ],
               ),
             ),

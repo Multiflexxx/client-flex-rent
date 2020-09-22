@@ -3,16 +3,20 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/app.dart';
 import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:rent/screens/authentication/login/login.dart';
+import 'package:rent/screens/authentication/registration/register.dart';
 
 import 'logic/services/services.dart';
 
 void main() => runApp(
-      // Injects the Authentication service
-      RepositoryProvider<AuthenticationService>(
-        create: (context) {
-          return ApiAuthenticationService();
-        },
-        // Injects the Authentication BLoC
+      MultiRepositoryProvider(
+        providers: [
+          RepositoryProvider<AuthenticationService>(
+            create: (context) => ApiAuthenticationService(),
+          ),
+          RepositoryProvider<RegisterService>(
+            create: (context) => ApiRegisterService(),
+          ),
+        ],
         child: BlocProvider<AuthenticationBloc>(
           create: (context) {
             final authService =
@@ -42,6 +46,8 @@ class MyApp extends StatelessWidget {
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
             return App();
+          } else if (state is AuthenticationSignUp) {
+            return RegisterScreen();
           } else {
             return LoginScreen();
           }

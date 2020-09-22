@@ -5,6 +5,7 @@ import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
 import 'package:rent/logic/blocs/authentication/authentication.dart';
+import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/register_service.dart';
 
@@ -27,14 +28,31 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
-    if (event is RegisterButtonPressed) {
+    if (event is RegisterPhoneForm) {
+      yield* _mapPhoneFormToState(event);
+    }
+
+    if (event is RegisterNextPressed) {
+      yield* _mapPersonalFormToState(event);
+    }
+
+    if (event is RegisterSubmitPressed) {
       yield* _mapRegisterToState(event);
     }
   }
 
+  Stream<RegisterState> _mapPhoneFormToState(RegisterPhoneForm event) async* {
+    yield RegisterInitial();
+  }
+
+  Stream<RegisterState> _mapPersonalFormToState(
+      RegisterNextPressed event) async* {
+    yield RegisterPhoneSuccess(phoneNumber: event.phoneNumber);
+  }
+
   Stream<RegisterState> _mapRegisterToState(
-      RegisterButtonPressed event) async* {
-    yield RegisterLoading();
+      RegisterSubmitPressed event) async* {
+    yield RegisterPersonalLoading(phoneNumber: event.user.phoneNumber);
     try {
       final user = await _registerService.registerUser(event.user);
       if (user != null) {
@@ -42,10 +60,17 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         yield RegisterSuccess();
         yield RegisterInitial();
       } else {
-        yield RegisterFailure(error: 'Das war ein Schuss in den ...');
+        yield RegisterPersonalFailure(
+            error: 'Das war ein Schuss in den ...',
+            phoneNumber: event.user.phoneNumber);
       }
+    } on RegisterException catch (e) {
+      yield RegisterPersonalFailure(
+          error: e.message, phoneNumber: event.user.phoneNumber);
     } catch (err) {
-      yield RegisterFailure(error: err.message ?? 'An unknown error occured');
+      yield RegisterPersonalFailure(
+          error: err.message ?? 'An unknown error occured',
+          phoneNumber: event.user.phoneNumber);
     }
   }
 }

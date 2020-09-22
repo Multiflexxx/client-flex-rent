@@ -43,7 +43,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginSuccess();
         yield LoginInitial();
       } else {
-        yield LoginFailure(error: 'Something just happened');
+        yield LoginFailure(error: 'Das war ein Schuss in den ...');
       }
     } on AuthenticationException catch (e) {
       yield LoginFailure(error: e.message);

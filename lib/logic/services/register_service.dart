@@ -3,6 +3,7 @@ import 'dart:core';
 import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:rent/logic/exceptions/exceptions.dart';
 
 import '../models/models.dart';
 
@@ -26,8 +27,9 @@ class ApiRegisterService extends RegisterService {
       ),
     );
 
+    final Map<String, dynamic> jsonBody = json.decode(response.body);
+
     if (response.statusCode == 200) {
-      final Map<String, dynamic> jsonBody = json.decode(response.body);
       final Map<String, dynamic> jsonUser = jsonBody['user'];
       final sessionId = jsonBody['session_id'];
       final User user = User.fromJson(jsonUser);
@@ -37,6 +39,7 @@ class ApiRegisterService extends RegisterService {
       return user;
     } else {
       inspect(response);
+      throw RegisterException(message: jsonBody['message']);
     }
   }
 }
