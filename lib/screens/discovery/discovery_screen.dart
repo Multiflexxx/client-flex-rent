@@ -68,47 +68,66 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
     return Scaffold(
       body: SafeArea(
-        child: ListView(
-          children: <Widget>[
-            SearchBar(),
-            Padding(
-              padding: EdgeInsets.only(top: 20.0, left: 20.0, right: 120.0),
-              child: Text(
-                'Hello ${user.firstName} ${user.lastName}',
-                style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
-              ),
-            ),
-            // Row(
-            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-            //     children: _icons
-            //         .asMap()
-            //         .entries
-            //         .map(
-            //           (MapEntry map) => _buildIcon(map.key),
-            //         )
-            //         .toList()),
-            FutureBuilder<Map<String, List<Offer>>>(
-              future: discoveryOffer,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return Column(
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              child: ConstrainedBox(
+                constraints: BoxConstraints(
+                  minHeight: constraints.maxHeight,
+                ),
+                child: IntrinsicHeight(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      SizedBox(height: 20.0),
-                      DiscoveryCarousel(
-                        snapshot.data['bestOffer'],
-                        'Topseller',
+                      SearchBar(),
+                      Padding(
+                        padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                        child: Text(
+                          'Hello ${user.firstName} ${user.lastName}',
+                          style: TextStyle(
+                            fontSize: 30.0,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                      // Row(
+                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      //     children: _icons
+                      //         .asMap()
+                      //         .entries
+                      //         .map(
+                      //           (MapEntry map) => _buildIcon(map.key),
+                      //         )
+                      //         .toList()),
+                      FutureBuilder<Map<String, List<Offer>>>(
+                        future: discoveryOffer,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return Column(
+                              children: <Widget>[
+                                SizedBox(height: 20.0),
+                                DiscoveryCarousel(
+                                  snapshot.data['bestOffer'],
+                                  'Topseller',
+                                ),
+                              ],
+                            );
+                          }
+                          return Expanded(
+                            child: Center(
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     ],
-                  );
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
                   ),
-                );
-              },
-            ),
-          ],
+                ),
+              ),
+            );
+          },
         ),
       ),
     );
