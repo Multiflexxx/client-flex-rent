@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/offer_model.dart';
+import 'package:rent/logic/models/models.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
 class ProductCard extends StatelessWidget {
@@ -98,12 +98,19 @@ class ProductCard extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
-                    child: Image(
-                      height: 100,
-                      width: 200,
-                      image: AssetImage(offer.imageUrl),
-                      fit: BoxFit.cover,
-                    ),
+                    child: offer.pictureLinks.length == 0
+                        ? Image(
+                            image: AssetImage('assets/images/dyson.jpg'),
+                            height: 100,
+                            width: 200,
+                            fit: BoxFit.cover,
+                          )
+                        : Image.network(
+                            offer.pictureLinks[0],
+                            height: 100,
+                            width: 200,
+                            fit: BoxFit.cover,
+                          ),
                   ),
                 ),
               ],

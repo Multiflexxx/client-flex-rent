@@ -3,17 +3,23 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/login/login.dart';
 import 'package:rent/logic/services/services.dart';
-import 'package:rent/screens/authentication/sign_in_form.dart';
+import 'package:rent/screens/authentication/login/sign_in_form.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
           minimum: const EdgeInsets.all(16),
           child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) {
-              if (state is AuthenticationNotAuthenticated) {
+              if (state is AuthenticationNotAuthenticated ||
+                  state is AuthenticationSignIn) {
                 return _AuthForm();
               }
               if (state is AuthenticationFailure) {
@@ -40,7 +46,9 @@ class LoginScreen extends StatelessWidget {
                 ),
               );
             },
-          )),
+          ),
+        ),
+      ),
     );
   }
 }

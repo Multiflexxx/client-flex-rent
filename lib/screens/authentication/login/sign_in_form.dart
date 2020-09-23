@@ -1,9 +1,9 @@
-import 'dart:developer';
-
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/login/login.dart';
-import 'package:rent/logic/models/models.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class SignInForm extends StatefulWidget {
@@ -21,7 +21,7 @@ class _SignInFormState extends State<SignInForm> {
   Widget build(BuildContext context) {
     _onLoginButtonPressed() {
       if (_key.currentState.validate()) {
-        BlocProvider.of<LoginBloc>(context).add(LoginInWithEmailButtonPressed(
+        BlocProvider.of<LoginBloc>(context).add(LoginWithEmailButtonPressed(
             email: _emailController.text, password: _passwordController.text));
       } else {
         setState(() {
@@ -53,15 +53,15 @@ class _SignInFormState extends State<SignInForm> {
                   FormFieldStyled(
                     controller: _emailController,
                     autocorrect: false,
-                    hintText: "Enter your Emailaddress",
+                    hintText: 'Email',
                     type: TextInputType.emailAddress,
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return 'A Email is required';
+                        return 'Email ist notwendig';
                       } else if (!RegExp(
                               r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
                           .hasMatch(value)) {
-                        return 'Please use a valid email';
+                        return 'Bitte gebe eine gültige Nummer ein';
                       }
                     },
                   ),
@@ -71,11 +71,11 @@ class _SignInFormState extends State<SignInForm> {
                   FormFieldStyled(
                     controller: _passwordController,
                     autocorrect: false,
-                    hintText: "Enter your Password",
+                    hintText: 'Password',
                     obscureText: true,
                     validator: (String value) {
                       if (value.isEmpty) {
-                        return 'Password is required.';
+                        return 'Passwort ist notwendig.';
                       }
                       return null;
                     },
@@ -89,9 +89,32 @@ class _SignInFormState extends State<SignInForm> {
                     padding: const EdgeInsets.all(16),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('LOG IN'),
+                    child: Text('Login'),
                     onPressed:
                         state is LoginLoading ? () {} : _onLoginButtonPressed,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Du hast noch kein Konto? ',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Registrieren',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(UserSignUp());
+                            },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

@@ -14,7 +14,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     email: json['email'] as String,
     phoneNumber: json['phone_number'] as String,
     passwordHash: json['password_hash'] as String,
-    verified: json['verified'] as int,
+    verified: json['verified'] as bool,
     placeId: json['place_id'] as int,
     postCode: json['post_code'] as String,
     city: json['city'] as String,
@@ -24,9 +24,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     numberOfLesseeRatings: json['number_of_lessee_ratings'] as int,
     lessorRating: (json['lessor_rating'] as num)?.toDouble(),
     numberOfLessorRatings: json['number_of_lessor_ratings'] as int,
-    dateOfBirth: json['date_of_birth'] == null
-        ? null
-        : DateTime.parse(json['date_of_birth'] as String),
+    dateOfBirth: json['date_of_birth'],
   );
 }
 
@@ -55,6 +53,6 @@ Map<String, dynamic> _$UserToJson(User instance) {
   writeNotNull('number_of_lessee_ratings', instance.numberOfLesseeRatings);
   writeNotNull('lessor_rating', instance.lessorRating);
   writeNotNull('number_of_lessor_ratings', instance.numberOfLessorRatings);
-  writeNotNull('date_of_birth', instance.dateOfBirth?.toIso8601String());
+  writeNotNull('date_of_birth', instance.dateOfBirth);
   return val;
 }

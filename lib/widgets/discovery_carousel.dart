@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/models/offer_model.dart';
+import 'package:rent/logic/models/offer/offer.dart';
 import 'package:rent/screens/product/product_screen.dart';
 
 class DiscoveryCarousel extends StatefulWidget {
@@ -94,7 +95,9 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                 Row(
                                   children: [
                                     Icon(
-                                      offer.category.icon,
+                                      // TODO
+                                      // offer.category.pictureLink,
+                                      Feather.activity,
                                       size: 16.0,
                                       color: Colors.purple,
                                     ),
@@ -133,12 +136,20 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           tag: offer.offerId,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
-                            child: Image(
-                              height: 180.0,
-                              width: 180.0,
-                              image: AssetImage(offer.imageUrl),
-                              fit: BoxFit.cover,
-                            ),
+                            child: offer.pictureLinks.length == 0
+                                ? Image(
+                                    image:
+                                        AssetImage('assets/images/dyson.jpg'),
+                                    height: 180.0,
+                                    width: 180.0,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    offer.pictureLinks[0],
+                                    height: 180.0,
+                                    width: 180.0,
+                                    fit: BoxFit.cover,
+                                  ),
                           ),
                         ),
                       )

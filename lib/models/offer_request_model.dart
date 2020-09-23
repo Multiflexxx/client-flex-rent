@@ -1,4 +1,4 @@
-import 'package:rent/models/offer_model.dart';
+import 'package:rent/logic/models/models.dart';
 
 class OfferRequest {
   Offer offer;
