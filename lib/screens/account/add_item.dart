@@ -72,8 +72,8 @@ class _AddItemState extends State<AddItem> {
                           'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
                       String differentUrl =
                           'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-                      apiResult = await http.get('http://opengtindb.org/?ean=4316268374385&cmd=query&queryid=400000000');
-
+                      //apiResult = await http.get('http://opengtindb.org/?ean=4316268374385&cmd=query&queryid=400000000');
+                      apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
                       try {
                         product = apiResponseToOffer(apiResult);
                         setState(() {
@@ -114,20 +114,30 @@ class _AddItemState extends State<AddItem> {
     // 13 - queryid missing or wrong - die UserID/queryid fehlt in der Abfrage oder ist für diese Funktion nicht freigeschaltet
     // 14 - unknown command - es wurde mit dem Parameter "cmd" ein unbekanntes Kommando übergeben
 
+    //result = "error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---";
     String error = result.substring(7, 8);
     print(error);
     if (error == "0"){
-      offer.description = result;
+      //offer.description = result;
+      print(result);
       //result.split('---');
       //decoded = result[1];
       LineSplitter ls = new LineSplitter();
-      List<String> lines = ls.convert(result);
+      List lines = ls.convert(result);
+      print(lines[0]);
+      print(lines[1]);
+      for(String line in lines){
+        List<String> newLine = line.split("=");
+        lines[lines.indexOf(line)] = newLine;
+      }
     }else if(error == "1"){
       throw Exception('Artikel nicht gefunden');
     }else if(error == "2"){
       throw Exception('Fehler bei der Übertragung');
     }else if(error == "3"){
       throw Exception('Fehler beim Scannen des Codes');
+    }else if(error == "5"){
+      throw Exception('Limit überschritten');
     }else{
       throw Exception('API Fehler');
     }
