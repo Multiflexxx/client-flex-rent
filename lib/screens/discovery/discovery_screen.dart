@@ -65,7 +65,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
     final state = BlocProvider.of<AuthenticationBloc>(context).state
         as AuthenticationAuthenticated;
     final User user = state.user;
-    inspect(user);
 
     return Scaffold(
       body: SafeArea(
@@ -79,8 +78,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                 style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 20.0),
-
             // Row(
             //     mainAxisAlignment: MainAxisAlignment.spaceAround,
             //     children: _icons
@@ -90,27 +87,27 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
             //           (MapEntry map) => _buildIcon(map.key),
             //         )
             //         .toList()),
-
             FutureBuilder<Map<String, List<Offer>>>(
               future: discoveryOffer,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
-                  return DiscoveryCarousel(
-                    snapshot.data['bestOffer'],
-                    'Topseller',
+                  return Column(
+                    children: <Widget>[
+                      SizedBox(height: 20.0),
+                      DiscoveryCarousel(
+                        snapshot.data['bestOffer'],
+                        'Topseller',
+                      ),
+                    ],
                   );
                 }
-                return CircularProgressIndicator();
+                return Center(
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                );
               },
             ),
-            SizedBox(
-              height: 20.0,
-            ),
-            // FlatButton(
-            //   child: Text('Test'),
-            //   color: Colors.purple,
-            //   onPressed: () => ApiOfferService().getDiscoveryOffer(),
-            // ),
           ],
         ),
       ),
