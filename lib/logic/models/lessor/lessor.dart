@@ -9,7 +9,7 @@ class Lessor {
   final String lastName;
   final String postCode;
   final String city;
-  final int verified;
+  final bool verified;
   final double lessorRating;
   final int numberOfLessorRatings;
 

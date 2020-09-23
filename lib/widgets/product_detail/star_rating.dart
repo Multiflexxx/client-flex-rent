@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/rent_product_model.dart';
 
 class StarRating extends StatelessWidget {
   final int stars;
@@ -9,9 +8,7 @@ class StarRating extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      children: [
-        
-      ],
+      children: [],
     );
   }
 }

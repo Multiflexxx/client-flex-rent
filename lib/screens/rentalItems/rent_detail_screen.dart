@@ -1,28 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:rent/models/rent_product_model.dart';
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:rent/widgets/price/price_overview.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:rent/widgets/product_detail/description_box.dart';
 
-
-
-
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
-
-
-
 
 import 'package:flutter/cupertino.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/widgets/product_detail/user_box.dart';
 import 'package:rent/widgets/product_detail/rating_box.dart';
-
-
-
 
 class RentDetailScreen extends StatefulWidget {
   final RentProduct rentProduct;
@@ -33,17 +23,18 @@ class RentDetailScreen extends StatefulWidget {
 }
 
 class _RentDetailScreen extends State<RentDetailScreen> {
-     DateTime _startDate;
+  DateTime _startDate;
   DateTime _endDate;
 
   @override
   void initState() {
     _startDate = null;
     _endDate = null;
-      initializeDateFormatting('de_DE', null);
+    initializeDateFormatting('de_DE', null);
     super.initState();
   }
- void _onSelectedRangeChanged(_picker.PickerDateRange dateRange) {
+
+  void _onSelectedRangeChanged(_picker.PickerDateRange dateRange) {
     final DateTime startDateValue = dateRange.startDate;
     DateTime endDateValue = dateRange.endDate;
     endDateValue ??= startDateValue;
@@ -57,7 +48,6 @@ class _RentDetailScreen extends State<RentDetailScreen> {
       }
     });
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -241,12 +231,10 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                   ),
                 ),
                 // Description
-              DescriptionBox(
-                description: widget.rentProduct.description,
-                title: widget.rentProduct.title,
-                
-                
-              ),
+                DescriptionBox(
+                  description: widget.rentProduct.description,
+                  title: widget.rentProduct.title,
+                ),
                 // Availabilty
                 // GestureDetector(
                 //   onTap: () async {
@@ -362,12 +350,10 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                 // User
                 UserBox(),
 
-
-                //Bewertung 
+                //Bewertung
                 RatingBox(
                   recession: widget.rentProduct.rating,
                 ),
-               
               ],
             ),
           ),

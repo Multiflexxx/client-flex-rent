@@ -3,7 +3,9 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
+import 'package:rent/models/offer_model.dart';
 
 class AddItem extends StatefulWidget {
   @override
@@ -13,40 +15,88 @@ class AddItem extends StatefulWidget {
 class _AddItemState extends State<AddItem> {
   String barcodeResult = '';
   http.Response apiResult;
-  String product = '';
+  Offer product;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: () async{
-          barcodeResult = await FlutterBarcodeScanner.scanBarcode('#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
-          String url = 'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
-          String differentUrl = 'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-          apiResult = await http.get(url);
-          setState((){
-            barcodeResult= barcodeResult;
-            print(barcodeResult);
-            product = apiResult.body;
-          });
-        },
-        child: Text('Scan'),
-
+      appBar: AppBar(
+        title: Text('Ein Produkt einstellen'),
+        centerTitle: true,
       ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Text(barcodeResult, style: TextStyle(color: Colors.white),),
-            Text(product, style: TextStyle(color: Colors.white),),
-          ],
-        ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(60.0),
+                child: Image(
+                  width: 200,
+                  height: 200,
+                  image: AssetImage('assets/images/jett.jpg'),
+                ),
+              ),
+              Expanded(
+                child: Icon(
+                  Icons.edit,
+                  color: Colors.white,
+                ),
+              )
+            ],
+          ),
+          Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RaisedButton.icon(
+                    icon: Icon(Icons.search),
+                    onPressed: () {},
+                    label: Text('Search'),
+                  ),
+                ),
+              ),
+              Expanded(
+                flex: 1,
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: RaisedButton.icon(
+                    icon: Icon(Ionicons.md_qr_scanner),
+                    onPressed: () async {
+                      //barcodeResult = await FlutterBarcodeScanner.scanBarcode(
+                      //    '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
+                      String url =
+                          'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
+                      String differentUrl =
+                          'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
+                      apiResult = await http.get('http://opengtindb.org/?ean=4316268374385&cmd=query&queryid=400000000');
+
+                      try {
+                        product = apiResponseToOffer(apiResult);
+                        setState(() {
+
+                        });
+                      }catch(e) {
+                        //error handling
+                      }
+                    },
+                    label: Text('Scan'),
+                  ),
+                ),
+              )
+            ],
+          )
+        ],
       ),
     );
   }
 
-  String decodeApiResponse(http.Response apiResult){
+  Offer apiResponseToOffer(http.Response apiResult) {
     String result = apiResult.body;
-    String decoded = '';
+    Offer offer;
     //fehlercodes:
     //0 - OK - Operation war erfolgreich
     // 1 - not found - die EAN konnte nicht gefunden werden
@@ -64,22 +114,50 @@ class _AddItemState extends State<AddItem> {
     // 13 - queryid missing or wrong - die UserID/queryid fehlt in der Abfrage oder ist für diese Funktion nicht freigeschaltet
     // 14 - unknown command - es wurde mit dem Parameter "cmd" ein unbekanntes Kommando übergeben
 
-    String error = result.substring(7,9);
+    String error = result.substring(7, 8);
     print(error);
-    switch (error) {
-      case '0':{
-        decoded = result;
-        //result.split('---');
-        //decoded = result[1];
-        LineSplitter ls = new LineSplitter();
-        List<String> lines = ls.convert(result);
-
-      } break;
-      case '1':{ decoded = 'Artikel nicht gefunden'; } break;
-      case '2':{ decoded = 'Fehler bei der Übertragung'; } break;
-
+    if (error == "0"){
+      offer.description = result;
+      //result.split('---');
+      //decoded = result[1];
+      LineSplitter ls = new LineSplitter();
+      List<String> lines = ls.convert(result);
+    }else if(error == "1"){
+      throw Exception('Artikel nicht gefunden');
+    }else if(error == "2"){
+      throw Exception('Fehler bei der Übertragung');
+    }else if(error == "3"){
+      throw Exception('Fehler beim Scannen des Codes');
+    }else{
+      throw Exception('API Fehler');
     }
-    return decoded;
-
+    /*
+    switch (error) {
+      case "0":
+        {
+          offer.description = result;
+          //result.split('---');
+          //decoded = result[1];
+          LineSplitter ls = new LineSplitter();
+          List<String> lines = ls.convert(result);
+        }
+        break;
+      case '1':
+        {
+          throw Exception('Artikel nicht gefunden');
+        }
+        break;
+      case '2':
+        {
+          throw Exception('Fehler bei der Übertragung');
+        }
+        break;
+      case '3':
+        {
+          throw Exception('Fehler beim Scannen des Codes');
+        }
+        break;
+    }*/
+    return offer;
   }
 }

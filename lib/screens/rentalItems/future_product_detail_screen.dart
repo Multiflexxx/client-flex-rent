@@ -8,15 +8,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:rent/models/future_product_model.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
-
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
-
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-
-import 'package:rent/models/offer_request_model.dart';
-import 'package:rent/screens/booking/confiramtion_payment_screen.dart';
-
 import 'package:rent/widgets/product_detail/user_box.dart';
 
 class FutureProductDetailScreen extends StatefulWidget {
@@ -139,7 +132,8 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12.0),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
@@ -211,13 +205,14 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12),
-                                      child: Text(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 16.0, vertical: 12),
+                    child: Text(
                       '11.05.20 - 11.10.20',
                       style: TextStyle(
                         // color: Colors.white,
                         fontSize: 16.0,
-                        
+
                         letterSpacing: 1.2,
                       ),
                       maxLines: 2,

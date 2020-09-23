@@ -50,6 +50,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             ),
                             hintText: 'Vorname',
                             type: TextInputType.name,
+                            autocorrect: true,
                           ),
                       ),
                       Expanded(
@@ -57,6 +58,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         FormFieldStyled(
                           hintText: 'Nachname',
                           type: TextInputType.name,
+                          autocorrect: true,
                         ),
                       ),
                     ],
@@ -75,12 +77,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             ),
                             hintText: 'Strasse',
                             type: TextInputType.streetAddress,
+                            autocorrect: true,
                           ),
                         ),
                         Expanded(
                           flex: 1,
                           child: FormFieldStyled(
                             hintText: 'Hausnummer',
+                            autocorrect: true,
                           ),
                         ),
                       ],
@@ -98,12 +102,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           ),
                           hintText: 'PLZ',
                           type: TextInputType.number,
+                          autocorrect: true,
                         ),
                       ),
                       Expanded(
                         flex: 2,
                         child: FormFieldStyled(
                           hintText: 'Ort',
+                          autocorrect: true,
                         ),
                       ),
                     ],
@@ -118,6 +124,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     ),
                     hintText: 'E-Mail',
                     type: TextInputType.emailAddress,
+                    autocorrect: true,
                   ),
                 ),
                 Padding(
@@ -130,7 +137,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     hintText: 'Passwort',
                     type: TextInputType.visiblePassword,
                     obscureText: true,
-
+                    autocorrect: true,
                   ),
                 ),
                 Padding(
@@ -142,6 +149,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     ),
                     hintText: 'Handynummer',
                     type: TextInputType.phone,
+                    autocorrect: true,
                   ),
                 ),
                 FlatButton(
