@@ -4,20 +4,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/models/offer_model.dart';
+import 'package:rent/logic/models/offer/offer.dart';
+import 'package:rent/logic/services/offer_service.dart';
+
 import 'package:rent/widgets/discovery_carousel.dart';
 import 'package:rent/widgets/search_bar.dart';
 
 class DiscoveryScreen extends StatefulWidget {
-  final List<Offer> productSuggestionList;
-
-  DiscoveryScreen(this.productSuggestionList);
-
   @override
   _DiscoveryScreen createState() => _DiscoveryScreen();
 }
 
 class _DiscoveryScreen extends State<DiscoveryScreen> {
+  Future<Map<String, List<Offer>>> discoveryOffer;
+
+  @override
+  initState() {
+    super.initState();
+    discoveryOffer = ApiOfferService().getDiscoveryOffer();
+  }
+
   // int _selectedIndex = 0;
   // List<IconData> _icons = [
   //   FontAwesome.laptop,
@@ -74,6 +80,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
               ),
             ),
             SizedBox(height: 20.0),
+
             // Row(
             //     mainAxisAlignment: MainAxisAlignment.spaceAround,
             //     children: _icons
@@ -83,13 +90,27 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
             //           (MapEntry map) => _buildIcon(map.key),
             //         )
             //         .toList()),
-            DiscoveryCarousel(
-              widget.productSuggestionList,
-              'Topseller',
+
+            FutureBuilder<Map<String, List<Offer>>>(
+              future: discoveryOffer,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return DiscoveryCarousel(
+                    snapshot.data['bestOffer'],
+                    'Topseller',
+                  );
+                }
+                return CircularProgressIndicator();
+              },
             ),
             SizedBox(
               height: 20.0,
             ),
+            // FlatButton(
+            //   child: Text('Test'),
+            //   color: Colors.purple,
+            //   onPressed: () => ApiOfferService().getDiscoveryOffer(),
+            // ),
           ],
         ),
       ),

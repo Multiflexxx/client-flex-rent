@@ -13,7 +13,7 @@ Lessor _$LessorFromJson(Map<String, dynamic> json) {
     lastName: json['last_name'] as String,
     postCode: json['post_code'] as String,
     city: json['city'] as String,
-    verified: json['verified'] as int,
+    verified: json['verified'] as bool,
     lessorRating: (json['lessor_rating'] as num)?.toDouble(),
     numberOfLessorRatings: json['number_of_lessor_ratings'] as int,
   );

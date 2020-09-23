@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/models/offer_model.dart';
 import 'package:rent/screens/rentalItems/rental_items_screen.dart';
 
 import 'screens/account/account_screen.dart';
@@ -54,7 +53,7 @@ class _AppState extends State<App> {
 
   List<Widget> _buildScreens() {
     return [
-      DiscoveryScreen(productSuggestionList),
+      DiscoveryScreen(),
       CategoryScreen(),
       RentalItemsScreen(),
       SearchScreen(),

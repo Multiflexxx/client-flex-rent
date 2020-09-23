@@ -25,4 +25,7 @@ class Offer {
       this.category,
       this.pictureLinks,
       this.lessor});
+
+  factory Offer.fromJson(Map<String, dynamic> json) => _$OfferFromJson(json);
+  Map<String, dynamic> toJson() => _$OfferToJson(this);
 }

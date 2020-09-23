@@ -155,11 +155,10 @@ class _SearchScreenState extends State<SearchScreen> {
       onTap: () => Navigator.push(
         context,
         new MaterialPageRoute(
-          builder: (BuildContext context) => new ProductListScreen('Penis'),
+          builder: (BuildContext context) => new ProductListScreen(),
         ),
       ),
       child: Container(
-        // width: MediaQuery.of(context).size.width,
         height: 0.075 * MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           border: Border(

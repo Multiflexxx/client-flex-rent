@@ -6,7 +6,7 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:rent/models/offer_model.dart';
+import 'package:rent/logic/models/models.dart';
 import 'package:rent/models/offer_request_model.dart';
 import 'package:rent/screens/booking/confiramtion_payment_screen.dart';
 import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
@@ -112,10 +112,19 @@ class _OfferScreenState extends State<OfferScreen> {
                         bottomLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0),
                       ),
-                      child: Image(
-                        image: AssetImage(widget.offer.imageUrl),
-                        fit: BoxFit.cover,
-                      ),
+                      child: widget.offer.pictureLinks.length == 0
+                          ? Image(
+                              image: AssetImage('assets/images/dyson.jpg'),
+                              height: 180.0,
+                              width: 180.0,
+                              fit: BoxFit.cover,
+                            )
+                          : Image.network(
+                              widget.offer.pictureLinks[0],
+                              height: 180.0,
+                              width: 180.0,
+                              fit: BoxFit.cover,
+                            ),
                     ),
                   ),
                 ],
