@@ -4,51 +4,63 @@ import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/login/login.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/authentication/login/sign_in_form.dart';
+import 'package:rent/widgets/background/logo.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SafeArea(
-          minimum: const EdgeInsets.all(16),
-          child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-            builder: (context, state) {
-              if (state is AuthenticationNotAuthenticated ||
-                  state is AuthenticationSignIn) {
-                return _AuthForm();
-              }
-              if (state is AuthenticationFailure) {
+      // resizeToAvoidBottomPadding: false,
+      body: Stack(children: <Widget>[
+        // decoration: BoxDecoration(
+        //   image: DecorationImage(
+        //     image: (SvgPicture.asset('assets/images/Logo_white_no_background.svg',)).toPicture(),
+        //   ),
+        // ),
+
+        Background(),
+
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SafeArea(
+            minimum: const EdgeInsets.all(16),
+            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+              builder: (context, state) {
+                if (state is AuthenticationNotAuthenticated ||
+                    state is AuthenticationSignIn) {
+                  return _AuthForm();
+                }
+                if (state is AuthenticationFailure) {
+                  return Center(
+                      child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Text(state.message),
+                      FlatButton(
+                        textColor: Theme.of(context).primaryColor,
+                        child: Text('Retry'),
+                        onPressed: () {
+                          BlocProvider.of<AuthenticationBloc>(context)
+                              .add(AppLoaded());
+                        },
+                      )
+                    ],
+                  ));
+                }
                 return Center(
-                    child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    Text(state.message),
-                    FlatButton(
-                      textColor: Theme.of(context).primaryColor,
-                      child: Text('Retry'),
-                      onPressed: () {
-                        BlocProvider.of<AuthenticationBloc>(context)
-                            .add(AppLoaded());
-                      },
-                    )
-                  ],
-                ));
-              }
-              return Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2,
-                ),
-              );
-            },
+                  child: CircularProgressIndicator(
+                    strokeWidth: 2,
+                  ),
+                );
+              },
+            ),
           ),
         ),
-      ),
+      ]),
     );
   }
 }
@@ -59,13 +71,13 @@ class _AuthForm extends StatelessWidget {
     final authService = RepositoryProvider.of<AuthenticationService>(context);
 
     return Column(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         Text(
-          'Logo von FlexRent',
+          'Login',
           style: TextStyle(
               color: Colors.white,
-              fontSize: 26,
+              fontSize: 50,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2),
         ),
