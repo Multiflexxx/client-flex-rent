@@ -18,6 +18,11 @@ class _AddItemState extends State<AddItem> {
   Offer product;
 
   @override
+  void initState() {
+    super.initState();
+    product = Offer(brand: "",category: null,description: "",imageUrl: "",offerId: 0,price: 0.0,title: "test");
+  }
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -66,20 +71,20 @@ class _AddItemState extends State<AddItem> {
                   child: RaisedButton.icon(
                     icon: Icon(Ionicons.md_qr_scanner),
                     onPressed: () async {
-                      //barcodeResult = await FlutterBarcodeScanner.scanBarcode(
-                      //    '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
+                      barcodeResult = await FlutterBarcodeScanner.scanBarcode(
+                          '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
                       String url =
                           'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
                       String differentUrl =
                           'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-                      //apiResult = await http.get('http://opengtindb.org/?ean=4316268374385&cmd=query&queryid=400000000');
-                      apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
+                      apiResult = await http.get('http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000');
+                      //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
                       try {
-                        product = apiResponseToOffer(apiResult);
-                        setState(() {
-
+                        setState((){
+                          product = apiResponseToOffer(apiResult);
                         });
                       }catch(e) {
+                        print(e.toString());
                         //error handling
                       }
                     },
@@ -88,7 +93,12 @@ class _AddItemState extends State<AddItem> {
                 ),
               )
             ],
-          )
+          ),
+          Column(children: [
+            Text(product.title,style: TextStyle(color: Colors.white),),
+            Text(product.description,style: TextStyle(color: Colors.white),),
+            Text(product.brand,style: TextStyle(color: Colors.white),),
+          ],),
         ],
       ),
     );
@@ -96,7 +106,7 @@ class _AddItemState extends State<AddItem> {
 
   Offer apiResponseToOffer(http.Response apiResult) {
     String result = apiResult.body;
-    Offer offer;
+    Offer offer = Offer(title: "",price: 0.0,offerId: 0,imageUrl: "",description: "",category: null,brand: "");
     //fehlercodes:
     //0 - OK - Operation war erfolgreich
     // 1 - not found - die EAN konnte nicht gefunden werden
@@ -116,20 +126,48 @@ class _AddItemState extends State<AddItem> {
 
     //result = "error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---";
     String error = result.substring(7, 8);
-    print(error);
     if (error == "0"){
       //offer.description = result;
-      print(result);
+      //print(result);
       //result.split('---');
       //decoded = result[1];
       LineSplitter ls = new LineSplitter();
       List lines = ls.convert(result);
-      print(lines[0]);
-      print(lines[1]);
-      for(String line in lines){
-        List<String> newLine = line.split("=");
-        lines[lines.indexOf(line)] = newLine;
+      //List lines = result.split("\n");
+      //print(lines[0]);
+      //print(lines[1]);
+      for(int i = 1; i < lines.length; i++){
+        List<String> newLine = lines[i].split("=");
+        if(newLine.length > 1) {
+          lines[i-1] = newLine[1];
+        }else{
+          lines[i-1] = "";
+        }
       }
+      //indizes
+      //0=error
+      //1=---
+      //2=asin
+      //3=name
+      //4=detailname
+      //5=verkäufer
+      //6=kategorie
+      //7=unterkategorie
+      //8=kategorienummer
+      //9="contents"
+      //10="pack"
+      //11=Herkunft
+      //12=Beschreibung
+      //13=name_en(oft leer)
+      //14=detailname_en(oft leer)
+      //15=validated (prozent)
+      //16=---
+      //print(lines);
+      offer.title=lines[4];
+      offer.brand=lines[5];
+      //offer.category=lines[6]; Kategorie scheint objekt zu sein
+      offer.description=lines[13];
+
     }else if(error == "1"){
       throw Exception('Artikel nicht gefunden');
     }else if(error == "2"){
