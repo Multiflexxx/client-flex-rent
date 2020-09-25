@@ -1,5 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
+import 'package:rent/logic/models/user/user.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -12,6 +15,9 @@ class _PersonalInfoState extends State<PersonalInfo> {
 
   @override
   Widget build(BuildContext context) {
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+    as AuthenticationAuthenticated;
+    final User user = state.user;
     return Scaffold(
       appBar: AppBar(
         title: Text("Meine Informationen"),
@@ -51,6 +57,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             hintText: 'Vorname',
                             type: TextInputType.name,
                             autocorrect: true,
+                            initialValue: user.firstName,
                           ),
                       ),
                       Expanded(
@@ -59,6 +66,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           hintText: 'Nachname',
                           type: TextInputType.name,
                           autocorrect: true,
+                          initialValue: user.lastName,
                         ),
                       ),
                     ],
@@ -78,6 +86,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             hintText: 'Strasse',
                             type: TextInputType.streetAddress,
                             autocorrect: true,
+                            initialValue: user.street,
                           ),
                         ),
                         Expanded(
@@ -85,6 +94,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           child: FormFieldStyled(
                             hintText: 'Hausnummer',
                             autocorrect: true,
+                            initialValue: user.houseNumber,
                           ),
                         ),
                       ],
@@ -103,6 +113,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                           hintText: 'PLZ',
                           type: TextInputType.number,
                           autocorrect: true,
+                          initialValue: user.postCode,
                         ),
                       ),
                       Expanded(
@@ -110,6 +121,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                         child: FormFieldStyled(
                           hintText: 'Ort',
                           autocorrect: true,
+                          initialValue: user.city,
                         ),
                       ),
                     ],
@@ -125,6 +137,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     hintText: 'E-Mail',
                     type: TextInputType.emailAddress,
                     autocorrect: true,
+                    initialValue: user.email,
                   ),
                 ),
                 Padding(
@@ -150,6 +163,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
                     hintText: 'Handynummer',
                     type: TextInputType.phone,
                     autocorrect: true,
+                    initialValue: user.phoneNumber,
                   ),
                 ),
                 FlatButton(

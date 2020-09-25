@@ -13,6 +13,7 @@ class FormFieldStyled extends StatefulWidget {
   final autocorrect;
   final TextInputType type;
   final length;
+  final initialValue;
 
   FormFieldStyled(
       {Key key,
@@ -25,7 +26,8 @@ class FormFieldStyled extends StatefulWidget {
       this.type,
       this.length,
       this.controller,
-      this.autocorrect})
+      this.autocorrect,
+      this.initialValue})
       : super(key: key);
 
   _FormFieldStyledState createState() => _FormFieldStyledState();
@@ -35,6 +37,7 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      initialValue: widget.initialValue,
       autocorrect: widget.autocorrect,
       keyboardType: widget.type,
       controller: widget.controller,

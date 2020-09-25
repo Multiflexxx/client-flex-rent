@@ -7,6 +7,7 @@ import 'package:rent/screens/404.dart';
 import 'package:rent/screens/account/my_items.dart';
 import 'package:rent/screens/account/personal_info.dart';
 import 'package:rent/screens/account/settings.dart';
+import 'package:rent/logic/models/models.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key key}) : super(key: key);
@@ -16,9 +17,7 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-  String name = "Kim 19";
-  String city = "Mannheim";
-  bool verified = true;
+
   final routes = {
     'personalInfo': PersonalInfo(),
     'myitems': MyItems(),
@@ -30,6 +29,15 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+    as AuthenticationAuthenticated;
+    final User user = state.user;
+
+    String name = '${user.firstName} ${user.lastName}';
+    String city = '${user.city}';
+    bool verified = user.verified;
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Account"),
