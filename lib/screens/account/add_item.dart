@@ -110,12 +110,12 @@ class _AddItemState extends State<AddItem> {
           Column(
             children: [
               FormFieldStyled(
-                initialValue: "",
+                initialValue: product.title,
                 hintText: "Produktname",
                 autocorrect: true,
               ),
               FormFieldStyled(
-                initialValue: "",
+                initialValue: product.brand,
                 hintText: "Marke/Firma",
                 autocorrect: true,
               ),
@@ -148,7 +148,7 @@ class _AddItemState extends State<AddItem> {
                 onChanged: (value) {},
               ),
               FormFieldStyled(
-                initialValue: "",
+                initialValue: product.description,
                 hintText: "Beschreibung",
                 autocorrect: true,
               ),
