@@ -40,7 +40,6 @@ class _PhoneFormState extends State<PhoneForm> {
           key: _key,
           autovalidate: _autoValidate,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: <Widget>[
               FormFieldStyled(
                 controller: _phoneController,
