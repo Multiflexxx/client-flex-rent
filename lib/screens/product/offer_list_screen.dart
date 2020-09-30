@@ -52,7 +52,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
               },
             );
           }
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );

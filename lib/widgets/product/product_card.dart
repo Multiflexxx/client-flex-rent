@@ -110,6 +110,7 @@ class ProductCard extends StatelessWidget {
                   ),
                   child: Hero(
                     tag: offer.offerId + offer.category.name,
+                    transitionOnUserGestures: true,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),
                       child: offer.pictureLinks.length == 0

@@ -138,6 +138,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                         ),
                         child: Hero(
                           tag: offer.offerId + widget.carouselTitle,
+                          transitionOnUserGestures: true,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: offer.pictureLinks.length == 0

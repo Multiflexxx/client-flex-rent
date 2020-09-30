@@ -109,6 +109,7 @@ class _OfferScreenState extends State<OfferScreen> {
                 children: <Widget>[
                   Hero(
                     tag: widget.heroTag,
+                    transitionOnUserGestures: true,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
