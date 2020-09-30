@@ -18,7 +18,7 @@ class LoginScreen extends StatelessWidget {
         //   ),
         // ),
 
-        Background(),
+        Background(top: 30,),
 
         GestureDetector(
           behavior: HitTestBehavior.opaque,

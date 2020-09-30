@@ -13,7 +13,7 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: <Widget>[
-        Background(top: 240,
+        Background(top: 30,
         ),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
