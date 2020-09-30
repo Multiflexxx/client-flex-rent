@@ -104,7 +104,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         },
                       );
                     }
-                    return CircularProgressIndicator();
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
                   },
                 ),
               ),

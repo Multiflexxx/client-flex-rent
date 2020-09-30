@@ -13,8 +13,10 @@ class Category {
   });
 }
 
+final dynamic test = 'Feater.printer';
+
 List<Category> categoryList = [
-  Category(categoryId: 0, name: 'Computer & Office', icon: Feather.printer),
+  Category(categoryId: 0, name: 'Computer & Office', icon: test),
   Category(categoryId: 1, name: 'TV & Audio', icon: Feather.speaker),
   Category(categoryId: 2, name: 'Household', icon: Ionicons.ios_restaurant),
   Category(categoryId: 3, name: 'DIY', icon: Ionicons.ios_construct),

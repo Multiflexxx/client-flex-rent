@@ -10,16 +10,8 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // resizeToAvoidBottomPadding: false,
       body: Stack(children: <Widget>[
-        // decoration: BoxDecoration(
-        //   image: DecorationImage(
-        //     image: (SvgPicture.asset('assets/images/Logo_white_no_background.svg',)).toPicture(),
-        //   ),
-        // ),
-
-        Background(top: 30,),
-
+        Background(top: 30),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
@@ -72,14 +64,16 @@ class _AuthForm extends StatelessWidget {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           'Login',
           style: TextStyle(
-              color: Colors.white,
-              fontSize: 50,
-              fontWeight: FontWeight.bold,
-              letterSpacing: 1.2),
+            color: Colors.white,
+            fontSize: 50,
+            fontWeight: FontWeight.bold,
+            letterSpacing: 1.2,
+          ),
         ),
         Container(
           alignment: Alignment.center,
