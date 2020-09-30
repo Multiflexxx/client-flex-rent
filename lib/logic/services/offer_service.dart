@@ -1,8 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
+
+import '../exceptions/exceptions.dart';
 
 abstract class OfferService {
   Future<List<Offer>> getAllOffers();
@@ -33,13 +34,16 @@ class ApiOfferService extends OfferService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);
-      final List<Offer> offerList =
-          (jsonBody).map((i) => Offer.fromJson(i)).toList();
 
-      inspect(offerList);
-      return offerList;
+      if (jsonBody.isNotEmpty) {
+        final List<Offer> offerList =
+            (jsonBody).map((i) => Offer.fromJson(i)).toList();
+        return offerList;
+      } else {
+        return Future.error(
+            OfferException(message: 'Die Suche ergab keine Ergebnisse'));
+      }
     } else {
-      inspect(response);
       return null;
     }
   }
@@ -80,9 +84,6 @@ class ApiOfferService extends OfferService {
           .map((i) => Offer.fromJson(i))
           .toList(),
     );
-
-    inspect(discoveryOffer);
-
     return discoveryOffer;
   }
 
@@ -95,10 +96,8 @@ class ApiOfferService extends OfferService {
       final List<dynamic> jsonBody = json.decode(response.body);
       final List<Category> categoryList =
           (jsonBody).map((i) => Category.fromJson(i)).toList();
-      inspect(categoryList);
       return categoryList;
     } else {
-      inspect(response);
       return null;
     }
   }

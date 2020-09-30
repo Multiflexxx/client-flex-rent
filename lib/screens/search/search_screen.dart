@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:rent/screens/product/product_list_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/screens/product/offer_list_screen.dart';
 import 'package:rent/widgets/divider_with_text.dart';
+import '../../logic/models/models.dart';
+import '../../logic/services/offer_service.dart';
+import '../product/offer_screen.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -11,20 +15,7 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = new TextEditingController();
 
-  final _searchResult = [
-    'Berlin',
-    'Paris',
-    'Wien',
-    'Madrid',
-    'Prag',
-    'Amsterdam',
-    'Rom',
-    'München',
-    'Athen',
-    'Lissabon',
-    'London',
-    'New York',
-  ];
+  Future<List<Offer>> _searchOfferList;
 
   final _suggestedList = [
     'Wien',
@@ -34,14 +25,12 @@ class _SearchScreenState extends State<SearchScreen> {
   ];
 
   String _heading;
-  var _resultList = [];
+  Future<List<Offer>> _resultList;
 
   @override
   void initState() {
     super.initState();
     _heading = 'Vorschläge';
-    _resultList = _suggestedList;
-    print(_resultList);
   }
 
   var suggestionList = [];
@@ -50,15 +39,21 @@ class _SearchScreenState extends State<SearchScreen> {
     if (query.isEmpty) {
       setState(() {
         _heading = 'Vorschläge';
-        _resultList = _suggestedList;
+        _resultList = Future.value();
       });
       return;
     }
-    //TODO API Call
-    setState(() {
-      _heading = 'Ergebnisse';
-      _resultList = _searchResult;
+    _searchOfferList = ApiOfferService()
+        .getAllOffers(search: query, limit: 3)
+        .catchError((error) {
+      setState(() {
+        _heading = error.message;
+      });
     });
+    _searchOfferList.whenComplete(() => setState(() {
+          _heading = 'Ergebnisse';
+          _resultList = _searchOfferList;
+        }));
   }
 
   @override
@@ -106,7 +101,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             setState(() {
                               _searchController.clear();
                               _heading = 'Vorschläge';
-                              _resultList = _suggestedList;
+                              _resultList = Future.value();
                             });
                           },
                         )
@@ -131,17 +126,40 @@ class _SearchScreenState extends State<SearchScreen> {
             SizedBox(
               height: 15.0,
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-              child: DividerWithText(
-                dividerText: _heading,
-              ),
-            ),
             Expanded(
-              child: ListView.builder(
-                itemCount: _resultList.length,
-                itemBuilder: (context, index) =>
-                    buildResultCard(_resultList[index]),
+              child: FutureBuilder<List<Offer>>(
+                future: _resultList,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data.length > 0) {
+                      return ListView.builder(
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (context, index) {
+                          Offer offer = snapshot.data[index];
+                          return GestureDetector(
+                            onTap: () => pushNewScreen(
+                              context,
+                              screen: OfferScreen(offer: offer),
+                              withNavBar: false,
+                            ),
+                            child: buildResultCard(offer.title),
+                          );
+                        },
+                      );
+                    } else {
+                      return Center(
+                        child: Text(
+                          'Die Suche ergab keine Ergebnisse',
+                          style: TextStyle(fontSize: 21.0),
+                        ),
+                      );
+                    }
+                  } else if (snapshot.hasError) {
+                    print(snapshot.hasError);
+                    return Text(snapshot.error);
+                  }
+                  return Center(child: CircularProgressIndicator());
+                },
               ),
             ),
           ],
