@@ -13,7 +13,8 @@ class RegisterScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Stack(children: <Widget>[
-        Background(top: 30,
+        Background(
+          top: 30,
         ),
         GestureDetector(
           behavior: HitTestBehavior.opaque,
@@ -48,34 +49,29 @@ class _AuthForm extends StatelessWidget {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-   
       children: [
         Text(
           'Register and become an User',
           style: TextStyle(
-              
               color: Colors.white,
               fontSize: 50,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: BlocProvider<RegisterBloc>(
-            create: (context) => RegisterBloc(
-                BlocProvider.of<AuthenticationBloc>(context), registerService),
-            child: BlocBuilder<RegisterBloc, RegisterState>(
-              builder: (context, state) {
-                if (state is RegisterPhoneSuccess) {
-                  return PersonalForm(phoneNumber: state.phoneNumber);
-                } else if (state is RegisterPersonalLoading) {
-                  return PersonalForm(phoneNumber: state.phoneNumber);
-                } else if (state is RegisterPersonalFailure) {
-                  return PersonalForm(phoneNumber: state.phoneNumber);
-                }
-                return PhoneForm();
-              },
-            ),
+        BlocProvider<RegisterBloc>(
+          create: (context) => RegisterBloc(
+              BlocProvider.of<AuthenticationBloc>(context), registerService),
+          child: BlocBuilder<RegisterBloc, RegisterState>(
+            builder: (context, state) {
+              if (state is RegisterPhoneSuccess) {
+                return PersonalForm(phoneNumber: state.phoneNumber);
+              } else if (state is RegisterPersonalLoading) {
+                return PersonalForm(phoneNumber: state.phoneNumber);
+              } else if (state is RegisterPersonalFailure) {
+                return PersonalForm(phoneNumber: state.phoneNumber);
+              }
+              return PhoneForm();
+            },
           ),
         ),
       ],

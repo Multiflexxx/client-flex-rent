@@ -40,16 +40,28 @@ class _MyItemsState extends State<MyItems> {
               color: Colors.black,
             ),
             Card(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  'Test',
-                  style: TextStyle(color: Colors.white, fontSize: 40.0),
-                ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                 ListTile(
+                    title: Text('iPhone 11'),
+                    subtitle: Text('Apple'),
+                  ),
+                  ButtonBar(
+                    children: <Widget>[
+                      FlatButton(
+                        child: const Text('Bearbeiten'),
+                        onPressed: () {/* ... */},
+                      ),
+                      FlatButton(
+                        child: const Text('Verfügbarkeit ändern'),
+                        onPressed: () {/* ... */},
+                      ),
+                    ],
+                  ),
+                ],
               ),
-              shadowColor: Colors.purple,
-              color: Colors.grey,
-            )
+            ),
           ],
         ),
       ),

@@ -6,6 +6,7 @@ import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/models/offer_model.dart';
+import 'package:rent/widgets/formfieldstyled.dart';
 
 class AddItem extends StatefulWidget {
   @override
@@ -16,6 +17,19 @@ class _AddItemState extends State<AddItem> {
   String barcodeResult = '';
   http.Response apiResult;
   Offer product;
+
+  @override
+  void initState() {
+    super.initState();
+    product = Offer(
+        brand: "",
+        category: null,
+        description: "",
+        imageUrl: "",
+        offerId: 0,
+        price: 0.0,
+        title: "test");
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -66,21 +80,25 @@ class _AddItemState extends State<AddItem> {
                   child: RaisedButton.icon(
                     icon: Icon(Ionicons.md_qr_scanner),
                     onPressed: () async {
-                      //barcodeResult = await FlutterBarcodeScanner.scanBarcode(
-                      //    '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
+                      barcodeResult = await FlutterBarcodeScanner.scanBarcode(
+                          '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
                       String url =
                           'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
                       String differentUrl =
                           'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-                      apiResult = await http.get('http://opengtindb.org/?ean=4316268374385&cmd=query&queryid=400000000');
-
-                      try {
-                        product = apiResponseToOffer(apiResult);
-                        setState(() {
-
-                        });
-                      }catch(e) {
-                        //error handling
+                      if (barcodeResult != "-1") {
+                        //-1 heißt der barcode scanner wurde abgebrochen
+                        apiResult = await http.get(
+                            'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000');
+                        //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
+                        try {
+                          setState(() {
+                            product = apiResponseToOffer(apiResult);
+                          });
+                        } catch (e) {
+                          _showError(e);
+                          //error handling
+                        }
                       }
                     },
                     label: Text('Scan'),
@@ -88,7 +106,67 @@ class _AddItemState extends State<AddItem> {
                 ),
               )
             ],
-          )
+          ),
+          Column(
+            children: [
+              FormFieldStyled(
+                initialValue: product.title,
+                hintText: "Produktname",
+                autocorrect: true,
+              ),
+              FormFieldStyled(
+                initialValue: product.brand,
+                hintText: "Marke/Firma",
+                autocorrect: true,
+              ),
+              DropdownButton(
+                hint: Text(
+                  'Kategorie',
+                  style: TextStyle(color: Colors.white),
+                ),
+                dropdownColor: Colors.black,
+                items: [
+                  DropdownMenuItem(
+                    child: Text(
+                      'Kategorie 1',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    child: Text(
+                      'Kategorie 2',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  DropdownMenuItem(
+                    child: Text(
+                      'Kategorie 3',
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ],
+                onChanged: (value) {},
+              ),
+              FormFieldStyled(
+                initialValue: product.description,
+                hintText: "Beschreibung",
+                autocorrect: true,
+              ),
+              FormFieldStyled(
+                initialValue: "10",
+                hintText: "Beschte Preis",
+                autocorrect: true,
+                type: TextInputType.numberWithOptions(signed: false, decimal: true),
+              ),
+
+
+              /*
+            Text(product.title,style: TextStyle(color: Colors.white),),
+            Text(product.description,style: TextStyle(color: Colors.white),),
+            Text(product.brand,style: TextStyle(color: Colors.white),),
+             */
+            ],
+          ),
         ],
       ),
     );
@@ -96,7 +174,14 @@ class _AddItemState extends State<AddItem> {
 
   Offer apiResponseToOffer(http.Response apiResult) {
     String result = apiResult.body;
-    Offer offer;
+    Offer offer = Offer(
+        title: "",
+        price: 0.0,
+        offerId: 0,
+        imageUrl: "",
+        description: "",
+        category: null,
+        brand: "");
     //fehlercodes:
     //0 - OK - Operation war erfolgreich
     // 1 - not found - die EAN konnte nicht gefunden werden
@@ -114,21 +199,58 @@ class _AddItemState extends State<AddItem> {
     // 13 - queryid missing or wrong - die UserID/queryid fehlt in der Abfrage oder ist für diese Funktion nicht freigeschaltet
     // 14 - unknown command - es wurde mit dem Parameter "cmd" ein unbekanntes Kommando übergeben
 
+    //result = "error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---";
     String error = result.substring(7, 8);
-    print(error);
-    if (error == "0"){
-      offer.description = result;
+    if (error == "0") {
+      //offer.description = result;
+      //print(result);
       //result.split('---');
       //decoded = result[1];
       LineSplitter ls = new LineSplitter();
-      List<String> lines = ls.convert(result);
-    }else if(error == "1"){
+      List lines = ls.convert(result);
+      //List lines = result.split("\n");
+      //print(lines[0]);
+      //print(lines[1]);
+      for (int i = 1; i < lines.length; i++) {
+        List<String> newLine = lines[i].split("=");
+        if (newLine.length > 1) {
+          lines[i - 1] = newLine[1];
+        } else {
+          lines[i - 1] = "";
+        }
+      }
+      //indizes
+      //0=error
+      //1=---
+      //2=asin
+      //3=name
+      //4=detailname
+      //5=verkäufer
+      //6=kategorie
+      //7=unterkategorie
+      //8=kategorienummer
+      //9="contents"
+      //10="pack"
+      //11=Herkunft
+      //12=Beschreibung
+      //13=name_en(oft leer)
+      //14=detailname_en(oft leer)
+      //15=validated (prozent)
+      //16=---
+      //print(lines);
+      offer.title = lines[4];
+      offer.brand = lines[5];
+      //offer.category=lines[6]; Kategorie scheint objekt zu sein
+      offer.description = lines[13];
+    } else if (error == "1") {
       throw Exception('Artikel nicht gefunden');
-    }else if(error == "2"){
+    } else if (error == "2") {
       throw Exception('Fehler bei der Übertragung');
-    }else if(error == "3"){
+    } else if (error == "3") {
       throw Exception('Fehler beim Scannen des Codes');
-    }else{
+    } else if (error == "5") {
+      throw Exception('Limit überschritten');
+    } else {
       throw Exception('API Fehler');
     }
     /*
@@ -159,5 +281,31 @@ class _AddItemState extends State<AddItem> {
         break;
     }*/
     return offer;
+  }
+
+  void _showError(Exception e) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: new Text(
+            "Fehler",
+            style: TextStyle(color: Colors.black),
+          ),
+          content: new Text(
+            e.toString(),
+            style: TextStyle(color: Colors.black),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text("Schließen"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }

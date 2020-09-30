@@ -225,98 +225,102 @@ class _PersonalFormState extends State<PersonalForm> {
           return Form(
             key: _key,
             autovalidate: _autoValidate,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(flex: 3, child: _buildFirstNameField()),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(flex: 2, child: _buildNameField()),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildEMailField(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(flex: 3, child: _buildStreetField()),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(flex: 1, child: _buildHouseNrField()),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Expanded(flex: 2, child: _buildPlzField()),
-                      SizedBox(
-                        width: 10,
-                      ),
-                      Expanded(flex: 3, child: _buildCityField()),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildPasswordField(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  _buildPasswordAgainField(),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  RaisedButton(
-                    color: Theme.of(context).primaryColor,
-                    textColor: Colors.white,
-                    padding: const EdgeInsets.all(16),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('Register'),
-                    onPressed: state is RegisterLoading
-                        ? () {}
-                        : _onRegisterSubmitPressed,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: 'Du hast noch kein Konto? ',
-                      style: TextStyle(
-                        color: Colors.white,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Login',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              BlocProvider.of<RegisterBloc>(context)
-                                  .add(RegisterPhoneForm());
-                              BlocProvider.of<AuthenticationBloc>(context)
-                                  .add(UserSignIn());
-                            },
+            child: Flexible(
+              fit: FlexFit.loose,
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(flex: 3, child: _buildFirstNameField()),
+                        SizedBox(
+                          width: 10,
                         ),
+                        Expanded(flex: 2, child: _buildNameField()),
                       ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _buildEMailField(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(flex: 3, child: _buildStreetField()),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(flex: 1, child: _buildHouseNrField()),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(flex: 2, child: _buildPlzField()),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Expanded(flex: 3, child: _buildCityField()),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _buildPasswordField(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    _buildPasswordAgainField(),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(16),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(8.0)),
+                      child: Text('Register'),
+                      onPressed: state is RegisterLoading
+                          ? () {}
+                          : _onRegisterSubmitPressed,
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Du hast noch kein Konto? ',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Login',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () {
+                                BlocProvider.of<RegisterBloc>(context)
+                                    .add(RegisterPhoneForm());
+                                BlocProvider.of<AuthenticationBloc>(context)
+                                    .add(UserSignIn());
+                              },
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );
