@@ -29,7 +29,7 @@ class _AddItemState extends State<AddItem> {
         category: null,
         description: "",
         price: 0.0,
-        title: "test",
+        title: "",
         offerId: null,
         numberOfRatings: 0,
         rating: 0);
@@ -154,9 +154,10 @@ class _AddItemState extends State<AddItem> {
             initialValue: product.description,
             hintText: "Beschreibung",
             autocorrect: true,
-            maxLines: 10,
+            maxLines: 8,
           ),
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Expanded(
                 child: FormFieldStyled(
@@ -167,7 +168,10 @@ class _AddItemState extends State<AddItem> {
                 ),
               ),
               Expanded(
-                child: Text('Pro Tag', style: TextStyle(color: Colors.white),),
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                  child: Text('€ Pro Tag', style: TextStyle(color: Colors.white)),
+                ),
               )
             ],
           ),
