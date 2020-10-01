@@ -109,10 +109,7 @@ class ApiOfferService extends OfferService {
 
   @override
   List<String> getSuggestion() {
-    var suggestions = _storage.read(key: 'suggestions').whenComplete(() {
-      
-    });
-    jsonDecode(suggestions.);
+    var suggestions = _storage.read(key: 'suggestions');
     final _suggestedList = [
       'Test',
       'Title',
