@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:http/http.dart' as http;
-import 'package:rent/models/offer_model.dart';
+import 'package:rent/logic/models/category/category.dart';
+import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/logic/models/offer/offer.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class AddItem extends StatefulWidget {
@@ -17,18 +19,20 @@ class _AddItemState extends State<AddItem> {
   String barcodeResult = '';
   http.Response apiResult;
   Offer product;
+  Future<List<Category>> categoryList;
 
   @override
   void initState() {
     super.initState();
+    categoryList = ApiOfferService().getAllCategory();
     product = Offer(
-        brand: "",
         category: null,
         description: "",
-        imageUrl: "",
-        offerId: 0,
         price: 0.0,
-        title: "test");
+        title: "test",
+        offerId: null,
+        numberOfRatings: 0,
+        rating: 0);
   }
 
   @override
@@ -38,8 +42,8 @@ class _AddItemState extends State<AddItem> {
         title: Text('Ein Produkt einstellen'),
         centerTitle: true,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      body: ListView(
+        //crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -107,66 +111,70 @@ class _AddItemState extends State<AddItem> {
               )
             ],
           ),
-          Column(
+          FormFieldStyled(
+            initialValue: product.title,
+            hintText: "Produktname",
+            autocorrect: true,
+          ),
+          FutureBuilder<List<Category>>(
+              future: categoryList,
+              builder: (context, categories) {
+                if (categories.hasData) {
+                  return Padding(
+                    padding: const EdgeInsets.all(4.0),
+                    child: DropdownButton<Category>(
+                      dropdownColor: Colors.black,
+                      hint: Text(
+                        'Kategorie',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      items: categories.data
+                          .map<DropdownMenuItem<Category>>((Category value) {
+                        return DropdownMenuItem<Category>(
+                          value: value,
+                          child: Text(
+                            value.name,
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        setState(() {
+                          product.category = value;
+                        });
+                      },
+                      value: product.category,
+                    ),
+                  );
+                } else {
+                  return CircularProgressIndicator();
+                }
+              }),
+          FormFieldStyled(
+            initialValue: product.description,
+            hintText: "Beschreibung",
+            autocorrect: true,
+            maxLines: 10,
+          ),
+          Row(
             children: [
-              FormFieldStyled(
-                initialValue: product.title,
-                hintText: "Produktname",
-                autocorrect: true,
-              ),
-              FormFieldStyled(
-                initialValue: product.brand,
-                hintText: "Marke/Firma",
-                autocorrect: true,
-              ),
-              DropdownButton(
-                hint: Text(
-                  'Kategorie',
-                  style: TextStyle(color: Colors.white),
+              Expanded(
+                child: FormFieldStyled(
+                  initialValue: "10",
+                  hintText: "Beschte Preis",
+                  autocorrect: true,
+                  type: TextInputType.numberWithOptions(signed: false, decimal: true),
                 ),
-                dropdownColor: Colors.black,
-                items: [
-                  DropdownMenuItem(
-                    child: Text(
-                      'Kategorie 1',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    child: Text(
-                      'Kategorie 2',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  DropdownMenuItem(
-                    child: Text(
-                      'Kategorie 3',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                ],
-                onChanged: (value) {},
               ),
-              FormFieldStyled(
-                initialValue: product.description,
-                hintText: "Beschreibung",
-                autocorrect: true,
-              ),
-              FormFieldStyled(
-                initialValue: "10",
-                hintText: "Beschte Preis",
-                autocorrect: true,
-                type: TextInputType.numberWithOptions(signed: false, decimal: true),
-              ),
-
-
-              /*
-            Text(product.title,style: TextStyle(color: Colors.white),),
-            Text(product.description,style: TextStyle(color: Colors.white),),
-            Text(product.brand,style: TextStyle(color: Colors.white),),
-             */
+              Expanded(
+                child: Text('Pro Tag', style: TextStyle(color: Colors.white),),
+              )
             ],
           ),
+          RaisedButton(
+            child: Text('Speichern'),
+            onPressed: () {  },
+          )
         ],
       ),
     );
@@ -175,13 +183,14 @@ class _AddItemState extends State<AddItem> {
   Offer apiResponseToOffer(http.Response apiResult) {
     String result = apiResult.body;
     Offer offer = Offer(
-        title: "",
-        price: 0.0,
-        offerId: 0,
-        imageUrl: "",
-        description: "",
-        category: null,
-        brand: "");
+      title: "",
+      price: 0.0,
+      offerId: null,
+      description: "",
+      category: null,
+      numberOfRatings: null,
+      rating: null,
+    );
     //fehlercodes:
     //0 - OK - Operation war erfolgreich
     // 1 - not found - die EAN konnte nicht gefunden werden
@@ -239,7 +248,6 @@ class _AddItemState extends State<AddItem> {
       //16=---
       //print(lines);
       offer.title = lines[4];
-      offer.brand = lines[5];
       //offer.category=lines[6]; Kategorie scheint objekt zu sein
       offer.description = lines[13];
     } else if (error == "1") {

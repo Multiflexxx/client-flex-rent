@@ -14,6 +14,7 @@ class FormFieldStyled extends StatefulWidget {
   final TextInputType type;
   final length;
   final initialValue;
+  final maxLines;
 
   FormFieldStyled(
       {Key key,
@@ -27,7 +28,8 @@ class FormFieldStyled extends StatefulWidget {
       this.length,
       this.controller,
       this.autocorrect,
-      this.initialValue})
+      this.initialValue,
+      this.maxLines})
       : super(key: key);
 
   _FormFieldStyledState createState() => _FormFieldStyledState();
@@ -83,6 +85,7 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
       ),
       obscureText: widget.obscureText ?? false,
       validator: widget.validator,
+      maxLines: widget.maxLines ?? 1,
     );
   }
 }
