@@ -16,6 +16,7 @@ class AddItem extends StatefulWidget {
 }
 
 class _AddItemState extends State<AddItem> {
+  final _formKey = GlobalKey<FormState>();
   String barcodeResult = '';
   http.Response apiResult;
   Offer product;
@@ -42,144 +43,152 @@ class _AddItemState extends State<AddItem> {
         title: Text('Ein Produkt einstellen'),
         centerTitle: true,
       ),
-      body: ListView(
-        //crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ClipRRect(
-                borderRadius: BorderRadius.circular(60.0),
-                child: Image(
-                  width: 200,
-                  height: 200,
-                  image: AssetImage('assets/images/jett.jpg'),
-                ),
-              ),
-              Expanded(
-                child: Icon(
-                  Icons.edit,
-                  color: Colors.white,
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: [
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton.icon(
-                    icon: Icon(Icons.search),
-                    onPressed: () {},
-                    label: Text('Search'),
-                  ),
-                ),
-              ),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: RaisedButton.icon(
-                    icon: Icon(Ionicons.md_qr_scanner),
-                    onPressed: () async {
-                      barcodeResult = await FlutterBarcodeScanner.scanBarcode(
-                          '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
-                      String url =
-                          'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
-                      String differentUrl =
-                          'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-                      if (barcodeResult != "-1") {
-                        //-1 heißt der barcode scanner wurde abgebrochen
-                        apiResult = await http.get(
-                            'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000');
-                        //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
-                        try {
-                          setState(() {
-                            product = apiResponseToOffer(apiResult);
-                          });
-                        } catch (e) {
-                          _showError(e);
-                          //error handling
-                        }
-                      }
-                    },
-                    label: Text('Scan'),
-                  ),
-                ),
-              )
-            ],
-          ),
-          FormFieldStyled(
-            initialValue: product.title,
-            hintText: "Produktname",
-            autocorrect: true,
-          ),
-          FutureBuilder<List<Category>>(
-              future: categoryList,
-              builder: (context, categories) {
-                if (categories.hasData) {
-                  return Padding(
-                    padding: const EdgeInsets.all(4.0),
-                    child: DropdownButton<Category>(
-                      dropdownColor: Colors.black,
-                      hint: Text(
-                        'Kategorie',
-                        style: TextStyle(color: Colors.white),
+      body: Form(
+        key: _formKey,
+        child: Flexible(
+          fit: FlexFit.loose,
+          child: SingleChildScrollView(
+            child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(60.0),
+                      child: Image(
+                        width: 200,
+                        height: 200,
+                        image: AssetImage('assets/images/jett.jpg'),
                       ),
-                      items: categories.data
-                          .map<DropdownMenuItem<Category>>((Category value) {
-                        return DropdownMenuItem<Category>(
-                          value: value,
-                          child: Text(
-                            value.name,
-                            style: TextStyle(color: Colors.white),
+                    ),
+                    Expanded(
+                      child: Icon(
+                        Icons.edit,
+                        color: Colors.white,
+                      ),
+                    )
+                  ],
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RaisedButton.icon(
+                          icon: Icon(Icons.search),
+                          onPressed: () {},
+                          label: Text('Search'),
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      flex: 1,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: RaisedButton.icon(
+                          icon: Icon(Ionicons.md_qr_scanner),
+                          onPressed: () async {
+                            barcodeResult = await FlutterBarcodeScanner.scanBarcode(
+                                '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
+                            String url =
+                                'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
+                            String differentUrl =
+                                'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
+                            if (barcodeResult != "-1") {
+                              //-1 heißt der barcode scanner wurde abgebrochen
+                              apiResult = await http.get(
+                                  'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000');
+                              //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
+                              try {
+                                setState(() {
+                                  product = apiResponseToOffer(apiResult);
+                                });
+                              } catch (e) {
+                                _showError(e);
+                                //error handling
+                              }
+                            }
+                          },
+                          label: Text('Scan'),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+                FormFieldStyled(
+                  initialValue: product.title,
+                  hintText: "Produktname",
+                  autocorrect: true,
+                ),
+                FutureBuilder<List<Category>>(
+                    future: categoryList,
+                    builder: (context, categories) {
+                      if (categories.hasData) {
+                        return Padding(
+                          padding: const EdgeInsets.all(4.0),
+                          child: DropdownButton<Category>(
+                            dropdownColor: Colors.black,
+                            hint: Text(
+                              'Kategorie',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                            items: categories.data
+                                .map<DropdownMenuItem<Category>>((Category value) {
+                              return DropdownMenuItem<Category>(
+                                value: value,
+                                child: Text(
+                                  value.name,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                product.category = value;
+                              });
+                            },
+                            value: product.category,
                           ),
                         );
-                      }).toList(),
-                      onChanged: (value) {
-                        setState(() {
-                          product.category = value;
-                        });
-                      },
-                      value: product.category,
-                    ),
-                  );
-                } else {
-                  return CircularProgressIndicator();
-                }
-              }),
-          FormFieldStyled(
-            initialValue: product.description,
-            hintText: "Beschreibung",
-            autocorrect: true,
-            maxLines: 8,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Expanded(
-                child: FormFieldStyled(
-                  initialValue: "10",
-                  hintText: "Beschte Preis",
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    }),
+                FormFieldStyled(
+                  initialValue: product.description,
+                  hintText: "Beschreibung",
                   autocorrect: true,
-                  type: TextInputType.numberWithOptions(signed: false, decimal: true),
+                  maxLines: 8,
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                  child: Text('€ Pro Tag', style: TextStyle(color: Colors.white)),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: FormFieldStyled(
+                        initialValue: "10",
+                        hintText: "Beschte Preis",
+                        autocorrect: true,
+                        type: TextInputType.numberWithOptions(signed: false, decimal: true),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                        child: Text('€ Pro Tag', style: TextStyle(color: Colors.white)),
+                      ),
+                    )
+                  ],
                 ),
-              )
-            ],
+                RaisedButton(
+                  child: Text('Speichern'),
+                  onPressed: () {  },
+                )
+              ],
+            ),
           ),
-          RaisedButton(
-            child: Text('Speichern'),
-            onPressed: () {  },
-          )
-        ],
+        ),
       ),
     );
   }
