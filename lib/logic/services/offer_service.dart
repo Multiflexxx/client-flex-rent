@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
 
@@ -10,9 +11,13 @@ abstract class OfferService {
   Future<Offer> getOfferById();
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Category>> getAllCategory();
+  List<String> getSuggestion();
+  void setSuggestion();
 }
 
 class ApiOfferService extends OfferService {
+  final _storage = FlutterSecureStorage();
+
   @override
   Future<List<Offer>> getAllOffers(
       {int limit, int category, String search}) async {
@@ -100,5 +105,25 @@ class ApiOfferService extends OfferService {
     } else {
       return null;
     }
+  }
+
+  @override
+  List<String> getSuggestion() {
+    var suggestions = _storage.read(key: 'suggestions').whenComplete(() {
+      
+    });
+    jsonDecode(suggestions.);
+    final _suggestedList = [
+      'Test',
+      'Title',
+      'Teufel',
+    ];
+    return _suggestedList;
+  }
+
+  @override
+  void setSuggestion({String query}) {
+    var suggestions = _storage.read(key: 'suggestions');
+    // _storage.write(key: 'suggestions', value: null);
   }
 }

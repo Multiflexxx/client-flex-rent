@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/offer/offer.dart';
-import 'package:rent/screens/product/offer_screen.dart';
+import 'package:rent/screens/offer/offer_screen.dart';
 
 class DiscoveryCarousel extends StatefulWidget {
   final List<Offer> offerList;
