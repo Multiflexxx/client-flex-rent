@@ -90,14 +90,19 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                         ),
                       ),
                       Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: _icons
-                              .asMap()
-                              .entries
-                              .map(
-                                (MapEntry map) => _buildIcon(map.key),
-                              )
-                              .toList()),
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: _icons
+                            .asMap()
+                            .entries
+                            .map(
+                              (MapEntry map) => _buildIcon(map.key),
+                            )
+                            .toList(),
+                      ),
+                      RaisedButton(
+                        onPressed: () => ApiOfferService().createOffer(),
+                        child: Text('test'),
+                      ),
                       FutureBuilder<Map<String, List<Offer>>>(
                         future: discoveryOffer,
                         builder: (context, snapshot) {

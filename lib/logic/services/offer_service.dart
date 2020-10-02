@@ -1,8 +1,10 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
+import 'package:rent/logic/models/offer/newOffer.dart';
 
 import '../exceptions/exceptions.dart';
 
@@ -11,6 +13,7 @@ abstract class OfferService {
   Future<Offer> getOfferById();
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Category>> getAllCategory();
+  Future<Offer> createOffer();
   List<String> getSuggestion();
   void setSuggestion();
 }
@@ -122,5 +125,25 @@ class ApiOfferService extends OfferService {
   void setSuggestion({String query}) {
     var suggestions = _storage.read(key: 'suggestions');
     // _storage.write(key: 'suggestions', value: null);
+  }
+
+  @override
+  Future<Offer> createOffer({NewOffer newOffer}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    NewOffer offer = NewOffer(
+        title: 'Boomstar', description: 'Keine', price: 14, categoryId: 1);
+
+    newOffer.sessionId = sessionId;
+    newOffer.userId = userId;
+
+    final response = await http.put(
+      'https://flexrent.multiflexxx.de/offer/',
+      headers: {"Content-Type": "application/json"},
+      body: offer.toJson(),
+    );
+
+    inspect(response);
   }
 }
