@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/widgets/price/price_tag.dart';
@@ -93,24 +94,43 @@ class ProductCard extends StatelessWidget {
                   ),
                 ),
                 Container(
-                  width: 170,
-                  height: 200,
+                  width: 170.0,
+                  height: 200.0,
                   margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
-                  child: ClipRRect(
+                  decoration: BoxDecoration(
+                    color: Colors.black,
                     borderRadius: BorderRadius.circular(20.0),
-                    child: offer.pictureLinks.length == 0
-                        ? Image(
-                            image: AssetImage('assets/images/dyson.jpg'),
-                            height: 100,
-                            width: 200,
-                            fit: BoxFit.cover,
-                          )
-                        : Image.network(
-                            offer.pictureLinks[0],
-                            height: 100,
-                            width: 200,
-                            fit: BoxFit.cover,
-                          ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black26,
+                        offset: Offset(0.0, 2.0),
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                  ),
+                  child: Hero(
+                    tag: offer.offerId + offer.category.name,
+                    transitionOnUserGestures: true,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: offer.pictureLinks.length == 0
+                          ? Image(
+                              image: AssetImage('assets/images/noimage.png'),
+                              fit: BoxFit.cover,
+                            )
+                          : CachedNetworkImage(
+                              imageUrl: offer.pictureLinks[0],
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Icon(
+                                Icons.error,
+                                color: Colors.white,
+                              ),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.error,
+                                color: Colors.white,
+                              ),
+                            ),
+                    ),
                   ),
                 ),
               ],

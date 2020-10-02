@@ -5,15 +5,15 @@ part 'offer.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Offer {
-  final String offerId;
-  final String title;
-  final String description;
-  final double rating;
-  final int numberOfRatings;
-  final double price;
-  final Category category;
-  final List<String> pictureLinks;
-  final Lessor lessor;
+  String offerId;
+  String title;
+  String description;
+  double rating;
+  int numberOfRatings;
+  double price;
+  Category category;
+  List<String> pictureLinks;
+  Lessor lessor;
 
   Offer(
       {@required this.offerId,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
-import 'package:rent/screens/product/product_screen.dart';
+import 'package:rent/screens/offer/offer_screen.dart';
 import 'package:rent/widgets/product/product_card.dart';
 
 class ProductListScreen extends StatefulWidget {
@@ -41,7 +41,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 return GestureDetector(
                   onTap: () => pushNewScreen(
                     context,
-                    screen: OfferScreen(offer: offer),
+                    screen: OfferScreen(
+                      offer: offer,
+                      heroTag: offer.offerId + offer.category.name,
+                    ),
                     withNavBar: false,
                   ),
                   child: ProductCard(offer: offer),
@@ -49,7 +52,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
               },
             );
           }
-          return CircularProgressIndicator();
+          return Center(
+            child: CircularProgressIndicator(),
+          );
         },
       ),
     );

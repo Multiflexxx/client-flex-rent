@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,8 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
 class OfferScreen extends StatefulWidget {
   final Offer offer;
-  OfferScreen({this.offer});
+  final String heroTag;
+  OfferScreen({this.offer, this.heroTag});
 
   @override
   _OfferScreenState createState() => _OfferScreenState();
@@ -106,7 +108,8 @@ class _OfferScreenState extends State<OfferScreen> {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Hero(
-                    tag: widget.offer.offerId,
+                    tag: widget.heroTag,
+                    transitionOnUserGestures: true,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
@@ -114,16 +117,24 @@ class _OfferScreenState extends State<OfferScreen> {
                       ),
                       child: widget.offer.pictureLinks.length == 0
                           ? Image(
-                              image: AssetImage('assets/images/dyson.jpg'),
+                              image: AssetImage('assets/images/noimage.png'),
                               height: 180.0,
                               width: 180.0,
                               fit: BoxFit.cover,
                             )
-                          : Image.network(
-                              widget.offer.pictureLinks[0],
+                          : CachedNetworkImage(
+                              imageUrl: widget.offer.pictureLinks[0],
                               height: 180.0,
                               width: 180.0,
                               fit: BoxFit.cover,
+                              placeholder: (context, url) => Icon(
+                                Icons.error,
+                                color: Colors.white,
+                              ),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.error,
+                                color: Colors.white,
+                              ),
                             ),
                     ),
                   ),

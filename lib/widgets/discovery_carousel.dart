@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/offer/offer.dart';
-import 'package:rent/screens/product/product_screen.dart';
+import 'package:rent/screens/offer/offer_screen.dart';
 
 class DiscoveryCarousel extends StatefulWidget {
   final List<Offer> offerList;
@@ -55,7 +56,10 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
               return GestureDetector(
                 onTap: () => pushNewScreen(
                   context,
-                  screen: OfferScreen(offer: offer),
+                  screen: OfferScreen(
+                    offer: offer,
+                    heroTag: offer.offerId + widget.carouselTitle,
+                  ),
                   withNavBar: false,
                 ),
                 child: Container(
@@ -133,22 +137,31 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           ],
                         ),
                         child: Hero(
-                          tag: offer.offerId,
+                          tag: offer.offerId + widget.carouselTitle,
+                          transitionOnUserGestures: true,
                           child: ClipRRect(
                             borderRadius: BorderRadius.circular(20.0),
                             child: offer.pictureLinks.length == 0
                                 ? Image(
                                     image:
-                                        AssetImage('assets/images/dyson.jpg'),
+                                        AssetImage('assets/images/noimage.png'),
                                     height: 180.0,
                                     width: 180.0,
                                     fit: BoxFit.cover,
                                   )
-                                : Image.network(
-                                    offer.pictureLinks[0],
+                                : CachedNetworkImage(
+                                    imageUrl: offer.pictureLinks[0],
                                     height: 180.0,
                                     width: 180.0,
                                     fit: BoxFit.cover,
+                                    placeholder: (context, url) => Icon(
+                                      Icons.error,
+                                      color: Colors.white,
+                                    ),
+                                    errorWidget: (context, url, error) => Icon(
+                                      Icons.error,
+                                      color: Colors.white,
+                                    ),
                                   ),
                           ),
                         ),

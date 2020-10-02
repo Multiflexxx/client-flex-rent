@@ -12,12 +12,18 @@ class PersonalInfo extends StatefulWidget {
 
 class _PersonalInfoState extends State<PersonalInfo> {
   final _formKey = GlobalKey<FormState>();
+  User user;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+    as AuthenticationAuthenticated;
+    user = state.user;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-    as AuthenticationAuthenticated;
-    final User user = state.user;
     return Scaffold(
       appBar: AppBar(
         title: Text("Meine Informationen"),

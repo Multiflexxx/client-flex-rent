@@ -26,7 +26,7 @@ class _PhoneFormState extends State<PhoneForm> {
   @override
   Widget build(BuildContext context) {
     _onNextPressed() {
-      if (_key.currentState.validate()) {
+      if (_key.currentState.validate() && _agbCheckBox == true) {
         BlocProvider.of<RegisterBloc>(context)
             .add(RegisterNextPressed(phoneNumber: _phoneController.text));
       } else {
@@ -40,6 +40,7 @@ class _PhoneFormState extends State<PhoneForm> {
           key: _key,
           autovalidate: _autoValidate,
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               FormFieldStyled(
                 controller: _phoneController,
@@ -56,23 +57,51 @@ class _PhoneFormState extends State<PhoneForm> {
                   }
                 },
               ),
-              Row(
-                children: [
-                  Theme(
-                    data: ThemeData(unselectedWidgetColor: Colors.white),
-                    child: Checkbox(
-                      onChanged: (bool value) {
-                        setState(() {
-                          _agbCheckBox = value;
-                        });
-                      },
-                      checkColor: Colors.purple,
-                      activeColor: Colors.black,
-                      value: _agbCheckBox,
-                    ),
-                  ),
-                  Text('Ich akzeptiere die AGB')
-                ],
+              FormField<bool>(
+                builder: (field) {
+                  return Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Row(
+                        children: [
+                          Theme(
+                            data:
+                                ThemeData(unselectedWidgetColor: Colors.white),
+                            child: Checkbox(
+                              checkColor: Colors.purple,
+                              activeColor: Colors.black,
+                              value: _agbCheckBox,
+                              onChanged: (bool value) {
+                                setState(() {
+                                  _agbCheckBox = value;
+                                  field.didChange(value);
+                                });
+                              },
+                            ),
+                          ),
+                          Text('Ich akzeptiere die AGB'),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          field.errorText ?? '',
+                          style: TextStyle(
+                            color: Theme.of(context).errorColor,
+                            fontSize: 12.0,
+                          ),
+                        ),
+                      )
+                    ],
+                  );
+                },
+                validator: (value) {
+                  if (!_agbCheckBox) {
+                    return 'Akzeptiere bitte unsere AGBs.';
+                  } else {
+                    return null;
+                  }
+                },
               ),
               SizedBox(
                 height: 16,

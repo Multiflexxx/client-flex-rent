@@ -1,17 +1,23 @@
 import 'dart:convert';
-import 'dart:developer';
 
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
+
+import '../exceptions/exceptions.dart';
 
 abstract class OfferService {
   Future<List<Offer>> getAllOffers();
   Future<Offer> getOfferById();
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Category>> getAllCategory();
+  List<String> getSuggestion();
+  void setSuggestion();
 }
 
 class ApiOfferService extends OfferService {
+  final _storage = FlutterSecureStorage();
+
   @override
   Future<List<Offer>> getAllOffers(
       {int limit, int category, String search}) async {
@@ -33,13 +39,16 @@ class ApiOfferService extends OfferService {
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);
-      final List<Offer> offerList =
-          (jsonBody).map((i) => Offer.fromJson(i)).toList();
 
-      inspect(offerList);
-      return offerList;
+      if (jsonBody.isNotEmpty) {
+        final List<Offer> offerList =
+            (jsonBody).map((i) => Offer.fromJson(i)).toList();
+        return offerList;
+      } else {
+        return Future.error(
+            OfferException(message: 'Die Suche ergab keine Ergebnisse'));
+      }
     } else {
-      inspect(response);
       return null;
     }
   }
@@ -80,9 +89,6 @@ class ApiOfferService extends OfferService {
           .map((i) => Offer.fromJson(i))
           .toList(),
     );
-
-    inspect(discoveryOffer);
-
     return discoveryOffer;
   }
 
@@ -95,11 +101,26 @@ class ApiOfferService extends OfferService {
       final List<dynamic> jsonBody = json.decode(response.body);
       final List<Category> categoryList =
           (jsonBody).map((i) => Category.fromJson(i)).toList();
-      inspect(categoryList);
       return categoryList;
     } else {
-      inspect(response);
       return null;
     }
+  }
+
+  @override
+  List<String> getSuggestion() {
+    var suggestions = _storage.read(key: 'suggestions');
+    final _suggestedList = [
+      'Test',
+      'Title',
+      'Teufel',
+    ];
+    return _suggestedList;
+  }
+
+  @override
+  void setSuggestion({String query}) {
+    var suggestions = _storage.read(key: 'suggestions');
+    // _storage.write(key: 'suggestions', value: null);
   }
 }

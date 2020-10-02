@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:rent/screens/product/product_list_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/exceptions/exceptions.dart';
+import 'package:rent/screens/offer/offer_screen.dart';
 import 'package:rent/widgets/divider_with_text.dart';
+import 'package:rent/widgets/product/product_card.dart';
+import '../../logic/models/models.dart';
+import '../../logic/services/offer_service.dart';
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -11,54 +16,16 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = new TextEditingController();
 
-  final _searchResult = [
-    'Berlin',
-    'Paris',
-    'Wien',
-    'Madrid',
-    'Prag',
-    'Amsterdam',
-    'Rom',
-    'München',
-    'Athen',
-    'Lissabon',
-    'London',
-    'New York',
-  ];
+  Future<List<Offer>> _searchOfferList;
 
-  final _suggestedList = [
-    'Wien',
-    'Amsterdam',
-    'München',
-    'London',
-  ];
-
-  String _heading;
-  var _resultList = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _heading = 'Vorschläge';
-    _resultList = _suggestedList;
-    print(_resultList);
-  }
-
-  var suggestionList = [];
+  List<String> _suggestedList = ApiOfferService().getSuggestion();
 
   void initiateSearch(String query) {
-    if (query.isEmpty) {
-      setState(() {
-        _heading = 'Vorschläge';
-        _resultList = _suggestedList;
-      });
-      return;
+    if (query.length > 3) {
+      _searchOfferList =
+          ApiOfferService().getAllOffers(search: query, limit: 3);
+      ApiOfferService().setSuggestion(query: query);
     }
-    //TODO API Call
-    setState(() {
-      _heading = 'Ergebnisse';
-      _resultList = _searchResult;
-    });
   }
 
   @override
@@ -68,96 +35,140 @@ class _SearchScreenState extends State<SearchScreen> {
     });
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            Padding(
-              padding: EdgeInsets.all(12.0),
-              child: TextField(
-                controller: _searchController,
-                autofocus: true,
-                cursorColor: Colors.purple,
-                style: TextStyle(
-                  color: Colors.white70,
-                  fontWeight: FontWeight.w500,
-                  letterSpacing: 1.25,
-                ),
-                onChanged: (query) {
-                  initiateSearch(query);
-                },
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.black,
-                  hintStyle: TextStyle(color: Colors.white70),
-                  hintText: "Search",
-                  contentPadding: EdgeInsets.symmetric(vertical: 0.0),
-                  prefixIcon: BackButton(
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.all(12.0),
+                child: TextField(
+                  controller: _searchController,
+                  autofocus: true,
+                  cursorColor: Colors.purple,
+                  style: TextStyle(
                     color: Colors.white70,
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.25,
                   ),
-                  suffixIcon: _searchController.text.length > 0
-                      ? IconButton(
-                          icon: Icon(
-                            Feather.x,
-                          ),
-                          color: Colors.white70,
-                          onPressed: () {
-                            setState(() {
-                              _searchController.clear();
-                              _heading = 'Vorschläge';
-                              _resultList = _suggestedList;
-                            });
-                          },
-                        )
-                      : null,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: BorderSide(
-                      color: Colors.white54,
-                      width: 0.75,
+                  onSubmitted: (query) {
+                    initiateSearch(query);
+                  },
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.black,
+                    hintStyle: TextStyle(color: Colors.white70),
+                    hintText: "Suche",
+                    contentPadding: EdgeInsets.symmetric(vertical: 0.0),
+                    prefixIcon: BackButton(
+                      color: Colors.white70,
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(15.0),
-                    borderSide: BorderSide(
-                      color: Colors.purple,
-                      width: 0.75,
+                    suffixIcon: _searchController.text.length > 0
+                        ? IconButton(
+                            icon: Icon(
+                              Feather.x,
+                            ),
+                            color: Colors.white70,
+                            onPressed: () {
+                              setState(() {
+                                _searchController.clear();
+                                _searchOfferList = Future.value();
+                              });
+                            },
+                          )
+                        : null,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: BorderSide(
+                        color: Colors.white54,
+                        width: 0.75,
+                      ),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(15.0),
+                      borderSide: BorderSide(
+                        color: Colors.purple,
+                        width: 0.75,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SizedBox(
-              height: 15.0,
-            ),
-            Padding(
-              padding: EdgeInsets.only(left: 10.0, right: 10.0),
-              child: DividerWithText(
-                dividerText: _heading,
+              SizedBox(
+                height: 15.0,
               ),
-            ),
-            Expanded(
-              child: ListView.builder(
-                itemCount: _resultList.length,
-                itemBuilder: (context, index) =>
-                    buildResultCard(_resultList[index]),
+              Expanded(
+                child: FutureBuilder<List<Offer>>(
+                  future: _searchOfferList,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.waiting) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (snapshot.hasData) {
+                      return Column(
+                        children: <Widget>[
+                          DividerWithText(
+                            dividerText: 'Ergebnisse',
+                          ),
+                          Expanded(
+                            child: ListView.builder(
+                              itemCount: snapshot.data.length,
+                              itemBuilder: (context, index) {
+                                Offer offer = snapshot.data[index];
+                                return GestureDetector(
+                                  onTap: () => pushNewScreen(
+                                    context,
+                                    screen: OfferScreen(offer: offer),
+                                    withNavBar: false,
+                                  ),
+                                  child: ProductCard(offer: offer),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      OfferException e = snapshot.error;
+                      return Text(e.message);
+                    }
+                    return Column(
+                      children: <Widget>[
+                        DividerWithText(
+                          dividerText: 'Vorschläge',
+                        ),
+                        Expanded(
+                          child: ListView.builder(
+                            itemCount: _suggestedList.length,
+                            itemBuilder: (context, index) {
+                              return buildSuggestion(_suggestedList[index]);
+                            },
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildResultCard(data) {
+  Widget buildSuggestion(query) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        new MaterialPageRoute(
-          builder: (BuildContext context) => new ProductListScreen(),
-        ),
-      ),
+      onTap: () {
+        setState(() {
+          _searchController.text = query;
+        });
+        initiateSearch(query);
+      },
       child: Container(
         height: 0.075 * MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
@@ -173,34 +184,21 @@ class _SearchScreenState extends State<SearchScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Icons.location_city,
-                    size: 40.0,
-                    color: Colors.white70,
-                  ),
-                  SizedBox(
-                    width: 25.0,
-                  ),
-                  Text(
-                    data,
-                    style: TextStyle(
-                        fontSize: 21.0,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white70,
-                        letterSpacing: 1.2),
-                  ),
-                ],
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0),
+                child: Text(
+                  query,
+                  style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white70,
+                      letterSpacing: 1.2),
+                ),
               ),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Ionicons.ios_arrow_forward,
-                    size: 30.0,
-                    color: Colors.white70,
-                  ),
-                ],
+              Icon(
+                Ionicons.ios_arrow_forward,
+                size: 24.0,
+                color: Colors.white70,
               ),
             ],
           ),
