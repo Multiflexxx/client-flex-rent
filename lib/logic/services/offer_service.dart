@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/models/offer/newOffer.dart';
 
 import '../exceptions/exceptions.dart';
 
@@ -111,6 +109,29 @@ class ApiOfferService extends OfferService {
   }
 
   @override
+  Future<Offer> createOffer({Offer newOffer}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response = await http.put('https://flexrent.multiflexxx.de/offer/',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(<String, dynamic>{
+          'session': session.toJson(),
+          'offer': newOffer.toJson()
+        }));
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBody = json.decode(response.body);
+      final Offer offer = Offer.fromJson(jsonBody);
+      return offer;
+    } else {
+      return null;
+    }
+  }
+
+  @override
   List<String> getSuggestion() {
     var suggestions = _storage.read(key: 'suggestions');
     final _suggestedList = [
@@ -125,25 +146,5 @@ class ApiOfferService extends OfferService {
   void setSuggestion({String query}) {
     var suggestions = _storage.read(key: 'suggestions');
     // _storage.write(key: 'suggestions', value: null);
-  }
-
-  @override
-  Future<Offer> createOffer({NewOffer newOffer}) async {
-    final String sessionId = await _storage.read(key: 'sessionId');
-    final String userId = await _storage.read(key: 'userId');
-
-    NewOffer offer = NewOffer(
-        title: 'Boomstar', description: 'Keine', price: 14, categoryId: 1);
-
-    newOffer.sessionId = sessionId;
-    newOffer.userId = userId;
-
-    final response = await http.put(
-      'https://flexrent.multiflexxx.de/offer/',
-      headers: {"Content-Type": "application/json"},
-      body: offer.toJson(),
-    );
-
-    inspect(response);
   }
 }

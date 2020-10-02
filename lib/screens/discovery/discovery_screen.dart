@@ -99,10 +99,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                             )
                             .toList(),
                       ),
-                      RaisedButton(
-                        onPressed: () => ApiOfferService().createOffer(),
-                        child: Text('test'),
-                      ),
                       FutureBuilder<Map<String, List<Offer>>>(
                         future: discoveryOffer,
                         builder: (context, snapshot) {

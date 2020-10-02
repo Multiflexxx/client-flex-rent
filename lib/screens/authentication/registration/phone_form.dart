@@ -103,9 +103,7 @@ class _PhoneFormState extends State<PhoneForm> {
                   }
                 },
               ),
-              SizedBox(
-                height: 16,
-              ),
+              SizedBox(height: 16),
               RaisedButton(
                 color: Theme.of(context).primaryColor,
                 textColor: Colors.white,

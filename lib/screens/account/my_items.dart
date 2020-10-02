@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/screens/account/add_item.dart';
+import 'package:rent/screens/account/create_offer/add_item.dart';
 
 class MyItems extends StatefulWidget {
   @override
@@ -24,11 +24,11 @@ class _MyItemsState extends State<MyItems> {
               child: Padding(
                 padding: EdgeInsets.all(8.0),
                 child: FlatButton(
-                  onPressed: (){
-                    Navigator.push(context, new CupertinoPageRoute(
-                        builder: (BuildContext context) {
-                          return AddItem();
-                        }));
+                  onPressed: () {
+                    Navigator.push(context,
+                        new CupertinoPageRoute(builder: (BuildContext context) {
+                      return AddItem();
+                    }));
                   },
                   child: Text(
                     '+',
@@ -43,7 +43,7 @@ class _MyItemsState extends State<MyItems> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                 ListTile(
+                  ListTile(
                     title: Text('iPhone 11'),
                     subtitle: Text('Apple'),
                   ),
