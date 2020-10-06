@@ -7,10 +7,9 @@ import 'package:rent/screens/rentalItems/rental_items_screen.dart';
 import 'screens/account/account_screen.dart';
 import 'screens/category/category_screen.dart';
 import 'screens/discovery/discovery_screen.dart';
-import 'package:rent/screens/search/search_screen.dart';
 
 class App extends StatefulWidget {
-  final titles = ['Home', 'Category', 'Cart', 'Search', 'Account'];
+  final titles = ['Home', 'Category', 'Cart', 'Account'];
   final icons = [
     Icon(
       Feather.home,
@@ -22,10 +21,6 @@ class App extends StatefulWidget {
     ),
     Icon(
       Feather.shopping_bag,
-      size: 22,
-    ),
-    Icon(
-      Feather.search,
       size: 22,
     ),
     Icon(
@@ -56,7 +51,6 @@ class _AppState extends State<App> {
       DiscoveryScreen(),
       CategoryScreen(),
       RentalItemsScreen(),
-      SearchScreen(),
       AccountScreen()
     ];
   }

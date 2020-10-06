@@ -17,7 +17,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-
   final routes = {
     'personalInfo': PersonalInfo(),
     'myitems': MyItems(),
@@ -29,9 +28,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final state = BlocProvider.of<AuthenticationBloc>(context).state
-    as AuthenticationAuthenticated;
+        as AuthenticationAuthenticated;
     final User user = state.user;
 
     String name = '${user.firstName} ${user.lastName}';
@@ -105,11 +103,11 @@ class _AccountScreenState extends State<AccountScreen> {
                             Navigator.push(
                               context,
                               new CupertinoPageRoute(
-                                builder: (BuildContext context) {
-                                  return routes[option.optionId] ??
-                                      PageNotFound();
-                                },
-                              ),
+                                  builder: (BuildContext context) {
+                                    return routes[option.optionId] ??
+                                        PageNotFound();
+                                  },
+                                  settings: RouteSettings(name: option.name)),
                             );
                           } else {
                             BlocProvider.of<AuthenticationBloc>(context)

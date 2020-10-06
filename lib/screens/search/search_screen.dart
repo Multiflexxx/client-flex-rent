@@ -4,7 +4,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/screens/offer/offer_screen.dart';
 import 'package:rent/widgets/divider_with_text.dart';
-import 'package:rent/widgets/product/product_card.dart';
+import 'package:rent/widgets/offer/offer_card.dart';
 import '../../logic/models/models.dart';
 import '../../logic/services/offer_service.dart';
 

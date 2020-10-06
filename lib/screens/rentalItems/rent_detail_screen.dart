@@ -4,19 +4,19 @@ import 'package:rent/models/rent_product_model.dart';
 import 'package:rent/widgets/price/price_overview.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:rent/widgets/product_detail/description_box.dart';
+import 'package:rent/widgets/offer_detail/description_box.dart';
+import 'package:rent/widgets/offer_detail/user_box.dart';
+import 'package:rent/widgets/offer_detail/rating_box.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
 import 'package:flutter/cupertino.dart';
 
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:rent/widgets/product_detail/user_box.dart';
-import 'package:rent/widgets/product_detail/rating_box.dart';
 
 class RentDetailScreen extends StatefulWidget {
-  final RentProduct rentProduct;
-  RentDetailScreen({this.rentProduct});
+  final RentOffer rentOffer;
+  RentDetailScreen({this.rentOffer});
 
   @override
   _RentDetailScreen createState() => _RentDetailScreen();
@@ -90,7 +90,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
               ],
               centerTitle: true,
               title: Text(
-                widget.rentProduct.title,
+                widget.rentOffer.title,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
@@ -102,14 +102,14 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Hero(
-                    tag: widget.rentProduct.offerId,
+                    tag: widget.rentOffer.offerId,
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0),
                       ),
                       child: Image(
-                        image: AssetImage(widget.rentProduct.imageUrl),
+                        image: AssetImage(widget.rentOffer.imageUrl),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -143,7 +143,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                           children: <Widget>[
                             Column(
                               children: [
-                                PriceTag(widget.rentProduct.price),
+                                PriceTag(widget.rentOffer.price),
                                 GestureDetector(
                                   onTap: () => showCupertinoModalBottomSheet(
                                     expand: false,
@@ -151,7 +151,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                                     barrierColor: Colors.black45,
                                     builder: (context, scrollController) =>
                                         PriceOverview(
-                                      price: widget.rentProduct.price,
+                                      price: widget.rentOffer.price,
                                       scrollController: scrollController,
                                       startDate: _startDate,
                                       endDate: _endDate,
@@ -178,7 +178,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                             //           builder: (BuildContext context) =>
                             //               new ConfirmationPaymentScreen(
                             //             offerRequest: OfferRequest(
-                            //                 offer: widget.rentProduct,
+                            //                 offer: widget.rentOffer,
                             //                 startDate: _startDate,
                             //                 endDate: _endDate),
                             //           ),
@@ -232,8 +232,8 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                 ),
                 // Description
                 DescriptionBox(
-                  description: widget.rentProduct.description,
-                  title: widget.rentProduct.title,
+                  description: widget.rentOffer.description,
+                  title: widget.rentOffer.title,
                 ),
                 // Availabilty
                 // GestureDetector(
@@ -352,7 +352,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
 
                 //Bewertung
                 RatingBox(
-                  recession: widget.rentProduct.rating,
+                  recession: widget.rentOffer.rating,
                 ),
               ],
             ),

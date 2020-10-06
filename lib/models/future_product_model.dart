@@ -1,6 +1,6 @@
 import 'package:rent/models/category_model.dart';
 
-class FutureProduct {
+class FutureOffer {
   String imageUrl;
   String title;
   String brand;
@@ -10,7 +10,7 @@ class FutureProduct {
   int offerId;
   bool rent;
 
-  FutureProduct(
+  FutureOffer(
       {this.imageUrl,
       this.title,
       this.brand,
@@ -24,8 +24,8 @@ class FutureProduct {
       });
 }
 
-List<FutureProduct> futureProductSuggestionList = [
-  FutureProduct(
+List<FutureOffer> futureOfferSuggestionList = [
+  FutureOffer(
     imageUrl: 'assets/images/teufel.jpg',
     title: 'Teufel BOOMSTER',
     brand: 'Teufel',
@@ -36,7 +36,7 @@ List<FutureProduct> futureProductSuggestionList = [
     rent: true,
     offerId: 0,
   ),
-  FutureProduct(
+  FutureOffer(
     imageUrl: 'assets/images/dyson.jpg',
     title: 'Dyson Turmventialot A07',
     brand: 'Dyson',
@@ -46,7 +46,7 @@ List<FutureProduct> futureProductSuggestionList = [
     rent: true,
     offerId: 1,
   ),
-  FutureProduct(
+  FutureOffer(
     imageUrl: 'assets/images/pumpe.jpg',
     title: 'Fahrradpumpe',
     brand: 'none',
@@ -56,7 +56,7 @@ List<FutureProduct> futureProductSuggestionList = [
     rent: false,
     offerId: 2,
   ),
-  FutureProduct(
+  FutureOffer(
     imageUrl: 'assets/images/iphone11.png',
     title: 'iPhone 11',
     brand: 'Apple',
@@ -66,7 +66,7 @@ List<FutureProduct> futureProductSuggestionList = [
     rent: true,
     offerId: 3,
   ),
-  FutureProduct(
+  FutureOffer(
     imageUrl: 'assets/images/note20ultra.png',
     title: 'Note 20 Ultra',
     brand: 'Samsung',

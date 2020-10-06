@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:rent/models/rent_product_model.dart';
+import 'package:rent/models/future_product_model.dart';
+import 'package:rent/widgets/price/price_tag.dart';
 
-class RentProductCard extends StatelessWidget {
-  final RentProduct rentProduct;
+class FutureOfferCard extends StatelessWidget {
+  final FutureOffer futureOffer;
 
-  RentProductCard({Key key, this.rentProduct}) : super(key: key);
+  FutureOfferCard({Key key, this.futureOffer}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +14,7 @@ class RentProductCard extends StatelessWidget {
         children: [
           SizedBox(
             width: double.infinity,
-            height: 240,
+            height: 220,
             child: Stack(
               alignment: Alignment.centerLeft,
               children: <Widget>[
@@ -21,9 +22,9 @@ class RentProductCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Container(
-                      margin: EdgeInsets.fromLTRB(100.0, 0, 10, 0),
+                      margin: EdgeInsets.fromLTRB(90.0, 0, 10, 0),
                       width: double.infinity,
-                      height: 220,
+                      height: 200,
                       decoration: BoxDecoration(
                         color: Color(0xFF202020),
                         borderRadius: BorderRadius.circular(20),
@@ -33,14 +34,14 @@ class RentProductCard extends StatelessWidget {
                           Flexible(
                             child: Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(90.0, 20.0, 20.0, 20.0),
+                                  EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    '${rentProduct.title}',
+                                    '${futureOffer.title}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
@@ -50,11 +51,11 @@ class RentProductCard extends StatelessWidget {
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-
-                                  // PriceTag(rentProduct.price),
                                   RichText(
                                       text: TextSpan(
-                                    text: 'Ausgeliehen',
+                                    text: futureOffer.rent == true
+                                        ? 'Ausleihe'
+                                        : 'Miete',
                                     style: TextStyle(
                                       color: Colors.purple,
                                       fontSize: 20.0,
@@ -63,13 +64,26 @@ class RentProductCard extends StatelessWidget {
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: ' vom',
+                                          text: futureOffer.rent == true
+                                              ? ' vom'
+                                              : ' beginnt am',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.normal,
                                               fontSize: 16)),
                                     ],
                                   )),
+                                  // Text(
+                                  //   'Gesperrt vom',
+                                  //   style: TextStyle(
+                                  //     color: Colors.purple,
+                                  //     fontSize: 20.0,
+                                  //     fontWeight: FontWeight.w700,
+                                  //     letterSpacing: 1.2,
+                                  //   ),
+                                  //   maxLines: 1,
+                                  //   overflow: TextOverflow.ellipsis,
+                                  // ),
                                   Text(
                                     '11.05.20 - 11.10.20',
                                     style: TextStyle(
@@ -81,18 +95,8 @@ class RentProductCard extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  Text(
-                                    rentProduct.rating == ''
-                                        ? ' Du hast den Gegenstand noch nicht bewertet'
-                                        : '${rentProduct.rating}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                    maxLines: 3,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
+
+                                  PriceTag(futureOffer.price),
                                   Text(
                                     'Show more',
                                     style: TextStyle(
@@ -103,6 +107,26 @@ class RentProductCard extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
+                                  // Row(
+                                  //   children: [
+                                  //     Text(
+                                  //       '4.9',
+                                  //       style: TextStyle(
+                                  //         color: Colors.white,
+                                  //         fontSize: 16.0,
+                                  //         fontWeight: FontWeight.w300,
+                                  //         letterSpacing: 1.2,
+                                  //       ),
+                                  //     ),
+                                  //     SizedBox(
+                                  //       width: 5.0,
+                                  //     ),
+                                  //     Icon(
+                                  //       Icons.star,
+                                  //       color: Colors.purple,
+                                  //     ),
+                                  //   ],
+                                  // ),
                                 ],
                               ),
                             ),
@@ -114,14 +138,14 @@ class RentProductCard extends StatelessWidget {
                 ),
                 Container(
                   width: 160,
-                  height: 220,
+                  height: 200,
                   margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Image(
                       height: 100,
                       width: 200,
-                      image: AssetImage(rentProduct.imageUrl),
+                      image: AssetImage(futureOffer.imageUrl),
                       fit: BoxFit.cover,
                     ),
                   ),

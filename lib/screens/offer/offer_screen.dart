@@ -13,9 +13,8 @@ import 'package:rent/screens/booking/confiramtion_payment_screen.dart';
 import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
 import 'package:rent/widgets/price/price_overview.dart';
 import 'package:rent/widgets/price/price_tag.dart';
-import 'package:rent/widgets/product/product_description.dart';
-
-import 'package:rent/widgets/product_detail/user_box.dart';
+import 'package:rent/widgets/offer/offer_description.dart';
+import 'package:rent/widgets/offer_detail/user_box.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 

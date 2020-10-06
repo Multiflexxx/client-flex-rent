@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/screens/account/create_offer/add_item.dart';
 
 class MyItems extends StatefulWidget {
@@ -25,10 +26,19 @@ class _MyItemsState extends State<MyItems> {
                 padding: EdgeInsets.all(8.0),
                 child: FlatButton(
                   onPressed: () {
-                    Navigator.push(context,
-                        new CupertinoPageRoute(builder: (BuildContext context) {
-                      return AddItem();
-                    }));
+                    pushNewScreenWithRouteSettings(
+                      context,
+                      settings: RouteSettings(name: 'AddItem'),
+                      screen: AddItem(),
+                      withNavBar: false,
+                      pageTransitionAnimation:
+                          PageTransitionAnimation.cupertino,
+                    );
+
+                    // Navigator.push(context,
+                    //     new CupertinoPageRoute(builder: (BuildContext context) {
+                    //   return AddItem();
+                    // }));
                   },
                   child: Text(
                     '+',
