@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
-class ProductCard extends StatelessWidget {
+class OfferCard extends StatelessWidget {
   final Offer offer;
+  final String heroTag;
 
-  ProductCard({Key key, this.offer}) : super(key: key);
+  OfferCard({Key key, this.offer, this.heroTag}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -109,7 +110,7 @@ class ProductCard extends StatelessWidget {
                     ],
                   ),
                   child: Hero(
-                    tag: offer.offerId + offer.category.name,
+                    tag: offer.offerId + heroTag,
                     transitionOnUserGestures: true,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20.0),

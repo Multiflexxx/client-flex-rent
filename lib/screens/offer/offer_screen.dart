@@ -71,7 +71,8 @@ class _OfferScreenState extends State<OfferScreen> {
               icon: Icon(Feather.arrow_left),
               iconSize: 30.0,
               color: Colors.white,
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => Navigator.popUntil(
+                  context, ModalRoute.withName(Navigator.defaultRouteName)),
             ),
             actions: <Widget>[
               IconButton(

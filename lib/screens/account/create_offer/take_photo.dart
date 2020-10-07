@@ -5,8 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/screens/account/create_offer/upload_image.dart';
 
 class TakePhoto extends StatefulWidget {
   final Offer offer;
@@ -35,68 +36,29 @@ class _TakePhotoState extends State<TakePhoto> {
     super.dispose();
   }
 
-  Widget cameraControl(context) {
-    return Expanded(
-      child: Align(
-        alignment: Alignment.center,
-        child: Stack(
-          // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          // mainAxisSize: MainAxisSize.max,
-          children: <Widget>[
-            Positioned(
-              left: 5.0,
-              child: FloatingActionButton(
-                child: Icon(
-                  Feather.arrow_left,
-                  color: Colors.purple,
-                ),
-                backgroundColor: Colors.black,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
-            ),
-            Positioned(
-              // left: MediaQuery.of(context).size.width / 2,
-              left: 0.0,
-              right: 0.0,
-              child: FloatingActionButton(
-                child: Icon(
-                  Icons.camera,
-                  color: Colors.purple,
-                ),
-                backgroundColor: Colors.black,
-                onPressed: () async {
-                  try {
-                    await _initializeControllerFuture;
-                    final path = join(
-                      (await getTemporaryDirectory()).path,
-                      '${DateTime.now()}.png',
-                    );
-                    await _controller.takePicture(path);
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => DisplayPictureScreen(
-                            offer: widget.offer, imagePath: path),
-                      ),
-                    );
-                  } catch (e) {
-                    print(e);
-                  }
-                },
-              ),
-            ),
-          ],
+  void _captureImage(context) async {
+    try {
+      await _initializeControllerFuture;
+      final path = join(
+        (await getTemporaryDirectory()).path,
+        '${DateTime.now()}.png',
+      );
+      await _controller.takePicture(path);
+      pushNewScreen(
+        context,
+        screen: DisplayImageScreen(
+          offer: widget.offer,
+          imagePath: path,
         ),
-      ),
-    );
+      );
+    } catch (e) {
+      print(e);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(title: Text('Take a picture')),
       body: FutureBuilder<void>(
         future: _initializeControllerFuture,
         builder: (context, snapshot) {
@@ -104,23 +66,54 @@ class _TakePhotoState extends State<TakePhoto> {
             return Container(
               child: Stack(
                 children: <Widget>[
-                  Align(
-                    alignment: Alignment.center,
-                    child: CameraPreview(_controller),
-                  ),
+                  CameraPreview(_controller),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: Container(
-                      height: 120,
                       width: double.infinity,
-                      padding: EdgeInsets.all(15),
-                      color: Colors.transparent,
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                      height: 80.0,
+                      padding: EdgeInsets.all(20.0),
+                      color: Color.fromRGBO(00, 00, 00, 0.7),
+                      child: Stack(
                         children: <Widget>[
-                          // cameraToggle(),
-                          cameraControl(context),
-                          Spacer(),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                onTap: () => Navigator.pop(context),
+                                child: Container(
+                                  child: Icon(
+                                    Feather.arrow_left,
+                                    color: Colors.purple,
+                                    size: 36.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                          Align(
+                            alignment: Alignment.center,
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(50.0)),
+                                onTap: () {
+                                  _captureImage(context);
+                                },
+                                child: Container(
+                                  child: Icon(
+                                    Icons.camera_outlined,
+                                    color: Colors.purple,
+                                    size: 40.0,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -133,56 +126,110 @@ class _TakePhotoState extends State<TakePhoto> {
           }
         },
       ),
-
-      // floatingActionButton: FloatingActionButton(
-      //   child: Icon(Icons.camera_alt),
-      //   onPressed: () async {
-      //     try {
-      //       await _initializeControllerFuture;
-      //       final path = join(
-      //         (await getTemporaryDirectory()).path,
-      //         '${DateTime.now()}.png',
-      //       );
-      //       await _controller.takePicture(path);
-      //       Navigator.push(
-      //         context,
-      //         MaterialPageRoute(
-      //           builder: (context) =>
-      //               DisplayPictureScreen(offer: widget.offer, imagePath: path),
-      //         ),
-      //       );
-      //     } catch (e) {
-      //       print(e);
-      //     }
-      //   },
-      // ),
     );
   }
 }
 
-class DisplayPictureScreen extends StatelessWidget {
+class DisplayImageScreen extends StatefulWidget {
   final String imagePath;
   final Offer offer;
 
-  const DisplayPictureScreen({Key key, this.imagePath, this.offer})
+  const DisplayImageScreen({Key key, this.imagePath, this.offer})
       : super(key: key);
+
+  @override
+  _DisplayImageScreenState createState() => _DisplayImageScreenState();
+}
+
+class _DisplayImageScreenState extends State<DisplayImageScreen> {
+  bool _visible;
+
+  @override
+  void initState() {
+    super.initState();
+    _visible = true;
+  }
+
+  void _toggleVisibility() {
+    setState(() {
+      _visible = !_visible;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Display the Picture')),
-      body: Column(
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(20.0),
-            child: Image.file(File(imagePath),
-                height: 200, width: 300, fit: BoxFit.cover),
+      body: Stack(
+        children: <Widget>[
+          Center(
+            child: GestureDetector(
+              onTap: () => _toggleVisibility(),
+              child: Image.file(File(widget.imagePath)),
+            ),
           ),
-          RaisedButton(
-            onPressed: () =>
-                ApiOfferService().addImage(offer: offer, imagePath: imagePath),
-            child: Text('Bild hinzufügen.'),
-          )
+          Visibility(
+            visible: _visible,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                width: double.infinity,
+                height: 50.0,
+                color: Color.fromRGBO(00, 00, 00, 1),
+                child: Stack(
+                  children: <Widget>[
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: InkWell(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            onTap: () => Navigator.pop(context),
+                            child: Container(
+                              child: Icon(
+                                Feather.arrow_left,
+                                color: Colors.purple,
+                                size: 36.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: Material(
+                        color: Colors.transparent,
+                        child: Padding(
+                          padding: const EdgeInsets.only(right: 10.0),
+                          child: InkWell(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(50.0)),
+                            onTap: () => pushNewScreen(
+                              context,
+                              screen: UploadImageScreen(
+                                offer: widget.offer,
+                                imagePath: widget.imagePath,
+                              ),
+                            ),
+                            child: Container(
+                              child: Icon(
+                                Icons.check,
+                                color: Colors.purple,
+                                size: 40.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );

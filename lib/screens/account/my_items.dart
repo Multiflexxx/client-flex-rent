@@ -26,19 +26,11 @@ class _MyItemsState extends State<MyItems> {
                 padding: EdgeInsets.all(8.0),
                 child: FlatButton(
                   onPressed: () {
-                    pushNewScreenWithRouteSettings(
+                    pushNewScreen(
                       context,
-                      settings: RouteSettings(name: 'AddItem'),
                       screen: AddItem(),
                       withNavBar: false,
-                      pageTransitionAnimation:
-                          PageTransitionAnimation.cupertino,
                     );
-
-                    // Navigator.push(context,
-                    //     new CupertinoPageRoute(builder: (BuildContext context) {
-                    //   return AddItem();
-                    // }));
                   },
                   child: Text(
                     '+',

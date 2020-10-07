@@ -58,7 +58,8 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
       body: SafeArea(
         child: ListView(
           children: <Widget>[
-            ProductCard(offer: widget.offerRequest.offer),
+            OfferCard(
+                offer: widget.offerRequest.offer, heroTag: 'confirmation'),
             // Zeitraum
             Container(
               margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),

@@ -102,7 +102,7 @@ class _RentDetailScreen extends State<RentDetailScreen> {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Hero(
-                    tag: widget.rentOffer.offerId,
+                    tag: widget.rentOffer.offerId.toString() + 'rentOffer',
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),

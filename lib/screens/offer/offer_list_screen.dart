@@ -47,7 +47,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     ),
                     withNavBar: false,
                   ),
-                  child: ProductCard(offer: offer),
+                  child: OfferCard(offer: offer, heroTag: offer.category.name),
                 );
               },
             );

@@ -122,10 +122,14 @@ class _SearchScreenState extends State<SearchScreen> {
                                 return GestureDetector(
                                   onTap: () => pushNewScreen(
                                     context,
-                                    screen: OfferScreen(offer: offer),
+                                    screen: OfferScreen(
+                                      offer: offer,
+                                      heroTag: offer.offerId + 'search',
+                                    ),
                                     withNavBar: false,
                                   ),
-                                  child: ProductCard(offer: offer),
+                                  child: OfferCard(
+                                      offer: offer, heroTag: 'search'),
                                 );
                               },
                             ),
