@@ -39,105 +39,110 @@ class _PhoneFormState extends State<PhoneForm> {
         return Form(
           key: _key,
           autovalidate: _autoValidate,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: <Widget>[
-              FormFieldStyled(
-                controller: _phoneController,
-                autocorrect: false,
-                hintText: "Mobilenummer",
-                helperText:
-                    'Wir werden dir eine SMS senden, um deine Nummer zu bestätigen. Es können übliche Gebühren für die Nachricht anfallen.',
-                type: TextInputType.phone,
-                validator: (String value) {
-                  if (value.isEmpty) {
-                    return 'Eine Mobilenummer ist notwendig';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              FormField<bool>(
-                builder: (field) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Row(
-                        children: [
-                          Theme(
-                            data:
-                                ThemeData(unselectedWidgetColor: Colors.white),
-                            child: Checkbox(
-                              checkColor: Colors.purple,
-                              activeColor: Colors.black,
-                              value: _agbCheckBox,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  _agbCheckBox = value;
-                                  field.didChange(value);
-                                });
-                              },
-                            ),
-                          ),
-                          Text('Ich akzeptiere die AGB'),
-                        ],
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 12.0),
-                        child: Text(
-                          field.errorText ?? '',
-                          style: TextStyle(
-                            color: Theme.of(context).errorColor,
-                            fontSize: 12.0,
-                          ),
-                        ),
-                      )
-                    ],
-                  );
-                },
-                validator: (value) {
-                  if (!_agbCheckBox) {
-                    return 'Akzeptiere bitte unsere AGBs.';
-                  } else {
-                    return null;
-                  }
-                },
-              ),
-              SizedBox(height: 16),
-              RaisedButton(
-                color: Theme.of(context).primaryColor,
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(16),
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(8.0)),
-                child: Text('Weiter'),
-                onPressed:
-                    state is RegisterPhoneLoading ? () {} : _onNextPressed,
-              ),
-              SizedBox(
-                height: 16,
-              ),
-              RichText(
-                text: TextSpan(
-                  text: 'Du hast schon ein FlexRent Konto? ',
-                  style: TextStyle(
-                    color: Colors.white,
+          child: Flexible(
+            fit: FlexFit.loose,
+                      child: SingleChildScrollView(
+                        child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  FormFieldStyled(
+                    controller: _phoneController,
+                    autocorrect: false,
+                    hintText: "Mobilenummer",
+                    helperText:
+                        'Wir werden dir eine SMS senden, um deine Nummer zu bestätigen. Es können übliche Gebühren für die Nachricht anfallen.',
+                    type: TextInputType.phone,
+                    validator: (String value) {
+                      if (value.isEmpty) {
+                        return 'Eine Mobilenummer ist notwendig';
+                      } else {
+                        return null;
+                      }
+                    },
                   ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: 'Einloggen',
+                  FormField<bool>(
+                    builder: (field) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Row(
+                            children: [
+                              Theme(
+                                data:
+                                    ThemeData(unselectedWidgetColor: Colors.white),
+                                child: Checkbox(
+                                  checkColor: Colors.purple,
+                                  activeColor: Colors.black,
+                                  value: _agbCheckBox,
+                                  onChanged: (bool value) {
+                                    setState(() {
+                                      _agbCheckBox = value;
+                                      field.didChange(value);
+                                    });
+                                  },
+                                ),
+                              ),
+                              Text('Ich akzeptiere die AGB'),
+                            ],
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 12.0),
+                            child: Text(
+                              field.errorText ?? '',
+                              style: TextStyle(
+                                color: Theme.of(context).errorColor,
+                                fontSize: 12.0,
+                              ),
+                            ),
+                          )
+                        ],
+                      );
+                    },
+                    validator: (value) {
+                      if (!_agbCheckBox) {
+                        return 'Akzeptiere bitte unsere AGBs.';
+                      } else {
+                        return null;
+                      }
+                    },
+                  ),
+                  SizedBox(height: 16),
+                  RaisedButton(
+                    color: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
+                    padding: const EdgeInsets.all(16),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(8.0)),
+                    child: Text('Weiter'),
+                    onPressed:
+                        state is RegisterPhoneLoading ? () {} : _onNextPressed,
+                  ),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Du hast schon ein FlexRent Konto? ',
                       style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.white),
-                      recognizer: TapGestureRecognizer()
-                        ..onTap = () {
-                          BlocProvider.of<AuthenticationBloc>(context)
-                              .add(UserSignIn());
-                        },
+                        color: Colors.white,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Einloggen',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, color: Colors.white),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(UserSignIn());
+                            },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         );
       },

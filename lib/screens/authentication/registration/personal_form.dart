@@ -144,6 +144,7 @@ class _PersonalFormState extends State<PersonalForm> {
     return FormFieldStyled(
       controller: _passwordController,
       autocorrect: false,
+      type: TextInputType.visiblePassword,
       icon: Icon(
         Icons.vpn_key,
         color: Colors.white,
@@ -162,6 +163,7 @@ class _PersonalFormState extends State<PersonalForm> {
     return FormFieldStyled(
       controller: _verifiedPasswordController,
       autocorrect: false,
+      type: TextInputType.visiblePassword,
       icon: Icon(
         Icons.vpn_key,
         color: Colors.white,
@@ -246,10 +248,6 @@ class _PersonalFormState extends State<PersonalForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    _buildEMailField(),
-                    SizedBox(
-                      height: 10,
-                    ),
                     Row(
                       children: [
                         Expanded(flex: 3, child: _buildStreetField()),
@@ -274,7 +272,14 @@ class _PersonalFormState extends State<PersonalForm> {
                     SizedBox(
                       height: 10,
                     ),
+                    _buildEMailField(),
+                    SizedBox(
+                      height: 10,
+                    ),
                     _buildPasswordField(),
+                    SizedBox(
+                      height: 10,
+                    ),
                     SizedBox(
                       height: 10,
                     ),

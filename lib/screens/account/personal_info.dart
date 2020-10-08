@@ -18,7 +18,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
     // TODO: implement initState
     super.initState();
     final state = BlocProvider.of<AuthenticationBloc>(context).state
-    as AuthenticationAuthenticated;
+        as AuthenticationAuthenticated;
     user = state.user;
   }
 
@@ -29,11 +29,14 @@ class _PersonalInfoState extends State<PersonalInfo> {
         title: Text("Meine Informationen"),
         centerTitle: true,
       ),
-      body: Form(
-          key: _formKey,
-          child: ListView(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, 0),
-              children: <Widget>[
+      body: Container(
+        padding: EdgeInsets.all(8.0),
+        child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+                child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
                 Container(
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
@@ -41,142 +44,149 @@ class _PersonalInfoState extends State<PersonalInfo> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage('assets/images/jett.jpg'),
-                          radius: 50.0,
-                          child: Icon(Icons.edit, size: 40.0)
-                        ),
+                            backgroundImage:
+                                AssetImage('assets/images/jett.jpg'),
+                            radius: 50.0,
+                            child: Icon(Icons.edit, size: 40.0)),
                       ],
                     ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child:
-                          FormFieldStyled(
-                            icon: Icon(
-                              Icons.person,
-                              color: Colors.white,
-                            ),
-                            hintText: 'Vorname',
-                            type: TextInputType.name,
-                            autocorrect: true,
-                            initialValue: user.firstName,
-                          ),
-                      ),
-                      Expanded(
-                        child:
-                        FormFieldStyled(
-                          hintText: 'Nachname',
-                          type: TextInputType.name,
-                          autocorrect: true,
-                          initialValue: user.lastName,
-                        ),
-                      ),
-                    ],
-                  ),
+                SizedBox(
+                  height: 10,
                 ),
-                Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          flex: 3,
-                          child: FormFieldStyled(
-                            icon: Icon(
-                              Icons.home,
-                              color: Colors.white,
-                            ),
-                            hintText: 'Strasse',
-                            type: TextInputType.streetAddress,
-                            autocorrect: true,
-                            initialValue: user.street,
-                          ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: FormFieldStyled(
+                        icon: Icon(
+                          Icons.person,
+                          color: Colors.white,
                         ),
-                        Expanded(
-                          flex: 1,
-                          child: FormFieldStyled(
-                            hintText: 'Hausnummer',
-                            autocorrect: true,
-                            initialValue: user.houseNumber,
-                          ),
-                        ),
-                      ],
-                    )),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: FormFieldStyled(
-                          icon: Icon(
-                            Icons.location_city,
-                            color: Colors.white,
-                          ),
-                          hintText: 'PLZ',
-                          type: TextInputType.number,
-                          autocorrect: true,
-                          initialValue: user.postCode,
-                        ),
+                        hintText: 'Vorname',
+                        type: TextInputType.name,
+                        autocorrect: true,
+                        initialValue: user.firstName,
                       ),
-                      Expanded(
-                        flex: 2,
-                        child: FormFieldStyled(
-                          hintText: 'Ort',
-                          autocorrect: true,
-                          initialValue: user.city,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FormFieldStyled(
-                    icon: Icon(
-                      Icons.email,
-                      color: Colors.white,
                     ),
-                    hintText: 'E-Mail',
-                    type: TextInputType.emailAddress,
-                    autocorrect: true,
-                    initialValue: user.email,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FormFieldStyled(
-                    icon: Icon(
-                      Icons.vpn_key,
-                      color: Colors.white,
+                    SizedBox(width: 10),
+                    Expanded(
+                      child: FormFieldStyled(
+                        hintText: 'Nachname',
+                        type: TextInputType.name,
+                        autocorrect: true,
+                        initialValue: user.lastName,
+                      ),
                     ),
-                    hintText: 'Passwort',
-                    type: TextInputType.visiblePassword,
-                    obscureText: true,
-                    autocorrect: true,
-                  ),
+                  ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FormFieldStyled(
-                    icon: Icon(
-                      Icons.phone,
-                      color: Colors.white,
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 3,
+                      child: FormFieldStyled(
+                        icon: Icon(
+                          Icons.home,
+                          color: Colors.white,
+                        ),
+                        hintText: 'Strasse',
+                        type: TextInputType.streetAddress,
+                        autocorrect: true,
+                        initialValue: user.street,
+                      ),
                     ),
-                    hintText: 'Handynummer',
-                    type: TextInputType.phone,
-                    autocorrect: true,
-                    initialValue: user.phoneNumber,
+                    SizedBox(width: 10),
+                    Expanded(
+                      flex: 1,
+                      child: FormFieldStyled(
+                        hintText: 'Hausnummer',
+                        autocorrect: true,
+                        initialValue: user.houseNumber,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      flex: 1,
+                      child: FormFieldStyled(
+                        icon: Icon(
+                          Icons.location_city,
+                          color: Colors.white,
+                        ),
+                        hintText: 'PLZ',
+                        type: TextInputType.number,
+                        autocorrect: true,
+                        initialValue: user.postCode,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Expanded(
+                      flex: 2,
+                      child: FormFieldStyled(
+                        hintText: 'Ort',
+                        autocorrect: true,
+                        initialValue: user.city,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                FormFieldStyled(
+                  icon: Icon(
+                    Icons.email,
+                    color: Colors.white,
                   ),
+                  hintText: 'E-Mail',
+                  type: TextInputType.emailAddress,
+                  autocorrect: true,
+                  initialValue: user.email,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                FormFieldStyled(
+                  icon: Icon(
+                    Icons.vpn_key,
+                    color: Colors.white,
+                  ),
+                  hintText: 'Passwort',
+                  type: TextInputType.visiblePassword,
+                  obscureText: true,
+                  autocorrect: true,
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                FormFieldStyled(
+                  icon: Icon(
+                    Icons.phone,
+                    color: Colors.white,
+                  ),
+                  hintText: 'Handynummer',
+                  type: TextInputType.phone,
+                  autocorrect: true,
+                  initialValue: user.phoneNumber,
                 ),
                 FlatButton(
                   onPressed: null,
-                  child: Text('Speichern', style: TextStyle(color: Colors.white),),
+                  child: Text(
+                    'Speichern',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 )
-              ])),
+              ],
+            ))),
+      ),
     );
   }
 }
