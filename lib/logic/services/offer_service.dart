@@ -1,14 +1,9 @@
 import 'dart:convert';
-import 'dart:developer';
-
-import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
 
 import '../exceptions/exceptions.dart';
-
-import 'package:http_parser/http_parser.dart';
 
 abstract class OfferService {
   Future<List<Offer>> getAllOffers();
@@ -16,6 +11,7 @@ abstract class OfferService {
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Category>> getAllCategory();
   Future<Offer> createOffer();
+  Future<List<Offer>> getOfferbyUser();
   void addImage();
   List<String> getSuggestion();
   void setSuggestion();
@@ -99,6 +95,26 @@ class ApiOfferService extends OfferService {
   }
 
   @override
+  Future<List<Offer>> getOfferbyUser() async {
+    final String userId = await _storage.read(key: 'userId');
+    final response = await http
+        .get('https://flexrent.multiflexxx.de/offer/user-offers/$userId');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBody = json.decode(response.body);
+
+      if (jsonBody.isNotEmpty) {
+        final List<Offer> offerList =
+            (jsonBody).map((i) => Offer.fromJson(i)).toList();
+        return offerList;
+      } else {
+        return Future.error(
+            OfferException(message: 'Fange jetzt an zu Vermieten!'));
+      }
+    }
+  }
+
+  @override
   Future<List<Category>> getAllCategory() async {
     final response =
         await http.get('https://flexrent.multiflexxx.de/offer/categories');
@@ -144,25 +160,12 @@ class ApiOfferService extends OfferService {
     var multipartFile = await http.MultipartFile.fromPath('images', imagePath,
         filename: imagePath);
 
-    // var multipartFile = http.MultipartFile.fromBytes(
-    //   'images',
-    //   (await rootBundle.load('assets/images/pumpe.jpg')).buffer.asUint8List(),
-    //   filename: 'pumpe.jpg',
-    // );
-
-    // var multipartFile2 = http.MultipartFile.fromBytes(
-    //   'images',
-    //   (await rootBundle.load('assets/images/jett.jpg')).buffer.asUint8List(),
-    //   filename: 'jett.jpg',
-    // );
-
     var uri = Uri.parse('https://flexrent.multiflexxx.de/offer/images');
     var request = http.MultipartRequest('POST', uri)
       ..fields['session_id'] = sessionId
       ..fields['offer_id'] = offer.offerId
       ..fields['user_id'] = userId
       ..files.add(multipartFile);
-    // ..files.add(multipartFile2);
 
     http.Response response =
         await http.Response.fromStream(await request.send());

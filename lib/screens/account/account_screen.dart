@@ -106,7 +106,6 @@ class _AccountScreenState extends State<AccountScreen> {
                               context,
                               settings: RouteSettings(name: option.optionId),
                               screen: routes[option.optionId] ?? PageNotFound(),
-                              // withNavBar: index == 1 ? false : true,
                               withNavBar: true,
                             );
                           } else {
