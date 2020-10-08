@@ -14,7 +14,6 @@ class PhoneForm extends StatefulWidget {
 class _PhoneFormState extends State<PhoneForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final _phoneController = TextEditingController();
-  bool _autoValidate = false;
   bool _agbCheckBox;
 
   @override
@@ -29,8 +28,6 @@ class _PhoneFormState extends State<PhoneForm> {
       if (_key.currentState.validate() && _agbCheckBox == true) {
         BlocProvider.of<RegisterBloc>(context)
             .add(RegisterNextPressed(phoneNumber: _phoneController.text));
-      } else {
-        _autoValidate = true;
       }
     }
 
@@ -38,11 +35,11 @@ class _PhoneFormState extends State<PhoneForm> {
       builder: (context, state) {
         return Form(
           key: _key,
-          autovalidate: _autoValidate,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           child: Flexible(
             fit: FlexFit.loose,
-                      child: SingleChildScrollView(
-                        child: Column(
+            child: SingleChildScrollView(
+              child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   FormFieldStyled(
@@ -68,8 +65,8 @@ class _PhoneFormState extends State<PhoneForm> {
                           Row(
                             children: [
                               Theme(
-                                data:
-                                    ThemeData(unselectedWidgetColor: Colors.white),
+                                data: ThemeData(
+                                    unselectedWidgetColor: Colors.white),
                                 child: Checkbox(
                                   checkColor: Colors.purple,
                                   activeColor: Colors.black,

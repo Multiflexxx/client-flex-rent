@@ -15,7 +15,6 @@ class _SignInFormState extends State<SignInForm> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final _passwordController = TextEditingController();
   final _emailController = TextEditingController();
-  bool _autoValidate = false;
 
   @override
   Widget build(BuildContext context) {
@@ -23,10 +22,6 @@ class _SignInFormState extends State<SignInForm> {
       if (_key.currentState.validate()) {
         BlocProvider.of<LoginBloc>(context).add(LoginWithEmailButtonPressed(
             email: _emailController.text, password: _passwordController.text));
-      } else {
-        setState(() {
-          _autoValidate = true;
-        });
       }
     }
 
@@ -45,7 +40,7 @@ class _SignInFormState extends State<SignInForm> {
           }
           return Form(
             key: _key,
-            autovalidate: _autoValidate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: SingleChildScrollView(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,

@@ -27,7 +27,6 @@ class _PersonalFormState extends State<PersonalForm> {
   final _cityController = TextEditingController();
   final _passwordController = TextEditingController();
   final _verifiedPasswordController = TextEditingController();
-  bool _autoValidate = false;
 
   Widget _buildFirstNameField() {
     return FormFieldStyled(
@@ -206,8 +205,6 @@ class _PersonalFormState extends State<PersonalForm> {
       if (_key.currentState.validate()) {
         BlocProvider.of<RegisterBloc>(context)
             .add(RegisterSubmitPressed(user: user));
-      } else {
-        _autoValidate = true;
       }
     }
 
@@ -226,7 +223,7 @@ class _PersonalFormState extends State<PersonalForm> {
           }
           return Form(
             key: _key,
-            autovalidate: _autoValidate,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Flexible(
               fit: FlexFit.loose,
               child: SingleChildScrollView(
