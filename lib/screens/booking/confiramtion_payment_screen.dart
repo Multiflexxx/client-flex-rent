@@ -7,10 +7,9 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/models/offer_request_model.dart';
 import 'package:rent/screens/booking/lessee/lessee_booking_screen.dart';
-import 'package:rent/widgets/booking/booking_info.dart';
 import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
 import 'package:rent/widgets/price/detail_price_overview.dart';
-import 'package:rent/widgets/product/product_card.dart';
+import 'package:rent/widgets/offer/offer_card.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
@@ -59,7 +58,8 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
       body: SafeArea(
         child: ListView(
           children: <Widget>[
-            ProductCard(offer: widget.offerRequest.offer),
+            OfferCard(
+                offer: widget.offerRequest.offer, heroTag: 'confirmation'),
             // Zeitraum
             Container(
               margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
@@ -230,7 +230,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
               padding: const EdgeInsets.all(16.0),
               child: GestureDetector(
                 onTap: () => pushNewScreen(
-                   context,
+                  context,
                   screen: LeseeBookingScreen(),
                 ),
                 child: Container(

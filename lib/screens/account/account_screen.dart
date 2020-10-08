@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/models/profile_options_model.dart';
 import 'package:rent/screens/404.dart';
@@ -17,7 +18,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-
   final routes = {
     'personalInfo': PersonalInfo(),
     'myitems': MyItems(),
@@ -29,9 +29,8 @@ class _AccountScreenState extends State<AccountScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final state = BlocProvider.of<AuthenticationBloc>(context).state
-    as AuthenticationAuthenticated;
+        as AuthenticationAuthenticated;
     final User user = state.user;
 
     String name = '${user.firstName} ${user.lastName}';
@@ -102,14 +101,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     return ListTile(
                         onTap: () {
                           if (index < profileOptions.length - 1) {
-                            Navigator.push(
+                            print(option.optionId);
+                            pushNewScreenWithRouteSettings(
                               context,
-                              new CupertinoPageRoute(
-                                builder: (BuildContext context) {
-                                  return routes[option.optionId] ??
-                                      PageNotFound();
-                                },
-                              ),
+                              settings: RouteSettings(name: option.optionId),
+                              screen: routes[option.optionId] ?? PageNotFound(),
+                              // withNavBar: index == 1 ? false : true,
+                              withNavBar: true,
                             );
                           } else {
                             BlocProvider.of<AuthenticationBloc>(context)

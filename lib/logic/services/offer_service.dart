@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'dart:developer';
 
+import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
 
 import '../exceptions/exceptions.dart';
+
+import 'package:http_parser/http_parser.dart';
 
 abstract class OfferService {
   Future<List<Offer>> getAllOffers();
@@ -12,6 +16,7 @@ abstract class OfferService {
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Category>> getAllCategory();
   Future<Offer> createOffer();
+  void addImage();
   List<String> getSuggestion();
   void setSuggestion();
 }
@@ -127,6 +132,47 @@ class ApiOfferService extends OfferService {
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<Offer> addImage({Offer offer, String imagePath}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    var multipartFile = await http.MultipartFile.fromPath('images', imagePath,
+        filename: imagePath);
+
+    // var multipartFile = http.MultipartFile.fromBytes(
+    //   'images',
+    //   (await rootBundle.load('assets/images/pumpe.jpg')).buffer.asUint8List(),
+    //   filename: 'pumpe.jpg',
+    // );
+
+    // var multipartFile2 = http.MultipartFile.fromBytes(
+    //   'images',
+    //   (await rootBundle.load('assets/images/jett.jpg')).buffer.asUint8List(),
+    //   filename: 'jett.jpg',
+    // );
+
+    var uri = Uri.parse('https://flexrent.multiflexxx.de/offer/images');
+    var request = http.MultipartRequest('POST', uri)
+      ..fields['session_id'] = sessionId
+      ..fields['offer_id'] = offer.offerId
+      ..fields['user_id'] = userId
+      ..files.add(multipartFile);
+    // ..files.add(multipartFile2);
+
+    http.Response response =
+        await http.Response.fromStream(await request.send());
+
+    if (response.statusCode == 201) {
+      final dynamic jsonBody = json.decode(response.body);
+      final Offer offer = Offer.fromJson(jsonBody);
+      return offer;
+    } else {
+      print(response.statusCode);
       return null;
     }
   }

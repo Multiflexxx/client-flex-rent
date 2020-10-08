@@ -10,17 +10,17 @@ import 'package:rent/models/future_product_model.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 import 'package:flutter/cupertino.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:rent/widgets/product_detail/user_box.dart';
+import 'package:rent/widgets/offer_detail/user_box.dart';
 
-class FutureProductDetailScreen extends StatefulWidget {
-  final FutureProduct futureProduct;
-  FutureProductDetailScreen({this.futureProduct});
+class FutureOfferDetailScreen extends StatefulWidget {
+  final FutureOffer futureOffer;
+  FutureOfferDetailScreen({this.futureOffer});
 
   @override
-  _FutureProductDetailScreen createState() => _FutureProductDetailScreen();
+  _FutureOfferDetailScreen createState() => _FutureOfferDetailScreen();
 }
 
-class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
+class _FutureOfferDetailScreen extends State<FutureOfferDetailScreen> {
   DateTime _startDate;
   DateTime _endDate;
 
@@ -88,7 +88,7 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
               ],
               centerTitle: true,
               title: Text(
-                widget.futureProduct.title,
+                widget.futureOffer.title,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 18.0,
@@ -100,14 +100,14 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
                 fit: StackFit.expand,
                 children: <Widget>[
                   Hero(
-                    tag: widget.futureProduct.offerId,
+                    tag: widget.futureOffer.offerId.toString() + 'futureOffer',
                     child: ClipRRect(
                       borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(20.0),
                         bottomRight: Radius.circular(20.0),
                       ),
                       child: Image(
-                        image: AssetImage(widget.futureProduct.imageUrl),
+                        image: AssetImage(widget.futureOffer.imageUrl),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -142,7 +142,7 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
                           children: <Widget>[
                             Column(
                               children: [
-                                PriceTag(widget.futureProduct.price),
+                                PriceTag(widget.futureOffer.price),
                                 GestureDetector(
                                   onTap: () => showCupertinoModalBottomSheet(
                                     expand: false,
@@ -150,7 +150,7 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
                                     barrierColor: Colors.black45,
                                     builder: (context, scrollController) =>
                                         PriceOverview(
-                                      price: widget.futureProduct.price,
+                                      price: widget.futureOffer.price,
                                       scrollController: scrollController,
                                       startDate: _startDate,
                                       endDate: _endDate,
@@ -231,7 +231,7 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
                   child: Padding(
                     padding: const EdgeInsets.all(16.0),
                     child: AutoSizeText(
-                      widget.futureProduct.description,
+                      widget.futureOffer.description,
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 16.0,
@@ -244,7 +244,7 @@ class _FutureProductDetailScreen extends State<FutureProductDetailScreen> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            widget.futureProduct.description,
+                            widget.futureOffer.description,
                             style: TextStyle(
                               color: Colors.white,
                               fontSize: 16.0,

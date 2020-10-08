@@ -44,11 +44,13 @@ class _AddItemState extends State<AddItem> {
     );
 
     Future<Offer> backendOffer = ApiOfferService().createOffer(newOffer: offer);
-    pushNewScreen(context,
-        screen: AddImages(
-          offer: backendOffer,
-        ),
-        withNavBar: false);
+    pushNewScreen(
+      context,
+      screen: AddImages(
+        offer: backendOffer,
+      ),
+      withNavBar: false,
+    );
   }
 
   @override
@@ -58,163 +60,163 @@ class _AddItemState extends State<AddItem> {
         title: Text('Ein Produkt einstellen'),
         centerTitle: true,
       ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Column(
-          children: [
-            Form(
-              key: _formKey,
-              child: Flexible(
-                fit: FlexFit.loose,
-                child: ListView(
-                  children: [
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     ClipRRect(
-                    //       borderRadius: BorderRadius.circular(60.0),
-                    //       child: Image(
-                    //         width: 200,
-                    //         height: 200,
-                    //         image: AssetImage('assets/images/jett.jpg'),
-                    //       ),
-                    //     ),
-                    //     Expanded(
-                    //       child: Icon(
-                    //         Icons.edit,
-                    //         color: Colors.white,
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    // Row(
-                    //   children: [
-                    //     Expanded(
-                    //       flex: 1,
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.all(8.0),
-                    //         child: RaisedButton.icon(
-                    //           icon: Icon(Icons.search),
-                    //           onPressed: () {},
-                    //           label: Text('Search'),
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     Expanded(
-                    //       flex: 1,
-                    //       child: Padding(
-                    //         padding: const EdgeInsets.all(8.0),
-                    //         child: RaisedButton.icon(
-                    //           icon: Icon(Ionicons.md_qr_scanner),
-                    //           onPressed: () async {
-                    //             barcodeResult =
-                    //                 await FlutterBarcodeScanner.scanBarcode(
-                    //                     '#FF5733',
-                    //                     'Abbrechen',
-                    //                     true,
-                    //                     ScanMode.BARCODE);
-                    //             String url =
-                    //                 'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
-                    //             String differentUrl =
-                    //                 'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-                    //             if (barcodeResult != "-1") {
-                    //               //-1 heißt der barcode scanner wurde abgebrochen
-                    //               apiResult = await http.get(
-                    //                   'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000');
-                    //               //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
-                    //               try {
-                    //                 setState(() {
-                    //                   product = apiResponseToOffer(apiResult);
-                    //                 });
-                    //               } catch (e) {
-                    //                 _showError(e);
-                    //                 //error handling
-                    //               }
-                    //             }
-                    //           },
-                    //           label: Text('Scan'),
-                    //         ),
-                    //       ),
-                    //     )
-                    //   ],
-                    // ),
-                    SizedBox(height: 16),
-                    FormFieldStyled(
-                      controller: _titleController,
-                      hintText: "Produktname",
-                      autocorrect: true,
-                    ),
-                    SizedBox(height: 16),
-                    FutureBuilder<List<Category>>(
-                      future: categoryList,
-                      builder: (context, categories) {
-                        if (categories.hasData) {
-                          return Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: DropdownButton<Category>(
-                              dropdownColor: Colors.black,
-                              hint: Text(
-                                'Kategorie',
-                                style: TextStyle(color: Colors.white),
-                              ),
-                              items: categories.data
-                                  .map<DropdownMenuItem<Category>>(
-                                      (Category category) {
-                                return DropdownMenuItem<Category>(
-                                  value: category,
-                                  child: Text(
-                                    category.name,
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                );
-                              }).toList(),
-                              onChanged: (value) {
-                                setState(() {
-                                  category = value;
-                                });
-                              },
-                              value: category,
+      body: SafeArea(
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   children: [
+                  //     ClipRRect(
+                  //       borderRadius: BorderRadius.circular(60.0),
+                  //       child: Image(
+                  //         width: 200,
+                  //         height: 200,
+                  //         image: AssetImage('assets/images/jett.jpg'),
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       child: Icon(
+                  //         Icons.edit,
+                  //         color: Colors.white,
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                  // Row(
+                  //   children: [
+                  //     Expanded(
+                  //       flex: 1,
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(8.0),
+                  //         child: RaisedButton.icon(
+                  //           icon: Icon(Icons.search),
+                  //           onPressed: () {},
+                  //           label: Text('Search'),
+                  //         ),
+                  //       ),
+                  //     ),
+                  //     Expanded(
+                  //       flex: 1,
+                  //       child: Padding(
+                  //         padding: const EdgeInsets.all(8.0),
+                  //         child: RaisedButton.icon(
+                  //           icon: Icon(Ionicons.md_qr_scanner),
+                  //           onPressed: () async {
+                  //             barcodeResult =
+                  //                 await FlutterBarcodeScanner.scanBarcode(
+                  //                     '#FF5733',
+                  //                     'Abbrechen',
+                  //                     true,
+                  //                     ScanMode.BARCODE);
+                  //             String url =
+                  //                 'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
+                  //             String differentUrl =
+                  //                 'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
+                  //             if (barcodeResult != "-1") {
+                  //               //-1 heißt der barcode scanner wurde abgebrochen
+                  //               apiResult = await http.get(
+                  //                   'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000');
+                  //               //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
+                  //               try {
+                  //                 setState(() {
+                  //                   product = apiResponseToOffer(apiResult);
+                  //                 });
+                  //               } catch (e) {
+                  //                 _showError(e);
+                  //                 //error handling
+                  //               }
+                  //             }
+                  //           },
+                  //           label: Text('Scan'),
+                  //         ),
+                  //       ),
+                  //     )
+                  //   ],
+                  // ),
+                  SizedBox(height: 10.0),
+                  FormFieldStyled(
+                    controller: _titleController,
+                    hintText: "Produktname",
+                    autocorrect: true,
+                  ),
+                  SizedBox(height: 10.0),
+                  FutureBuilder<List<Category>>(
+                    future: categoryList,
+                    builder: (context, categories) {
+                      if (categories.hasData) {
+                        return SizedBox(
+                          width: double.infinity,
+                          child: DropdownButton<Category>(
+                            dropdownColor: Colors.black,
+                            hint: Text(
+                              'Kategorie',
+                              style: TextStyle(color: Colors.white),
                             ),
-                          );
-                        } else {
-                          return Center(child: CircularProgressIndicator());
-                        }
-                      },
-                    ),
-                    SizedBox(height: 16),
-                    FormFieldStyled(
-                      controller: _descritpionController,
-                      hintText: "Beschreibung",
-                      autocorrect: true,
-                      maxLines: 8,
-                    ),
-                    SizedBox(height: 16),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Expanded(
-                          child: FormFieldStyled(
-                            controller: _priceController,
-                            hintText: "Preis",
-                            autocorrect: true,
-                            type: TextInputType.numberWithOptions(
-                                signed: false, decimal: true),
+                            items: categories.data
+                                .map<DropdownMenuItem<Category>>(
+                                    (Category category) {
+                              return DropdownMenuItem<Category>(
+                                value: category,
+                                child: Text(
+                                  category.name,
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              );
+                            }).toList(),
+                            onChanged: (value) {
+                              setState(() {
+                                category = value;
+                              });
+                            },
+                            value: category,
                           ),
+                        );
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                  SizedBox(height: 10.0),
+                  FormFieldStyled(
+                    controller: _descritpionController,
+                    hintText: "Beschreibung",
+                    autocorrect: true,
+                    maxLines: 8,
+                  ),
+                  SizedBox(height: 10.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: FormFieldStyled(
+                          controller: _priceController,
+                          hintText: "Preis",
+                          autocorrect: true,
+                          type: TextInputType.numberWithOptions(
+                              signed: false, decimal: true),
                         ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                            child: Text('€ Pro Tag',
-                                style: TextStyle(color: Colors.white)),
-                          ),
-                        )
-                      ],
-                    ),
-                    SizedBox(height: 16),
-                    RaisedButton(
+                      ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                          child: Text('€ Pro Tag',
+                              style: TextStyle(color: Colors.white)),
+                        ),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 10.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: RaisedButton(
                       color: Theme.of(context).primaryColor,
                       textColor: Colors.white,
                       padding: const EdgeInsets.all(16),
@@ -224,12 +226,12 @@ class _AddItemState extends State<AddItem> {
                       onPressed: () {
                         _createOffer();
                       },
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               ),
             ),
-          ],
+          ),
         ),
       ),
     );
@@ -363,7 +365,7 @@ class _AddItemState extends State<AddItem> {
             new FlatButton(
               child: new Text("Schließen"),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.pop(context);
               },
             ),
           ],

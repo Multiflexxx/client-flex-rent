@@ -4,12 +4,13 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/models/rent_product_model.dart';
 import 'package:rent/models/future_product_model.dart';
 import 'package:rent/widgets/circle_tab_indicator.dart';
-import 'package:rent/widgets/product/future_product_card.dart';
-import 'package:rent/widgets/product/rent_product_card.dart';
+import 'package:rent/widgets/offer/future_offer_card.dart';
+import 'package:rent/widgets/offer/rent_offer_card.dart';
 import 'package:rent/models/offer_model.dart';
 
 import 'package:rent/screens/rentalItems/rent_detail_screen.dart';
-import 'package:rent/screens/rentalItems/future_product_detail_screen.dart';
+import 'package:rent/screens/rentalItems/future_offer_detail_screen.dart';
+
 class RentalItemsScreen extends StatefulWidget {
   RentalItemsScreen({Key key}) : super(key: key);
 
@@ -91,16 +92,16 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                               delegate: name == 'Ausstehende'
                                   ? SliverChildBuilderDelegate(
                                       (BuildContext context, int index) {
-                                        FutureProduct futureProduct =
-                                            futureProductSuggestionList[index];
+                                        FutureOffer futureOffer =
+                                            futureOfferSuggestionList[index];
                                         return GestureDetector(
                                           onTap: () => pushNewScreen(context,
-                                              screen: FutureProductDetailScreen(
-                                                futureProduct: futureProduct,
+                                              screen: FutureOfferDetailScreen(
+                                                futureOffer: futureOffer,
                                               ),
                                               withNavBar: false),
-                                          child: FutureProductCard(
-                                            futureProduct: futureProduct,
+                                          child: FutureOfferCard(
+                                            futureOffer: futureOffer,
                                           ),
                                         );
                                         //  return GestureDetector(onTap: () => Navigator.push(context, new CupertinoPageRoute(builder: (BuildContext context) => new ProductListScreen(category.name),
@@ -115,21 +116,21 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                     )
                                   : SliverChildBuilderDelegate(
                                       (BuildContext context, int index) {
-                                        RentProduct rentProduct =
-                                            rentProductSuggestionList[index];
+                                        RentOffer rentOffer =
+                                            rentOfferSuggestionList[index];
                                         return GestureDetector(
                                           onTap: () => pushNewScreen(context,
                                               screen: RentDetailScreen(
-                                                rentProduct: rentProduct,
+                                                rentOffer: rentOffer,
                                               ),
                                               withNavBar: false),
                                           child: RentProductCard(
-                                            rentProduct: rentProduct,
+                                            rentOffer: rentOffer,
                                           ),
                                         );
                                       },
                                       childCount:
-                                          rentProductSuggestionList.length,
+                                          rentOfferSuggestionList.length,
                                     )),
                         ),
                       ],
