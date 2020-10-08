@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/screens/booking/qrcode_screen.dart';
 
 import 'package:rent/widgets/booking/booking_info.dart';
 import 'package:rent/widgets/booking/booking_overview.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 
 class LeseeBookingScreen extends StatefulWidget {
   const LeseeBookingScreen();
@@ -57,10 +55,10 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
               : Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: GestureDetector(
-                      onTap: () => pushNewScreen(
-                            context,
-                            screen: QrCodeScreen(),
-                          ),
+                    onTap: () => pushNewScreen(
+                      context,
+                      screen: QrCodeScreen(),
+                    ),
                     child: Container(
                       padding: const EdgeInsets.all(10.0),
                       height: 50.0,

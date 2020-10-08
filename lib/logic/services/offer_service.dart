@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
@@ -97,6 +98,7 @@ class ApiOfferService extends OfferService {
   @override
   Future<List<Offer>> getOfferbyUser() async {
     final String userId = await _storage.read(key: 'userId');
+
     final response = await http
         .get('https://flexrent.multiflexxx.de/offer/user-offers/$userId');
 
@@ -106,12 +108,15 @@ class ApiOfferService extends OfferService {
       if (jsonBody.isNotEmpty) {
         final List<Offer> offerList =
             (jsonBody).map((i) => Offer.fromJson(i)).toList();
+        inspect(offerList);
         return offerList;
       } else {
         return Future.error(
             OfferException(message: 'Fange jetzt an zu Vermieten!'));
       }
     }
+    return Future.error(
+        OfferException(message: 'Fange jetzt an zu Vermieten!'));
   }
 
   @override
