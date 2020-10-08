@@ -106,7 +106,7 @@ class _TakePhotoState extends State<TakePhoto> {
                                 },
                                 child: Container(
                                   child: Icon(
-                                    Icons.camera_outlined,
+                                    Icons.camera,
                                     color: Colors.purple,
                                     size: 40.0,
                                   ),
