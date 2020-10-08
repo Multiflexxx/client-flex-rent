@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:rent/logic/models/offer/offer.dart';
@@ -34,38 +35,68 @@ class ItemCard extends StatelessWidget {
                           Flexible(
                             child: Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                                  EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 20.0),
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Text(
-                                    '${offer.title}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20.0,
-                                      fontWeight: FontWeight.w700,
-                                      letterSpacing: 1.2,
-                                    ),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  Text(
-                                    '${offer.description}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w300,
-                                      letterSpacing: 1.2,
-                                    ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ),
-                                  PriceTag(offer.price),
                                   Row(
                                     children: [
-                                      Text('Frei'),
+                                      Container(
+                                        width: 120.0,
+                                        height: 120.0,
+                                        margin: EdgeInsets.only(right: 10.0),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(20.0),
+                                          child: offer.pictureLinks.length == 0
+                                              ? Image(
+                                            image: AssetImage('assets/images/noimage.png'),
+                                            fit: BoxFit.cover,
+                                          )
+                                              : CachedNetworkImage(
+                                            imageUrl: offer.pictureLinks[0],
+                                            fit: BoxFit.cover,
+                                            placeholder: (context, url) => Icon(
+                                              Icons.error,
+                                              color: Colors.white,
+                                            ),
+                                            errorWidget: (context, url, error) => Icon(
+                                              Icons.error,
+                                              color: Colors.white,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${offer.title}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w700,
+                                              letterSpacing: 1.2,
+                                            ),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          Text(
+                                            '${offer.description}',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w300,
+                                              letterSpacing: 1.2,
+                                            ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          PriceTag(offer.price),
+                                          Text('Frei'),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                   Row(
