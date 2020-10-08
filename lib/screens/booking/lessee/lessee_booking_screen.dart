@@ -27,7 +27,7 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
         child: ListView(children: <Widget>[
           BookingInfo(),
           BookingOverview(),
-          status != 1
+          status == 1
               ? Padding(
                   padding: const EdgeInsets.all(20.0),
                   child: GestureDetector(
