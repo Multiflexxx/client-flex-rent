@@ -59,28 +59,8 @@ class _MyItemsState extends State<MyItems> {
                     return ListView.builder(
                       itemCount: snapshot.data.length,
                       itemBuilder: (context, index) {
-                        return Card(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: <Widget>[
-                              ListTile(
-                                title: Text('iPhone 11'),
-                                subtitle: Text('Apple'),
-                              ),
-                              ButtonBar(
-                                children: <Widget>[
-                                  FlatButton(
-                                    child: const Text('Bearbeiten'),
-                                    onPressed: () {/* ... */},
-                                  ),
-                                  FlatButton(
-                                    child: const Text('Verfügbarkeit ändern'),
-                                    onPressed: () {/* ... */},
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                        return ItemCard(
+                          offer: snapshot.data[index],
                         );
                       },
                     );
@@ -88,18 +68,6 @@ class _MyItemsState extends State<MyItems> {
                   return Center(child: CircularProgressIndicator());
                 },
               ),
-            ),
-            ItemCard(
-              offer: Offer(
-                  category: null,
-                  description: "Test",
-                  offerId: "0000",
-                  price: 20.0,
-                  title: "TestOffer",
-                  lessor: null,
-                  numberOfRatings: 0,
-                  pictureLinks: null,
-                  rating: 1.0),
             ),
           ],
         ),
