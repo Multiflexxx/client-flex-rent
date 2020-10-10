@@ -16,6 +16,7 @@ abstract class OfferService {
   void addImage();
   List<String> getSuggestion();
   void setSuggestion();
+  Future<dynamic> bookOffer();
 }
 
 class ApiOfferService extends OfferService {
@@ -57,11 +58,13 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future<Offer> getOfferById() async {
-    final response = await http.get('https://flexrent.multiflexxx.de/offer/1');
+  Future<Offer> getOfferById({String offerId}) async {
+    final response =
+        await http.get('https://flexrent.multiflexxx.de/offer/$offerId');
 
     final Map<String, dynamic> jsonBody = json.decode(response.body);
-    return Offer.fromJson(jsonBody);
+    Offer offer = Offer.fromJson(jsonBody);
+    return offer;
   }
 
   @override
@@ -200,5 +203,29 @@ class ApiOfferService extends OfferService {
   void setSuggestion({String query}) {
     var suggestions = _storage.read(key: 'suggestions');
     // _storage.write(key: 'suggestions', value: null);
+  }
+
+  @override
+  Future bookOffer({String offerId, DateRange dateRange}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response = await http.post(
+        'https://flexrent.multiflexxx.de/offer/$offerId',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(<String, dynamic>{
+          'session': session.toJson(),
+          'message': '',
+          'date_range': dateRange.toJson()
+        }));
+
+    if (response.statusCode == 201) {
+      final dynamic jsonBody = json.decode(response.body);
+      inspect(jsonBody);
+    } else {
+      inspect(response);
+    }
   }
 }

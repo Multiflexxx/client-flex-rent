@@ -5,6 +5,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/models/models.dart';
+import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/models/offer_request_model.dart';
 import 'package:rent/screens/booking/lessee/lessee_booking_screen.dart';
 import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
@@ -50,6 +52,19 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
     widget.offerRequest.startDate = _startDate;
     widget.offerRequest.endDate = _endDate;
     inspect(widget.offerRequest);
+  }
+
+  void _bookOffer() async {
+    // pushNewScreen(
+    //   context,
+    //   screen: LeseeBookingScreen(),
+    // );
+    String offerId = widget.offerRequest.offer.offerId;
+    DateRange dateRange = DateRange(
+        fromDate: widget.offerRequest.startDate,
+        toDate: widget.offerRequest.endDate);
+
+    ApiOfferService().bookOffer(offerId: offerId, dateRange: dateRange);
   }
 
   @override
@@ -153,6 +168,8 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                             Duration(days: 90),
                                           ),
                                           displayDate: null,
+                                          blockedDates: widget
+                                              .offerRequest.offer.blockedDates,
                                         ),
                                       );
                                       if (range != null) {
@@ -229,10 +246,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: GestureDetector(
-                onTap: () => pushNewScreen(
-                  context,
-                  screen: LeseeBookingScreen(),
-                ),
+                onTap: () => _bookOffer(),
                 child: Container(
                   height: 50.0,
                   decoration: BoxDecoration(

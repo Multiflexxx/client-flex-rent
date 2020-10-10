@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
+import 'package:rent/logic/models/lessor/lessor.dart';
 
 class UserBox extends StatelessWidget {
-  UserBox();
+  final Lessor lessor;
+
+  UserBox({this.lessor});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +28,7 @@ class UserBox extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      'Vermieter/in: Tristan',
+                      'Vermieter/in: ${lessor.firstName} ${lessor.lastName}',
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18.0,
@@ -63,7 +66,7 @@ class UserBox extends StatelessWidget {
                   width: 10.0,
                 ),
                 Text(
-                  '69 Bewertungen',
+                  '${lessor.numberOfLessorRatings} Bewertungen',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18.0,
@@ -86,15 +89,25 @@ class UserBox extends StatelessWidget {
                 SizedBox(
                   width: 10.0,
                 ),
-                Text(
-                  'Identität verifiziert',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 18.0,
-                    height: 1.35,
-                    fontWeight: FontWeight.w300,
-                  ),
-                ),
+                lessor.verified
+                    ? Text(
+                        'Identität verifiziert',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          height: 1.35,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      )
+                    : Text(
+                        'Identität nicht verifiziert',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18.0,
+                          height: 1.35,
+                          fontWeight: FontWeight.w300,
+                        ),
+                      ),
               ],
             ),
             SizedBox(

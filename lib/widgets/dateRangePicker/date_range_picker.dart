@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:rent/logic/models/models.dart';
 import 'package:rent/widgets/slide_bar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
@@ -12,6 +15,7 @@ class DateRangePicker extends StatefulWidget {
   final DateTime minDate;
   final DateTime maxDate;
   final DateTime displayDate;
+  final List<DateRange> blockedDates;
 
   DateRangePicker(
     this.scrollController, {
@@ -20,6 +24,7 @@ class DateRangePicker extends StatefulWidget {
     this.minDate,
     this.maxDate,
     this.displayDate,
+    this.blockedDates,
   });
 
   @override
@@ -37,6 +42,23 @@ class _DataRangePickerState extends State<DateRangePicker> {
     range = widget.range;
     _controller = _picker.DateRangePickerController();
     super.initState();
+  }
+
+  List<DateTime> _getDaysInBeteween(DateTime startDate, DateTime endDate) {
+    List<DateTime> days = [];
+    for (int i = 0; i <= endDate.difference(startDate).inDays; i++) {
+      days.add(startDate.add(Duration(days: i)));
+    }
+    return days;
+  }
+
+  List<DateTime> _getBlackOutDates() {
+    List<DateTime> _blackOutDates = [];
+    if (widget.blockedDates != null) {
+      widget.blockedDates.forEach((e) =>
+          _blackOutDates.addAll(_getDaysInBeteween(e.fromDate, e.toDate)));
+    }
+    return _blackOutDates;
   }
 
   @override
@@ -84,7 +106,7 @@ class _DataRangePickerState extends State<DateRangePicker> {
                   ),
                   dayFormat: 'EE',
                   weekendDays: List<int>()..add(7),
-                  blackoutDates: List<DateTime>()..add(DateTime(2020, 09, 26)),
+                  blackoutDates: _getBlackOutDates(),
                 ),
 
                 // Style

@@ -13,6 +13,7 @@ class Offer {
   Category category;
   List<String> pictureLinks;
   Lessor lessor;
+  List<DateRange> blockedDates;
 
   Offer(
       {this.offerId,
@@ -23,7 +24,8 @@ class Offer {
       this.price,
       this.category,
       this.pictureLinks,
-      this.lessor});
+      this.lessor,
+      this.blockedDates});
 
   factory Offer.fromJson(Map<String, dynamic> json) => _$OfferFromJson(json);
   Map<String, dynamic> toJson() => _$OfferToJson(this);

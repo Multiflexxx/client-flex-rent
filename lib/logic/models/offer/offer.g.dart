@@ -22,6 +22,10 @@ Offer _$OfferFromJson(Map<String, dynamic> json) {
     lessor: json['lessor'] == null
         ? null
         : Lessor.fromJson(json['lessor'] as Map<String, dynamic>),
+    blockedDates: (json['blocked_dates'] as List)
+        ?.map((e) =>
+            e == null ? null : DateRange.fromJson(e as Map<String, dynamic>))
+        ?.toList(),
   );
 }
 
@@ -43,5 +47,6 @@ Map<String, dynamic> _$OfferToJson(Offer instance) {
   writeNotNull('category', instance.category);
   writeNotNull('picture_links', instance.pictureLinks);
   writeNotNull('lessor', instance.lessor);
+  writeNotNull('blocked_dates', instance.blockedDates);
   return val;
 }

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/screens/booking/confiramtion_payment_screen.dart';
+import 'package:rent/screens/booking/confirmation_payment_screen.dart';
 import 'package:rent/screens/booking/info_screen.dart';
 
 class BookingOverview extends StatelessWidget {
