@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/offer/offer_screen.dart';
 import 'package:rent/widgets/offer/offer_card.dart';
 

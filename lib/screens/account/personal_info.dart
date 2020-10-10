@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:rent/logic/models/user/user.dart';
+import 'package:rent/logic/services/services.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class PersonalInfo extends StatefulWidget {
@@ -11,15 +12,58 @@ class PersonalInfo extends StatefulWidget {
 }
 
 class _PersonalInfoState extends State<PersonalInfo> {
-  final _formKey = GlobalKey<FormState>();
+  final _key = GlobalKey<FormState>();
+  final _firstNameController = TextEditingController();
+  final _lastNameController = TextEditingController();
+  final _streetController = TextEditingController();
+  final _numberController = TextEditingController();
+  final _zipController = TextEditingController();
+  final _cityController = TextEditingController();
+  final _emailController = TextEditingController();
+  final _phoneController = TextEditingController();
+
   User user;
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     final state = BlocProvider.of<AuthenticationBloc>(context).state
         as AuthenticationAuthenticated;
     user = state.user;
+
+    _firstNameController.text = user.firstName;
+    _lastNameController.text = user.lastName;
+    _streetController.text = user.street;
+    _numberController.text = user.houseNumber;
+    _zipController.text = user.postCode;
+    _cityController.text = user.city;
+    _emailController.text = user.email;
+    _phoneController.text = user.phoneNumber;
+  }
+
+  void _saveChanges() {
+    if (_key.currentState.validate()) {
+      User _updatedUser = User(
+        userId: user.userId,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        email: _emailController.text,
+        phoneNumber: _phoneController.text,
+        verified: user.verified,
+        postCode: _zipController.text,
+        city: _cityController.text,
+        street: _streetController.text,
+        houseNumber: _numberController.text,
+        lesseeRating: user.lesseeRating,
+        numberOfLesseeRatings: user.numberOfLesseeRatings,
+        lessorRating: user.lessorRating,
+        numberOfLessorRatings: user.numberOfLessorRatings,
+        dateOfBirth: user.dateOfBirth,
+      );
+      ApiUserService().updateUser(user: _updatedUser);
+    } else {
+      print('falsch');
+    }
   }
 
   @override
@@ -29,163 +73,217 @@ class _PersonalInfoState extends State<PersonalInfo> {
         title: Text("Meine Informationen"),
         centerTitle: true,
       ),
-      body: Container(
-        padding: EdgeInsets.all(8.0),
-        child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-                child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                Container(
+      body: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SafeArea(
+          child: Form(
+              key: _key,
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              child: SingleChildScrollView(
                   child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Container(
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CircleAvatar(
+                                backgroundImage:
+                                    AssetImage('assets/images/jett.jpg'),
+                                radius: 50.0,
+                                child: Icon(Icons.edit, size: 40.0)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
                       children: [
-                        CircleAvatar(
-                            backgroundImage:
-                                AssetImage('assets/images/jett.jpg'),
-                            radius: 50.0,
-                            child: Icon(Icons.edit, size: 40.0)),
+                        Expanded(
+                          child: FormFieldStyled(
+                            controller: _firstNameController,
+                            icon: Icon(
+                              Icons.person,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Vorname',
+                            type: TextInputType.name,
+                            autocorrect: true,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Vorname notwendig';
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          child: FormFieldStyled(
+                            controller: _lastNameController,
+                            hintText: 'Nachname',
+                            type: TextInputType.name,
+                            autocorrect: true,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Nachname notwendig';
+                              }
+                            },
+                          ),
+                        ),
                       ],
                     ),
-                  ),
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: FormFieldStyled(
-                        icon: Icon(
-                          Icons.person,
-                          color: Colors.white,
-                        ),
-                        hintText: 'Vorname',
-                        type: TextInputType.name,
-                        autocorrect: true,
-                        initialValue: user.firstName,
-                      ),
+                    SizedBox(
+                      height: 10,
                     ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      child: FormFieldStyled(
-                        hintText: 'Nachname',
-                        type: TextInputType.name,
-                        autocorrect: true,
-                        initialValue: user.lastName,
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 3,
+                          child: FormFieldStyled(
+                            controller: _streetController,
+                            icon: Icon(
+                              Icons.home,
+                              color: Colors.white,
+                            ),
+                            hintText: 'Straße',
+                            type: TextInputType.streetAddress,
+                            autocorrect: true,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Straße notwendig';
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          flex: 1,
+                          child: FormFieldStyled(
+                            controller: _numberController,
+                            hintText: 'Hausnummer',
+                            autocorrect: true,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Hausnummer notwendig';
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: FormFieldStyled(
+                            controller: _zipController,
+                            icon: Icon(
+                              Icons.location_city,
+                              color: Colors.white,
+                            ),
+                            hintText: 'PLZ',
+                            type: TextInputType.number,
+                            autocorrect: true,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'PLZ notwendig';
+                              }
+                            },
+                          ),
+                        ),
+                        SizedBox(width: 10),
+                        Expanded(
+                          flex: 2,
+                          child: FormFieldStyled(
+                            controller: _cityController,
+                            hintText: 'Ort',
+                            autocorrect: true,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Ort notwendig';
+                              }
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    FormFieldStyled(
+                      controller: _emailController,
+                      icon: Icon(
+                        Icons.email,
+                        color: Colors.white,
                       ),
+                      hintText: 'E-Mail',
+                      type: TextInputType.emailAddress,
+                      autocorrect: true,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return 'E-Mail notwendig';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    // FormFieldStyled(
+                    //   icon: Icon(
+                    //     Icons.vpn_key,
+                    //     color: Colors.white,
+                    //   ),
+                    //   hintText: 'Passwort',
+                    //   type: TextInputType.visiblePassword,
+                    //   obscureText: true,
+                    //   autocorrect: true,
+                    // ),
+                    SizedBox(
+                      height: 10,
+                    ),
+                    FormFieldStyled(
+                      controller: _phoneController,
+                      icon: Icon(
+                        Icons.phone,
+                        color: Colors.white,
+                      ),
+                      hintText: 'Handynummer',
+                      type: TextInputType.phone,
+                      autocorrect: true,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return 'Handynummer notwendig';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    RaisedButton(
+                      color: Theme.of(context).primaryColor,
+                      textColor: Colors.white,
+                      padding: const EdgeInsets.all(16),
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(8.0)),
+                      child: Text('Speichern'),
+                      onPressed: () => _saveChanges(),
                     ),
                   ],
                 ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 3,
-                      child: FormFieldStyled(
-                        icon: Icon(
-                          Icons.home,
-                          color: Colors.white,
-                        ),
-                        hintText: 'Strasse',
-                        type: TextInputType.streetAddress,
-                        autocorrect: true,
-                        initialValue: user.street,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      flex: 1,
-                      child: FormFieldStyled(
-                        hintText: 'Hausnummer',
-                        autocorrect: true,
-                        initialValue: user.houseNumber,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      flex: 1,
-                      child: FormFieldStyled(
-                        icon: Icon(
-                          Icons.location_city,
-                          color: Colors.white,
-                        ),
-                        hintText: 'PLZ',
-                        type: TextInputType.number,
-                        autocorrect: true,
-                        initialValue: user.postCode,
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Expanded(
-                      flex: 2,
-                      child: FormFieldStyled(
-                        hintText: 'Ort',
-                        autocorrect: true,
-                        initialValue: user.city,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                FormFieldStyled(
-                  icon: Icon(
-                    Icons.email,
-                    color: Colors.white,
-                  ),
-                  hintText: 'E-Mail',
-                  type: TextInputType.emailAddress,
-                  autocorrect: true,
-                  initialValue: user.email,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                FormFieldStyled(
-                  icon: Icon(
-                    Icons.vpn_key,
-                    color: Colors.white,
-                  ),
-                  hintText: 'Passwort',
-                  type: TextInputType.visiblePassword,
-                  obscureText: true,
-                  autocorrect: true,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                FormFieldStyled(
-                  icon: Icon(
-                    Icons.phone,
-                    color: Colors.white,
-                  ),
-                  hintText: 'Handynummer',
-                  type: TextInputType.phone,
-                  autocorrect: true,
-                  initialValue: user.phoneNumber,
-                ),
-                FlatButton(
-                  onPressed: null,
-                  child: Text(
-                    'Speichern',
-                    style: TextStyle(color: Colors.white),
-                  ),
-                )
-              ],
-            ))),
+              ))),
+        ),
       ),
     );
   }

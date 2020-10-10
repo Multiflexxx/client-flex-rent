@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/category/category.dart';
-import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/logic/models/offer/offer.dart';
+import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/account/create_offer/add_images.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 

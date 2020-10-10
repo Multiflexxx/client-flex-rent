@@ -188,7 +188,6 @@ class _PersonalFormState extends State<PersonalForm> {
         lastName: _lastNameController.text,
         email: _emailController.text,
         phoneNumber: widget.phoneNumber,
-        // phoneNumber: '1234578699',
         passwordHash: _passwordController.text,
         verified: false,
         postCode: _zipController.text,

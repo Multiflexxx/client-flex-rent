@@ -21,6 +21,7 @@ class User {
   final double lessorRating;
   final int numberOfLessorRatings;
   final dynamic dateOfBirth;
+  final String profilePicture;
 
   User(
       {@required this.userId,
@@ -39,7 +40,8 @@ class User {
       @required this.numberOfLesseeRatings,
       @required this.lessorRating,
       @required this.numberOfLessorRatings,
-      @required this.dateOfBirth});
+      @required this.dateOfBirth,
+      this.profilePicture});
 
   factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
   Map<String, dynamic> toJson() => _$UserToJson(this);

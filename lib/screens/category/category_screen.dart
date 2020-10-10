@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/offer/offer_list_screen.dart';
 import 'package:rent/widgets/search_bar.dart';
 

@@ -3,8 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/models/offer/offer.dart';
-import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/logic/services/services.dart';
 
 import 'package:rent/widgets/discovery_carousel.dart';
 import 'package:rent/widgets/search_bar.dart';

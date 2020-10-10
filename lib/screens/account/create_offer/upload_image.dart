@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/logic/services/services.dart';
 
 class UploadImageScreen extends StatelessWidget {
   final String imagePath;

@@ -25,6 +25,7 @@ User _$UserFromJson(Map<String, dynamic> json) {
     lessorRating: (json['lessor_rating'] as num)?.toDouble(),
     numberOfLessorRatings: json['number_of_lessor_ratings'] as int,
     dateOfBirth: json['date_of_birth'],
+    profilePicture: json['profile_picture'] as String,
   );
 }
 
@@ -54,5 +55,6 @@ Map<String, dynamic> _$UserToJson(User instance) {
   writeNotNull('lessor_rating', instance.lessorRating);
   writeNotNull('number_of_lessor_ratings', instance.numberOfLessorRatings);
   writeNotNull('date_of_birth', instance.dateOfBirth);
+  writeNotNull('profile_picture', instance.profilePicture);
   return val;
 }
