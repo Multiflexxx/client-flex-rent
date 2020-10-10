@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/account/create_offer/add_item.dart';
@@ -21,57 +22,58 @@ class _MyItemsState extends State<MyItems> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Meine Mietgegenstände'),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Card(
-              child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: FlatButton(
-                  onPressed: () {
-                    pushNewScreen(
-                      context,
-                      screen: AddItem(),
-                      withNavBar: false,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.stretch,
+      children: [
+        RaisedButton(
+          color: Colors.transparent,
+          onPressed: () {
+            pushNewScreen(
+              context,
+              screen: AddItem(),
+              withNavBar: false,
+            );
+          },
+          child: Text(
+            '+',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 40.0,
+              fontWeight: FontWeight.w300,
+            ),
+          ),
+        ),
+        Expanded(
+          child: FutureBuilder<List<Offer>>(
+            future: offerList,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                return ListView.builder(
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (context, index) {
+                    return ItemCard(
+                      offer: snapshot.data[index],
                     );
                   },
+                );
+              } else if (snapshot.hasError) {
+                OfferException e = snapshot.error;
+                return Center(
                   child: Text(
-                    '+',
-                    style: TextStyle(color: Colors.white, fontSize: 40.0),
+                    e.message,
+                    style: TextStyle(
+                      fontSize: 24.0,
+                      letterSpacing: 1.35,
+                      fontWeight: FontWeight.w300,
+                    ),
                   ),
-                ),
-              ),
-              shadowColor: Colors.purple,
-              color: Colors.black,
-            ),
-            Expanded(
-              child: FutureBuilder<List<Offer>>(
-                future: offerList,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (context, index) {
-                        return ItemCard(
-                          offer: snapshot.data[index],
-                        );
-                      },
-                    );
-                  }
-                  return Center(child: CircularProgressIndicator());
-                },
-              ),
-            ),
-          ],
+                );
+              }
+              return Center(child: CircularProgressIndicator());
+            },
+          ),
         ),
-      ),
+      ],
     );
   }
 }
