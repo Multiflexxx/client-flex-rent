@@ -1,6 +1,9 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/models/rent_product_model.dart';
 import 'package:rent/models/future_product_model.dart';
 import 'package:rent/widgets/circle_tab_indicator.dart';
@@ -23,6 +26,12 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
     "Ausstehende",
     "Gemietete",
   ];
+
+  @override
+  void initState() {
+    inspect(ApiOfferService().getAllFutureOfferRequests(statusCode: 5));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
