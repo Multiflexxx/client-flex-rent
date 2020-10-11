@@ -38,7 +38,7 @@ dependencies:
   flutter_barcode_scanner: ^1.0.1
   bloc: ^6.0.0
   flutter_bloc: ^6.0.5
-  equatable: ^1.2.0
+  equatable: ^1.2.5
   flutter_secure_storage: ^3.3.3
   http: ^0.12.2
   json_annotation: ^3.0.0

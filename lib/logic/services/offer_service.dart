@@ -16,7 +16,7 @@ abstract class OfferService {
   void addImage();
   List<String> getSuggestion();
   void setSuggestion();
-  Future<dynamic> bookOffer();
+  Future<OfferRequest> bookOffer();
 }
 
 class ApiOfferService extends OfferService {
@@ -206,7 +206,7 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future bookOffer({String offerId, DateRange dateRange}) async {
+  Future<OfferRequest> bookOffer({String offerId, DateRange dateRange}) async {
     final String sessionId = await _storage.read(key: 'sessionId');
     final String userId = await _storage.read(key: 'userId');
 
@@ -223,7 +223,9 @@ class ApiOfferService extends OfferService {
 
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
-      inspect(jsonBody);
+      OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
+
+      inspect(offerRequest);
     } else {
       inspect(response);
     }

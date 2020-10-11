@@ -1,15 +1,27 @@
-// import 'package:json_annotation/json_annotation.dart';
-// import 'package:rent/logic/models/date_range/date_range.dart';
-// import 'package:rent/logic/models/models.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:rent/logic/models/models.dart';
+part 'offer_request.g.dart';
 
-// @JsonSerializable(fieldRename: FieldRename.snake)
-// class OfferRequest {
-//   Offer offer;
-//   DateRange
+@JsonSerializable(fieldRename: FieldRename.snake)
+class OfferRequest {
+  final String requestId;
+  final User user;
+  final Offer offer;
+  final int statusId;
+  final DateRange dateRange;
+  final String message;
+  final String qrCode;
 
-//   OfferRequest({
-//     this.offer,
-//     this.startDate,
-//     this.endDate,
-//   });
-// }
+  OfferRequest(
+      {this.requestId,
+      this.user,
+      this.offer,
+      this.statusId,
+      this.dateRange,
+      this.message,
+      this.qrCode});
+
+  factory OfferRequest.fromJson(Map<String, dynamic> json) =>
+      _$OfferRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$OfferRequestToJson(this);
+}

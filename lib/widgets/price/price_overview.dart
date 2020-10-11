@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:rent/logic/models/models.dart';
 import 'package:rent/widgets/price/detail_price_overview.dart';
 import 'package:rent/widgets/slide_bar.dart';
 
@@ -7,16 +8,14 @@ class PriceOverview extends StatelessWidget {
   final double price;
   final ScrollController scrollController;
   final bool reverse;
-  final DateTime startDate;
-  final DateTime endDate;
+  final DateRange dateRange;
 
   PriceOverview({
     Key key,
     this.price,
     this.scrollController,
     this.reverse = false,
-    this.startDate,
-    this.endDate,
+    this.dateRange,
   }) : super(key: key);
 
   @override
@@ -34,8 +33,7 @@ class PriceOverview extends StatelessWidget {
             ),
             DetailPriceOverview(
               price: price,
-              startDate: startDate,
-              endDate: endDate,
+              dateRange: dateRange,
             ),
             SizedBox(
               height: 10.0,

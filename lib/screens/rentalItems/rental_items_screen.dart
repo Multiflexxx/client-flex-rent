@@ -95,11 +95,12 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                         FutureOffer futureOffer =
                                             futureOfferSuggestionList[index];
                                         return GestureDetector(
-                                          onTap: () => pushNewScreen(context,
-                                              screen: FutureOfferDetailScreen(
-                                                futureOffer: futureOffer,
-                                              ),
-                                              withNavBar: false),
+                                          onTap: () => print('todo'),
+                                          // pushNewScreen(context,
+                                          //     screen: FutureOfferDetailScreen(
+                                          //       futureOffer: futureOffer,
+                                          //     ),
+                                          //     withNavBar: false),
                                           child: FutureOfferCard(
                                             futureOffer: futureOffer,
                                           ),
@@ -119,11 +120,12 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                         RentOffer rentOffer =
                                             rentOfferSuggestionList[index];
                                         return GestureDetector(
-                                          onTap: () => pushNewScreen(context,
-                                              screen: RentDetailScreen(
-                                                rentOffer: rentOffer,
-                                              ),
-                                              withNavBar: false),
+                                          onTap: () => print('todo'),
+                                          // pushNewScreen(context,
+                                          //     screen: RentDetailScreen(
+                                          //       rentOffer: rentOffer,
+                                          //     ),
+                                          //     withNavBar: false),
                                           child: RentProductCard(
                                             rentOffer: rentOffer,
                                           ),

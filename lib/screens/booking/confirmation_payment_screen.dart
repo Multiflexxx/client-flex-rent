@@ -16,9 +16,10 @@ import 'package:rent/widgets/offer/offer_card.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
 class ConfirmationPaymentScreen extends StatefulWidget {
-  final OfferRequest offerRequest;
+  final Offer offer;
+  final DateRange dateRange;
 
-  ConfirmationPaymentScreen({this.offerRequest});
+  ConfirmationPaymentScreen({this.offer, this.dateRange});
 
   @override
   _ConfirmationPaymentScreenState createState() =>
@@ -26,13 +27,11 @@ class ConfirmationPaymentScreen extends StatefulWidget {
 }
 
 class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
-  DateTime _startDate;
-  DateTime _endDate;
+  DateRange _dateRange;
 
   @override
   void initState() {
-    _startDate = widget.offerRequest.startDate;
-    _endDate = widget.offerRequest.endDate;
+    _dateRange = widget.dateRange;
     super.initState();
   }
 
@@ -42,16 +41,11 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
     endDateValue ??= startDateValue;
     setState(() {
       if (startDateValue.isAfter(endDateValue)) {
-        _startDate = endDateValue;
-        _endDate = startDateValue;
+        _dateRange = DateRange(fromDate: endDateValue, toDate: startDateValue);
       } else {
-        _startDate = startDateValue;
-        _endDate = endDateValue;
+        _dateRange = DateRange(fromDate: startDateValue, toDate: endDateValue);
       }
     });
-    widget.offerRequest.startDate = _startDate;
-    widget.offerRequest.endDate = _endDate;
-    inspect(widget.offerRequest);
   }
 
   void _bookOffer() async {
@@ -59,12 +53,8 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
     //   context,
     //   screen: LeseeBookingScreen(),
     // );
-    String offerId = widget.offerRequest.offer.offerId;
-    DateRange dateRange = DateRange(
-        fromDate: widget.offerRequest.startDate,
-        toDate: widget.offerRequest.endDate);
-
-    ApiOfferService().bookOffer(offerId: offerId, dateRange: dateRange);
+    String offerId = widget.offer.offerId;
+    ApiOfferService().bookOffer(offerId: offerId, dateRange: _dateRange);
   }
 
   @override
@@ -73,8 +63,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
       body: SafeArea(
         child: ListView(
           children: <Widget>[
-            OfferCard(
-                offer: widget.offerRequest.offer, heroTag: 'confirmation'),
+            OfferCard(offer: widget.offer, heroTag: 'confirmation'),
             // Zeitraum
             Container(
               margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
@@ -126,7 +115,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                   Row(
                                     children: [
                                       Text(
-                                        '${DateFormat('yMd', 'de').format(_startDate)}',
+                                        '${DateFormat('yMd', 'de').format(_dateRange.fromDate)}',
                                         style: TextStyle(
                                           color: Colors.white,
                                           fontSize: 16.0,
@@ -134,9 +123,9 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                           fontWeight: FontWeight.w300,
                                         ),
                                       ),
-                                      _startDate != _endDate
+                                      _dateRange.fromDate != _dateRange.toDate
                                           ? Text(
-                                              ' bis ${DateFormat('yMd', 'de').format(_endDate)}',
+                                              ' bis ${DateFormat('yMd', 'de').format(_dateRange.toDate)}',
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 16.0,
@@ -160,16 +149,16 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                           scrollController,
                                           date: null,
                                           range: _picker.PickerDateRange(
-                                            _startDate,
-                                            _endDate,
+                                            _dateRange.fromDate,
+                                            _dateRange.toDate,
                                           ),
                                           minDate: DateTime.now(),
                                           maxDate: DateTime.now().add(
                                             Duration(days: 90),
                                           ),
                                           displayDate: null,
-                                          blockedDates: widget
-                                              .offerRequest.offer.blockedDates,
+                                          blockedDates:
+                                              widget.offer.blockedDates,
                                         ),
                                       );
                                       if (range != null) {
@@ -236,9 +225,8 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                     ),
                   ),
                   DetailPriceOverview(
-                    price: widget.offerRequest.offer.price,
-                    startDate: widget.offerRequest.startDate,
-                    endDate: widget.offerRequest.endDate,
+                    price: widget.offer.price,
+                    dateRange: widget.dateRange,
                   ),
                 ],
               ),

@@ -11,7 +11,6 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
-import 'package:rent/models/offer_request_model.dart';
 import 'package:rent/screens/booking/confirmation_payment_screen.dart';
 import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
 import 'package:rent/widgets/price/price_overview.dart';
@@ -31,14 +30,12 @@ class OfferScreen extends StatefulWidget {
 }
 
 class _OfferScreenState extends State<OfferScreen> {
-  DateTime _startDate;
-  DateTime _endDate;
   Future<Offer> offer;
+  DateRange _dateRange;
 
   @override
   void initState() {
-    _startDate = null;
-    _endDate = null;
+    _dateRange = DateRange(fromDate: null, toDate: null);
     initializeDateFormatting('de_DE', null);
     offer = ApiOfferService().getOfferById(offerId: widget.offer.offerId);
     super.initState();
@@ -50,11 +47,9 @@ class _OfferScreenState extends State<OfferScreen> {
     endDateValue ??= startDateValue;
     setState(() {
       if (startDateValue.isAfter(endDateValue)) {
-        _startDate = endDateValue;
-        _endDate = startDateValue;
+        _dateRange = DateRange(fromDate: endDateValue, toDate: startDateValue);
       } else {
-        _startDate = startDateValue;
-        _endDate = endDateValue;
+        _dateRange = DateRange(fromDate: startDateValue, toDate: endDateValue);
       }
     });
   }
@@ -191,8 +186,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                                   PriceOverview(
                                             price: offer.price,
                                             scrollController: scrollController,
-                                            startDate: _startDate,
-                                            endDate: _endDate,
+                                            dateRange: _dateRange,
                                           ),
                                         ),
                                         child: Text(
@@ -210,16 +204,14 @@ class _OfferScreenState extends State<OfferScreen> {
                                   ),
                                   GestureDetector(
                                     onTap: () {
-                                      if (_startDate != null) {
+                                      if (_dateRange.fromDate != null) {
                                         Navigator.push(
                                           context,
                                           new CupertinoPageRoute(
                                             builder: (BuildContext context) =>
                                                 new ConfirmationPaymentScreen(
-                                              offerRequest: OfferRequest(
-                                                  offer: offer,
-                                                  startDate: _startDate,
-                                                  endDate: _endDate),
+                                              offer: offer,
+                                              dateRange: _dateRange,
                                             ),
                                           ),
                                         );
@@ -335,7 +327,6 @@ class _OfferScreenState extends State<OfferScreen> {
                       // Availabilty
                       GestureDetector(
                         onTap: () async {
-                          inspect(offer);
                           final range =
                               await showCupertinoModalBottomSheet<dynamic>(
                             expand: true,
@@ -346,18 +337,19 @@ class _OfferScreenState extends State<OfferScreen> {
                               scrollController,
                               date: null,
                               range: _picker.PickerDateRange(
-                                _startDate,
-                                _endDate,
+                                _dateRange.fromDate,
+                                _dateRange.toDate,
                               ),
                               minDate: DateTime.now(),
                               maxDate: DateTime.now().add(
                                 Duration(days: 90),
                               ),
-                              displayDate: _startDate,
+                              displayDate: _dateRange.fromDate,
                               blockedDates: offer.blockedDates,
                             ),
                           );
                           if (range != null) {
+                            inspect(range);
                             _onSelectedRangeChanged(range);
                           }
                         },
@@ -400,7 +392,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                           ),
                                         ],
                                       ),
-                                      _startDate != null
+                                      _dateRange.fromDate != null
                                           ? Column(
                                               children: [
                                                 SizedBox(
@@ -409,7 +401,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                                 Row(
                                                   children: [
                                                     Text(
-                                                      '${DateFormat('yMd', 'de').format(_startDate)}',
+                                                      '${DateFormat('yMd', 'de').format(_dateRange.fromDate)}',
                                                       style: TextStyle(
                                                         color: Colors.white,
                                                         fontSize: 16.0,
@@ -418,11 +410,13 @@ class _OfferScreenState extends State<OfferScreen> {
                                                             FontWeight.w300,
                                                       ),
                                                     ),
-                                                    _endDate != null &&
-                                                            _startDate !=
-                                                                _endDate
+                                                    _dateRange.toDate != null &&
+                                                            _dateRange
+                                                                    .fromDate !=
+                                                                _dateRange
+                                                                    .toDate
                                                         ? Text(
-                                                            ' bis ${DateFormat('yMd', 'de').format(_endDate)}',
+                                                            ' bis ${DateFormat('yMd', 'de').format(_dateRange.toDate)}',
                                                             style: TextStyle(
                                                               color:
                                                                   Colors.white,

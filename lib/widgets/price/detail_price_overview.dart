@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:rent/logic/models/date_range/date_range.dart';
 
 class DetailPriceOverview extends StatelessWidget {
   final double price;
-  final DateTime startDate;
-  final DateTime endDate;
+  final DateRange dateRange;
 
   final currenyFormat = new NumberFormat("#,##0.00", "de_DE");
 
-  DetailPriceOverview({Key key, this.price, this.startDate, this.endDate})
-      : super(key: key);
+  DetailPriceOverview({Key key, this.price, this.dateRange}) : super(key: key);
 
   int _getRentDuration() {
-    if (endDate == null || startDate == null) {
+    if (dateRange.toDate == null || dateRange.fromDate == null) {
       return 1;
     }
-    return (endDate.difference(startDate).inDays + 1);
+    return (dateRange.toDate.difference(dateRange.fromDate).inDays + 1);
   }
 
   @override
