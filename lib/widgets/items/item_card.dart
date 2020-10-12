@@ -24,6 +24,7 @@ class ItemCard extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
                     child: Container(
+                      margin: EdgeInsets.fromLTRB(100.0, 0, 10, 0),
                       width: double.infinity,
                       height: 200,
                       decoration: BoxDecoration(
@@ -35,68 +36,40 @@ class ItemCard extends StatelessWidget {
                           Flexible(
                             child: Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(5.0, 20.0, 5.0, 20.0),
+                                  EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
                               child: Column(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
-                                  Row(
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Container(
-                                        width: 120.0,
-                                        height: 130.0,
-                                        margin: EdgeInsets.only(right: 10.0),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(20.0),
-                                          child: offer.pictureLinks.length == 0
-                                              ? Image(
-                                            image: AssetImage('assets/images/noimage.png'),
-                                            fit: BoxFit.cover,
-                                          )
-                                              : CachedNetworkImage(
-                                            imageUrl: offer.pictureLinks[0],
-                                            fit: BoxFit.cover,
-                                            placeholder: (context, url) => Icon(
-                                              Icons.error,
-                                              color: Colors.white,
-                                            ),
-                                            errorWidget: (context, url, error) => Icon(
-                                              Icons.error,
-                                              color: Colors.white,
-                                            ),
-                                          ),
+                                      Text(
+                                        '${offer.title}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.w700,
+                                          letterSpacing: 1.2,
                                         ),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            '${offer.title}',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w700,
-                                              letterSpacing: 1.2,
-                                            ),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          Text(
-                                            '${offer.description}',
-                                            style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 16.0,
-                                              fontWeight: FontWeight.w300,
-                                              letterSpacing: 1.2,
-                                            ),
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                          ),
-                                          PriceTag(offer.price),
-                                          Text('Frei'),
-                                        ],
+                                      Text(
+                                        '${offer.description}',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w300,
+                                          letterSpacing: 1.2,
+                                        ),
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
+                                      PriceTag(offer.price),
+                                      Text('Frei'),
                                     ],
                                   ),
                                   Row(
@@ -112,9 +85,11 @@ class ItemCard extends StatelessWidget {
                                             letterSpacing: 1.0,
                                           ),
                                         ),
-                                        onTap: (){/* */},
+                                        onTap: () {/* */},
                                       ),
-                                      SizedBox(width: 20.0,),
+                                      SizedBox(
+                                        width: 20.0,
+                                      ),
                                       GestureDetector(
                                         child: const Text(
                                           'Verfügbarkeit ändern',
@@ -125,7 +100,7 @@ class ItemCard extends StatelessWidget {
                                             letterSpacing: 1.0,
                                           ),
                                         ),
-                                        onTap: (){/* */},
+                                        onTap: () {/* */},
                                       )
                                     ],
                                   ),
@@ -136,6 +111,31 @@ class ItemCard extends StatelessWidget {
                         ],
                       ),
                     ),
+                  ),
+                ),
+                Container(
+                  width: 170.0,
+                  height: 200.0,
+                  margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.0),
+                    child: offer.pictureLinks.length == 0
+                        ? Image(
+                            image: AssetImage('assets/images/noimage.png'),
+                            fit: BoxFit.cover,
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: offer.pictureLinks[0],
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Icon(
+                              Icons.error,
+                              color: Colors.white,
+                            ),
+                            errorWidget: (context, url, error) => Icon(
+                              Icons.error,
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
                 ),
               ],
