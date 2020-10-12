@@ -19,36 +19,40 @@ class AccountSettingsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('Einstellungen'),
+        ),
         body: SafeArea(
-      child: ListView.builder(
-        itemCount: profileOptions.length,
-        itemBuilder: (context, index) {
-          ProfileOption option = profileOptions[index];
-          return ListTile(
-              onTap: () {
-                if (index < profileOptions.length - 1) {
-                  print(option.optionId);
-                  pushNewScreenWithRouteSettings(
-                    context,
-                    settings: RouteSettings(name: option.optionId),
-                    screen: routes[option.optionId] ?? PageNotFound(),
-                    withNavBar: true,
-                  );
-                } else {
-                  BlocProvider.of<AuthenticationBloc>(context)
-                      .add(UserLoggedOut());
-                }
-              },
-              leading: Icon(
-                option.icon,
-                color: Colors.white,
-              ),
-              title: Text(
-                option.name,
-                style: TextStyle(color: Colors.white),
-              ));
-        },
-      ),
-    ));
+          child: ListView.builder(
+            itemCount: profileOptions.length,
+            itemBuilder: (context, index) {
+              ProfileOption option = profileOptions[index];
+              return ListTile(
+                  onTap: () {
+                    if (index < profileOptions.length - 1) {
+                      print(option.optionId);
+                      pushNewScreenWithRouteSettings(
+                        context,
+                        settings: RouteSettings(name: option.optionId),
+                        screen: routes[option.optionId] ?? PageNotFound(),
+                        withNavBar: true,
+                      );
+                    } else {
+                      BlocProvider.of<AuthenticationBloc>(context)
+                          .add(UserLoggedOut());
+                    }
+                  },
+                  leading: Icon(
+                    option.icon,
+                    color: Colors.white,
+                  ),
+                  title: Text(
+                    option.name,
+                    style: TextStyle(color: Colors.white),
+                  ));
+            },
+          ),
+        ));
   }
 }
