@@ -95,11 +95,7 @@ class _AddItemState extends State<AddItem> {
                         flex: 1,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: RaisedButton.icon(
-                            icon: Icon(Icons.search),
-                            onPressed: () {},
-                            label: Text('Search'),
-                          ),
+                          child: Center(child: Text('Manuell oder'))
                         ),
                       ),
                       Expanded(
