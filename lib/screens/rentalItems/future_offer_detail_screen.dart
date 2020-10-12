@@ -2,6 +2,7 @@
 // import 'package:flutter_icons/flutter_icons.dart';
 
 // import 'package:auto_size_text/auto_size_text.dart';
+// import 'package:rent/logic/models/models.dart';
 // import 'package:rent/widgets/price/price_overview.dart';
 // import 'package:rent/widgets/price/price_tag.dart';
 // import 'package:intl/date_symbol_data_local.dart';
@@ -13,8 +14,8 @@
 // import 'package:rent/widgets/offer_detail/user_box.dart';
 
 // class FutureOfferDetailScreen extends StatefulWidget {
-//   final FutureOffer futureOffer;
-//   FutureOfferDetailScreen({this.futureOffer});
+//   final OfferRequest offerRequest;
+//   FutureOfferDetailScreen({this.offerRequest});
 
 //   @override
 //   _FutureOfferDetailScreen createState() => _FutureOfferDetailScreen();

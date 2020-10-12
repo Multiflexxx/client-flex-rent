@@ -120,17 +120,11 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                             //       futureOffer: futureOffer,
                                             //     ),
                                             //     withNavBar: false),
-                                            child: FutureOfferCard(
-                                              futureOffer: futureOffer,
+                                            child: OfferRequestCard(
+                                              offerRequest:
+                                                  openOfferRequestList[index],
                                             ),
                                           );
-                                          //  return GestureDetector(onTap: () => Navigator.push(context, new CupertinoPageRoute(builder: (BuildContext context) => new ProductListScreen(category.name),
-                                          //  ),
-                                          //  ),
-                                          //  ),
-                                          // return FutureProductCard(
-                                          //   futureProduct: futureProduct,
-                                          // );
                                         },
                                         childCount:
                                             productSuggestionList.length,

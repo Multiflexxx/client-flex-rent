@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:rent/logic/models/models.dart';
 import 'package:rent/models/future_product_model.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
-class FutureOfferCard extends StatelessWidget {
-  final FutureOffer futureOffer;
+class OfferRequestCard extends StatelessWidget {
+  final OfferRequest offerRequest;
 
-  FutureOfferCard({Key key, this.futureOffer}) : super(key: key);
+  OfferRequestCard({Key key, this.offerRequest}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +42,7 @@ class FutureOfferCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    '${futureOffer.title}',
+                                    '${offerRequest.offer.title}',
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 20.0,
@@ -53,7 +54,7 @@ class FutureOfferCard extends StatelessWidget {
                                   ),
                                   RichText(
                                       text: TextSpan(
-                                    text: futureOffer.rent == true
+                                    text: offerRequest.statusId == 1
                                         ? 'Ausleihe'
                                         : 'Miete',
                                     style: TextStyle(
@@ -64,7 +65,7 @@ class FutureOfferCard extends StatelessWidget {
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: futureOffer.rent == true
+                                          text: offerRequest.dateRange.fromDate == true
                                               ? ' vom'
                                               : ' beginnt am',
                                           style: TextStyle(
@@ -96,7 +97,7 @@ class FutureOfferCard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
 
-                                  PriceTag(futureOffer.price),
+                                  PriceTag(offerRequest.offer.price),
                                   Text(
                                     'Show more',
                                     style: TextStyle(
@@ -136,20 +137,20 @@ class FutureOfferCard extends StatelessWidget {
                     ),
                   ),
                 ),
-                Container(
-                  width: 160,
-                  height: 200,
-                  margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20.0),
-                    child: Image(
-                      height: 100,
-                      width: 200,
-                      image: AssetImage(futureOffer.imageUrl),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                ),
+                // Container(
+                //   width: 160,
+                //   height: 200,
+                //   margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
+                //   child: ClipRRect(
+                //     borderRadius: BorderRadius.circular(20.0),
+                //     child: Image(
+                //       height: 100,
+                //       width: 200,
+                //       image: AssetImage(offerRequest.offer.),
+                //       fit: BoxFit.cover,
+                //     ),
+                //   ),
+                // ),
               ],
             ),
           ),
