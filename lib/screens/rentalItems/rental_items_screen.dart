@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/models/rent_product_model.dart';
 import 'package:rent/models/future_product_model.dart';
@@ -27,9 +28,13 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
     "Gemietete",
   ];
 
+  Future<List<OfferRequest>> openOfferRequsts;
+  Future<List<OfferRequest>> closedOfferRequsts;
+
   @override
   void initState() {
-    inspect(ApiOfferService().getAllFutureOfferRequests(statusCode: 5));
+    openOfferRequsts =
+        ApiOfferService().getAllOfferRequestsbyStatusCode(statusCode: 1);
     super.initState();
   }
 
@@ -81,75 +86,71 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
             ];
           },
           body: TabBarView(
-            children: _tabs.map((String name) {
-              return SafeArea(
-                top: false,
-                bottom: false,
-                child: Builder(
-                  builder: (BuildContext context) {
-                    return CustomScrollView(
-                      key: PageStorageKey<String>(name),
-                      slivers: <Widget>[
-                        SliverOverlapInjector(
-                          handle:
-                              NestedScrollView.sliverOverlapAbsorberHandleFor(
-                                  context),
-                        ),
-                        SliverPadding(
-                          padding: const EdgeInsets.all(8.0),
-                          sliver: SliverList(
-                              delegate: name == 'Ausstehende'
-                                  ? SliverChildBuilderDelegate(
-                                      (BuildContext context, int index) {
-                                        FutureOffer futureOffer =
-                                            futureOfferSuggestionList[index];
-                                        return GestureDetector(
-                                          onTap: () => print('todo'),
-                                          // pushNewScreen(context,
-                                          //     screen: FutureOfferDetailScreen(
-                                          //       futureOffer: futureOffer,
-                                          //     ),
-                                          //     withNavBar: false),
-                                          child: FutureOfferCard(
-                                            futureOffer: futureOffer,
-                                          ),
-                                        );
-                                        //  return GestureDetector(onTap: () => Navigator.push(context, new CupertinoPageRoute(builder: (BuildContext context) => new ProductListScreen(category.name),
-                                        //  ),
-                                        //  ),
-                                        //  ),
-                                        // return FutureProductCard(
-                                        //   futureProduct: futureProduct,
-                                        // );
-                                      },
-                                      childCount: productSuggestionList.length,
-                                    )
-                                  : SliverChildBuilderDelegate(
-                                      (BuildContext context, int index) {
-                                        RentOffer rentOffer =
-                                            rentOfferSuggestionList[index];
-                                        return GestureDetector(
-                                          onTap: () => print('todo'),
-                                          // pushNewScreen(context,
-                                          //     screen: RentDetailScreen(
-                                          //       rentOffer: rentOffer,
-                                          //     ),
-                                          //     withNavBar: false),
-                                          child: RentProductCard(
-                                            rentOffer: rentOffer,
-                                          ),
-                                        );
-                                      },
-                                      childCount:
-                                          rentOfferSuggestionList.length,
-                                    )),
-                        ),
-                      ],
-                    );
-                  },
-                ),
-              );
-            }).toList(),
+            children: _tabs.map(
+              (String name) {
+                return SafeArea(
+                  top: false,
+                  bottom: false,
+                  child: Builder(
+                    builder: (BuildContext context) {
+                      if (name == 'Ausstehende') {
+                        return FutureBuilder(
+                          future: openOfferRequsts,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              List<OfferRequest> openOfferRequestList =
+                                  snapshot.data;
+                              return CustomScrollView(
+                                key: PageStorageKey<String>(name),
+                                slivers: <Widget>[
+                                  SliverOverlapInjector(
+                                    handle: NestedScrollView
+                                        .sliverOverlapAbsorberHandleFor(
+                                            context),
+                                  ),
+                                  SliverPadding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    sliver: SliverList(
+                                      delegate: SliverChildBuilderDelegate(
+                                        (BuildContext context, int index) {
+                                          return GestureDetector(
+                                            onTap: () => print('todo'),
+                                            // pushNewScreen(context,
+                                            //     screen: FutureOfferDetailScreen(
+                                            //       futureOffer: futureOffer,
+                                            //     ),
+                                            //     withNavBar: false),
+                                            child: FutureOfferCard(
+                                              futureOffer: futureOffer,
+                                            ),
+                                          );
+                                          //  return GestureDetector(onTap: () => Navigator.push(context, new CupertinoPageRoute(builder: (BuildContext context) => new ProductListScreen(category.name),
+                                          //  ),
+                                          //  ),
+                                          //  ),
+                                          // return FutureProductCard(
+                                          //   futureProduct: futureProduct,
+                                          // );
+                                        },
+                                        childCount:
+                                            productSuggestionList.length,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                            return Center(child: CircularProgressIndicator());
+                          },
+                        );
+                      } else {
+                        return Text('Scheiße');
+                      }
+                    },
+                  ),
+                );
+              },
+            ).toList(),
           ),
         ),
       ),

@@ -18,8 +18,7 @@ abstract class OfferService {
   List<String> getSuggestion();
   void setSuggestion();
   Future<OfferRequest> bookOffer();
-  Future<List<OfferRequest>> getAllFutureOfferRequests();
-  Future<List<OfferRequest>> getAllObsoletOfferRequests();
+  Future<List<OfferRequest>> getAllOfferRequestsbyStatusCode();
 }
 
 class ApiOfferService extends OfferService {
@@ -235,7 +234,7 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future<List<OfferRequest>> getAllFutureOfferRequests(
+  Future<List<OfferRequest>> getAllOfferRequestsbyStatusCode(
       {int statusCode, OfferRequest offerRequest}) async {
     final String sessionId = await _storage.read(key: 'sessionId');
     final String userId = await _storage.read(key: 'userId');
@@ -263,11 +262,5 @@ class ApiOfferService extends OfferService {
     } else {
       return Future.error(OfferException(message: 'Fange jetzt an zu mieten!'));
     }
-  }
-
-  @override
-  Future<List<OfferRequest>> getAllObsoletOfferRequests() {
-    // TODO: implement getAllObsoletOfferRequests
-    throw UnimplementedError();
   }
 }
