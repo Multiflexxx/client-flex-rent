@@ -45,7 +45,7 @@ class ItemCard extends StatelessWidget {
                                     children: [
                                       Container(
                                         width: 120.0,
-                                        height: 120.0,
+                                        height: 130.0,
                                         margin: EdgeInsets.only(right: 10.0),
                                         child: ClipRRect(
                                           borderRadius: BorderRadius.circular(20.0),
