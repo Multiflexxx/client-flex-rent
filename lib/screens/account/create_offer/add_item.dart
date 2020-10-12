@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/category/category.dart';
@@ -69,76 +70,77 @@ class _AddItemState extends State<AddItem> {
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //   children: [
-                  //     ClipRRect(
-                  //       borderRadius: BorderRadius.circular(60.0),
-                  //       child: Image(
-                  //         width: 200,
-                  //         height: 200,
-                  //         image: AssetImage('assets/images/jett.jpg'),
-                  //       ),
-                  //     ),
-                  //     Expanded(
-                  //       child: Icon(
-                  //         Icons.edit,
-                  //         color: Colors.white,
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
-                  // Row(
-                  //   children: [
-                  //     Expanded(
-                  //       flex: 1,
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.all(8.0),
-                  //         child: RaisedButton.icon(
-                  //           icon: Icon(Icons.search),
-                  //           onPressed: () {},
-                  //           label: Text('Search'),
-                  //         ),
-                  //       ),
-                  //     ),
-                  //     Expanded(
-                  //       flex: 1,
-                  //       child: Padding(
-                  //         padding: const EdgeInsets.all(8.0),
-                  //         child: RaisedButton.icon(
-                  //           icon: Icon(Ionicons.md_qr_scanner),
-                  //           onPressed: () async {
-                  //             barcodeResult =
-                  //                 await FlutterBarcodeScanner.scanBarcode(
-                  //                     '#FF5733',
-                  //                     'Abbrechen',
-                  //                     true,
-                  //                     ScanMode.BARCODE);
-                  //             String url =
-                  //                 'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
-                  //             String differentUrl =
-                  //                 'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-                  //             if (barcodeResult != "-1") {
-                  //               //-1 heißt der barcode scanner wurde abgebrochen
-                  //               apiResult = await http.get(
-                  //                   'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000');
-                  //               //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
-                  //               try {
-                  //                 setState(() {
-                  //                   product = apiResponseToOffer(apiResult);
-                  //                 });
-                  //               } catch (e) {
-                  //                 _showError(e);
-                  //                 //error handling
-                  //               }
-                  //             }
-                  //           },
-                  //           label: Text('Scan'),
-                  //         ),
-                  //       ),
-                  //     )
-                  //   ],
-                  // ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(60.0),
+                        child: Image(
+                          width: 200,
+                          height: 200,
+                          image: AssetImage('assets/images/jett.jpg'),
+                        ),
+                      ),
+                      Expanded(
+                        child: Icon(
+                          Icons.edit,
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton.icon(
+                            icon: Icon(Icons.search),
+                            onPressed: () {},
+                            label: Text('Search'),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        flex: 1,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: RaisedButton.icon(
+                            icon: Icon(Icons.qr_code_scanner_outlined),
+                            onPressed: () async {
+                              barcodeResult =
+                                  await FlutterBarcodeScanner.scanBarcode(
+                                      '#FF5733',
+                                      'Abbrechen',
+                                      true,
+                                      ScanMode.BARCODE);
+                              String url =
+                                  'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
+                              String differentUrl =
+                                  'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
+                              if (barcodeResult != "-1") {
+                                //-1 heißt der barcode scanner wurde abgebrochen
+                                apiResult = await http.get(url);
+                                //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
+                                try {
+                                  setState(() {
+                                    Offer product = apiResponseToOffer(apiResult);
+                                    _titleController.text = product.title;
+                                    _descritpionController.text = product.description;
+                                  });
+                                } catch (e) {
+                                  _showError(e);
+                                  //error handling
+                                }
+                              }
+                            },
+                            label: Text('Scan'),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                   SizedBox(height: 10.0),
                   FormFieldStyled(
                     controller: _titleController,

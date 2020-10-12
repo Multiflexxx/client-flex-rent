@@ -43,6 +43,9 @@ class _AccountScreenState extends State<AccountScreen> {
                     Text(
                       '$name',
                       style: TextStyle(color: Colors.white, fontSize: 20),
+                      maxLines: 2,
+                      overflow: TextOverflow.clip,
+
                     ),
                     Padding(
                       padding: const EdgeInsets.only(left: 5.0),
