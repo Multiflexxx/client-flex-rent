@@ -1,19 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
-import 'package:rent/models/rent_product_model.dart';
-import 'package:rent/models/future_product_model.dart';
 import 'package:rent/widgets/circle_tab_indicator.dart';
 import 'package:rent/widgets/offer/future_offer_card.dart';
-import 'package:rent/widgets/offer/rent_offer_card.dart';
-import 'package:rent/models/offer_model.dart';
-
-import 'package:rent/screens/rentalItems/rent_detail_screen.dart';
-import 'package:rent/screens/rentalItems/future_offer_detail_screen.dart';
 
 class RentalItemsScreen extends StatefulWidget {
   RentalItemsScreen({Key key}) : super(key: key);
@@ -126,8 +116,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                             ),
                                           );
                                         },
-                                        childCount:
-                                            productSuggestionList.length,
+                                        childCount: openOfferRequestList.length,
                                       ),
                                     ),
                                   ),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/models/future_product_model.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
 class OfferRequestCard extends StatelessWidget {
@@ -65,9 +64,11 @@ class OfferRequestCard extends StatelessWidget {
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
-                                          text: offerRequest.dateRange.fromDate == true
-                                              ? ' vom'
-                                              : ' beginnt am',
+                                          text:
+                                              offerRequest.dateRange.fromDate ==
+                                                      true
+                                                  ? ' vom'
+                                                  : ' beginnt am',
                                           style: TextStyle(
                                               color: Colors.white,
                                               fontWeight: FontWeight.normal,
