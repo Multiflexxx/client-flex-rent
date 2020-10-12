@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/widgets/circle_tab_indicator.dart';
-import 'package:rent/widgets/offer/future_offer_card.dart';
+import 'package:rent/widgets/offer/offer_request_card.dart';
+import 'package:intl/date_symbol_data_local.dart';
+import 'package:rent/widgets/offer/rent_offer_card.dart';
 
 class RentalItemsScreen extends StatefulWidget {
   RentalItemsScreen({Key key}) : super(key: key);
@@ -13,10 +15,7 @@ class RentalItemsScreen extends StatefulWidget {
 }
 
 class _RentalItemsScreenState extends State<RentalItemsScreen> {
-  final List<String> _tabs = <String>[
-    "Ausstehende",
-    "Gemietete",
-  ];
+  final List<String> _tabs = <String>["Ausstehende", "Gemietete"];
 
   Future<List<OfferRequest>> openOfferRequsts;
   Future<List<OfferRequest>> closedOfferRequsts;
@@ -25,6 +24,9 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
   void initState() {
     openOfferRequsts =
         ApiOfferService().getAllOfferRequestsbyStatusCode(statusCode: 1);
+    closedOfferRequsts =
+        ApiOfferService().getAllOfferRequestsbyStatusCode(statusCode: 5);
+    initializeDateFormatting('de_DE', null);
     super.initState();
   }
 
@@ -127,7 +129,48 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                           },
                         );
                       } else {
-                        return Text('Scheiße');
+                        return FutureBuilder(
+                          future: closedOfferRequsts,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              List<OfferRequest> closedOfferRequestList =
+                                  snapshot.data;
+                              return CustomScrollView(
+                                key: PageStorageKey<String>(name),
+                                slivers: <Widget>[
+                                  SliverOverlapInjector(
+                                    handle: NestedScrollView
+                                        .sliverOverlapAbsorberHandleFor(
+                                            context),
+                                  ),
+                                  SliverPadding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    sliver: SliverList(
+                                      delegate: SliverChildBuilderDelegate(
+                                        (BuildContext context, int index) {
+                                          return GestureDetector(
+                                            onTap: () => print('todo'),
+                                            // pushNewScreen(context,
+                                            //     screen: FutureOfferDetailScreen(
+                                            //       futureOffer: futureOffer,
+                                            //     ),
+                                            //     withNavBar: false),
+                                            child: OfferRequestCard(
+                                              offerRequest:
+                                                  closedOfferRequestList[index],
+                                            ),
+                                          );
+                                        },
+                                        childCount: closedOfferRequestList.length,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
+                            return Center(child: CircularProgressIndicator());
+                          },
+                        );
                       }
                     },
                   ),
