@@ -11,11 +11,17 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationService _authenticationService;
+  final UserService _userService;
 
-  AuthenticationBloc(AuthenticationService authenticationService)
+  AuthenticationBloc(
+      AuthenticationService authenticationService, UserService userService)
       : assert(authenticationService != null),
+        assert(userService != null),
         _authenticationService = authenticationService,
-        super(null);
+        _userService = userService,
+        super(
+          null,
+        );
 
   AuthenticationState get initialState => AuthenticationInitial();
 
@@ -28,6 +34,10 @@ class AuthenticationBloc
 
     if (event is UserLoggedIn) {
       yield* _mapUserLoggedInToState(event);
+    }
+
+    if (event is UserUpdate) {
+      yield* _mapUserUpdateToState(event);
     }
 
     if (event is UserSignUp) {
@@ -62,6 +72,20 @@ class AuthenticationBloc
   Stream<AuthenticationState> _mapUserLoggedInToState(
       UserLoggedIn event) async* {
     yield AuthenticationAuthenticated(user: event.user);
+  }
+
+  Stream<AuthenticationState> _mapUserUpdateToState(UserUpdate event) async* {
+    try {
+      final currentUser = await _userService.updateUser(user: event.user);
+      if (currentUser != null) {
+        yield AuthenticationAuthenticated(user: currentUser);
+      } else {
+        yield AuthenticationNotAuthenticated();
+      }
+    } catch (e) {
+      yield AuthenticationFailure(
+          message: e.message ?? 'An unknown error occurred');
+    }
   }
 
   Stream<AuthenticationState> _mapUserSignUpToState(UserSignUp event) async* {
