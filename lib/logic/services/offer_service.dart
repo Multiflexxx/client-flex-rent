@@ -257,6 +257,7 @@ class ApiOfferService extends OfferService {
       if (jsonBody.isNotEmpty) {
         final List<OfferRequest> offerRequestList =
             (jsonBody).map((i) => OfferRequest.fromJson(i)).toList();
+            inspect(offerRequestList);
         return offerRequestList;
       }
     } else {
