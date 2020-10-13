@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:rent/logic/models/models.dart';
 
-
 class OfferRequestCard extends StatelessWidget {
   final OfferRequest offerRequest;
 
@@ -62,19 +61,22 @@ class OfferRequestCard extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  
-                                 offerRequest.statusId == 5 ? Container() : SizedBox(height: 10.0),
-                                   offerRequest.statusId == 5 ? Text(
-                                    offerRequest.offer.rating == null
-                                        ? ' Du hast den Gegenstand noch nicht bewertet'
-                                        : 'Bewertung: ${offerRequest.offer.rating}',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 16.0,
-                                    ),
-                                    maxLines: 2,
-                                    overflow: TextOverflow.ellipsis,
-                                  ) : Container(),
+                                  offerRequest.statusId == 5
+                                      ? Container()
+                                      : SizedBox(height: 10.0),
+                                  offerRequest.statusId == 5
+                                      ? Text(
+                                          offerRequest.offer.rating == null
+                                              ? ' Du hast den Gegenstand noch nicht bewertet'
+                                              : 'Bewertung: ${offerRequest.offer.rating}',
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 16.0,
+                                          ),
+                                          maxLines: 2,
+                                          overflow: TextOverflow.ellipsis,
+                                        )
+                                      : Container(),
                                   SizedBox(height: 20.0),
                                   Text(
                                     offerRequest.statusId == 1
@@ -96,7 +98,7 @@ class OfferRequestCard extends StatelessWidget {
                                         color: Colors.purple,
                                         fontSize: 16.0,
                                         fontWeight: FontWeight.w600),
-                                          maxLines: 2,
+                                    maxLines: 2,
                                   ),
                                 ],
                               ),

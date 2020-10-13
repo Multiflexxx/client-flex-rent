@@ -1,11 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/widgets/circle_tab_indicator.dart';
 import 'package:rent/widgets/offer/offer_request_card.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:rent/widgets/offer/rent_offer_card.dart';
+import 'package:rent/screens/booking/lessee/lessee_booking_screen.dart';
 
 class RentalItemsScreen extends StatefulWidget {
   RentalItemsScreen({Key key}) : super(key: key);
@@ -106,12 +107,11 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                       delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index) {
                                           return GestureDetector(
-                                            onTap: () => print('todo'),
-                                            // pushNewScreen(context,
-                                            //     screen: FutureOfferDetailScreen(
-                                            //       futureOffer: futureOffer,
-                                            //     ),
-                                            //     withNavBar: false),
+                                            onTap: () => pushNewScreen(context,
+                                                screen: LeseeBookingScreen(
+                                                  offerRequest:
+                                                  openOfferRequestList[index]),
+                                                withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:
                                                   openOfferRequestList[index],
@@ -149,19 +149,17 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                       delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index) {
                                           return GestureDetector(
-                                            onTap: () => print('todo'),
-                                            // pushNewScreen(context,
-                                            //     screen: FutureOfferDetailScreen(
-                                            //       futureOffer: futureOffer,
-                                            //     ),
-                                            //     withNavBar: false),
+                                            onTap: () => pushNewScreen(context,
+                                                screen: LeseeBookingScreen(),
+                                                withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:
                                                   closedOfferRequestList[index],
                                             ),
                                           );
                                         },
-                                        childCount: closedOfferRequestList.length,
+                                        childCount:
+                                            closedOfferRequestList.length,
                                       ),
                                     ),
                                   ),
