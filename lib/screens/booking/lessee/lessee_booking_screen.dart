@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
+import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/screens/booking/qrcode_screen.dart';
 
 import 'package:rent/widgets/booking/booking_info.dart';
@@ -15,7 +16,15 @@ class LeseeBookingScreen extends StatefulWidget {
 }
 
 class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
+  Future<OfferRequest> offerReqeust;
   String barcodeResult = '';
+
+  @override
+  void initState() {
+    offerReqeust = ApiOfferService()
+        .getOfferRequestbyRequest(offerRequest: widget.offerRequest);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

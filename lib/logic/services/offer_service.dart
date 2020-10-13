@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-import 'dart:ffi';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
@@ -19,6 +18,7 @@ abstract class OfferService {
   void setSuggestion();
   Future<OfferRequest> bookOffer();
   Future<List<OfferRequest>> getAllOfferRequestsbyStatusCode();
+  Future<OfferRequest> getOfferRequestbyRequest();
 }
 
 class ApiOfferService extends OfferService {
@@ -257,11 +257,37 @@ class ApiOfferService extends OfferService {
       if (jsonBody.isNotEmpty) {
         final List<OfferRequest> offerRequestList =
             (jsonBody).map((i) => OfferRequest.fromJson(i)).toList();
-            inspect(offerRequestList);
+        inspect(offerRequestList);
         return offerRequestList;
       }
     } else {
       return Future.error(OfferException(message: 'Fange jetzt an zu mieten!'));
     }
+  }
+
+  @override
+  Future<OfferRequest> getOfferRequestbyRequest(
+      {OfferRequest offerRequest}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response = await http.post(
+      'https://flexrent.multiflexxx.de/offer/user-requests',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, dynamic>{
+        'session': session.toJson(),
+        'request': offerRequest.toJson(),
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      final dynamic jsonBody = json.decode(response.body);
+      final OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
+      inspect(offerRequest);
+      return offerRequest;
+    }
+    return null;
   }
 }
