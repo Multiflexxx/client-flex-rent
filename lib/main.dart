@@ -16,12 +16,19 @@ void main() => runApp(
           RepositoryProvider<RegisterService>(
             create: (context) => ApiRegisterService(),
           ),
+          RepositoryProvider<UserService>(
+            create: (context) => ApiUserService(),
+          ),
         ],
         child: BlocProvider<AuthenticationBloc>(
           create: (context) {
             final authService =
                 RepositoryProvider.of<AuthenticationService>(context);
-            return AuthenticationBloc(authService)..add(AppLoaded());
+            final userService = RepositoryProvider.of<UserService>(context);
+            return AuthenticationBloc(
+              authService,
+              userService,
+            )..add(AppLoaded());
           },
           child: MyApp(),
         ),
