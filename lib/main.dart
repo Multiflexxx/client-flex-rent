@@ -58,13 +58,26 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          if (state is AuthenticationAuthenticated) {
-            return App();
-          } else if (state is AuthenticationSignUp) {
-            return RegisterScreen();
-          } else {
-            return LoginScreen();
-          }
+          // if (state is AuthenticationAuthenticated) {
+          //   return App();
+          // }
+          // if (state is AuthenticationSignUp) {
+          return AnimatedSwitcher(
+              duration: Duration(milliseconds: 500),
+              transitionBuilder: (Widget child, Animation<double> animation) {
+                return SlideTransition(
+                  position: Tween<Offset>(
+                    begin: const Offset(0, 0.25),
+                    end: Offset.zero,
+                  ).animate(animation),
+                  child: child,
+                );
+              },
+              child: state is AuthenticationSignUp
+                  ? RegisterScreen()
+                  : LoginScreen());
+          // }
+          // return LoginScreen();
         },
       ),
     );
