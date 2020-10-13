@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/app.dart';
 import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
+import 'package:rent/logic/blocs/user/bloc/user_bloc.dart';
 import 'package:rent/screens/authentication/login/login.dart';
 import 'package:rent/screens/authentication/registration/register.dart';
 
@@ -9,30 +10,36 @@ import 'logic/services/services.dart';
 
 void main() => runApp(
       MultiRepositoryProvider(
-        providers: [
-          RepositoryProvider<AuthenticationService>(
-            create: (context) => ApiAuthenticationService(),
-          ),
-          RepositoryProvider<RegisterService>(
-            create: (context) => ApiRegisterService(),
-          ),
-          RepositoryProvider<UserService>(
-            create: (context) => ApiUserService(),
-          ),
-        ],
-        child: BlocProvider<AuthenticationBloc>(
-          create: (context) {
-            final authService =
-                RepositoryProvider.of<AuthenticationService>(context);
-            final userService = RepositoryProvider.of<UserService>(context);
-            return AuthenticationBloc(
-              authService,
-              userService,
-            )..add(AppLoaded());
-          },
-          child: MyApp(),
-        ),
-      ),
+          providers: [
+            RepositoryProvider<AuthenticationService>(
+              create: (context) => ApiAuthenticationService(),
+            ),
+            RepositoryProvider<RegisterService>(
+              create: (context) => ApiRegisterService(),
+            ),
+            RepositoryProvider<UserService>(
+              create: (context) => ApiUserService(),
+            ),
+          ],
+          child: MultiBlocProvider(
+            providers: [
+              BlocProvider<AuthenticationBloc>(
+                create: (context) {
+                  final authService =
+                      RepositoryProvider.of<AuthenticationService>(context);
+                  return AuthenticationBloc(
+                    authService,
+                  )..add(AppLoaded());
+                },
+              ),
+              BlocProvider<UserBloc>(create: (context) {
+                final userService = RepositoryProvider.of<UserService>(context);
+                return UserBloc(
+                    BlocProvider.of<AuthenticationBloc>(context), userService);
+              }),
+            ],
+            child: MyApp(),
+          )),
     );
 
 class MyApp extends StatelessWidget {

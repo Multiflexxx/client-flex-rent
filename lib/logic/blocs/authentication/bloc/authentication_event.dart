@@ -19,14 +19,15 @@ class UserLoggedIn extends AuthenticationEvent {
   List<Object> get props => [user];
 }
 
-class UserUpdate extends AuthenticationEvent {
-  final User user;
+// class UserUpdate extends AuthenticationEvent {
+//   final User user;
+//   final Password password;
 
-  UserUpdate({@required this.user});
+//   UserUpdate({@required this.user, this.password});
 
-  @override
-  List<Object> get props => [user];
-}
+//   @override
+//   List<Object> get props => [user, password];
+// }
 
 class UserSignUp extends AuthenticationEvent {}
 

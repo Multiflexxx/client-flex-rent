@@ -42,17 +42,20 @@ class ApiUserService extends UserService {
         final User user = User.fromJson(jsonBody['user']);
         final String sessionId = jsonBody['session_id'];
         await _storage.write(key: 'sessionId', value: sessionId);
-        inspect(user);
-        inspect(sessionId);
+        // inspect(user);
+        // inspect(sessionId);
         return user;
       } else if (response.statusCode == 401) {
         inspect(response);
         throw AuthenticationException(
             message: 'Dein altes Passwort war falsch');
       }
-      return null;
+      throw AuthenticationException(
+          message:
+              'Hier ist ein Fehler unterlaufen. Probiere es später noche einmal');
     } else {
-      return null;
+      throw AuthenticationException(
+          message: 'Deine Session ist abgelaufen. Melde dich neu an.');
     }
   }
 }
