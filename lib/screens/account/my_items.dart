@@ -27,10 +27,11 @@ class _MyItemsState extends State<MyItems> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        Padding(
-          padding: EdgeInsets.all(10.0),
-          child: GestureDetector(
-            onTap: () => pushNewScreen(context, screen: LessorBookingScreen()),
+        GestureDetector(
+          onTap: () => pushNewScreen(context, screen: LessorBookingScreen()),
+          child: Container(
+            padding: EdgeInsets.all(10.0),
+            color: Colors.transparent,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: <Widget>[
