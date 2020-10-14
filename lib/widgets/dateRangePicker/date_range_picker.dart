@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/widgets/slide_bar.dart';

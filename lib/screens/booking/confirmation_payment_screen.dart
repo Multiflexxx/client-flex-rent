@@ -1,14 +1,9 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
-import 'package:rent/models/offer_request_model.dart';
-import 'package:rent/screens/booking/lessee/lessee_booking_screen.dart';
 import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
 import 'package:rent/widgets/price/detail_price_overview.dart';
 import 'package:rent/widgets/offer/offer_card.dart';

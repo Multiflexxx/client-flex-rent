@@ -1,14 +1,9 @@
-import 'dart:developer';
-
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/blocs/user/user.dart';
-import 'package:rent/logic/exceptions/authentication_exception.dart';
 import 'package:rent/logic/models/models.dart';
-import 'package:rent/screens/account/settings/personal_info.dart';
 import 'package:rent/widgets/flushbar_styled.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
