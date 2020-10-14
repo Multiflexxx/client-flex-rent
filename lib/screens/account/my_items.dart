@@ -6,6 +6,7 @@ import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/account/create_offer/add_item.dart';
+import 'package:rent/screens/booking/lessor/lessor_booking_screen.dart';
 import 'package:rent/widgets/items/item_card.dart';
 
 class MyItems extends StatefulWidget {
@@ -28,39 +29,42 @@ class _MyItemsState extends State<MyItems> {
       children: [
         Padding(
           padding: EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Feather.mail,
-                    size: 30.0,
-                    color: Colors.white,
-                  ),
-                  SizedBox(
-                    width: 25.0,
-                  ),
-                  Text(
-                    'Postfach',
-                    style: TextStyle(
-                        fontSize: 21.0,
-                        fontWeight: FontWeight.w300,
-                        color: Colors.white,
-                        letterSpacing: 1.2),
-                  ),
-                ],
-              ),
-              Row(
-                children: <Widget>[
-                  Icon(
-                    Ionicons.ios_arrow_forward,
-                    size: 30.0,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-            ],
+          child: GestureDetector(
+            onTap: () => pushNewScreen(context, screen: LessorBookingScreen()),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Feather.mail,
+                      size: 30.0,
+                      color: Colors.white,
+                    ),
+                    SizedBox(
+                      width: 25.0,
+                    ),
+                    Text(
+                      'Postfach',
+                      style: TextStyle(
+                          fontSize: 21.0,
+                          fontWeight: FontWeight.w300,
+                          color: Colors.white,
+                          letterSpacing: 1.2),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: <Widget>[
+                    Icon(
+                      Ionicons.ios_arrow_forward,
+                      size: 30.0,
+                      color: Colors.white,
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
         Divider(

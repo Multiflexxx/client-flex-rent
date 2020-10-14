@@ -264,6 +264,36 @@ class ApiOfferService extends OfferService {
       return Future.error(OfferException(message: 'Fange jetzt an zu mieten!'));
     }
   }
+   @override
+  Future<List<OfferRequest>> getAllOfferRequestsForLessor(
+      {OfferRequest offerRequest}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response = await http.post(
+      'https://flexrent.multiflexxx.de/offer/user-requests',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, dynamic>{
+        'session': session.toJson(),
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      final List<dynamic> jsonBody = json.decode(response.body);
+      inspect(jsonBody);
+
+      if (jsonBody.isNotEmpty) {
+        final List<OfferRequest> offerRequestList =
+            (jsonBody).map((i) => OfferRequest.fromJson(i)).toList();
+        inspect(offerRequestList);
+        return offerRequestList;
+      }
+    } else {
+      return Future.error(OfferException(message: 'Fange jetzt an zu mieten!'));
+    }
+  }
 
   @override
   Future<OfferRequest> getOfferRequestbyRequest(

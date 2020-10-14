@@ -58,9 +58,9 @@ class MyApp extends StatelessWidget {
       ),
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          // if (state is AuthenticationAuthenticated) {
-          //   return App();
-          // }
+          if (state is AuthenticationAuthenticated) {
+            return App();
+          }
           // if (state is AuthenticationSignUp) {
           return AnimatedSwitcher(
               duration: Duration(milliseconds: 500),

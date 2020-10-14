@@ -66,7 +66,7 @@ class OfferRequestCard extends StatelessWidget {
                                       : SizedBox(height: 10.0),
                                   offerRequest.statusId == 5
                                       ? Text(
-                                          offerRequest.offer.rating == null
+                                          offerRequest.offer.rating == 1
                                               ? ' Du hast den Gegenstand noch nicht bewertet'
                                               : 'Bewertung: ${offerRequest.offer.rating}',
                                           style: TextStyle(
