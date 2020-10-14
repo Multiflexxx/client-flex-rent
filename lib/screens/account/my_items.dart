@@ -28,7 +28,10 @@ class _MyItemsState extends State<MyItems> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         GestureDetector(
-          onTap: () => pushNewScreen(context, screen: LessorBookingScreen()),
+          onTap: () => pushNewScreen(
+            context,
+            screen: LessorRentalItemScreen(),
+          ),
           child: Container(
             padding: EdgeInsets.all(10.0),
             color: Colors.transparent,

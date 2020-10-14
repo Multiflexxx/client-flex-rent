@@ -1,33 +1,42 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/screens/booking/lessor/lessor_response_screen.dart';
 
 import 'package:rent/widgets/circle_tab_indicator.dart';
 import 'package:rent/widgets/offer/offer_request_card.dart';
 import 'package:intl/date_symbol_data_local.dart';
-import 'package:rent/screens/booking/lessee/lessee_booking_screen.dart';
 
-class LessorBookingScreen extends StatefulWidget {
-  LessorBookingScreen({Key key}) : super(key: key);
+class LessorRentalItemScreen extends StatefulWidget {
+  LessorRentalItemScreen({Key key}) : super(key: key);
 
   @override
-  _LessorBookingScreenState createState() => _LessorBookingScreenState();
+  _LessorRentalItemScreenState createState() => _LessorRentalItemScreenState();
 }
 
-class _LessorBookingScreenState extends State<LessorBookingScreen> {
-   final List<String> _tabs = <String>["Ausstehende", "Gemietete"];
+class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
+  final List<String> _tabs = <String>["Ausstehend", "Abgeschlossen"];
 
-  Future<List<OfferRequest>> offerRequsts;
- 
+  Future<List<OfferRequest>> openOfferRequsts;
+  Future<List<OfferRequest>> closedOfferRequsts;
+
   @override
   void initState() {
-    offerRequsts = ApiOfferService().getAllOfferRequestsForLessor();
+    openOfferRequsts = ApiOfferService()
+        .getAllOfferRequestsbyStatusCode(statusCode: 1, lessor: true);
+    closedOfferRequsts = ApiOfferService()
+        .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: true);
 
     initializeDateFormatting('de_DE', null);
     super.initState();
-  }@override
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: DefaultTabController(
@@ -42,7 +51,7 @@ class _LessorBookingScreenState extends State<LessorBookingScreen> {
                   top: false,
                   sliver: SliverAppBar(
                     title: const Text(
-                      'Mietgegenstände',
+                      'Vermietgegenstände',
                       style: TextStyle(
                         fontSize: 21.0,
                         letterSpacing: 1.2,
@@ -82,13 +91,14 @@ class _LessorBookingScreenState extends State<LessorBookingScreen> {
                   bottom: false,
                   child: Builder(
                     builder: (BuildContext context) {
-                      if (name == 'Ausstehende') {
+                      if (name == _tabs[0]) {
                         return FutureBuilder(
-                          future: offerRequsts,
+                          future: openOfferRequsts,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
-                              List<OfferRequest> offerRequestList =
+                              List<OfferRequest> openOfferRequestList =
                                   snapshot.data;
+                              print(openOfferRequestList.length.toString());
                               return CustomScrollView(
                                 key: PageStorageKey<String>(name),
                                 slivers: <Widget>[
@@ -104,29 +114,40 @@ class _LessorBookingScreenState extends State<LessorBookingScreen> {
                                         (BuildContext context, int index) {
                                           return GestureDetector(
                                             onTap: () => pushNewScreen(context,
-                                                screen: LeseeBookingScreen(
-                                                  offerRequest:
-                                                  offerRequestList[index]),
+                                                screen: LessorResponseScreen(
+                                                    offerRequest:
+                                                        openOfferRequestList[
+                                                            index]),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:
-                                                  offerRequestList[index],
+                                                  openOfferRequestList[index],
                                             ),
                                           );
                                         },
-                                        childCount: offerRequestList.length,
+                                        childCount: openOfferRequestList.length,
                                       ),
                                     ),
                                   ),
                                 ],
                               );
+                            } else if (snapshot.hasError) {
+                              OfferException e = snapshot.error;
+                              return Center(
+                                  child: Text(
+                                e.message,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  letterSpacing: 1.35,
+                                ),
+                              ));
                             }
                             return Center(child: CircularProgressIndicator());
                           },
                         );
                       } else {
                         return FutureBuilder(
-                          future: offerRequsts,
+                          future: closedOfferRequsts,
                           builder: (context, snapshot) {
                             if (snapshot.hasData) {
                               List<OfferRequest> closedOfferRequestList =
@@ -146,7 +167,7 @@ class _LessorBookingScreenState extends State<LessorBookingScreen> {
                                         (BuildContext context, int index) {
                                           return GestureDetector(
                                             onTap: () => pushNewScreen(context,
-                                                screen: LeseeBookingScreen(),
+                                                screen: LessorResponseScreen(),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:
@@ -160,6 +181,17 @@ class _LessorBookingScreenState extends State<LessorBookingScreen> {
                                     ),
                                   ),
                                 ],
+                              );
+                            } else if (snapshot.hasError) {
+                              OfferException e = snapshot.error;
+                              return Center(
+                                child: Text(
+                                  e.message,
+                                  style: TextStyle(
+                                    fontSize: 18.0,
+                                    letterSpacing: 1.35,
+                                  ),
+                                ),
                               );
                             }
                             return Center(child: CircularProgressIndicator());

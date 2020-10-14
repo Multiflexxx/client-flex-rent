@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/widgets/circle_tab_indicator.dart';
@@ -16,17 +17,17 @@ class RentalItemsScreen extends StatefulWidget {
 }
 
 class _RentalItemsScreenState extends State<RentalItemsScreen> {
-  final List<String> _tabs = <String>["Ausstehende", "Gemietete"];
+  final List<String> _tabs = <String>["Ausstehend", "Gemietet"];
 
   Future<List<OfferRequest>> openOfferRequsts;
   Future<List<OfferRequest>> closedOfferRequsts;
 
   @override
   void initState() {
-    openOfferRequsts =
-        ApiOfferService().getAllOfferRequestsbyStatusCode(statusCode: 1);
-    closedOfferRequsts =
-        ApiOfferService().getAllOfferRequestsbyStatusCode(statusCode: 5);
+    openOfferRequsts = ApiOfferService()
+        .getAllOfferRequestsbyStatusCode(statusCode: 1, lessor: false);
+    closedOfferRequsts = ApiOfferService()
+        .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: false);
     initializeDateFormatting('de_DE', null);
     super.initState();
   }
@@ -86,7 +87,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                   bottom: false,
                   child: Builder(
                     builder: (BuildContext context) {
-                      if (name == 'Ausstehende') {
+                      if (name == _tabs[0]) {
                         return FutureBuilder(
                           future: openOfferRequsts,
                           builder: (context, snapshot) {
@@ -109,8 +110,9 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                           return GestureDetector(
                                             onTap: () => pushNewScreen(context,
                                                 screen: LeseeBookingScreen(
-                                                  offerRequest:
-                                                  openOfferRequestList[index]),
+                                                    offerRequest:
+                                                        openOfferRequestList[
+                                                            index]),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:
@@ -124,6 +126,16 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                   ),
                                 ],
                               );
+                            } else if (snapshot.hasError) {
+                              OfferException e = snapshot.error;
+                              return Center(
+                                  child: Text(
+                                e.message,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  letterSpacing: 1.35,
+                                ),
+                              ));
                             }
                             return Center(child: CircularProgressIndicator());
                           },
@@ -165,6 +177,16 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                   ),
                                 ],
                               );
+                            } else if (snapshot.hasError) {
+                              OfferException e = snapshot.error;
+                              return Center(
+                                  child: Text(
+                                e.message,
+                                style: TextStyle(
+                                  fontSize: 18.0,
+                                  letterSpacing: 1.35,
+                                ),
+                              ));
                             }
                             return Center(child: CircularProgressIndicator());
                           },
