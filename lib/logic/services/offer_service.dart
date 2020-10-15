@@ -226,8 +226,11 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
       OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
+      inspect(offerRequest);
+      return offerRequest;
     } else {
       inspect(response);
+      return null;
     }
   }
 

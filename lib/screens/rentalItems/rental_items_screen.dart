@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -94,6 +96,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                             if (snapshot.hasData) {
                               List<OfferRequest> openOfferRequestList =
                                   snapshot.data;
+                              inspect(openOfferRequestList);
                               return CustomScrollView(
                                 key: PageStorageKey<String>(name),
                                 slivers: <Widget>[
@@ -112,12 +115,11 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                                 screen: LeseeBookingScreen(
                                                     offerRequest:
                                                         openOfferRequestList[
-                                                            index]),
+                                                            0]),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
-                                              offerRequest:
-                                                  openOfferRequestList[index],
-                                            ),
+                                                offerRequest:
+                                                    openOfferRequestList[0]),
                                           );
                                         },
                                         childCount: openOfferRequestList.length,

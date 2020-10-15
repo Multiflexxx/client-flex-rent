@@ -6,7 +6,7 @@ import 'package:rent/logic/models/models.dart';
 class OfferRequestCard extends StatelessWidget {
   final OfferRequest offerRequest;
 
-  OfferRequestCard({Key key, this.offerRequest}) : super(key: key);
+  OfferRequestCard({this.offerRequest});
 
   @override
   Widget build(BuildContext context) {
@@ -115,20 +115,27 @@ class OfferRequestCard extends StatelessWidget {
                   margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(20.0),
-                    child: CachedNetworkImage(
-                      imageUrl: offerRequest.offer.pictureLinks[0],
-                      height: 180.0,
-                      width: 180.0,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Icon(
-                        Icons.error,
-                        color: Colors.white,
-                      ),
-                      errorWidget: (context, url, error) => Icon(
-                        Icons.error,
-                        color: Colors.white,
-                      ),
-                    ),
+                    child: offerRequest.offer.pictureLinks.length == 0
+                        ? Image(
+                            image: AssetImage('assets/images/noimage.png'),
+                            height: 180.0,
+                            width: 180.0,
+                            fit: BoxFit.cover,
+                          )
+                        : CachedNetworkImage(
+                            imageUrl: offerRequest.offer.pictureLinks[0],
+                            height: 180.0,
+                            width: 180.0,
+                            fit: BoxFit.cover,
+                            placeholder: (context, url) => Icon(
+                              Icons.error,
+                              color: Colors.white,
+                            ),
+                            errorWidget: (context, url, error) => Icon(
+                              Icons.error,
+                              color: Colors.white,
+                            ),
+                          ),
                   ),
                 ),
               ],

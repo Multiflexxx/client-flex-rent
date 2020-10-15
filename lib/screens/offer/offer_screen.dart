@@ -349,7 +349,6 @@ class _OfferScreenState extends State<OfferScreen> {
                             ),
                           );
                           if (range != null) {
-                            inspect(range);
                             _onSelectedRangeChanged(range);
                           }
                         },
