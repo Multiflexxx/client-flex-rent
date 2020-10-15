@@ -78,14 +78,14 @@ class BookingOverview extends StatelessWidget {
             ),
             SizedBox(height: 20),
             offerRequest.statusId == 2 ? SizedBox(height: 20) : Container(),
-            offerRequest.statusId == 2
+            offerRequest.statusId == 2 && true || offerRequest.statusId == 4 && false 
                 ? Container(
                     decoration: new BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: QrImage(
-                      data: "ab",
+                      data: offerRequest.qrCode,
                       version: QrVersions.auto,
                       size: 200.0,
                     ),
