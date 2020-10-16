@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rent/logic/exceptions/exceptions.dart';
@@ -76,11 +77,12 @@ class ApiUserService extends UserService {
 
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
+      // jsonBody['profile_picture'] = jsonBody['profile_picture'] +
+      //     '?refresh=' +
+      //     DateTime.now().millisecondsSinceEpoch.toString();
       final User user = User.fromJson(jsonBody);
-      inspect(user);
       return user;
     } else {
-      inspect(response);
       return null;
     }
   }

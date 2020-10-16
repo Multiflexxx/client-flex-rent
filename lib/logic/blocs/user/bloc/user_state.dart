@@ -13,6 +13,8 @@ class UserLoading extends UserState {}
 
 class UserSuccess extends UserState {}
 
+class UserImageSuccess extends UserState {}
+
 class UserFailure extends UserState {
   final String error;
 

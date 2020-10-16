@@ -54,7 +54,6 @@ class ApiOfferService extends OfferService {
     }
 
     final response = await http.get(url);
-    inspect(response);
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);

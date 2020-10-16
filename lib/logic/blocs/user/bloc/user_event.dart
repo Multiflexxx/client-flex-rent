@@ -16,3 +16,12 @@ class UserUpdate extends UserEvent {
   @override
   List<Object> get props => [user, password];
 }
+
+class ProfileImageUpload extends UserEvent {
+  final String path;
+
+  ProfileImageUpload({@required this.path});
+
+  @override
+  List<Object> get props => [path];
+}

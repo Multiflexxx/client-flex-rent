@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -29,6 +30,9 @@ class UserBloc extends Bloc<UserEvent, UserState> {
     if (event is UserUpdate) {
       yield* _mapUserUpdateToState(event);
     }
+    if (event is ProfileImageUpload) {
+      yield* _mapProfileImageUploadToState(event);
+    }
   }
 
   Stream<UserState> _mapUserUpdateToState(UserUpdate event) async* {
@@ -45,6 +49,23 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       if (user != null) {
         _authenticationBloc.add(UserLoggedIn(user: user));
         yield UserSuccess();
+        yield UserInitial();
+      } else {
+        yield UserFailure(error: 'Fehler bei Api Call');
+      }
+    } on AuthenticationException catch (e) {
+      yield UserFailure(error: e.message ?? 'An unknown error occurred');
+    }
+  }
+
+  Stream<UserState> _mapProfileImageUploadToState(
+      ProfileImageUpload event) async* {
+    yield UserLoading();
+    try {
+      final user = await _userService.updateProfileImage(imagePath: event.path);
+      if (user != null) {
+        _authenticationBloc.add(UserLoggedIn(user: user));
+        yield UserImageSuccess();
         yield UserInitial();
       } else {
         yield UserFailure(error: 'Fehler bei Api Call');

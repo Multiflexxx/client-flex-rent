@@ -1,5 +1,8 @@
+import 'dart:developer';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,7 +11,6 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:rent/logic/blocs/user/bloc/user_bloc.dart';
 import 'package:rent/logic/models/user/user.dart';
-import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/account/settings/update_password.dart';
 import 'package:rent/widgets/flushbar_styled.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
@@ -32,7 +34,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
   final picker = ImagePicker();
 
   User user;
-  File _profileImage;
+  File profileImage;
 
   @override
   void initState() {
@@ -55,23 +57,22 @@ class _PersonalInfoState extends State<PersonalInfo> {
     pushNewScreen(context, screen: UpdatePasswordScreen(), withNavBar: true);
   }
 
-  void _updateImage({ImageSource source}) async {
-    final image = await picker.getImage(source: source);
-
-    setState(
-      () {
-        if (image != null) {
-          _profileImage = File(image.path);
-          ApiUserService().updateProfileImage(imagePath: image.path);
-        } else {
-          print('No image selected.');
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
+    void _updateImage({ImageSource source}) async {
+      final image = await picker.getImage(source: source);
+      if (image != null) {
+        final _image = File(image.path);
+        setState(() {
+          profileImage = _image;
+        });
+        BlocProvider.of<UserBloc>(context)
+            .add(ProfileImageUpload(path: image.path));
+      } else {
+        print('No image selected.');
+      }
+    }
+
     void _saveChanges() {
       if (_key.currentState.validate()) {
         User _updatedUser = User(
@@ -135,24 +136,47 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+                                    // GestureDetector(
+                                    //   onTap: () => _updateImage(
+                                    //       source: ImageSource.camera),
+                                    //   child: Image.network(
+                                    //     user.profilePicture,
+                                    //     height: 100,
+                                    //     width: 100,
+                                    //   ),
+                                    // ),
                                     CircleAvatar(
                                       radius: 53,
                                       backgroundColor: Colors.purple,
                                       child: GestureDetector(
                                         onTap: () => _updateImage(
                                             source: ImageSource.camera),
-                                        child: _profileImage != null
+                                        child: (user.profilePicture != null &&
+                                                profileImage == null)
                                             ? Stack(
                                                 children: <Widget>[
                                                   ClipRRect(
                                                     borderRadius:
                                                         BorderRadius.circular(
                                                             50),
-                                                    child: Image.file(
-                                                      _profileImage,
+                                                    child: CachedNetworkImage(
+                                                      imageUrl:
+                                                          user.profilePicture,
                                                       width: 100,
                                                       height: 100,
                                                       fit: BoxFit.cover,
+                                                      placeholder:
+                                                          (context, url) =>
+                                                              Icon(
+                                                        Icons.error,
+                                                        color: Colors.white,
+                                                      ),
+                                                      errorWidget: (context,
+                                                              url, error) =>
+                                                          Icon(
+                                                        Icons.error,
+                                                        color: Colors.white,
+                                                      ),
                                                     ),
                                                   ),
                                                   Positioned.fill(
@@ -165,19 +189,45 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                                   ),
                                                 ],
                                               )
-                                            : Container(
-                                                decoration: BoxDecoration(
-                                                  color: Colors.black,
-                                                  borderRadius:
-                                                      BorderRadius.circular(50),
-                                                ),
-                                                width: 100,
-                                                height: 100,
-                                                child: Icon(
-                                                  Icons.camera_alt,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
+                                            : profileImage != null
+                                                ? Stack(
+                                                    children: <Widget>[
+                                                      ClipRRect(
+                                                        borderRadius:
+                                                            BorderRadius
+                                                                .circular(50),
+                                                        child: Image.file(
+                                                          profileImage,
+                                                          width: 100,
+                                                          height: 100,
+                                                          fit: BoxFit.cover,
+                                                        ),
+                                                      ),
+                                                      Positioned.fill(
+                                                        child: Align(
+                                                          alignment:
+                                                              Alignment.center,
+                                                          child: Icon(
+                                                              Icons.edit,
+                                                              size: 30.0),
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  )
+                                                : Container(
+                                                    decoration: BoxDecoration(
+                                                      color: Colors.black,
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              50),
+                                                    ),
+                                                    width: 100,
+                                                    height: 100,
+                                                    child: Icon(
+                                                      Icons.camera_alt,
+                                                      color: Colors.white,
+                                                    ),
+                                                  ),
                                       ),
                                     ),
                                   ],
