@@ -32,71 +32,71 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
       appBar: AppBar(title: Text('${widget.offerRequest.offer.title}')),
       body: SafeArea(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: <Widget>[
-              BookingInfo(
-                offerRequest: widget.offerRequest,
-              ),
-              BookingOverview(
-                offerRequest: widget.offerRequest,
-              ),
-              widget.offerRequest.statusId == 4
-                  ? Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: GestureDetector(
-                        onTap: () async {
-                          barcodeResult =
-                              await FlutterBarcodeScanner.scanBarcode(
-                                  '#9C27B0', 'Abbrechen', false, ScanMode.QR);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                              color: Colors.purple,
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Center(
-                            child: Text(
-                              'QR Code scannen',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w300,
-                              ),
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: <Widget>[
+            BookingInfo(
+              offerRequest: widget.offerRequest,
+            ),
+            BookingOverview(
+              offerRequest: widget.offerRequest,
+            ),
+            widget.offerRequest.statusId == 4
+                ? Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: GestureDetector(
+                      onTap: () async {
+                        barcodeResult = await FlutterBarcodeScanner.scanBarcode(
+                            '#9C27B0', 'Abbrechen', false, ScanMode.QR);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(10.0),
+                        height: 50.0,
+                        decoration: BoxDecoration(
+                            color: Colors.purple,
+                            borderRadius: BorderRadius.circular(10.0)),
+                        child: Center(
+                          child: Text(
+                            'QR Code scannen',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 20.0,
+                              fontWeight: FontWeight.w300,
                             ),
                           ),
                         ),
                       ),
-                    )
-                  : widget.offerRequest.statusId == 1
-                      ? Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: GestureDetector(
-                            onTap: () => pushNewScreen(
-                              context,
-                              screen: QrCodeScreen(),
-                            ),
-                            child: Container(
-                              padding: const EdgeInsets.all(10.0),
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                  color: Colors.purple,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Center(
-                                child: Text(
-                                  'Stonieren',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
+                    ),
+                  )
+                : widget.offerRequest.statusId == 1
+                    ? Padding(
+                        padding: const EdgeInsets.all(20.0),
+                        child: GestureDetector(
+                          onTap: () => pushNewScreen(
+                            context,
+                            screen: QrCodeScreen(),
+                          ),
+                          child: Container(
+                            padding: const EdgeInsets.all(10.0),
+                            height: 50.0,
+                            decoration: BoxDecoration(
+                                color: Colors.purple,
+                                borderRadius: BorderRadius.circular(10.0)),
+                            child: Center(
+                              child: Text(
+                                'Stonieren',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w300,
                                 ),
                               ),
                             ),
                           ),
-                        )
-                      : Container(),
-            ]),
+                        ),
+                      )
+                    : Container(),
+          ],
+        ),
       ),
     );
   }

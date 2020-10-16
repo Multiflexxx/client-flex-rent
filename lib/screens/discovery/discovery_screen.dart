@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -15,11 +17,16 @@ class DiscoveryScreen extends StatefulWidget {
 
 class _DiscoveryScreen extends State<DiscoveryScreen> {
   Future<Map<String, List<Offer>>> discoveryOffer;
+  User user;
 
   @override
   initState() {
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+        as AuthenticationAuthenticated;
+    user = state.user;
+    discoveryOffer =
+        ApiOfferService().getDiscoveryOffer(postCode: user.postCode);
     super.initState();
-    discoveryOffer = ApiOfferService().getDiscoveryOffer();
   }
 
   int _selectedIndex = 0;
@@ -60,10 +67,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
-    final User user = state.user;
-
     return Scaffold(
       body: SafeArea(
         child: LayoutBuilder(
@@ -81,12 +84,15 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                       Padding(
                         padding: EdgeInsets.only(top: 20.0, left: 20.0),
                         child: Text(
-                          'Hello ${user.firstName} ${user.lastName}',
+                          'Hallo ${user.firstName} ${user.lastName}',
                           style: TextStyle(
                             fontSize: 30.0,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,

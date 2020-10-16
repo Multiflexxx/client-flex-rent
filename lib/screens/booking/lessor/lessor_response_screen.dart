@@ -22,7 +22,6 @@ class _LessorResponseScreenState extends State<LessorResponseScreen> {
 
   @override
   void initState() {
-    inspect(widget.offerRequest);
     apiOfferReqeust = ApiOfferService()
         .getOfferRequestbyRequest(offerRequest: widget.offerRequest);
     super.initState();
@@ -147,7 +146,8 @@ class _LessorResponseScreenState extends State<LessorResponseScreen> {
                                     ),
                                     child: Text('Ablehnen'),
                                     onPressed: () {
-                                      _rejectOffer();
+                                      _rejectOffer(
+                                          updateOfferRequest: snapshot.data);
                                     },
                                   ),
                                 ),

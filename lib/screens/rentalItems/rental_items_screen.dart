@@ -96,7 +96,6 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                             if (snapshot.hasData) {
                               List<OfferRequest> openOfferRequestList =
                                   snapshot.data;
-                              inspect(openOfferRequestList);
                               return CustomScrollView(
                                 key: PageStorageKey<String>(name),
                                 slivers: <Widget>[

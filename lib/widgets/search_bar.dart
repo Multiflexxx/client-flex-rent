@@ -28,7 +28,7 @@ class _SearchBarState extends State<SearchBar> {
           filled: true,
           fillColor: Colors.black,
           hintStyle: TextStyle(color: Colors.white70),
-          hintText: "Search",
+          hintText: "Suche",
           contentPadding: EdgeInsets.symmetric(vertical: 0.0),
           prefixIcon: Icon(
             Icons.search,

@@ -1,7 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
-
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:rent/logic/exceptions/exceptions.dart';
 
@@ -35,10 +33,8 @@ class ApiRegisterService extends RegisterService {
       final User user = User.fromJson(jsonUser);
       await _storage.write(key: 'sessionId', value: sessionId);
       await _storage.write(key: 'userId', value: user.userId);
-      inspect(response);
       return user;
     } else {
-      inspect(response);
       throw RegisterException(message: jsonBody['message']);
     }
   }

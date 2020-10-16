@@ -48,6 +48,7 @@ dependencies:
   camera: ^0.5.8+7
   path_provider: ^1.6.18
   path: ^1.7.0
+  image_picker: ^0.6.7+12
 
 
 dev_dependencies:

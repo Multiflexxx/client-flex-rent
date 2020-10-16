@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/offer/offer_screen.dart';
@@ -16,12 +18,16 @@ class ProductListScreen extends StatefulWidget {
 
 class _ProductListScreenState extends State<ProductListScreen> {
   Future<List<Offer>> offerList;
+  User user;
 
   @override
   initState() {
     super.initState();
-    offerList =
-        ApiOfferService().getAllOffers(category: widget.category.categoryId);
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+        as AuthenticationAuthenticated;
+    user = state.user;
+    offerList = ApiOfferService().getAllOffers(
+        postCode: user.postCode, category: widget.category.categoryId);
   }
 
   @override

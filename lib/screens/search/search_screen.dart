@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/offer/offer_screen.dart';
 import 'package:rent/widgets/divider_with_text.dart';
 import 'package:rent/widgets/offer/offer_card.dart';
 import '../../logic/models/models.dart';
-
 
 class SearchScreen extends StatefulWidget {
   @override
@@ -17,14 +18,22 @@ class SearchScreen extends StatefulWidget {
 class _SearchScreenState extends State<SearchScreen> {
   final TextEditingController _searchController = new TextEditingController();
 
+  User user;
   Future<List<Offer>> _searchOfferList;
-
   List<String> _suggestedList = ApiOfferService().getSuggestion();
+
+  @override
+  void initState() {
+    super.initState();
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+        as AuthenticationAuthenticated;
+    user = state.user;
+  }
 
   void initiateSearch(String query) {
     if (query.length > 3) {
-      _searchOfferList =
-          ApiOfferService().getAllOffers(search: query, limit: 3);
+      _searchOfferList = ApiOfferService()
+          .getAllOffers(postCode: user.postCode, search: query, limit: 3);
       ApiOfferService().setSuggestion(query: query);
     }
   }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 import 'package:rent/logic/models/models.dart';
@@ -26,9 +27,19 @@ class ApiOfferService extends OfferService {
   final _storage = FlutterSecureStorage();
 
   @override
-  Future<List<Offer>> getAllOffers(
-      {int limit, int category, String search}) async {
-    String url = 'https://flexrent.multiflexxx.de/offer/all?';
+  Future<List<Offer>> getAllOffers({
+    @required String postCode,
+    int distance,
+    int limit,
+    int category,
+    String search,
+  }) async {
+    String url =
+        'https://flexrent.multiflexxx.de/offer/all?post_code=$postCode&';
+
+    if (distance != null) {
+      url += 'distance=$distance&';
+    }
 
     if (limit != null) {
       url += 'limit=$limit&';
@@ -43,6 +54,7 @@ class ApiOfferService extends OfferService {
     }
 
     final response = await http.get(url);
+    inspect(response);
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);
@@ -71,8 +83,9 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future<Map<String, List<Offer>>> getDiscoveryOffer() async {
-    final response = await http.get('https://flexrent.multiflexxx.de/offer/');
+  Future<Map<String, List<Offer>>> getDiscoveryOffer({String postCode}) async {
+    final response = await http
+        .get('https://flexrent.multiflexxx.de/offer/?post_code=$postCode');
 
     final jsonBody = json.decode(response.body);
 
@@ -226,10 +239,8 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
       OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
-      inspect(offerRequest);
       return offerRequest;
     } else {
-      inspect(response);
       return null;
     }
   }
@@ -293,7 +304,6 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
       final OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
-      print('hier');
       inspect(offerRequest);
       return offerRequest;
     }
@@ -319,7 +329,10 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
       final OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
+      inspect(offerRequest);
       return offerRequest;
+    } else {
+      inspect(response);
     }
     return null;
   }

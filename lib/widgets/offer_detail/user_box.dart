@@ -126,7 +126,7 @@ class UserBox extends StatelessWidget {
                       borderRadius: BorderRadius.circular(10.0)),
                   child: Center(
                     child: Text(
-                      'Vermieter kontaktieren',
+                      'Vermieter eine Nachricht schicken',
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 18.0,

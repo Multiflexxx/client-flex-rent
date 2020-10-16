@@ -29,8 +29,8 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
   void initState() {
     openOfferRequsts = ApiOfferService()
         .getAllOfferRequestsbyStatusCode(statusCode: 1, lessor: true);
-    // closedOfferRequsts = ApiOfferService()
-    //     .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: true);
+    closedOfferRequsts = ApiOfferService()
+        .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: true);
 
     initializeDateFormatting('de_DE', null);
     super.initState();
