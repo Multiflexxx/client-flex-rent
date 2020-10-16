@@ -8,6 +8,96 @@ class OfferRequestCard extends StatelessWidget {
 
   OfferRequestCard({this.offerRequest});
 
+  String getInfoText(bool lessor, int statusId) {
+    if (lessor) {
+      switch (statusId) {
+        case 1:
+          {
+            return 'Warten auf Bestätigung';
+          }
+          break;
+        case 2:
+          {
+            return 'Buchung Angenommen';
+          }
+          break;
+        case 3:
+          {
+            return 'Buchung Abgelehnt';
+          }
+          break;
+        case 4:
+          {
+            return 'Abgeholt';
+          }
+          break;
+        case 5:
+          {
+            return 'Zurückgebracht';
+          }
+          break;
+        case 6:
+          {
+            return 'Abgebrochen von Mieter';
+          }
+          break;
+        case 7:
+          {
+            return 'Selber Abgebrochen';
+          }
+          break;
+        default:
+          {
+            return 'Da lief was schief';
+          }
+          break;
+      }
+    } else {
+      switch (statusId) {
+        case 1:
+          {
+            return 'Anfrage';
+          }
+          break;
+        case 2:
+          {
+            return 'Abholung ausstehend';
+          }
+          break;
+        case 3:
+          {
+            return 'Abgelehnt';
+          }
+          break;
+        case 4:
+          {
+            return 'Ausgeliehen';
+          }
+          break;
+        case 5:
+          {
+            return 'Abgeschlossen';
+          }
+          break;
+        case 6:
+          {
+            return 'Selber Abgebrochen';
+          }
+          break;
+        case 7:
+          {
+            return 'Abgebrochen von Mieter';
+          }
+          break;
+        default:
+          {
+            return 'Da lief was schief';
+          }
+          break;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -37,6 +127,7 @@ class OfferRequestCard extends StatelessWidget {
                               padding:
                                   EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
                               child: Column(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
@@ -61,45 +152,16 @@ class OfferRequestCard extends StatelessWidget {
                                     maxLines: 2,
                                     overflow: TextOverflow.ellipsis,
                                   ),
-                                  offerRequest.statusId == 5
-                                      ? Container()
-                                      : SizedBox(height: 10.0),
-                                  offerRequest.statusId == 5
-                                      ? Text(
-                                          offerRequest.offer.rating == 1
-                                              ? ' Du hast den Gegenstand noch nicht bewertet'
-                                              : 'Bewertung: ${offerRequest.offer.rating}',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0,
-                                          ),
-                                          maxLines: 2,
-                                          overflow: TextOverflow.ellipsis,
-                                        )
-                                      : Container(),
-                                  SizedBox(height: 20.0),
+                                  // SizedBox(height: 20.0),
                                   Text(
-                                    offerRequest.statusId == 1
-                                        ? 'Warten auf Bestätigung'
-                                        : offerRequest.statusId == 2
-                                            ? 'Deine Buchung wurde bestätigt'
-                                            : offerRequest.statusId == 3
-                                                ? 'Deine Buchung wurde abgelehnt'
-                                                : offerRequest.statusId == 4
-                                                    ? 'Du hast das Item erhalten'
-                                                    : offerRequest.statusId == 5
-                                                        ? 'Du hast das Item zurückgegeben // sollte in der anderen ansicht angezeigt werden'
-                                                        : offerRequest
-                                                                    .statusId ==
-                                                                6
-                                                            ? 'Der andere hat die Buchung stoniert'
-                                                            : 'Du hast die Buchung stoniert',
+                                    getInfoText(true, offerRequest.statusId),
                                     style: TextStyle(
-                                        color: Colors.purple,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600),
+                                      color: Colors.purple,
+                                      fontSize: 16.0,
+                                    ),
                                     maxLines: 2,
-                                  ),
+                                    overflow: TextOverflow.ellipsis,
+                                  )
                                 ],
                               ),
                             ),
