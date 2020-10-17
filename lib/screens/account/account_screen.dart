@@ -20,7 +20,7 @@ class _AccountScreenState extends State<AccountScreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         Expanded(
-          flex: 1,
+          flex: 3,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
@@ -32,7 +32,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
         ),
         Expanded(
-          flex: 2,
+          flex: 5,
           child: Padding(
             padding: const EdgeInsets.only(left: 10.0),
             child: Column(
@@ -64,7 +64,7 @@ class _AccountScreenState extends State<AccountScreen> {
           ),
         ),
         Expanded(
-          flex: 1,
+          flex: 3,
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Center(
