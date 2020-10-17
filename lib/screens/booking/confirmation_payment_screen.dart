@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
+import 'package:rent/main.dart';
 import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
 import 'package:rent/widgets/price/detail_price_overview.dart';
 import 'package:rent/widgets/offer/offer_card.dart';
@@ -43,13 +44,12 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
     });
   }
 
-  void _bookOffer() async {
-    // pushNewScreen(
-    //   context,
-    //   screen: LeseeBookingScreen(),
-    // );
+  void _bookOffer() {
     String offerId = widget.offer.offerId;
     ApiOfferService().bookOffer(offerId: offerId, dateRange: _dateRange);
+    MyApp.appKey.currentState.controller.jumpToTab(2);
+    Navigator.popUntil(
+        context, ModalRoute.withName(Navigator.defaultRouteName));
   }
 
   @override
@@ -61,7 +61,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
             OfferCard(offer: widget.offer, heroTag: 'confirmation'),
             // Zeitraum
             Container(
-              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
+              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
               padding: EdgeInsets.symmetric(vertical: 8.0),
               decoration: new BoxDecoration(
                 color: Color(0xFF202020),
@@ -184,7 +184,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
             ),
             // Price overview
             Container(
-              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
+              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
               padding: EdgeInsets.symmetric(vertical: 8.0),
               decoration: new BoxDecoration(
                 color: Color(0xFF202020),
@@ -226,28 +226,49 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                 ],
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: GestureDetector(
-                onTap: () => _bookOffer(),
-                child: Container(
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                      color: Colors.purple,
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: Center(
-                    child: Text(
-                      'Bestätigen & Reservieren',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20.0,
-                        fontWeight: FontWeight.w300,
-                      ),
-                    ),
+
+            SizedBox(
+              width: double.infinity,
+              child: RaisedButton(
+                color: Theme.of(context).primaryColor,
+                textColor: Colors.white,
+                padding: const EdgeInsets.all(16),
+                shape: new RoundedRectangleBorder(
+                    borderRadius: new BorderRadius.circular(10.0)),
+                onPressed: () => _bookOffer(),
+                child: Text(
+                  'Bestätigen & Reservieren',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
               ),
             ),
+
+            // Padding(
+            //   padding: const EdgeInsets.all(16.0),
+            //   child: GestureDetector(
+            //     onTap: () => _bookOffer(),
+            //     child: Container(
+            //       height: 50.0,
+            //       decoration: BoxDecoration(
+            //           color: Colors.purple,
+            //           borderRadius: BorderRadius.circular(10.0)),
+            //       child: Center(
+            //         child: Text(
+            //           'Bestätigen & Reservieren',
+            //           style: TextStyle(
+            //             color: Colors.white,
+            //             fontSize: 20.0,
+            //             fontWeight: FontWeight.w300,
+            //           ),
+            //         ),
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),

@@ -32,17 +32,17 @@ class App extends StatefulWidget {
   App({Key key}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _AppState();
+  AppState createState() => AppState();
 }
 
-class _AppState extends State<App> {
-  PersistentTabController _controller;
+class AppState extends State<App> {
+  PersistentTabController controller;
   bool _hideNavBar;
 
   @override
   void initState() {
     super.initState();
-    _controller = PersistentTabController(initialIndex: 0);
+    controller = PersistentTabController(initialIndex: 0);
     _hideNavBar = false;
   }
 
@@ -70,7 +70,7 @@ class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
-      controller: _controller,
+      controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,

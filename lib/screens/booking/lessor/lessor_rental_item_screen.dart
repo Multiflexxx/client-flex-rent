@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,7 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                             if (snapshot.hasData) {
                               List<OfferRequest> openOfferRequestList =
                                   snapshot.data;
+                              inspect(openOfferRequestList);
                               return CustomScrollView(
                                 key: PageStorageKey<String>(name),
                                 slivers: <Widget>[

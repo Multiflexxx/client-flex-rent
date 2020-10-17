@@ -43,7 +43,8 @@ void main() => runApp(
     );
 
 class MyApp extends StatelessWidget {
-  // This widget is the root of your application.
+  static final appKey = new GlobalKey<AppState>();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -59,7 +60,9 @@ class MyApp extends StatelessWidget {
       home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
           if (state is AuthenticationAuthenticated) {
-            return App();
+            return App(
+              key: appKey,
+            );
           }
           // if (state is AuthenticationSignUp) {
           return AnimatedSwitcher(

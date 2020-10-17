@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -110,6 +111,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                             if (snapshot.hasData) {
                               List<OfferRequest> openOfferRequestList =
                                   snapshot.data;
+                              inspect(openOfferRequestList);
                               return CustomScrollView(
                                 key: PageStorageKey<String>(name),
                                 slivers: <Widget>[
@@ -128,11 +130,11 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                                 screen: LeseeBookingScreen(
                                                     offerRequest:
                                                         openOfferRequestList[
-                                                            0]),
+                                                            index]),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:
-                                                  openOfferRequestList[0],
+                                                  openOfferRequestList[index],
                                               lessor: false,
                                             ),
                                           );
