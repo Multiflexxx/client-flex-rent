@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class AppSettings extends StatefulWidget {
   @override
@@ -8,6 +9,10 @@ class AppSettings extends StatefulWidget {
 
 class _AppSettingsState extends State<AppSettings> {
   bool darkmode = true;
+  final _testPosition = CameraPosition(
+  target: LatLng(37.42796133580664, -122.085749655962),
+  zoom: 14.4746,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +40,12 @@ class _AppSettingsState extends State<AppSettings> {
                   value: darkmode,
                 )
               ],
-            )
+            ),
+          Flexible(
+            child: GoogleMap(
+                mapType: MapType.hybrid,
+                initialCameraPosition: _testPosition),
+          )
           ],
         ),
       ),

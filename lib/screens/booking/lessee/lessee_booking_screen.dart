@@ -5,6 +5,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/offer_service.dart';
 import 'package:rent/screens/booking/qrcode_screen.dart';
+import 'package:rent/widgets/booking/booking_address.dart';
 
 import 'package:rent/widgets/booking/booking_info.dart';
 import 'package:rent/widgets/booking/booking_overview.dart';
@@ -69,6 +70,7 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
                   BookingOverview(
                     offerRequest: _offerRequest,
                   ),
+                  BookingAddress(offerRequest: _offerRequest),
                   _offerRequest.statusId == 2
                       ? Padding(
                           padding: const EdgeInsets.all(20.0),
