@@ -90,18 +90,6 @@ class ItemCard extends StatelessWidget {
                                       SizedBox(
                                         width: 20.0,
                                       ),
-                                      GestureDetector(
-                                        child: const Text(
-                                          'Verfügbarkeit ändern',
-                                          style: TextStyle(
-                                            color: Colors.purple,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w300,
-                                            letterSpacing: 1.0,
-                                          ),
-                                        ),
-                                        onTap: () {/* */},
-                                      )
                                     ],
                                   ),
                                 ],
