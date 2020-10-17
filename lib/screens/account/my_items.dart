@@ -6,7 +6,7 @@ import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/account/create_offer/add_item.dart';
-import 'package:rent/screens/booking/lessor/lessor_booking_screen.dart';
+import 'package:rent/screens/booking/lessor/lessor_rental_item_screen.dart';
 import 'package:rent/widgets/items/item_card.dart';
 
 class MyItems extends StatefulWidget {

@@ -20,7 +20,7 @@ OfferRequest _$OfferRequestFromJson(Map<String, dynamic> json) {
         ? null
         : DateRange.fromJson(json['date_range'] as Map<String, dynamic>),
     message: json['message'] as String,
-    qrCode: json['qr_code'] as String,
+    qrCodeId: json['qr_code_id'] as String,
   );
 }
 
@@ -39,6 +39,6 @@ Map<String, dynamic> _$OfferRequestToJson(OfferRequest instance) {
   writeNotNull('status_id', instance.statusId);
   writeNotNull('date_range', instance.dateRange);
   writeNotNull('message', instance.message);
-  writeNotNull('qr_code', instance.qrCode);
+  writeNotNull('qr_code_id', instance.qrCodeId);
   return val;
 }

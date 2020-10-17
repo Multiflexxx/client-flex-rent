@@ -20,7 +20,7 @@ abstract class OfferService {
   Future<OfferRequest> bookOffer();
   Future<List<OfferRequest>> getAllOfferRequestsbyStatusCode();
   Future<OfferRequest> getOfferRequestbyRequest();
-  Future<OfferRequest> updateOfferReqeust();
+  Future<OfferRequest> updateOfferRequest();
 }
 
 class ApiOfferService extends OfferService {
@@ -310,7 +310,7 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future<OfferRequest> updateOfferReqeust({OfferRequest offerRequest}) async {
+  Future<OfferRequest> updateOfferRequest({OfferRequest offerRequest}) async {
     final String sessionId = await _storage.read(key: 'sessionId');
     final String userId = await _storage.read(key: 'userId');
 

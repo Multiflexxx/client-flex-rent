@@ -10,7 +10,7 @@ class OfferRequest {
   final int statusId;
   final DateRange dateRange;
   final String message;
-  final String qrCode;
+  final String qrCodeId;
 
   OfferRequest(
       {this.requestId,
@@ -19,7 +19,7 @@ class OfferRequest {
       this.statusId,
       this.dateRange,
       this.message,
-      this.qrCode});
+      this.qrCodeId});
 
   factory OfferRequest.fromJson(Map<String, dynamic> json) =>
       _$OfferRequestFromJson(json);

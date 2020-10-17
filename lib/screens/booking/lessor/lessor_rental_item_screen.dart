@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -21,19 +21,32 @@ class LessorRentalItemScreen extends StatefulWidget {
 
 class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
   final List<String> _tabs = <String>["Ausstehend", "Abgeschlossen"];
-
+  Timer timer;
   Future<List<OfferRequest>> openOfferRequsts;
   Future<List<OfferRequest>> closedOfferRequsts;
 
   @override
   void initState() {
-    openOfferRequsts = ApiOfferService()
-        .getAllOfferRequestsbyStatusCode(statusCode: 1, lessor: true);
-    closedOfferRequsts = ApiOfferService()
-        .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: true);
-
-    initializeDateFormatting('de_DE', null);
     super.initState();
+    _getLessorRentalItemUpdate();
+    timer = Timer.periodic(
+        Duration(seconds: 3), (Timer t) => _getLessorRentalItemUpdate());
+    initializeDateFormatting('de_DE', null);
+  }
+
+  void _getLessorRentalItemUpdate() {
+    setState(() {
+      openOfferRequsts = ApiOfferService()
+          .getAllOfferRequestsbyStatusCode(statusCode: 1, lessor: true);
+      closedOfferRequsts = ApiOfferService()
+          .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: true);
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -98,7 +111,6 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                             if (snapshot.hasData) {
                               List<OfferRequest> openOfferRequestList =
                                   snapshot.data;
-                              print(openOfferRequestList.length.toString());
                               return CustomScrollView(
                                 key: PageStorageKey<String>(name),
                                 slivers: <Widget>[
@@ -122,6 +134,7 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                             child: OfferRequestCard(
                                               offerRequest:
                                                   openOfferRequestList[index],
+                                              lessor: true,
                                             ),
                                           );
                                         },
@@ -172,6 +185,7 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                             child: OfferRequestCard(
                                               offerRequest:
                                                   closedOfferRequestList[index],
+                                              lessor: true,
                                             ),
                                           );
                                         },

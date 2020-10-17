@@ -5,11 +5,12 @@ import 'package:rent/logic/models/models.dart';
 
 class OfferRequestCard extends StatelessWidget {
   final OfferRequest offerRequest;
+  final bool lessor;
 
-  OfferRequestCard({this.offerRequest});
+  OfferRequestCard({this.offerRequest, this.lessor});
 
   String getInfoText(bool lessor, int statusId) {
-    if (lessor) {
+    if (!lessor) {
       switch (statusId) {
         case 1:
           {
@@ -18,12 +19,12 @@ class OfferRequestCard extends StatelessWidget {
           break;
         case 2:
           {
-            return 'Buchung Angenommen';
+            return 'Buchung angenommen';
           }
           break;
         case 3:
           {
-            return 'Buchung Abgelehnt';
+            return 'Buchung abgelehnt';
           }
           break;
         case 4:
@@ -43,7 +44,7 @@ class OfferRequestCard extends StatelessWidget {
           break;
         case 7:
           {
-            return 'Selber Abgebrochen';
+            return 'Selber abgebrochen';
           }
           break;
         default:
@@ -81,7 +82,7 @@ class OfferRequestCard extends StatelessWidget {
           break;
         case 6:
           {
-            return 'Selber Abgebrochen';
+            return 'Selber abgebrochen';
           }
           break;
         case 7:
@@ -127,7 +128,8 @@ class OfferRequestCard extends StatelessWidget {
                               padding:
                                   EdgeInsets.fromLTRB(100.0, 20.0, 20.0, 20.0),
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
@@ -154,7 +156,7 @@ class OfferRequestCard extends StatelessWidget {
                                   ),
                                   // SizedBox(height: 20.0),
                                   Text(
-                                    getInfoText(true, offerRequest.statusId),
+                                    getInfoText(lessor, offerRequest.statusId),
                                     style: TextStyle(
                                       color: Colors.purple,
                                       fontSize: 16.0,

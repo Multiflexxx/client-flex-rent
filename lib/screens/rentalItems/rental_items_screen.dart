@@ -1,4 +1,4 @@
-import 'dart:developer';
+import 'dart:async';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,18 +20,32 @@ class RentalItemsScreen extends StatefulWidget {
 
 class _RentalItemsScreenState extends State<RentalItemsScreen> {
   final List<String> _tabs = <String>["Ausstehend", "Gemietet"];
-
+  Timer timer;
   Future<List<OfferRequest>> openOfferRequsts;
   Future<List<OfferRequest>> closedOfferRequsts;
 
   @override
   void initState() {
-    openOfferRequsts = ApiOfferService()
-        .getAllOfferRequestsbyStatusCode(statusCode: 1, lessor: false);
-    closedOfferRequsts = ApiOfferService()
-        .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: false);
-    initializeDateFormatting('de_DE', null);
     super.initState();
+    _getRentalItemUpdate();
+    timer = Timer.periodic(
+        Duration(seconds: 3), (Timer t) => _getRentalItemUpdate());
+    initializeDateFormatting('de_DE', null);
+  }
+
+  void _getRentalItemUpdate() {
+    setState(() {
+      openOfferRequsts = ApiOfferService()
+          .getAllOfferRequestsbyStatusCode(statusCode: 1, lessor: false);
+      closedOfferRequsts = ApiOfferService()
+          .getAllOfferRequestsbyStatusCode(statusCode: 5, lessor: false);
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -117,8 +131,10 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                                             0]),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
-                                                offerRequest:
-                                                    openOfferRequestList[0]),
+                                              offerRequest:
+                                                  openOfferRequestList[0],
+                                              lessor: false,
+                                            ),
                                           );
                                         },
                                         childCount: openOfferRequestList.length,
@@ -168,6 +184,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                             child: OfferRequestCard(
                                               offerRequest:
                                                   closedOfferRequestList[index],
+                                              lessor: false,
                                             ),
                                           );
                                         },
