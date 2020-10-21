@@ -68,42 +68,31 @@ class _AddItemState extends State<AddItem> {
           child: Form(
             key: _formKey,
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(60.0),
-                        child: Image(
-                          width: 200,
-                          height: 200,
-                          image: AssetImage('assets/images/jett.jpg'),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          child: Center(
+                            child: Text('Manuell oder'),
+                          ),
                         ),
-                      ),
-                      Expanded(
-                        child: Icon(
-                          Icons.edit,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
-                  ),
-                  Row(
-                    children: [
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Center(child: Text('Manuell oder'))
-                        ),
-                      ),
-                      Expanded(
-                        flex: 1,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        Expanded(
+                          flex: 1,
                           child: RaisedButton.icon(
-                            icon: Icon(Icons.qr_code_scanner_outlined),
+                            icon: Icon(
+                              Icons.qr_code_scanner_outlined,
+                              color: Colors.white,
+                            ),
+                            color: Colors.transparent,
+                            padding: EdgeInsets.all(16.0),
+                            shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(8.0),
+                                side: BorderSide(
+                                    color: Colors.purple, width: 1.75)),
                             onPressed: () async {
                               barcodeResult =
                                   await FlutterBarcodeScanner.scanBarcode(
@@ -121,9 +110,11 @@ class _AddItemState extends State<AddItem> {
                                 //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
                                 try {
                                   setState(() {
-                                    Offer product = apiResponseToOffer(apiResult);
+                                    Offer product =
+                                        apiResponseToOffer(apiResult);
                                     _titleController.text = product.title;
-                                    _descritpionController.text = product.description;
+                                    _descritpionController.text =
+                                        product.description;
                                   });
                                 } catch (e) {
                                   _showError(e);
@@ -131,100 +122,104 @@ class _AddItemState extends State<AddItem> {
                                 }
                               }
                             },
-                            label: Text('Scan'),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  FormFieldStyled(
-                    controller: _titleController,
-                    hintText: "Produktname",
-                    autocorrect: true,
-                  ),
-                  SizedBox(height: 10.0),
-                  FutureBuilder<List<Category>>(
-                    future: categoryList,
-                    builder: (context, categories) {
-                      if (categories.hasData) {
-                        return SizedBox(
-                          width: double.infinity,
-                          child: DropdownButton<Category>(
-                            dropdownColor: Colors.black,
-                            hint: Text(
-                              'Kategorie',
+                            label: Text(
+                              'Scan',
                               style: TextStyle(color: Colors.white),
                             ),
-                            items: categories.data
-                                .map<DropdownMenuItem<Category>>(
-                                    (Category category) {
-                              return DropdownMenuItem<Category>(
-                                value: category,
-                                child: Text(
-                                  category.name,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              );
-                            }).toList(),
-                            onChanged: (value) {
-                              setState(() {
-                                category = value;
-                              });
-                            },
-                            value: category,
                           ),
-                        );
-                      } else {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                    },
-                  ),
-                  SizedBox(height: 10.0),
-                  FormFieldStyled(
-                    controller: _descritpionController,
-                    hintText: "Beschreibung",
-                    autocorrect: true,
-                    maxLines: 8,
-                  ),
-                  SizedBox(height: 10.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: FormFieldStyled(
-                          controller: _priceController,
-                          hintText: "Preis",
-                          autocorrect: true,
-                          type: TextInputType.numberWithOptions(
-                              signed: false, decimal: true),
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                          child: Text('€ Pro Tag',
-                              style: TextStyle(color: Colors.white)),
-                        ),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 10.0),
-                  SizedBox(
-                    width: double.infinity,
-                    child: RaisedButton(
-                      color: Theme.of(context).primaryColor,
-                      textColor: Colors.white,
-                      padding: const EdgeInsets.all(16),
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0)),
-                      child: Text('Speichern'),
-                      onPressed: () {
-                        _createOffer();
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    FormFieldStyled(
+                      controller: _titleController,
+                      hintText: "Produktname",
+                      autocorrect: true,
+                    ),
+                    SizedBox(height: 16.0),
+                    FutureBuilder<List<Category>>(
+                      future: categoryList,
+                      builder: (context, categories) {
+                        if (categories.hasData) {
+                          return SizedBox(
+                            width: double.infinity,
+                            child: DropdownButton<Category>(
+                              isExpanded: true,
+                              dropdownColor: Colors.black,
+                              hint: Text(
+                                'Kategorie',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              items: categories.data
+                                  .map<DropdownMenuItem<Category>>(
+                                      (Category category) {
+                                return DropdownMenuItem<Category>(
+                                  value: category,
+                                  child: Text(
+                                    category.name,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
+                                );
+                              }).toList(),
+                              onChanged: (value) {
+                                setState(() {
+                                  category = value;
+                                });
+                              },
+                              value: category,
+                            ),
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
                       },
                     ),
-                  )
-                ],
+                    SizedBox(height: 16.0),
+                    FormFieldStyled(
+                      controller: _descritpionController,
+                      hintText: "Beschreibung",
+                      autocorrect: true,
+                      maxLines: 8,
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: FormFieldStyled(
+                            controller: _priceController,
+                            hintText: "Preis",
+                            autocorrect: true,
+                            type: TextInputType.numberWithOptions(
+                                signed: false, decimal: true),
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                            child: Text('€ Pro Tag',
+                                style: TextStyle(color: Colors.white)),
+                          ),
+                        )
+                      ],
+                    ),
+                    SizedBox(height: 16.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        color: Theme.of(context).primaryColor,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(16),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(8.0)),
+                        child: Text('Speichern'),
+                        onPressed: () {
+                          _createOffer();
+                        },
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
