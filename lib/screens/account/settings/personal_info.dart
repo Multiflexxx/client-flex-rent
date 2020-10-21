@@ -5,11 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:rent/logic/blocs/user/bloc/user_bloc.dart';
 import 'package:rent/logic/models/user/user.dart';
 import 'package:rent/screens/account/settings/update_password.dart';
+import 'package:rent/widgets/camera/image_source.dart';
 import 'package:rent/widgets/flushbar_styled.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
 
@@ -55,47 +57,60 @@ class _PersonalInfoState extends State<PersonalInfo> {
     pushNewScreen(context, screen: UpdatePasswordScreen(), withNavBar: true);
   }
 
+  void _selectImageSource({BuildContext parentContext}) async {
+    final ImageSource source = await showCupertinoModalBottomSheet(
+      expand: false,
+      useRootNavigator: true,
+      context: context,
+      barrierColor: Colors.black45,
+      builder: (context, scrollController) => ImageSourcePicker(
+        scrollController: scrollController,
+      ),
+    );
+    _updateImage(source: source);
+  }
+
+  void _updateImage({ImageSource source}) async {
+    final image = await picker.getImage(source: source);
+    if (image != null) {
+      final _image = File(image.path);
+      setState(() {
+        profileImage = _image;
+      });
+      BlocProvider.of<UserBloc>(context)
+          .add(ProfileImageUpload(path: image.path));
+    } else {
+      print('No image selected.');
+    }
+  }
+
+  void _saveChanges() {
+    if (_key.currentState.validate()) {
+      User _updatedUser = User(
+        userId: user.userId,
+        firstName: _firstNameController.text,
+        lastName: _lastNameController.text,
+        email: _emailController.text,
+        phoneNumber: _phoneController.text,
+        verified: user.verified,
+        postCode: _zipController.text,
+        city: _cityController.text,
+        street: _streetController.text,
+        houseNumber: _numberController.text,
+        lesseeRating: user.lesseeRating,
+        numberOfLesseeRatings: user.numberOfLesseeRatings,
+        lessorRating: user.lessorRating,
+        numberOfLessorRatings: user.numberOfLessorRatings,
+        dateOfBirth: user.dateOfBirth,
+      );
+      BlocProvider.of<UserBloc>(context).add(UserUpdate(user: _updatedUser));
+    } else {
+      print('falsch');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    void _updateImage({ImageSource source}) async {
-      final image = await picker.getImage(source: source);
-      if (image != null) {
-        final _image = File(image.path);
-        setState(() {
-          profileImage = _image;
-        });
-        BlocProvider.of<UserBloc>(context)
-            .add(ProfileImageUpload(path: image.path));
-      } else {
-        print('No image selected.');
-      }
-    }
-
-    void _saveChanges() {
-      if (_key.currentState.validate()) {
-        User _updatedUser = User(
-          userId: user.userId,
-          firstName: _firstNameController.text,
-          lastName: _lastNameController.text,
-          email: _emailController.text,
-          phoneNumber: _phoneController.text,
-          verified: user.verified,
-          postCode: _zipController.text,
-          city: _cityController.text,
-          street: _streetController.text,
-          houseNumber: _numberController.text,
-          lesseeRating: user.lesseeRating,
-          numberOfLesseeRatings: user.numberOfLesseeRatings,
-          lessorRating: user.lessorRating,
-          numberOfLessorRatings: user.numberOfLessorRatings,
-          dateOfBirth: user.dateOfBirth,
-        );
-        BlocProvider.of<UserBloc>(context).add(UserUpdate(user: _updatedUser));
-      } else {
-        print('falsch');
-      }
-    }
-
     return Scaffold(
       appBar: AppBar(
         title: Text("Meine Informationen"),
@@ -134,21 +149,12 @@ class _PersonalInfoState extends State<PersonalInfo> {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                    // GestureDetector(
-                                    //   onTap: () => _updateImage(
-                                    //       source: ImageSource.camera),
-                                    //   child: Image.network(
-                                    //     user.profilePicture,
-                                    //     height: 100,
-                                    //     width: 100,
-                                    //   ),
-                                    // ),
                                     CircleAvatar(
                                       radius: 53,
                                       backgroundColor: Colors.purple,
                                       child: GestureDetector(
-                                        onTap: () => _updateImage(
-                                            source: ImageSource.camera),
+                                        onTap: () => _selectImageSource(
+                                            parentContext: context),
                                         child: (user.profilePicture != null &&
                                                 profileImage == null)
                                             ? Stack(
@@ -369,16 +375,6 @@ class _PersonalInfoState extends State<PersonalInfo> {
                             SizedBox(
                               height: 10,
                             ),
-                            // FormFieldStyled(
-                            //   icon: Icon(
-                            //     Icons.vpn_key,
-                            //     color: Colors.white,
-                            //   ),
-                            //   hintText: 'Passwort',
-                            //   type: TextInputType.visiblePassword,
-                            //   obscureText: true,
-                            //   autocorrect: true,
-                            // ),
                             SizedBox(
                               height: 10,
                             ),
