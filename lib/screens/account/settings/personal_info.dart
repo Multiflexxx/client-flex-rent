@@ -132,6 +132,7 @@ class _PersonalInfoState extends State<PersonalInfo> {
               }
             },
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Flexible(
                   child: Form(

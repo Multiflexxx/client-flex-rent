@@ -75,17 +75,14 @@ class ItemCard extends StatelessWidget {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.end,
                                     children: [
-                                      GestureDetector(
-                                        child: const Text(
-                                          'Bearbeiten',
-                                          style: TextStyle(
-                                            color: Colors.purple,
-                                            fontSize: 15.0,
-                                            fontWeight: FontWeight.w300,
-                                            letterSpacing: 1.0,
-                                          ),
+                                      Text(
+                                        'Bearbeiten',
+                                        style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 15.0,
+                                          fontWeight: FontWeight.w300,
+                                          letterSpacing: 1.0,
                                         ),
-                                        onTap: () {/* */},
                                       ),
                                       SizedBox(
                                         width: 20.0,

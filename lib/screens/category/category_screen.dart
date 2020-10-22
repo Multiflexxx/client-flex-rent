@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/offer/offer_list_screen.dart';
@@ -68,11 +69,19 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                   children: <Widget>[
                                     Row(
                                       children: <Widget>[
-                                        Icon(
-                                          // TODO: from api
-                                          Feather.airplay,
-                                          size: 40.0,
-                                          color: Colors.white70,
+                                        Container(
+                                          height: 50.0,
+                                          width: 50.0,
+                                          child: SvgPicture.network(
+                                            category.pictureLink,
+                                            color: Colors.purple,
+                                            placeholderBuilder:
+                                                (BuildContext context) =>
+                                                    Container(
+                                              child:
+                                                  const CircularProgressIndicator(),
+                                            ),
+                                          ),
                                         ),
                                         SizedBox(
                                           width: 25.0,

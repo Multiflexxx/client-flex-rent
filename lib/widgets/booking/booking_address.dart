@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:rent/logic/models/offer_request/offer_request.dart';
-import 'package:rent/logic/models/user/user.dart';
 
 class BookingAddress extends StatelessWidget {
   final OfferRequest offerRequest;
@@ -41,8 +40,7 @@ class BookingAddress extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                    offerRequest.user.street ?? 'Fehler',
+                Text(offerRequest.user.street ?? 'Fehler',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,
@@ -52,35 +50,7 @@ class BookingAddress extends StatelessWidget {
                 SizedBox(
                   width: 10.0,
                 ),
-                Text(
-                    offerRequest.user.houseNumber ?? 'Fehler',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      height: 1.0,
-                      fontWeight: FontWeight.w300,
-                    )),
-
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-
-                Text(
-                    offerRequest.user.postCode ?? 'Fehler',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      height: 1.0,
-                      fontWeight: FontWeight.w300,
-                    )
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Text(
-                    offerRequest.user.city ?? 'Fehler',
+                Text(offerRequest.user.houseNumber ?? 'Fehler',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,
@@ -92,14 +62,38 @@ class BookingAddress extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                FlatButton(onPressed: (){}, child:Text(
-                    'Zur Karte',
+                Text(offerRequest.user.postCode ?? 'Fehler',
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 18.0,
                       height: 1.0,
                       fontWeight: FontWeight.w300,
-                    )), )
+                    )),
+                SizedBox(
+                  width: 10.0,
+                ),
+                Text(offerRequest.user.city ?? 'Fehler',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 18.0,
+                      height: 1.0,
+                      fontWeight: FontWeight.w300,
+                    )),
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                FlatButton(
+                  onPressed: () {},
+                  child: Text('Zur Karte',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18.0,
+                        height: 1.0,
+                        fontWeight: FontWeight.w300,
+                      )),
+                )
               ],
             ),
           ],

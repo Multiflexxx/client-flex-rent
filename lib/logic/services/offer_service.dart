@@ -13,6 +13,7 @@ abstract class OfferService {
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Category>> getAllCategory();
   Future<Offer> createOffer();
+  Future<Offer> updateOffer();
   Future<List<Offer>> getOfferbyUser();
   void addImage();
   List<String> getSuggestion();
@@ -170,6 +171,39 @@ class ApiOfferService extends OfferService {
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
+      return null;
+    }
+  }
+
+  @override
+  Future<Offer> updateOffer({Offer updateOffer, List<String> images}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response = await http.patch(
+        'https://flexrent.multiflexxx.de/offer/${updateOffer.offerId}',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(<String, dynamic>{
+          'session': session.toJson(),
+          'offer': updateOffer.toJson(),
+          'delete_images': images,
+        }));
+
+    print(jsonEncode(<String, dynamic>{
+      'session': session.toJson(),
+      'offer': updateOffer.toJson(),
+      'delete_images': images,
+    }));
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBody = json.decode(response.body);
+      final Offer offer = Offer.fromJson(jsonBody);
+      inspect(offer);
+      return offer;
+    } else {
+      inspect(response);
       return null;
     }
   }

@@ -6,6 +6,7 @@ import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/account/create_offer/add_item.dart';
+import 'package:rent/screens/account/update_offer/update_offer.dart';
 import 'package:rent/screens/booking/lessor/lessor_rental_item_screen.dart';
 import 'package:rent/widgets/items/item_card.dart';
 
@@ -20,6 +21,18 @@ class _MyItemsState extends State<MyItems> {
   void initState() {
     super.initState();
     offerList = ApiOfferService().getOfferbyUser();
+  }
+
+  void _goToEditOfferView({Offer offer}) async {
+    await pushNewScreen(
+      context,
+      screen: UpdateOfferScreen(
+        offer: offer,
+      ),
+    );
+    setState(() {
+      offerList = ApiOfferService().getOfferbyUser();
+    });
   }
 
   @override
@@ -101,8 +114,12 @@ class _MyItemsState extends State<MyItems> {
                 return ListView.builder(
                   itemCount: snapshot.data.length,
                   itemBuilder: (context, index) {
-                    return ItemCard(
-                      offer: snapshot.data[index],
+                    return GestureDetector(
+                      onTap: () =>
+                          _goToEditOfferView(offer: snapshot.data[index]),
+                      child: ItemCard(
+                        offer: snapshot.data[index],
+                      ),
                     );
                   },
                 );

@@ -99,8 +99,6 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                 Row(
                                   children: [
                                     Icon(
-                                      // TODO
-                                      // offer.category.pictureLink,
                                       Feather.activity,
                                       size: 16.0,
                                       color: Colors.purple,

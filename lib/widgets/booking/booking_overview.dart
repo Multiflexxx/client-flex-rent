@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:rent/logic/models/offer_request/offer_request.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
