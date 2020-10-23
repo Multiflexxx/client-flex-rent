@@ -25,10 +25,11 @@ class _UpdateOfferScreenState extends State<UpdateOfferScreen> {
   final _descritpionController = TextEditingController();
   final _priceController = TextEditingController();
 
+  List<String> _imageList;
+  List<String> _deleteImageList;
   Offer _offer;
-  List<String> imageList;
-  List<String> deleteImageList = new List<String>();
   Future<List<Category>> categoryList;
+
   Category _category;
 
   final picker = ImagePicker();
@@ -37,29 +38,40 @@ class _UpdateOfferScreenState extends State<UpdateOfferScreen> {
   void initState() {
     super.initState();
     categoryList = ApiOfferService().getAllCategory();
-    imageList = widget.offer.pictureLinks;
-    _titleController.text = widget.offer.title;
-    _descritpionController.text = widget.offer.description;
-    _priceController.text = widget.offer.price.toString();
+    _offer = widget.offer;
+    initFormValues();
+  }
+
+  void initFormValues() {
+    _deleteImageList = new List<String>();
+    _imageList = _offer.pictureLinks;
+    _titleController.text = _offer.title;
+    _descritpionController.text = _offer.description;
+    _priceController.text = _offer.price.toString();
   }
 
   void _updateOffer() async {
     Offer updatedOffer = Offer(
-      offerId: widget.offer.offerId,
+      offerId: _offer.offerId,
       title: _titleController.text,
       description: _descritpionController.text,
       category: _category,
       price: double.parse(_priceController.text),
     );
 
-    offer = await ApiOfferService()
-        .updateOffer(updateOffer: updatedOffer, images: deleteImageList);
+    Offer offer = await ApiOfferService()
+        .updateOffer(updateOffer: updatedOffer, images: _deleteImageList);
+
+    setState(() {
+      _offer = offer;
+      initFormValues();
+    });
   }
 
   void _deleteImage({String imagePath}) {
     setState(() {
-      imageList.remove(imagePath);
-      deleteImageList.add(imagePath);
+      _imageList.remove(imagePath);
+      _deleteImageList.add(imagePath);
     });
   }
 
@@ -79,8 +91,13 @@ class _UpdateOfferScreenState extends State<UpdateOfferScreen> {
   void _addImage({ImageSource source}) async {
     final image = await picker.getImage(source: source);
     if (image != null) {
-      // final _image = File(image.path);
-      ApiOfferService().addImage(offer: offer, imagePath: image.path);
+      Offer offer = await ApiOfferService()
+          .addImage(offer: _offer, imagePath: image.path);
+
+      setState(() {
+        _offer = offer;
+        initFormValues();
+      });
     } else {
       print('No image selected.');
     }
@@ -108,13 +125,11 @@ class _UpdateOfferScreenState extends State<UpdateOfferScreen> {
                         children: <Widget>[
                           Container(
                             height: 180.0,
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 16.0),
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
-                              itemCount: imageList.length + 1,
+                              itemCount: _imageList.length + 1,
                               itemBuilder: (BuildContext context, int index) {
-                                if (index == imageList.length) {
+                                if (index == _imageList.length) {
                                   return Container(
                                     margin:
                                         EdgeInsets.symmetric(horizontal: 10.0),
@@ -150,19 +165,25 @@ class _UpdateOfferScreenState extends State<UpdateOfferScreen> {
                                       GestureDetector(
                                         onTap: () {
                                           _deleteImage(
-                                              imagePath: imageList[index]);
+                                              imagePath: _imageList[index]);
                                         },
                                         child: ClipRRect(
                                           borderRadius:
                                               BorderRadius.circular(20.0),
                                           child: CachedNetworkImage(
-                                            imageUrl: imageList[index],
+                                            imageUrl: _imageList[index],
                                             width: 180,
                                             height: 180,
                                             fit: BoxFit.cover,
-                                            placeholder: (context, url) => Icon(
-                                              Icons.error,
-                                              color: Colors.white,
+                                            placeholder: (context, url) =>
+                                                Container(
+                                              height: 180,
+                                              width: 180,
+                                              decoration: BoxDecoration(
+                                                color: Color(0xFF202020),
+                                                borderRadius:
+                                                    BorderRadius.circular(10.0),
+                                              ),
                                             ),
                                             errorWidget:
                                                 (context, url, error) => Icon(

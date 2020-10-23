@@ -191,12 +191,6 @@ class ApiOfferService extends OfferService {
           'delete_images': images,
         }));
 
-    print(jsonEncode(<String, dynamic>{
-      'session': session.toJson(),
-      'offer': updateOffer.toJson(),
-      'delete_images': images,
-    }));
-
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
       final Offer offer = Offer.fromJson(jsonBody);
