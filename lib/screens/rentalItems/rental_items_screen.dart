@@ -60,37 +60,35 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
               SliverOverlapAbsorber(
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-                sliver: SliverSafeArea(
-                  top: false,
-                  sliver: SliverAppBar(
-                    title: const Text(
-                      'Mietgegenstände',
-                      style: TextStyle(
-                        fontSize: 21.0,
-                        letterSpacing: 1.2,
-                      ),
+                sliver: SliverAppBar(
+                  centerTitle: true,
+                  title: Text(
+                    'Mietgegenstände',
+                    style: TextStyle(
+                      fontSize: 21.0,
+                      letterSpacing: 1.2,
                     ),
-                    backgroundColor: Colors.transparent,
-                    floating: true,
-                    pinned: true,
-                    snap: false,
-                    primary: true,
-                    forceElevated: innerBoxIsScrolled,
-                    toolbarHeight: 0.3 * MediaQuery.of(context).size.height,
-                    bottom: TabBar(
-                      indicator:
-                          CircleTabIndicator(color: Colors.purple, radius: 3.0),
-                      tabs: _tabs
-                          .map(
-                            (String name) => Tab(
-                              child: Text(
-                                name,
-                                style: TextStyle(fontSize: 18.0),
-                              ),
+                  ),
+                  backgroundColor: Colors.transparent,
+                  floating: true,
+                  pinned: true,
+                  snap: false,
+                  primary: true,
+                  forceElevated: innerBoxIsScrolled,
+                  toolbarHeight: 0.3 * MediaQuery.of(context).size.height,
+                  bottom: TabBar(
+                    indicator:
+                        CircleTabIndicator(color: Colors.purple, radius: 3.0),
+                    tabs: _tabs
+                        .map(
+                          (String name) => Tab(
+                            child: Text(
+                              name,
+                              style: TextStyle(fontSize: 18.0),
                             ),
-                          )
-                          .toList(),
-                    ),
+                          ),
+                        )
+                        .toList(),
                   ),
                 ),
               ),
