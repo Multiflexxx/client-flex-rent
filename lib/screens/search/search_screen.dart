@@ -61,7 +61,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: TextStyle(
                     color: Colors.white70,
                     fontWeight: FontWeight.w500,
-                    letterSpacing: 1.25,
+                    letterSpacing: 1.2,
                   ),
                   onSubmitted: (query) {
                     initiateSearch(query);

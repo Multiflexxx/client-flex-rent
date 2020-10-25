@@ -19,7 +19,10 @@ class ImageSourcePicker extends StatelessWidget {
             ListTile(
               title: Text(
                 'Kamera',
-                style: TextStyle(color: Colors.white, letterSpacing: 1.35),
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.2,
+                ),
               ),
               leading: Icon(
                 Icons.camera_alt,
@@ -30,7 +33,10 @@ class ImageSourcePicker extends StatelessWidget {
             ListTile(
               title: Text(
                 'Galerie',
-                style: TextStyle(color: Colors.white, letterSpacing: 1.35),
+                style: TextStyle(
+                  color: Colors.white,
+                  letterSpacing: 1.2,
+                ),
               ),
               leading: Icon(
                 Icons.photo,

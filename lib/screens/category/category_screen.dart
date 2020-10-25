@@ -56,7 +56,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               decoration: BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                    width: 0.2,
+                                    width: 0.25,
                                     color: Colors.purple,
                                   ),
                                 ),
@@ -91,7 +91,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           style: TextStyle(
                                               fontSize: 21.0,
                                               fontWeight: FontWeight.w300,
-                                              color: Colors.white70,
+                                              color: Colors.white,
                                               letterSpacing: 1.2),
                                         ),
                                       ],
@@ -101,7 +101,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         Icon(
                                           Ionicons.ios_arrow_forward,
                                           size: 30.0,
-                                          color: Colors.white70,
+                                          color: Colors.white,
                                         ),
                                       ],
                                     ),

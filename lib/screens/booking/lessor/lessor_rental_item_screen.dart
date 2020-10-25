@@ -153,7 +153,7 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                 e.message,
                                 style: TextStyle(
                                   fontSize: 18.0,
-                                  letterSpacing: 1.35,
+                                  letterSpacing: 1.2,
                                 ),
                               ));
                             }
@@ -205,7 +205,7 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                   e.message,
                                   style: TextStyle(
                                     fontSize: 18.0,
-                                    letterSpacing: 1.35,
+                                    letterSpacing: 1.2,
                                   ),
                                 ),
                               );

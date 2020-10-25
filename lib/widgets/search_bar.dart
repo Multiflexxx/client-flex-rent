@@ -14,9 +14,10 @@ class _SearchBarState extends State<SearchBar> {
       child: TextField(
         readOnly: true,
         style: TextStyle(
-            color: Colors.white70,
-            fontWeight: FontWeight.w500,
-            letterSpacing: 1.25),
+          color: Colors.white70,
+          fontWeight: FontWeight.w500,
+          letterSpacing: 1.2,
+        ),
         onTap: () {
           Navigator.of(context).push(
             MaterialPageRoute(

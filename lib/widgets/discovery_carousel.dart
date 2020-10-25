@@ -28,19 +28,20 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
               Text(
                 widget.carouselTitle,
                 style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                    letterSpacing: 1.5),
+                  fontSize: 22.0,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: 1.2,
+                ),
               ),
               GestureDetector(
                 onTap: () => print('See all'),
                 child: Text(
                   'See all',
                   style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w600,
-                      letterSpacing: 1.0),
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
             ],

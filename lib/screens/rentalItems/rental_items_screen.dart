@@ -109,7 +109,6 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                             if (snapshot.hasData) {
                               List<OfferRequest> openOfferRequestList =
                                   snapshot.data;
-                              inspect(openOfferRequestList);
                               return CustomScrollView(
                                 key: PageStorageKey<String>(name),
                                 slivers: <Widget>[
@@ -150,7 +149,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                 e.message,
                                 style: TextStyle(
                                   fontSize: 18.0,
-                                  letterSpacing: 1.35,
+                                  letterSpacing: 1.2,
                                 ),
                               ));
                             }
@@ -202,7 +201,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                 e.message,
                                 style: TextStyle(
                                   fontSize: 18.0,
-                                  letterSpacing: 1.35,
+                                  letterSpacing: 1.2,
                                 ),
                               ));
                             }

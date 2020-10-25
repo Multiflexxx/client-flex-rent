@@ -4,7 +4,7 @@ import 'package:rent/logic/models/models.dart';
 class BookingInfo extends StatelessWidget {
   final OfferRequest offerRequest;
   BookingInfo({this.offerRequest});
-  
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,22 +30,21 @@ class BookingInfo extends StatelessWidget {
             height: 20.0,
           ),
           Text(
-           getInfoTextBody(true, offerRequest.statusId),
+            getInfoTextBody(true, offerRequest.statusId),
             style: TextStyle(
               color: Colors.white,
               fontSize: 16.0,
               height: 1.15,
-              letterSpacing: 1,
+              letterSpacing: 1.0,
               fontWeight: FontWeight.w300,
             ),
           ),
-         
         ]),
       ),
     );
   }
 
- String getInfoTextHeading(bool lessor, int statusId) {
+  String getInfoTextHeading(bool lessor, int statusId) {
     if (lessor) {
       switch (statusId) {
         case 1:
@@ -134,7 +133,8 @@ class BookingInfo extends StatelessWidget {
       }
     }
   }
-String getInfoTextBody(bool lessor, int statusId) {
+
+  String getInfoTextBody(bool lessor, int statusId) {
     if (lessor) {
       switch (statusId) {
         case 1:
@@ -223,5 +223,4 @@ String getInfoTextBody(bool lessor, int statusId) {
       }
     }
   }
-
 }

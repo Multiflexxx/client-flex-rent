@@ -353,7 +353,7 @@ class _OfferScreenState extends State<OfferScreen> {
                         child: Container(
                           margin: EdgeInsets.symmetric(
                               vertical: 12.0, horizontal: 18.0),
-                          padding: EdgeInsets.only(top: 8, bottom: 8),
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
                           decoration: new BoxDecoration(
                             color: Color(0xFF202020),
                             borderRadius: BorderRadius.circular(10.0),

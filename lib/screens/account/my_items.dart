@@ -130,7 +130,7 @@ class _MyItemsState extends State<MyItems> {
                     e.message,
                     style: TextStyle(
                       fontSize: 24.0,
-                      letterSpacing: 1.35,
+                      letterSpacing: 1.2,
                       fontWeight: FontWeight.w300,
                     ),
                   ),
