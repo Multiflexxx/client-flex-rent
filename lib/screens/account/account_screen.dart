@@ -37,6 +37,12 @@ class _AccountScreenState extends State<AccountScreen> {
     });
   }
 
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
+  }
+
   Widget userCard({name, city, verified}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -48,7 +54,7 @@ class _AccountScreenState extends State<AccountScreen> {
             child: Center(
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: _user.profilePicture != null
+                child: _user.profilePicture != ''
                     ? CachedNetworkImage(
                         imageUrl: _user.profilePicture,
                         width: 100,
@@ -59,9 +65,10 @@ class _AccountScreenState extends State<AccountScreen> {
                           height: 100,
                           image: AssetImage('assets/images/jett.jpg'),
                         ),
-                        errorWidget: (context, url, error) => Icon(
-                          Icons.error,
-                          color: Colors.white,
+                        errorWidget: (context, url, error) => Image(
+                          width: 100,
+                          height: 100,
+                          image: AssetImage('assets/images/jett.jpg'),
                         ),
                       )
                     : Image(

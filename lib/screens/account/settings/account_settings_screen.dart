@@ -21,7 +21,7 @@ class AccountSettingsScreen extends StatelessWidget {
 
 class _AccountSettingsBody extends StatelessWidget {
   final routes = {
-    'personalInfo': PersonalInfo(),
+    'personalInfo': PersonalInfoScreen(),
     'paymentInfo': PageNotFound(),
     'settings': AppSettings(),
     'logout': PageNotFound(),
