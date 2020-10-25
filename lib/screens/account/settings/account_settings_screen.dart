@@ -63,7 +63,7 @@ class _AccountSettingsBody extends StatelessWidget {
         padding: EdgeInsets.symmetric(vertical: 8.0),
         decoration: new BoxDecoration(
           color: Color(0xFF202020),
-          borderRadius: BorderRadius.circular(10.0),
+          borderRadius: BorderRadius.circular(20.0),
         ),
         child: Padding(
           padding: EdgeInsets.all(16.0),
