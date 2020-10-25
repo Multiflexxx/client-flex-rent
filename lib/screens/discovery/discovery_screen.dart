@@ -17,16 +17,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
   Future<Map<String, List<Offer>>> discoveryOffer;
   User user;
 
-  @override
-  initState() {
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
-    user = state.user;
-    discoveryOffer =
-        ApiOfferService().getDiscoveryOffer(postCode: user.postCode);
-    super.initState();
-  }
-
   int _selectedIndex = 0;
   List<IconData> _icons = [
     FontAwesome.laptop,
@@ -35,13 +25,30 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
     Feather.printer
   ];
 
+  @override
+  initState() {
+    final state = BlocProvider.of<AuthenticationBloc>(context).state
+        as AuthenticationAuthenticated;
+    user = state.user;
+    _fetchDiscoveryOffer();
+    super.initState();
+  }
+
+  Future<dynamic> _fetchDiscoveryOffer() {
+    var fetchData =
+        ApiOfferService().getDiscoveryOffer(postCode: user.postCode);
+    setState(() {
+      discoveryOffer = fetchData;
+    });
+    return fetchData;
+  }
+
   Widget _buildIcon(int index) {
     return GestureDetector(
       onTap: () {
         setState(() {
           _selectedIndex = index;
         });
-        print(_selectedIndex);
       },
       child: Container(
         height: 60.0,
@@ -69,73 +76,77 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
       body: SafeArea(
         child: LayoutBuilder(
           builder: (context, constraints) {
-            return SingleChildScrollView(
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  minHeight: constraints.maxHeight,
-                ),
-                child: IntrinsicHeight(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      SearchBar(),
-                      Padding(
-                        padding: EdgeInsets.only(top: 20.0, left: 20.0),
-                        child: Text(
-                          'Hallo ${user.firstName} ${user.lastName}',
-                          style: TextStyle(
-                            fontSize: 30.0,
-                            fontWeight: FontWeight.bold,
+            return RefreshIndicator(
+              onRefresh: () => _fetchDiscoveryOffer(),
+              backgroundColor: Colors.purple,
+              child: SingleChildScrollView(
+                child: ConstrainedBox(
+                  constraints: BoxConstraints(
+                    minHeight: constraints.maxHeight,
+                  ),
+                  child: IntrinsicHeight(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        SearchBar(),
+                        Padding(
+                          padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                          child: Text(
+                            'Hallo ${user.firstName} ${user.lastName}',
+                            style: TextStyle(
+                              fontSize: 30.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        height: 10.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: _icons
-                            .asMap()
-                            .entries
-                            .map(
-                              (MapEntry map) => _buildIcon(map.key),
-                            )
-                            .toList(),
-                      ),
-                      FutureBuilder<Map<String, List<Offer>>>(
-                        future: discoveryOffer,
-                        builder: (context, snapshot) {
-                          if (snapshot.hasData) {
-                            return Column(
-                              children: <Widget>[
-                                SizedBox(height: 20.0),
-                                DiscoveryCarousel(
-                                  snapshot.data['bestOffer'],
-                                  'Topseller',
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: _icons
+                              .asMap()
+                              .entries
+                              .map(
+                                (MapEntry map) => _buildIcon(map.key),
+                              )
+                              .toList(),
+                        ),
+                        FutureBuilder<Map<String, List<Offer>>>(
+                          future: discoveryOffer,
+                          builder: (context, snapshot) {
+                            if (snapshot.hasData) {
+                              return Column(
+                                children: <Widget>[
+                                  SizedBox(height: 20.0),
+                                  DiscoveryCarousel(
+                                    snapshot.data['bestOffer'],
+                                    'Topseller',
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  DiscoveryCarousel(
+                                    snapshot.data['latestOffers'],
+                                    'Neuste',
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  DiscoveryCarousel(
+                                    snapshot.data['bestLessors'],
+                                    'Beste Vermieter',
+                                  ),
+                                ],
+                              );
+                            }
+                            return Expanded(
+                              child: Center(
+                                child: CircularProgressIndicator(
+                                  strokeWidth: 2,
                                 ),
-                                SizedBox(height: 20.0),
-                                DiscoveryCarousel(
-                                  snapshot.data['latestOffers'],
-                                  'Neuste',
-                                ),
-                                SizedBox(height: 20.0),
-                                DiscoveryCarousel(
-                                  snapshot.data['bestLessors'],
-                                  'Beste Vermieter',
-                                ),
-                              ],
-                            );
-                          }
-                          return Expanded(
-                            child: Center(
-                              child: CircularProgressIndicator(
-                                strokeWidth: 2,
                               ),
-                            ),
-                          );
-                        },
-                      ),
-                    ],
+                            );
+                          },
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),

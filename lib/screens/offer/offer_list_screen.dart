@@ -5,18 +5,35 @@ import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/offer/offer_screen.dart';
+import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
 import 'package:rent/widgets/offer/offer_card.dart';
 
-class ProductListScreen extends StatefulWidget {
+class ProductListScreen extends StatelessWidget {
   final Category category;
 
-  const ProductListScreen({this.category});
+  ProductListScreen({this.category});
 
   @override
-  _ProductListScreenState createState() => _ProductListScreenState();
+  Widget build(BuildContext context) {
+    return StandardSliverAppBarList(
+      title: category.name,
+      bodyWidget: ProductListBody(
+        category: category,
+      ),
+    );
+  }
 }
 
-class _ProductListScreenState extends State<ProductListScreen> {
+class ProductListBody extends StatefulWidget {
+  final Category category;
+
+  ProductListBody({this.category});
+
+  @override
+  _ProductListBodyState createState() => _ProductListBodyState();
+}
+
+class _ProductListBodyState extends State<ProductListBody> {
   Future<List<Offer>> offerList;
   User user;
 
@@ -30,39 +47,41 @@ class _ProductListScreenState extends State<ProductListScreen> {
         postCode: user.postCode, category: widget.category.categoryId);
   }
 
+  List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {
+    List<Widget> _offerList = List<Widget>();
+    for (Offer offer in offerList) {
+      _offerList.add(
+        GestureDetector(
+          onTap: () => pushNewScreen(
+            context,
+            screen: OfferScreen(
+              offer: offer,
+              heroTag: offer.offerId + offer.category.name,
+            ),
+            withNavBar: false,
+          ),
+          child: OfferCard(offer: offer, heroTag: offer.category.name),
+        ),
+      );
+    }
+    return _offerList;
+  }
+
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text(widget.category.name),
-      ),
-      body: FutureBuilder<List<Offer>>(
-        future: offerList,
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) {
-                Offer offer = snapshot.data[index];
-                return GestureDetector(
-                  onTap: () => pushNewScreen(
-                    context,
-                    screen: OfferScreen(
-                      offer: offer,
-                      heroTag: offer.offerId + offer.category.name,
-                    ),
-                    withNavBar: false,
-                  ),
-                  child: OfferCard(offer: offer, heroTag: offer.category.name),
-                );
-              },
-            );
-          }
-          return Center(
-            child: CircularProgressIndicator(),
+    return FutureBuilder<List<Offer>>(
+      future: offerList,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return Column(
+            children:
+                _getWidgetList(context: context, offerList: snapshot.data),
           );
-        },
-      ),
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
