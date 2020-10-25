@@ -5,8 +5,8 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/blocs/authentication/authentication.dart';
 import 'package:rent/models/profile_options_model.dart';
 import 'package:rent/screens/404.dart';
-import 'package:rent/screens/account/settings/personal_info.dart';
-import 'package:rent/screens/account/settings/settings.dart';
+import 'package:rent/screens/account/settings/personal_info_screen.dart';
+import 'package:rent/screens/account/settings/settings_screen.dart';
 import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class AccountSettingsScreen extends StatelessWidget {
@@ -23,7 +23,7 @@ class _AccountSettingsBody extends StatelessWidget {
   final routes = {
     'personalInfo': PersonalInfoScreen(),
     'paymentInfo': PageNotFound(),
-    'settings': AppSettings(),
+    'settings': AppSettingsScreen(),
     'logout': PageNotFound(),
   };
 

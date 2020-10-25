@@ -13,7 +13,7 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:rent/logic/blocs/user/bloc/user_bloc.dart';
 import 'package:rent/logic/models/user/user.dart';
-import 'package:rent/screens/account/settings/update_password.dart';
+import 'package:rent/screens/account/settings/update_password_screen.dart';
 import 'package:rent/widgets/camera/image_source.dart';
 import 'package:rent/widgets/flushbar_styled.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
@@ -80,10 +80,6 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
   void dispose() {
     timer?.cancel();
     super.dispose();
-  }
-
-  void _updatePassword() {
-    pushNewScreen(context, screen: UpdatePasswordScreen(), withNavBar: true);
   }
 
   void _selectImageSource({BuildContext parentContext}) async {
@@ -350,9 +346,6 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 10.0,
-                    ),
                     Row(
                       children: [
                         Expanded(
@@ -535,7 +528,11 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                             side:
                                 BorderSide(color: Colors.purple, width: 1.75)),
                         child: Text('Passwort ändern'),
-                        onPressed: () => _updatePassword(),
+                        onPressed: () => pushNewScreen(
+                          context,
+                          screen: UpdatePasswordScreen(),
+                        ),
+                        // _updatePassword(),
                       ),
                     ),
                   ],
