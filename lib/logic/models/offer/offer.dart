@@ -12,7 +12,7 @@ class Offer {
   double price;
   Category category;
   List<String> pictureLinks;
-  Lessor lessor;
+  User lessor;
   List<DateRange> blockedDates;
 
   Offer(

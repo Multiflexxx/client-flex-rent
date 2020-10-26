@@ -6,10 +6,12 @@ part 'date_range.g.dart';
 class DateRange extends Equatable {
   final DateTime fromDate;
   final DateTime toDate;
+  final bool blockedByLessor;
 
   DateRange({
     this.fromDate,
     this.toDate,
+    this.blockedByLessor,
   });
 
   factory DateRange.fromJson(Map<String, dynamic> json) =>
@@ -17,5 +19,5 @@ class DateRange extends Equatable {
   Map<String, dynamic> toJson() => _$DateRangeToJson(this);
 
   @override
-  List<Object> get props => [fromDate, toDate];
+  List<Object> get props => [fromDate, toDate, blockedByLessor];
 }

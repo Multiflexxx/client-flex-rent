@@ -14,6 +14,7 @@ DateRange _$DateRangeFromJson(Map<String, dynamic> json) {
     toDate: json['to_date'] == null
         ? null
         : DateTime.parse(json['to_date'] as String),
+    blockedByLessor: json['blocked_by_lessor'] as bool,
   );
 }
 
@@ -28,5 +29,6 @@ Map<String, dynamic> _$DateRangeToJson(DateRange instance) {
 
   writeNotNull('from_date', instance.fromDate?.toIso8601String());
   writeNotNull('to_date', instance.toDate?.toIso8601String());
+  writeNotNull('blocked_by_lessor', instance.blockedByLessor);
   return val;
 }

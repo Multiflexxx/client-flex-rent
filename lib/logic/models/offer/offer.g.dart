@@ -21,7 +21,7 @@ Offer _$OfferFromJson(Map<String, dynamic> json) {
         (json['picture_links'] as List)?.map((e) => e as String)?.toList(),
     lessor: json['lessor'] == null
         ? null
-        : Lessor.fromJson(json['lessor'] as Map<String, dynamic>),
+        : User.fromJson(json['lessor'] as Map<String, dynamic>),
     blockedDates: (json['blocked_dates'] as List)
         ?.map((e) =>
             e == null ? null : DateRange.fromJson(e as Map<String, dynamic>))

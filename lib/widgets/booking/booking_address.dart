@@ -17,7 +17,7 @@ class BookingAddress extends StatefulWidget {
 
 class _BookingAddressState extends State<BookingAddress> {
   Completer<GoogleMapController> _controller = Completer();
-  CameraPosition _cameraPosition;
+  static LatLng _initialPosition;
   Set<Marker> _markers = {};
 
   @override
@@ -27,17 +27,15 @@ class _BookingAddressState extends State<BookingAddress> {
   }
 
   void getCurrentPosition() async {
+    String address =
+        '${widget.offerRequest.offer.lessor.street} ${widget.offerRequest.offer.lessor.houseNumber}, ${widget.offerRequest.offer.lessor.postCode}';
+
     List<Location> locations =
-        await locationFromAddress("68165", localeIdentifier: 'de_DE');
-
+        await locationFromAddress(address, localeIdentifier: 'de_DE');
     LatLng _latlng = LatLng(locations[0].latitude, locations[0].longitude);
-
     setState(
       () {
-        _cameraPosition = CameraPosition(
-          target: _latlng,
-          zoom: 17.0,
-        );
+        _initialPosition = _latlng;
         _markers.add(
           Marker(
             draggable: false,
@@ -114,7 +112,7 @@ class _BookingAddressState extends State<BookingAddress> {
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
                           Text(
-                            'Schwetzingerstraße 140',
+                            '${widget.offerRequest.offer.lessor.street} ${widget.offerRequest.offer.lessor.houseNumber}',
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 18.0,
@@ -146,28 +144,40 @@ class _BookingAddressState extends State<BookingAddress> {
                 ),
               ],
             ),
-            Container(
-              width: double.infinity,
-              height: 200,
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(20.0),
-                child: GoogleMap(
-                  zoomGesturesEnabled: false,
-                  compassEnabled: false,
-                  rotateGesturesEnabled: false,
-                  scrollGesturesEnabled: false,
-                  tiltGesturesEnabled: false,
-                  zoomControlsEnabled: false,
-                  mapToolbarEnabled: false,
-                  mapType: MapType.normal,
-                  initialCameraPosition: _cameraPosition,
-                  markers: _markers,
-                  onMapCreated: (GoogleMapController controller) {
-                    _controller.complete(controller);
-                  },
-                ),
-              ),
-            ),
+            _initialPosition == null
+                ? Center(
+                    child: Text(
+                      'loading map..',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                  )
+                : Container(
+                    width: double.infinity,
+                    height: 0.25 * MediaQuery.of(context).size.height,
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20.0),
+                      child: GoogleMap(
+                        zoomGesturesEnabled: false,
+                        compassEnabled: false,
+                        rotateGesturesEnabled: false,
+                        scrollGesturesEnabled: false,
+                        tiltGesturesEnabled: false,
+                        zoomControlsEnabled: false,
+                        mapToolbarEnabled: false,
+                        mapType: MapType.normal,
+                        initialCameraPosition: CameraPosition(
+                          target: _initialPosition,
+                          zoom: 17.0,
+                        ),
+                        markers: _markers,
+                        onMapCreated: (GoogleMapController controller) {
+                          _controller.complete(controller);
+                        },
+                      ),
+                    ),
+                  ),
           ],
         ),
       ),
