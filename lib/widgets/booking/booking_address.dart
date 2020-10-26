@@ -5,7 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:map_launcher/map_launcher.dart' as MapLauncher;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/logic/models/offer_request/offer_request.dart';
+import 'package:rent/widgets/slide_bar.dart';
 
 class BookingAddress extends StatefulWidget {
   final OfferRequest offerRequest;
@@ -50,6 +53,61 @@ class _BookingAddressState extends State<BookingAddress> {
     );
   }
 
+  openMapsSheet({BuildContext context}) async {
+    try {
+      final coords = MapLauncher.Coords(
+          _markers.first.position.latitude, _markers.first.position.longitude);
+      final availableMaps = await MapLauncher.MapLauncher.installedMaps;
+
+      showCupertinoModalBottomSheet(
+        expand: false,
+        useRootNavigator: true,
+        context: context,
+        barrierColor: Colors.black45,
+        builder: (context, scrollController) => Container(
+          child: Wrap(
+            children: <Widget>[
+              for (var map in availableMaps)
+                Material(
+                  color: Color(0xFF202020),
+                  child: SafeArea(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        SlideBar(),
+                        ListTile(
+                          onTap: () => map.showDirections(
+                            destination: coords,
+                          ),
+                          title: Text(
+                            map.mapName,
+                            style: TextStyle(
+                              color: Colors.white,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
+                          leading: Image(
+                            image: map.icon,
+                            height: 30.0,
+                            width: 30.0,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.0,
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+            ],
+          ),
+        ),
+      );
+    } catch (e) {
+      print(e);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -85,23 +143,26 @@ class _BookingAddressState extends State<BookingAddress> {
               children: [
                 Flexible(
                   flex: 1,
-                  child: Column(
-                    children: [
-                      Icon(
-                        Feather.map,
-                        size: 24.0,
-                        color: Colors.white,
-                      ),
-                      Text(
-                        'Zur Karte',
-                        style: TextStyle(
+                  child: GestureDetector(
+                    onTap: () => openMapsSheet(context: context),
+                    child: Column(
+                      children: [
+                        Icon(
+                          Feather.map,
+                          size: 24.0,
                           color: Colors.white,
-                          fontSize: 18.0,
-                          height: 1.0,
-                          fontWeight: FontWeight.w300,
                         ),
-                      ),
-                    ],
+                        Text(
+                          'Zur Karte',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18.0,
+                            height: 1.0,
+                            fontWeight: FontWeight.w300,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 Flexible(
@@ -143,6 +204,9 @@ class _BookingAddressState extends State<BookingAddress> {
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 10.0,
             ),
             _initialPosition == null
                 ? Center(

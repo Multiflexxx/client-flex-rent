@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 import 'package:rent/logic/models/offer_request/offer_request.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
@@ -75,22 +76,6 @@ class BookingOverview extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 20),
-            // offerRequest.statusId == 2 ? SizedBox(height: 20) : Container(),
-            // (offerRequest.statusId == 2 && true) ||
-            //         (offerRequest.statusId == 4 && false)
-            //     ? Container(
-            //         decoration: new BoxDecoration(
-            //           color: Colors.white,
-            //           borderRadius: BorderRadius.circular(10.0),
-            //         ),
-            //         child: QrImage(
-            //           data: offerRequest.qrCode,
-            //           version: QrVersions.auto,
-            //           size: 200.0,
-            //         ),
-            //       )
-            //     : Container(),
           ],
         ),
       ),

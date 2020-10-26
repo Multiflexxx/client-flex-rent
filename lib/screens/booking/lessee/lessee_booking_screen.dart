@@ -9,15 +9,31 @@ import 'package:rent/widgets/booking/booking_info.dart';
 import 'package:rent/widgets/booking/booking_overview.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:rent/widgets/flushbar_styled.dart';
+import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
 
-class LeseeBookingScreen extends StatefulWidget {
+class LeseeBookingScreen extends StatelessWidget {
   final OfferRequest offerRequest;
+
   LeseeBookingScreen({this.offerRequest});
   @override
-  _LeseeBookingScreenState createState() => _LeseeBookingScreenState();
+  Widget build(BuildContext context) {
+    return StandardSliverAppBarList(
+      title: offerRequest.offer.title,
+      bodyWidget: LeseeBookingBody(
+        offerRequest: offerRequest,
+      ),
+    );
+  }
 }
 
-class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
+class LeseeBookingBody extends StatefulWidget {
+  final OfferRequest offerRequest;
+  LeseeBookingBody({this.offerRequest});
+  @override
+  _LeseeBookingBodyState createState() => _LeseeBookingBodyState();
+}
+
+class _LeseeBookingBodyState extends State<LeseeBookingBody> {
   Future<OfferRequest> offerRequest;
 
   @override
@@ -51,40 +67,59 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text('${widget.offerRequest.offer.title}')),
-      body: SafeArea(
-        child: FutureBuilder(
-          future: offerRequest,
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              OfferRequest _offerRequest = snapshot.data;
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  BookingInfo(
-                    offerRequest: _offerRequest,
-                  ),
-                  BookingOverview(
-                    offerRequest: _offerRequest,
-                  ),
-                  _offerRequest.statusId == 2 || _offerRequest.statusId == 4
-                      ? BookingAddress(offerRequest: _offerRequest)
-                      : Container(),
-                  _offerRequest.statusId == 2
+    return FutureBuilder(
+      future: offerRequest,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          OfferRequest _offerRequest = snapshot.data;
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              BookingInfo(
+                offerRequest: _offerRequest,
+              ),
+              BookingOverview(
+                offerRequest: _offerRequest,
+              ),
+              _offerRequest.statusId == 2
+                  ? Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: GestureDetector(
+                        onTap: () => _offerRequest.qrCodeId != ''
+                            ? pushNewScreen(
+                                context,
+                                screen: QrCodeScreen(
+                                  offerRequest: _offerRequest,
+                                ),
+                              )
+                            : showFlushbar(
+                                context: context,
+                                message: 'QR Code nicht verfügbar!'),
+                        child: Container(
+                          padding: const EdgeInsets.all(10.0),
+                          height: 50.0,
+                          decoration: BoxDecoration(
+                              color: Colors.purple,
+                              borderRadius: BorderRadius.circular(10.0)),
+                          child: Center(
+                            child: Text(
+                              'QR Code anzeigen',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20.0,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    )
+                  : _offerRequest.statusId == 4
                       ? Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: GestureDetector(
-                            onTap: () => _offerRequest.qrCodeId != ''
-                                ? pushNewScreen(
-                                    context,
-                                    screen: QrCodeScreen(
-                                      offerRequest: _offerRequest,
-                                    ),
-                                  )
-                                : showFlushbar(
-                                    context: context,
-                                    message: 'QR Code nicht verfügbar!'),
+                            onTap: () =>
+                                _scanQrCode(updateOfferRequest: _offerRequest),
                             child: Container(
                               padding: const EdgeInsets.all(10.0),
                               height: 50.0,
@@ -93,7 +128,7 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
                                   borderRadius: BorderRadius.circular(10.0)),
                               child: Center(
                                 child: Text(
-                                  'QR Code anzeigen',
+                                  'QR Code scannen',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 20.0,
@@ -104,40 +139,18 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
                             ),
                           ),
                         )
-                      : _offerRequest.statusId == 4
-                          ? Padding(
-                              padding: const EdgeInsets.all(20.0),
-                              child: GestureDetector(
-                                onTap: () => _scanQrCode(
-                                    updateOfferRequest: _offerRequest),
-                                child: Container(
-                                  padding: const EdgeInsets.all(10.0),
-                                  height: 50.0,
-                                  decoration: BoxDecoration(
-                                      color: Colors.purple,
-                                      borderRadius:
-                                          BorderRadius.circular(10.0)),
-                                  child: Center(
-                                    child: Text(
-                                      'QR Code scannen',
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.w300,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            )
-                          : Container(),
-                ],
-              );
-            }
-            return Center(child: CircularProgressIndicator());
-          },
-        ),
-      ),
+                      : Container(),
+              _offerRequest.statusId == 2 || _offerRequest.statusId == 4
+                  ? BookingAddress(offerRequest: _offerRequest)
+                  : Container(),
+              SizedBox(
+                height: 75.0,
+              ),
+            ],
+          );
+        }
+        return Center(child: CircularProgressIndicator());
+      },
     );
   }
 }
