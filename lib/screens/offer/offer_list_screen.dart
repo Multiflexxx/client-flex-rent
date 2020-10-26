@@ -72,14 +72,56 @@ class _ProductListBodyState extends State<ProductListBody> {
     return FutureBuilder<List<Offer>>(
       future: offerList,
       builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: CircularProgressIndicator(),
+          );
+        }
         if (snapshot.hasData) {
           return Column(
             children:
                 _getWidgetList(context: context, offerList: snapshot.data),
           );
         }
-        return Center(
-          child: CircularProgressIndicator(),
+        return Container(
+          margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+          decoration: new BoxDecoration(
+            color: Color(0xFF202020),
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: RichText(
+            text: TextSpan(
+              text: 'Für die Kategorie ',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18.0,
+                height: 1.35,
+                fontWeight: FontWeight.w300,
+              ),
+              children: <TextSpan>[
+                TextSpan(
+                  text: widget.category.name,
+                  style: TextStyle(
+                    color: Colors.purple,
+                    fontSize: 18.0,
+                    height: 1.35,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                TextSpan(
+                  text: ' sind noch keine Mietgegenstände eingestellt worden.',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    height: 1.35,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
+          ),
         );
       },
     );

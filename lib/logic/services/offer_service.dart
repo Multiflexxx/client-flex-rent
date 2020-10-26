@@ -16,8 +16,9 @@ abstract class OfferService {
   Future<Offer> updateOffer();
   Future<List<Offer>> getOfferbyUser();
   void addImage();
-  List<String> getSuggestion();
+  Future<List<dynamic>> getSuggestion();
   void setSuggestion();
+  void deleteSuggestion();
   Future<OfferRequest> bookOffer();
   Future<List<OfferRequest>> getAllOfferRequestsbyStatusCode();
   Future<OfferRequest> getOfferRequestbyRequest();
@@ -79,6 +80,7 @@ class ApiOfferService extends OfferService {
 
     final Map<String, dynamic> jsonBody = json.decode(response.body);
     Offer offer = Offer.fromJson(jsonBody);
+    inspect(jsonBody);
     return offer;
   }
 
@@ -231,20 +233,42 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  List<String> getSuggestion() {
-    var suggestions = _storage.read(key: 'suggestions');
-    final _suggestedList = [
-      'Test',
-      'Title',
-      'Teufel',
-    ];
-    return _suggestedList;
+  Future<List<dynamic>> getSuggestion() async {
+    var suggestions = await _storage.read(key: 'suggestions');
+    List<dynamic> _suggestionsList = List<String>();
+    if (suggestions != null) {
+      _suggestionsList = jsonDecode(suggestions);
+    } else {
+      _suggestionsList = [
+        'Box',
+        'Taschenrechner',
+        'Controller',
+      ];
+    }
+    return _suggestionsList;
   }
 
   @override
-  void setSuggestion({String query}) {
-    var suggestions = _storage.read(key: 'suggestions');
-    // _storage.write(key: 'suggestions', value: null);
+  void setSuggestion({String query}) async {
+    var suggestions = await _storage.read(key: 'suggestions');
+    List<dynamic> _suggestionsList = List<dynamic>();
+    if (suggestions == null) {
+      _suggestionsList.add(query);
+    } else {
+      _suggestionsList = jsonDecode(suggestions);
+      if (!_suggestionsList.contains(query)) {
+        if (_suggestionsList.length == 5) {
+          _suggestionsList.removeAt(0);
+        }
+        _suggestionsList.add(query);
+      }
+    }
+    _storage.write(key: 'suggestions', value: jsonEncode(_suggestionsList));
+  }
+
+  @override
+  void deleteSuggestion() {
+    _storage.deleteAll();
   }
 
   @override

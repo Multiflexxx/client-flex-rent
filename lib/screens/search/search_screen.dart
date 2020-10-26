@@ -20,7 +20,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   User user;
   Future<List<Offer>> _searchOfferList;
-  List<String> _suggestedList = ApiOfferService().getSuggestion();
+  List<dynamic> _suggestedList = List<String>();
 
   @override
   void initState() {
@@ -28,10 +28,22 @@ class _SearchScreenState extends State<SearchScreen> {
     final state = BlocProvider.of<AuthenticationBloc>(context).state
         as AuthenticationAuthenticated;
     user = state.user;
+    getSuggestions();
+  }
+
+  void getSuggestions() async {
+    _suggestedList = await ApiOfferService().getSuggestion();
+  }
+
+  void deleteSuggestions() {
+    ApiOfferService().deleteSuggestion();
+    setState(() {
+      getSuggestions();
+    });
   }
 
   void initiateSearch(String query) {
-    if (query.length > 3) {
+    if (query.length > 2) {
       _searchOfferList = ApiOfferService()
           .getAllOffers(postCode: user.postCode, search: query, limit: 3);
       ApiOfferService().setSuggestion(query: query);
@@ -86,6 +98,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             color: Colors.white70,
                             onPressed: () {
                               setState(() {
+                                getSuggestions();
                                 _searchController.clear();
                                 _searchOfferList = Future.value();
                               });
@@ -157,9 +170,14 @@ class _SearchScreenState extends State<SearchScreen> {
                         ),
                         Expanded(
                           child: ListView.builder(
-                            itemCount: _suggestedList.length,
+                            itemCount: _suggestedList.length + 1,
                             itemBuilder: (context, index) {
-                              return buildSuggestion(_suggestedList[index]);
+                              if (index == 0) {
+                                return _buildDeleteSuggestion();
+                              } else {
+                                return _buildSuggestion(
+                                    _suggestedList[index - 1]);
+                              }
                             },
                           ),
                         ),
@@ -175,7 +193,40 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 
-  Widget buildSuggestion(query) {
+// deleteSuggestions()
+
+  Widget _buildDeleteSuggestion() {
+    return Padding(
+      padding: EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Letzte Suchen',
+            style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w300,
+                color: Colors.white,
+                letterSpacing: 1.2),
+          ),
+          GestureDetector(
+            onTap: () => deleteSuggestions(),
+            child: Text(
+              'Löschen',
+              style: TextStyle(
+                color: Colors.purple,
+                fontSize: 16.0,
+                fontWeight: FontWeight.w300,
+                letterSpacing: 1.2,
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildSuggestion(query) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -199,13 +250,13 @@ class _SearchScreenState extends State<SearchScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.only(left: 16.0),
+                padding: EdgeInsets.only(left: 16.0),
                 child: Text(
                   query,
                   style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w300,
-                      color: Colors.white70,
+                      color: Colors.white,
                       letterSpacing: 1.2),
                 ),
               ),

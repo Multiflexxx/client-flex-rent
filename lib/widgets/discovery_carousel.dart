@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -107,13 +108,18 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                     SizedBox(
                                       width: 5.0,
                                     ),
-                                    Text(
-                                      offer.category.name,
-                                      style: TextStyle(
-                                        color: Colors.purple,
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 1.2,
+                                    Flexible(
+                                      child: AutoSizeText(
+                                        offer.category.name,
+                                        style: TextStyle(
+                                          color: Colors.purple,
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.2,
+                                        ),
+                                        maxLines: 1,
+                                        minFontSize: 16.0,
+                                        overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
                                   ],

@@ -75,12 +75,6 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           child: SvgPicture.network(
                                             category.pictureLink,
                                             color: Colors.purple,
-                                            placeholderBuilder:
-                                                (BuildContext context) =>
-                                                    Container(
-                                              child:
-                                                  const CircularProgressIndicator(),
-                                            ),
                                           ),
                                         ),
                                         SizedBox(
