@@ -61,8 +61,8 @@ class AppState extends State<App> {
       return PersistentBottomNavBarItem(
         icon: widget.icons[index],
         title: title,
-        activeColor: Colors.purple,
-        inactiveColor: Colors.grey,
+        activeColor: Theme.of(context).accentColor,
+        inactiveColor: Theme.of(context).primaryColor,
       );
     }).toList();
   }
@@ -74,7 +74,7 @@ class AppState extends State<App> {
       screens: _buildScreens(),
       items: _navBarsItems(),
       confineInSafeArea: true,
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).backgroundColor,
       handleAndroidBackButtonPress: true,
       resizeToAvoidBottomInset: true,
       stateManagement: true,

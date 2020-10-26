@@ -53,8 +53,24 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.black,
         accentColor: Colors.purple,
+        backgroundColor: Color(0xFFF2F2F2),
+        cardColor: Color(0xFFDDDDDD),
+        iconTheme: IconThemeData(color: Colors.black),
+        textTheme: TextTheme(
+          bodyText2: TextStyle(color: Colors.black),
+        ),
+        scaffoldBackgroundColor: Color(0xFFF2F2F2),
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
+      darkTheme: ThemeData(
+        primaryColor: Colors.white,
+        accentColor: Colors.purple,
         backgroundColor: Colors.black,
-        textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
+        cardColor: Color(0xFF202020),
+        iconTheme: IconThemeData(color: Colors.white),
+        textTheme: TextTheme(
+          bodyText2: TextStyle(color: Colors.white),
+        ),
         scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),

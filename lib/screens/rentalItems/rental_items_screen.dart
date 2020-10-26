@@ -65,6 +65,7 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                   title: Text(
                     'Mietgegenstände',
                     style: TextStyle(
+                      color: Theme.of(context).primaryColor,
                       fontSize: 21.0,
                       letterSpacing: 1.2,
                     ),
@@ -84,7 +85,10 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                           (String name) => Tab(
                             child: Text(
                               name,
-                              style: TextStyle(fontSize: 18.0),
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 18.0,
+                              ),
                             ),
                           ),
                         )

@@ -28,11 +28,11 @@ class StandardSliverAppBarList extends StatelessWidget {
               leading: IconButton(
                 icon: Icon(Feather.arrow_left),
                 iconSize: 30.0,
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 onPressed: () => Navigator.pop(context),
               ),
               expandedHeight: 0.3 * MediaQuery.of(context).size.height,
-              backgroundColor: Colors.black,
+              backgroundColor: Theme.of(context).backgroundColor,
               flexibleSpace: FlexibleSpaceBar(
                 stretchModes: <StretchMode>[
                   StretchMode.zoomBackground,
@@ -50,10 +50,10 @@ class StandardSliverAppBarList extends StatelessWidget {
                         Text(
                           title,
                           style: TextStyle(
-                            color: Colors.white,
                             fontSize: 21.0,
                             fontWeight: FontWeight.w500,
                             letterSpacing: 1.2,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                       ],

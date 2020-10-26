@@ -64,9 +64,10 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                 sliver: SliverSafeArea(
                   top: false,
                   sliver: SliverAppBar(
-                    title: const Text(
+                    title: Text(
                       'Vermietgegenstände',
                       style: TextStyle(
+                        color: Theme.of(context).primaryColor,
                         fontSize: 21.0,
                         letterSpacing: 1.2,
                       ),
@@ -86,7 +87,10 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                             (String name) => Tab(
                               child: Text(
                                 name,
-                                style: TextStyle(fontSize: 18.0),
+                                style: TextStyle(
+                                  color: Theme.of(context).primaryColor,
+                                  fontSize: 18.0,
+                                ),
                               ),
                             ),
                           )

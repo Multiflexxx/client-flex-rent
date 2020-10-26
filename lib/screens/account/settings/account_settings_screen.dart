@@ -62,7 +62,7 @@ class _AccountSettingsBody extends StatelessWidget {
         margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
         padding: EdgeInsets.symmetric(vertical: 8.0),
         decoration: new BoxDecoration(
-          color: Color(0xFF202020),
+          color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(20.0),
         ),
         child: Padding(
@@ -75,7 +75,7 @@ class _AccountSettingsBody extends StatelessWidget {
                   Icon(
                     profileOption.icon,
                     size: 25.0,
-                    color: Colors.purple,
+                    color: Theme.of(context).accentColor,
                   ),
                   SizedBox(
                     width: 25.0,
@@ -83,7 +83,6 @@ class _AccountSettingsBody extends StatelessWidget {
                   Text(
                     profileOption.name,
                     style: TextStyle(
-                      color: Colors.white,
                       fontSize: 21.0,
                       fontWeight: FontWeight.w300,
                       letterSpacing: 1.2,
@@ -94,7 +93,6 @@ class _AccountSettingsBody extends StatelessWidget {
               Icon(
                 Ionicons.ios_arrow_forward,
                 size: 25.0,
-                color: Colors.white,
               ),
             ],
           ),
