@@ -246,29 +246,6 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                 ),
               ),
             ),
-
-            // Padding(
-            //   padding: const EdgeInsets.all(16.0),
-            //   child: GestureDetector(
-            //     onTap: () => _bookOffer(),
-            //     child: Container(
-            //       height: 50.0,
-            //       decoration: BoxDecoration(
-            //           color: Colors.purple,
-            //           borderRadius: BorderRadius.circular(10.0)),
-            //       child: Center(
-            //         child: Text(
-            //           'Bestätigen & Reservieren',
-            //           style: TextStyle(
-            //             color: Colors.white,
-            //             fontSize: 20.0,
-            //             fontWeight: FontWeight.w300,
-            //           ),
-            //         ),
-            //       ),
-            //     ),
-            //   ),
-            // ),
           ],
         ),
       ),
