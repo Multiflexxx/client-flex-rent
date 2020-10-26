@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
                     children: <Widget>[
                       Text(state.message),
                       FlatButton(
-                        textColor: Theme.of(context).primaryColor,
+                        textColor: Theme.of(context).accentColor,
                         child: Text('Retry'),
                         onPressed: () {
                           BlocProvider.of<AuthenticationBloc>(context)

@@ -55,7 +55,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
         width: 60.0,
         decoration: BoxDecoration(
           color: _selectedIndex == index
-              ? Theme.of(context).primaryColor
+              ? Theme.of(context).accentColor
               : Colors.black,
           borderRadius: BorderRadius.circular(30.0),
         ),
@@ -64,7 +64,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
           size: 25.0,
           color: _selectedIndex == index
               ? Colors.white
-              : Theme.of(context).primaryColor,
+              : Theme.of(context).accentColor,
         ),
       ),
     );

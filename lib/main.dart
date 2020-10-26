@@ -51,8 +51,9 @@ class MyApp extends StatelessWidget {
       title: 'Flex Rent',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primaryColor: Colors.purple,
-        accentColor: Color(0xFFD8ECF1),
+        primaryColor: Colors.black,
+        accentColor: Colors.purple,
+        backgroundColor: Colors.black,
         textTheme: TextTheme(bodyText2: TextStyle(color: Colors.white)),
         scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,

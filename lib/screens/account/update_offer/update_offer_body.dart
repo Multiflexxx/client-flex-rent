@@ -305,7 +305,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                 SizedBox(
                   width: double.infinity,
                   child: RaisedButton(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                     textColor: Colors.white,
                     padding: const EdgeInsets.all(16),
                     shape: new RoundedRectangleBorder(

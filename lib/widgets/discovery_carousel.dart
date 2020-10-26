@@ -39,7 +39,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                 child: Text(
                   'See all',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).accentColor,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                   ),

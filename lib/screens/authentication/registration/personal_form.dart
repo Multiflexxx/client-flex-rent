@@ -284,7 +284,7 @@ class _PersonalFormState extends State<PersonalForm> {
                       height: 10,
                     ),
                     RaisedButton(
-                      color: Theme.of(context).primaryColor,
+                      color: Theme.of(context).accentColor,
                       textColor: Colors.white,
                       padding: const EdgeInsets.all(16),
                       shape: new RoundedRectangleBorder(
