@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
@@ -35,12 +37,27 @@ class LeseeBookingBody extends StatefulWidget {
 
 class _LeseeBookingBodyState extends State<LeseeBookingBody> {
   Future<OfferRequest> offerRequest;
+  Timer timer;
 
   @override
   void initState() {
-    offerRequest = ApiOfferService()
-        .getOfferRequestbyRequest(offerRequest: widget.offerRequest);
     super.initState();
+    _getOfferRequestUpdate();
+    timer = Timer.periodic(
+        Duration(seconds: 3), (Timer t) => _getOfferRequestUpdate());
+  }
+
+  void _getOfferRequestUpdate() {
+    setState(() {
+      offerRequest = ApiOfferService()
+          .getOfferRequestbyRequest(offerRequest: widget.offerRequest);
+    });
+  }
+
+  @override
+  void dispose() {
+    timer?.cancel();
+    super.dispose();
   }
 
   void _scanQrCode({OfferRequest updateOfferRequest}) async {

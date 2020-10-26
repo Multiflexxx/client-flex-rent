@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
-import 'package:qr_flutter/qr_flutter.dart';
 import 'package:rent/logic/models/offer_request/offer_request.dart';
 import 'package:rent/widgets/price/price_tag.dart';
 
@@ -50,13 +49,14 @@ class BookingOverview extends StatelessWidget {
                       fontWeight: FontWeight.w300,
                     )),
                 Text(
-                    '${DateFormat('yMd', 'de').format(offerRequest.dateRange.fromDate)} - ${DateFormat('yMd', 'de').format(offerRequest.dateRange.toDate)}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      height: 1.0,
-                      fontWeight: FontWeight.w300,
-                    ))
+                  '${DateFormat('yMd', 'de').format(offerRequest.dateRange.fromDate)} - ${DateFormat('yMd', 'de').format(offerRequest.dateRange.toDate)}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 10),
@@ -74,6 +74,31 @@ class BookingOverview extends StatelessWidget {
                 PriceTag(
                   offerRequest.offer.price,
                 )
+              ],
+            ),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Vermieter',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                Text(
+                  '${offerRequest.offer.lessor.firstName} ${offerRequest.offer.lessor.lastName}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
               ],
             ),
           ],
