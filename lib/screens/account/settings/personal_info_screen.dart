@@ -150,8 +150,8 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
           children: [
             // Profile image
             Container(
-              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
               decoration: new BoxDecoration(
                 color: Color(0xFF202020),
                 borderRadius: BorderRadius.circular(20.0),
@@ -161,8 +161,8 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                   GestureDetector(
                     onTap: () => _selectImageSource(parentContext: context),
                     child: Container(
-                      width: 150,
-                      height: 150,
+                      width: 0.3 * MediaQuery.of(context).size.width,
+                      height: 0.3 * MediaQuery.of(context).size.width,
                       color: Colors.transparent,
                       child: Stack(
                         children: <Widget>[
@@ -213,120 +213,89 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                     width: 10.0,
                   ),
                   Expanded(
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: <Widget>[
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              'Vermieter',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.w300,
-                                letterSpacing: 1.2,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            'Mieterbewertung',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 1.2,
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          Row(
+                            children: [
+                              Text(
+                                '${_user.lessorRating} ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 1.2,
+                                ),
                               ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '${_user.lessorRating} ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 21.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
-                                ),
-                                Icon(
-                                  Feather.star,
-                                  color: Colors.purple,
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '${_user.numberOfLesseeRatings} ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 21.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
-                                ),
-                                Icon(
-                                  Feather.heart,
-                                  color: Colors.purple,
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: <Widget>[
-                            Text(
-                              'Mieter',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.w300,
-                                letterSpacing: 1.2,
+                              Icon(
+                                Feather.star,
+                                color: Colors.purple,
                               ),
-                            ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '${_user.lessorRating} ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 21.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
+                              SizedBox(
+                                width: 15.0,
+                              ),
+                              Text(
+                                '(${_user.numberOfLesseeRatings})',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w300,
+                                  letterSpacing: 1.2,
                                 ),
-                                Icon(
-                                  Feather.star,
-                                  color: Colors.purple,
-                                ),
-                              ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20.0),
+                          Text(
+                            'Vermieterbewertung',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w300,
+                              letterSpacing: 1.2,
                             ),
-                            SizedBox(
-                              height: 10.0,
-                            ),
-                            Row(
-                              children: [
-                                Text(
-                                  '${_user.numberOfLesseeRatings} ',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 21.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
+                          ),
+                          SizedBox(height: 10.0),
+                          Row(
+                            children: [
+                              Text(
+                                '${_user.lessorRating} ',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w500,
+                                  letterSpacing: 1.2,
                                 ),
-                                Icon(
-                                  Feather.heart,
-                                  color: Colors.purple,
+                              ),
+                              Icon(
+                                Feather.star,
+                                color: Colors.purple,
+                              ),
+                              SizedBox(
+                                width: 15.0,
+                              ),
+                              Text(
+                                '(${_user.numberOfLessorRatings})',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 18.0,
+                                  fontWeight: FontWeight.w300,
+                                  letterSpacing: 1.2,
                                 ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                              ),
+                            ],
+                          ),
+                        ]),
                   ),
                 ],
               ),
@@ -335,8 +304,8 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
               height: 15.0,
             ),
             Container(
-              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
               decoration: new BoxDecoration(
                 color: Color(0xFF202020),
                 borderRadius: BorderRadius.circular(20.0),
