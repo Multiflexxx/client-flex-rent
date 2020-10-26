@@ -70,7 +70,8 @@ class _PhoneFormState extends State<PhoneForm> {
                                         Theme.of(context).primaryColor),
                                 child: Checkbox(
                                   checkColor: Colors.purple,
-                                  activeColor: Colors.black,
+                                  activeColor:
+                                      Theme.of(context).backgroundColor,
                                   value: _agbCheckBox,
                                   onChanged: (bool value) {
                                     setState(() {

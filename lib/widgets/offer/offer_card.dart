@@ -99,7 +99,7 @@ class OfferCard extends StatelessWidget {
                   height: 200.0,
                   margin: EdgeInsets.fromLTRB(15.0, 0.0, 0, 0),
                   decoration: BoxDecoration(
-                    color: Colors.black,
+                    color: Theme.of(context).backgroundColor,
                     borderRadius: BorderRadius.circular(20.0),
                     boxShadow: [
                       BoxShadow(

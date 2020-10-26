@@ -131,7 +131,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                       ),
                       Container(
                         decoration: BoxDecoration(
-                          color: Colors.black,
+                          color: Theme.of(context).backgroundColor,
                           borderRadius: BorderRadius.circular(20.0),
                           boxShadow: [
                             BoxShadow(

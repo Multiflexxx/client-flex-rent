@@ -151,7 +151,8 @@ class _AddItemState extends State<AddItem> {
                                   width: double.infinity,
                                   child: DropdownButton<Category>(
                                     isExpanded: true,
-                                    dropdownColor: Colors.black,
+                                    dropdownColor:
+                                        Theme.of(context).backgroundColor,
                                     hint: Text(
                                       'Kategorie',
                                       style: TextStyle(
@@ -363,11 +364,11 @@ class _AddItemState extends State<AddItem> {
         return AlertDialog(
           title: new Text(
             "Fehler",
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Theme.of(context).backgroundColor),
           ),
           content: new Text(
             e.toString(),
-            style: TextStyle(color: Colors.black),
+            style: TextStyle(color: Theme.of(context).backgroundColor),
           ),
           actions: <Widget>[
             new FlatButton(

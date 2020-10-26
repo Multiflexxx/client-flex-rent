@@ -56,7 +56,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
         decoration: BoxDecoration(
           color: _selectedIndex == index
               ? Theme.of(context).accentColor
-              : Colors.black,
+              : Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(30.0),
         ),
         child: Icon(

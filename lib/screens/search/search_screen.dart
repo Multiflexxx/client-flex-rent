@@ -80,7 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   },
                   decoration: InputDecoration(
                     filled: true,
-                    fillColor: Colors.black,
+                    fillColor: Theme.of(context).backgroundColor,
                     hintStyle: TextStyle(color: Colors.white70),
                     hintText: "Suche",
                     contentPadding: EdgeInsets.symmetric(vertical: 0.0),

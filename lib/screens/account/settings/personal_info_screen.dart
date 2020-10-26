@@ -489,7 +489,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                     SizedBox(
                       width: double.infinity,
                       child: RaisedButton(
-                        color: Colors.black,
+                        color: Theme.of(context).backgroundColor,
                         textColor: Theme.of(context).primaryColor,
                         padding: const EdgeInsets.all(16),
                         shape: new RoundedRectangleBorder(

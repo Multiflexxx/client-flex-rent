@@ -162,7 +162,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                           height: 180,
                           width: 180,
                           decoration: BoxDecoration(
-                            color: Colors.black,
+                            color: Theme.of(context).backgroundColor,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Icon(
@@ -194,7 +194,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                               height: 180,
                               width: 180,
                               decoration: BoxDecoration(
-                                color: Colors.black,
+                                color: Theme.of(context).backgroundColor,
                                 borderRadius: BorderRadius.circular(10.0),
                               ),
                             ),
