@@ -50,6 +50,9 @@ dependencies:
   path: ^1.7.0
   image_picker: ^0.6.7+12
   google_maps_flutter: ^1.0.3
+  geolocator: ^6.1.1
+  geocoding: ^1.0.5
+  map_launcher: ^0.12.2
 
 
 dev_dependencies:

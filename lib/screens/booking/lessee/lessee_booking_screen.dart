@@ -68,7 +68,9 @@ class _LeseeBookingScreenState extends State<LeseeBookingScreen> {
                   BookingOverview(
                     offerRequest: _offerRequest,
                   ),
-                  BookingAddress(offerRequest: _offerRequest),
+                  _offerRequest.statusId == 2 || _offerRequest.statusId == 4
+                      ? BookingAddress(offerRequest: _offerRequest)
+                      : Container(),
                   _offerRequest.statusId == 2
                       ? Padding(
                           padding: const EdgeInsets.all(20.0),
