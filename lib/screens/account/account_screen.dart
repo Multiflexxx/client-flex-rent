@@ -101,19 +101,19 @@ class _AccountScreenState extends State<AccountScreen> {
                           letterSpacing: 1.2,
                         ),
                         maxLines: 2,
-                        minFontSize: 18.0,
+                        minFontSize: 16.0,
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    Flexible(
-                      flex: 1,
-                      child: !verified
-                          ? Icon(
+                    verified
+                        ? Flexible(
+                            flex: 1,
+                            child: Icon(
                               Feather.user_check,
                               color: Colors.purple,
-                            )
-                          : null,
-                    ),
+                            ),
+                          )
+                        : Container(),
                   ],
                 ),
                 Text(
