@@ -1,7 +1,6 @@
 import 'dart:developer';
 
 import 'package:cached_network_image/cached_network_image.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,6 +8,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/widgets/camera/image_source.dart';
+import 'package:rent/widgets/category/category_picker.dart';
 
 import 'package:rent/widgets/formfieldstyled.dart';
 
@@ -39,18 +39,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
   @override
   void initState() {
     super.initState();
-    getCategories();
     _offer = widget.offer;
     initFormValues();
-  }
-
-  void getCategories() async {
-    categoryList = await ApiOfferService().getAllCategory();
-    int categoryIndex = categoryList.indexWhere(
-        (element) => element.categoryId == widget.offer.category.categoryId);
-    setState(() {
-      _category = categoryList[categoryIndex];
-    });
   }
 
   void initFormValues() {
@@ -59,6 +49,24 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
     _titleController.text = _offer.title;
     _descritpionController.text = _offer.description;
     _priceController.text = _offer.price.toString();
+    _category = _offer.category;
+  }
+
+  void _selectCategory({BuildContext parentContext}) async {
+    final Category _selectedCategory = await showCupertinoModalBottomSheet(
+      expand: false,
+      useRootNavigator: true,
+      context: context,
+      barrierColor: Colors.black45,
+      builder: (context, scrollController) => CategoryPicker(
+        scrollController: scrollController,
+      ),
+    );
+    if (_selectedCategory != null) {
+      setState(() {
+        _category = _selectedCategory;
+      });
+    }
   }
 
   void _updateOffer() async {
@@ -240,37 +248,28 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   autocorrect: true,
                 ),
                 SizedBox(height: 16.0),
-                _category != null
-                    ? Container(
-                        width: double.infinity,
-                        child: DropdownButton<Category>(
-                          isExpanded: true,
-                          dropdownColor: Colors.black,
-                          value: _category,
-                          onChanged: (value) {
-                            setState(
-                              () {
-                                _category = value;
-                              },
-                            );
-                          },
-                          hint: Text(
-                            'Kategorie',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          items: categoryList.map<DropdownMenuItem<Category>>(
-                              (Category category) {
-                            return DropdownMenuItem<Category>(
-                              value: category,
-                              child: Text(
-                                category.name,
-                                style: TextStyle(color: Colors.white),
-                              ),
-                            );
-                          }).toList(),
-                        ),
-                      )
-                    : Container(),
+                SizedBox(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    color: Color(0xFF202020),
+                    textColor: Colors.white,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: Colors.white),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        _category.name,
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                    onPressed: () => _selectCategory(parentContext: context),
+                  ),
+                ),
                 SizedBox(height: 16.0),
                 FormFieldStyled(
                   controller: _descritpionController,

@@ -39,7 +39,6 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      
       initialValue: widget.initialValue,
       autocorrect: widget.autocorrect,
       keyboardType: widget.type,
@@ -47,7 +46,6 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
       style: TextStyle(color: Colors.white),
       maxLength: widget.length,
       decoration: InputDecoration(
-        
         counter: Offstage(),
         isDense: true,
         icon: widget.icon ?? null,
@@ -70,11 +68,11 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
         helperText: widget.helperText,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10.0),
-          
-          
         ),
         enabledBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.white,),
+          borderSide: BorderSide(
+            color: Colors.white,
+          ),
           borderRadius: BorderRadius.circular(10.0),
         ),
         errorBorder: OutlineInputBorder(

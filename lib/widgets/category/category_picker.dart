@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+import 'package:rent/logic/models/models.dart';
+import 'package:rent/logic/services/services.dart';
+import 'package:rent/widgets/slide_bar.dart';
+
+class CategoryPicker extends StatefulWidget {
+  final ScrollController scrollController;
+
+  CategoryPicker({this.scrollController});
+
+  @override
+  _CategoryPickerState createState() => _CategoryPickerState();
+}
+
+class _CategoryPickerState extends State<CategoryPicker> {
+  List<Category> categoryList;
+
+  @override
+  void initState() {
+    super.initState();
+    getCategories();
+  }
+
+  void getCategories() async {
+    List<Category> _categoryList = await ApiOfferService().getAllCategory();
+    setState(() {
+      categoryList = _categoryList;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Color(0xFF202020),
+      child: SafeArea(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: <Widget>[
+            SlideBar(),
+            categoryList != null
+                ? Flexible(
+                    child: ListView.builder(
+                        itemCount: categoryList.length,
+                        itemBuilder: (context, index) {
+                          Category _category = categoryList[index];
+                          return ListTile(
+                            title: Text(
+                              _category.name,
+                              style: TextStyle(
+                                color: Colors.white,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                            leading:
+                                // add SVG
+                                Icon(
+                              Icons.photo,
+                              color: Colors.white,
+                            ),
+                            onTap: () => Navigator.pop(context, _category),
+                          );
+                        }),
+                  )
+                : Container(
+                    child: Text('Warten auf Kategorien!'),
+                  ),
+          ],
+        ),
+      ),
+    );
+  }
+}
