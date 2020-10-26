@@ -49,13 +49,14 @@ class BookingOverview extends StatelessWidget {
                       fontWeight: FontWeight.w300,
                     )),
                 Text(
-                    '${DateFormat('yMd', 'de').format(offerRequest.dateRange.fromDate)} - ${DateFormat('yMd', 'de').format(offerRequest.dateRange.toDate)}',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                      height: 1.0,
-                      fontWeight: FontWeight.w300,
-                    ))
+                  '${DateFormat('yMd', 'de').format(offerRequest.dateRange.fromDate)} - ${DateFormat('yMd', 'de').format(offerRequest.dateRange.toDate)}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
               ],
             ),
             SizedBox(height: 10),
@@ -75,22 +76,31 @@ class BookingOverview extends StatelessWidget {
                 )
               ],
             ),
-            SizedBox(height: 20),
-            // offerRequest.statusId == 2 ? SizedBox(height: 20) : Container(),
-            // (offerRequest.statusId == 2 && true) ||
-            //         (offerRequest.statusId == 4 && false)
-            //     ? Container(
-            //         decoration: new BoxDecoration(
-            //           color: Colors.white,
-            //           borderRadius: BorderRadius.circular(10.0),
-            //         ),
-            //         child: QrImage(
-            //           data: offerRequest.qrCode,
-            //           version: QrVersions.auto,
-            //           size: 200.0,
-            //         ),
-            //       )
-            //     : Container(),
+            SizedBox(height: 10),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Vermieter',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                Text(
+                  '${offerRequest.offer.lessor.firstName} ${offerRequest.offer.lessor.lastName}',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

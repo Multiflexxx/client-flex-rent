@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -88,25 +89,42 @@ class _AccountScreenState extends State<AccountScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(
-                      '$name',
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                      maxLines: 2,
-                      overflow: TextOverflow.clip,
+                    Flexible(
+                      flex: 2,
+                      child: AutoSizeText(
+                        name,
+                        style: TextStyle(
+                          color: Colors.purple,
+                          fontSize: 20.0,
+                          letterSpacing: 1.2,
+                        ),
+                        maxLines: 2,
+                        minFontSize: 18.0,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 5.0),
-                      child: verified
+                    Flexible(
+                      flex: 1,
+                      child: !verified
                           ? Icon(
-                              Icons.verified_user,
+                              Feather.user_check,
                               color: Colors.purple,
                             )
                           : null,
                     ),
                   ],
                 ),
-                Text('$city')
+                Text(
+                  '$city',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16.0,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 1.2,
+                  ),
+                )
               ],
             ),
           ),

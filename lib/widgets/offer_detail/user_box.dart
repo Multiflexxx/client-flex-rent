@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:rent/logic/models/lessor/lessor.dart';
+import 'package:rent/logic/models/models.dart';
 
 class UserBox extends StatelessWidget {
-  final Lessor lessor;
+  final User lessor;
 
   UserBox({this.lessor});
 
