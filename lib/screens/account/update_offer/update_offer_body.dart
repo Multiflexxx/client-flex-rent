@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -6,6 +9,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/widgets/camera/image_source.dart';
+
 import 'package:rent/widgets/formfieldstyled.dart';
 
 class UpdateOfferBody extends StatefulWidget {
@@ -26,7 +30,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
   List<String> _imageList;
   List<String> _deleteImageList;
   Offer _offer;
-  Future<List<Category>> categoryList;
+  List<Category> categoryList;
 
   Category _category;
 
@@ -35,9 +39,18 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
   @override
   void initState() {
     super.initState();
-    categoryList = ApiOfferService().getAllCategory();
+    getCategories();
     _offer = widget.offer;
     initFormValues();
+  }
+
+  void getCategories() async {
+    categoryList = await ApiOfferService().getAllCategory();
+    int categoryIndex = categoryList.indexWhere(
+        (element) => element.categoryId == widget.offer.category.categoryId);
+    setState(() {
+      _category = categoryList[categoryIndex];
+    });
   }
 
   void initFormValues() {
@@ -227,11 +240,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   autocorrect: true,
                 ),
                 SizedBox(height: 16.0),
-                FutureBuilder<List<Category>>(
-                  future: categoryList,
-                  builder: (context, categories) {
-                    if (categories.hasData) {
-                      return SizedBox(
+                _category != null
+                    ? Container(
                         width: double.infinity,
                         child: DropdownButton<Category>(
                           isExpanded: true,
@@ -248,9 +258,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                             'Kategorie',
                             style: TextStyle(color: Colors.white),
                           ),
-                          items: categories.data
-                              .map<DropdownMenuItem<Category>>(
-                                  (Category category) {
+                          items: categoryList.map<DropdownMenuItem<Category>>(
+                              (Category category) {
                             return DropdownMenuItem<Category>(
                               value: category,
                               child: Text(
@@ -260,12 +269,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                             );
                           }).toList(),
                         ),
-                      );
-                    } else {
-                      return Center(child: CircularProgressIndicator());
-                    }
-                  },
-                ),
+                      )
+                    : Container(),
                 SizedBox(height: 16.0),
                 FormFieldStyled(
                   controller: _descritpionController,
