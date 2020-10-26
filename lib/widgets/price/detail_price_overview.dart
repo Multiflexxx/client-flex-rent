@@ -30,7 +30,7 @@ class DetailPriceOverview extends StatelessWidget {
                 '${currenyFormat.format(price)} € x ${_getRentDuration()} Tage',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                   letterSpacing: 1.2,
                 ),
@@ -39,7 +39,7 @@ class DetailPriceOverview extends StatelessWidget {
                 '${currenyFormat.format(price * _getRentDuration())} €',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                   letterSpacing: 1.2,
                 ),
@@ -56,7 +56,7 @@ class DetailPriceOverview extends StatelessWidget {
                 'Service-Gebühr',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                   letterSpacing: 1.2,
                 ),
@@ -65,7 +65,7 @@ class DetailPriceOverview extends StatelessWidget {
                 '${currenyFormat.format(price * 0.2)} €',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                   letterSpacing: 1.2,
                 ),
@@ -89,7 +89,7 @@ class DetailPriceOverview extends StatelessWidget {
                 'Gesamtbetrag',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                   letterSpacing: 1.2,
                 ),
@@ -98,7 +98,7 @@ class DetailPriceOverview extends StatelessWidget {
                 '${currenyFormat.format((price * _getRentDuration()) + (price * 0.2))} €',
                 style: TextStyle(
                   fontSize: 18.0,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontWeight: FontWeight.w300,
                   letterSpacing: 1.2,
                 ),

@@ -89,7 +89,7 @@ class _AddItemState extends State<AddItem> {
                                 child: RaisedButton.icon(
                                   icon: Icon(
                                     Icons.qr_code_scanner_outlined,
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                   ),
                                   color: Colors.transparent,
                                   padding: EdgeInsets.all(16.0),
@@ -129,7 +129,8 @@ class _AddItemState extends State<AddItem> {
                                   },
                                   label: Text(
                                     'Scan',
-                                    style: TextStyle(color: Colors.white),
+                                    style: TextStyle(
+                                        color: Theme.of(context).primaryColor),
                                   ),
                                 ),
                               )
@@ -153,7 +154,9 @@ class _AddItemState extends State<AddItem> {
                                     dropdownColor: Colors.black,
                                     hint: Text(
                                       'Kategorie',
-                                      style: TextStyle(color: Colors.white),
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).primaryColor),
                                     ),
                                     items: categories.data
                                         .map<DropdownMenuItem<Category>>(
@@ -162,7 +165,9 @@ class _AddItemState extends State<AddItem> {
                                         value: category,
                                         child: Text(
                                           category.name,
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor),
                                         ),
                                       );
                                     }).toList(),
@@ -205,7 +210,9 @@ class _AddItemState extends State<AddItem> {
                                   padding:
                                       const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                                   child: Text('€ Pro Tag',
-                                      style: TextStyle(color: Colors.white)),
+                                      style: TextStyle(
+                                          color:
+                                              Theme.of(context).primaryColor)),
                                 ),
                               )
                             ],
@@ -215,7 +222,7 @@ class _AddItemState extends State<AddItem> {
                             width: double.infinity,
                             child: RaisedButton(
                               color: Theme.of(context).accentColor,
-                              textColor: Colors.white,
+                              textColor: Theme.of(context).primaryColor,
                               padding: const EdgeInsets.all(16),
                               shape: new RoundedRectangleBorder(
                                   borderRadius: new BorderRadius.circular(8.0)),

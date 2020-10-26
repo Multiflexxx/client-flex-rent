@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:rent/widgets/slide_bar.dart';
+
 class DescriptionBox extends StatelessWidget {
   final description;
- final title;
+  final title;
   DescriptionBox({this.description, this.title});
 
   @override
@@ -22,7 +23,7 @@ class DescriptionBox extends StatelessWidget {
         child: AutoSizeText(
           description,
           style: TextStyle(
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
             fontSize: 16.0,
             height: 1.35,
             fontWeight: FontWeight.w300,
@@ -35,7 +36,7 @@ class DescriptionBox extends StatelessWidget {
               Text(
                 description,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 16.0,
                   height: 1.25,
                   fontWeight: FontWeight.w300,
@@ -69,7 +70,8 @@ class DescriptionBox extends StatelessWidget {
                                       Text(
                                         title,
                                         style: TextStyle(
-                                            color: Colors.white,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             fontSize: 18.0,
                                             height: 1.35,
                                             decoration:
@@ -79,7 +81,7 @@ class DescriptionBox extends StatelessWidget {
                                       Text(
                                         description,
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context).primaryColor,
                                           fontSize: 16.0,
                                           height: 1.35,
                                           fontWeight: FontWeight.w300,

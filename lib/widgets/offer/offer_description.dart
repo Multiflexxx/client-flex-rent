@@ -28,7 +28,7 @@ class ProductDescription extends StatelessWidget {
                   Text(
                     offer.title,
                     style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         fontSize: 18.0,
                         height: 1.35,
                         decoration: TextDecoration.underline),
@@ -37,7 +37,7 @@ class ProductDescription extends StatelessWidget {
                   Text(
                     offer.description,
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 16.0,
                       height: 1.35,
                       fontWeight: FontWeight.w300,

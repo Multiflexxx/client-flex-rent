@@ -30,7 +30,7 @@ class _AddImagesState extends State<AddImages> {
           leading: IconButton(
             icon: Icon(Feather.arrow_left),
             iconSize: 30.0,
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
             onPressed: () {
               Navigator.popUntil(
                   context, ModalRoute.withName(Navigator.defaultRouteName));
@@ -60,7 +60,7 @@ class _AddImagesState extends State<AddImages> {
                           Text(
                             'Erfolgreich angelegt!',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 21.0,
                               height: 1.35,
                               fontWeight: FontWeight.w300,
@@ -96,7 +96,7 @@ class _AddImagesState extends State<AddImages> {
                             text: TextSpan(
                               text: 'Peppe jetzt deinen Mietgegenstand ',
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 18.0,
                                 height: 1.35,
                                 fontWeight: FontWeight.w300,
@@ -116,7 +116,7 @@ class _AddImagesState extends State<AddImages> {
                                   text:
                                       ' mit Bildern auf, um noch mehr Anfragen zu erhalten!',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 18.0,
                                     height: 1.35,
                                     fontWeight: FontWeight.w300,
@@ -132,7 +132,7 @@ class _AddImagesState extends State<AddImages> {
                             width: double.infinity,
                             child: RaisedButton(
                               color: Theme.of(context).accentColor,
-                              textColor: Colors.white,
+                              textColor: Theme.of(context).primaryColor,
                               padding: const EdgeInsets.all(16),
                               shape: new RoundedRectangleBorder(
                                   borderRadius:
@@ -150,7 +150,7 @@ class _AddImagesState extends State<AddImages> {
                               child: Text(
                                 'Bild hinzufügen.',
                                 style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 16.0,
                                     fontWeight: FontWeight.w300),
                               ),

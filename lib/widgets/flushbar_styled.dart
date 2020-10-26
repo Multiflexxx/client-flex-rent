@@ -6,7 +6,7 @@ Widget showFlushbar({BuildContext context, String message}) {
     messageText: Text(
       message,
       style: TextStyle(
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
         fontSize: 18.0,
         letterSpacing: 1.2,
       ),

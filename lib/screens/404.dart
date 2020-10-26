@@ -12,20 +12,30 @@ class PageNotFound extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(Octicons.hubot, color: Colors.white, size: 100.0,),
+              Icon(
+                Octicons.hubot,
+                color: Theme.of(context).primaryColor,
+                size: 100.0,
+              ),
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Text('404 - Page not found', style:
-                  TextStyle(
+                child: Text(
+                  '404 - Page not found',
+                  style: TextStyle(
                     fontSize: 30.0,
                     color: Colors.amber,
                   ),
                 ),
               ),
               IconButton(
-                icon: Icon(Icons.home, color: Colors.white,), onPressed: (){
+                icon: Icon(
+                  Icons.home,
+                  color: Theme.of(context).primaryColor,
+                ),
+                onPressed: () {
                   Navigator.pop(context);
-              }, iconSize: 50.0,
+                },
+                iconSize: 50.0,
               ),
             ],
           ),

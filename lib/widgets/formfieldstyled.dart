@@ -43,7 +43,7 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
       autocorrect: widget.autocorrect,
       keyboardType: widget.type,
       controller: widget.controller,
-      style: TextStyle(color: Colors.white),
+      style: TextStyle(color: Theme.of(context).primaryColor),
       maxLength: widget.length,
       decoration: InputDecoration(
         counter: Offstage(),
@@ -71,7 +71,7 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: Theme.of(context).primaryColor,
           ),
           borderRadius: BorderRadius.circular(10.0),
         ),
@@ -80,11 +80,11 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
           borderRadius: BorderRadius.circular(10.0),
         ),
         hintText: widget.hintText ?? '',
-        labelStyle: TextStyle(color: Colors.white),
+        labelStyle: TextStyle(color: Theme.of(context).primaryColor),
         hintStyle: TextStyle(
-          color: Colors.white,
+          color: Theme.of(context).primaryColor,
         ),
-        hoverColor: Colors.white,
+        hoverColor: Theme.of(context).primaryColor,
       ),
       obscureText: widget.obscureText ?? false,
       validator: widget.validator,

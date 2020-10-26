@@ -34,7 +34,7 @@ class _PersonalFormState extends State<PersonalForm> {
       autocorrect: false,
       icon: Icon(
         Icons.person,
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
       hintText: "Vorname",
       validator: (String value) {
@@ -64,7 +64,7 @@ class _PersonalFormState extends State<PersonalForm> {
       autocorrect: false,
       icon: Icon(
         Icons.email,
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
       hintText: "Email",
       type: TextInputType.emailAddress,
@@ -82,7 +82,7 @@ class _PersonalFormState extends State<PersonalForm> {
       autocorrect: false,
       icon: Icon(
         Icons.location_city,
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
       hintText: "Straße",
       validator: (String value) {
@@ -126,7 +126,7 @@ class _PersonalFormState extends State<PersonalForm> {
       autocorrect: false,
       icon: Icon(
         Icons.location_city,
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
       hintText: "PLZ",
       length: 5,
@@ -146,7 +146,7 @@ class _PersonalFormState extends State<PersonalForm> {
       type: TextInputType.visiblePassword,
       icon: Icon(
         Icons.vpn_key,
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
       hintText: "Passwort",
       obscureText: true,
@@ -165,7 +165,7 @@ class _PersonalFormState extends State<PersonalForm> {
       type: TextInputType.visiblePassword,
       icon: Icon(
         Icons.vpn_key,
-        color: Colors.white,
+        color: Theme.of(context).primaryColor,
       ),
       obscureText: true,
       hintText: "Passwortverifizierung",
@@ -285,7 +285,7 @@ class _PersonalFormState extends State<PersonalForm> {
                     ),
                     RaisedButton(
                       color: Theme.of(context).accentColor,
-                      textColor: Colors.white,
+                      textColor: Theme.of(context).primaryColor,
                       padding: const EdgeInsets.all(16),
                       shape: new RoundedRectangleBorder(
                           borderRadius: new BorderRadius.circular(8.0)),
@@ -301,14 +301,14 @@ class _PersonalFormState extends State<PersonalForm> {
                       text: TextSpan(
                         text: 'Du hast noch kein Konto? ',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                         ),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Login',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                color: Colors.white),
+                                color: Theme.of(context).primaryColor),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 BlocProvider.of<RegisterBloc>(context)

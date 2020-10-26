@@ -21,7 +21,7 @@ class DateRangeButtonBar extends StatelessWidget {
             child: Text(
               'Cancel',
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w300,
                 letterSpacing: 1.2,
@@ -33,7 +33,7 @@ class DateRangeButtonBar extends StatelessWidget {
             child: Text(
               'OK',
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 fontSize: 18.0,
                 fontWeight: FontWeight.w300,
                 letterSpacing: 1.2,
@@ -56,7 +56,7 @@ class DateRangeButtonBar extends StatelessWidget {
                           messageText: Text(
                             "Dein Zeitraum muss zusammenhängend sein.",
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 18.0,
                               letterSpacing: 1.2,
                             ),

@@ -198,7 +198,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                                   color: Colors.black54,
                                   child: Icon(
                                     Feather.camera,
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                     size: 30.0,
                                   ),
                                 ),
@@ -219,7 +219,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                           Text(
                             'Mieterbewertung',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 18.0,
                               fontWeight: FontWeight.w300,
                               letterSpacing: 1.2,
@@ -231,7 +231,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                               Text(
                                 '${_user.lessorRating} ',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.2,
@@ -247,7 +247,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                               Text(
                                 '(${_user.numberOfLesseeRatings})',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.w300,
                                   letterSpacing: 1.2,
@@ -259,7 +259,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                           Text(
                             'Vermieterbewertung',
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 18.0,
                               fontWeight: FontWeight.w300,
                               letterSpacing: 1.2,
@@ -271,7 +271,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                               Text(
                                 '${_user.lessorRating} ',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.w500,
                                   letterSpacing: 1.2,
@@ -287,7 +287,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                               Text(
                                 '(${_user.numberOfLessorRatings})',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 18.0,
                                   fontWeight: FontWeight.w300,
                                   letterSpacing: 1.2,
@@ -322,7 +322,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                             controller: _firstNameController,
                             icon: Icon(
                               Icons.person,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                             hintText: 'Vorname',
                             type: TextInputType.name,
@@ -361,7 +361,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                             controller: _streetController,
                             icon: Icon(
                               Icons.home,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                             hintText: 'Straße',
                             type: TextInputType.streetAddress,
@@ -402,7 +402,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                             controller: _zipController,
                             icon: Icon(
                               Icons.location_city,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                             hintText: 'PLZ',
                             type: TextInputType.number,
@@ -439,7 +439,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                       controller: _emailController,
                       icon: Icon(
                         Icons.email,
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                       ),
                       hintText: 'E-Mail',
                       type: TextInputType.emailAddress,
@@ -457,7 +457,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                       controller: _phoneController,
                       icon: Icon(
                         Icons.phone,
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                       ),
                       hintText: 'Handynummer',
                       type: TextInputType.phone,
@@ -475,7 +475,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                       width: double.infinity,
                       child: RaisedButton(
                         color: Theme.of(context).accentColor,
-                        textColor: Colors.white,
+                        textColor: Theme.of(context).primaryColor,
                         padding: const EdgeInsets.all(16),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(8.0)),
@@ -490,7 +490,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                       width: double.infinity,
                       child: RaisedButton(
                         color: Colors.black,
-                        textColor: Colors.white,
+                        textColor: Theme.of(context).primaryColor,
                         padding: const EdgeInsets.all(16),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(8.0),

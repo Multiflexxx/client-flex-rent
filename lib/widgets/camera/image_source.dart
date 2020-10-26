@@ -20,13 +20,13 @@ class ImageSourcePicker extends StatelessWidget {
               title: Text(
                 'Kamera',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   letterSpacing: 1.2,
                 ),
               ),
               leading: Icon(
                 Icons.camera_alt,
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
               ),
               onTap: () => Navigator.pop(context, ImageSource.camera),
             ),
@@ -34,13 +34,13 @@ class ImageSourcePicker extends StatelessWidget {
               title: Text(
                 'Galerie',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   letterSpacing: 1.2,
                 ),
               ),
               leading: Icon(
                 Icons.photo,
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
               ),
               onTap: () => Navigator.pop(context, ImageSource.gallery),
             ),

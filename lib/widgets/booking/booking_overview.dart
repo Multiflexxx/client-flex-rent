@@ -30,7 +30,7 @@ class BookingOverview extends StatelessWidget {
                 ),
                 Text('Übersicht',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 20.0,
                       height: 1.35,
                       fontWeight: FontWeight.w600,
@@ -43,7 +43,7 @@ class BookingOverview extends StatelessWidget {
               children: [
                 Text('Mietzeitraum',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 18.0,
                       height: 1.0,
                       fontWeight: FontWeight.w300,
@@ -51,7 +51,7 @@ class BookingOverview extends StatelessWidget {
                 Text(
                   '${DateFormat('yMd', 'de').format(offerRequest.dateRange.fromDate)} - ${DateFormat('yMd', 'de').format(offerRequest.dateRange.toDate)}',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     height: 1.0,
                     fontWeight: FontWeight.w300,
@@ -65,7 +65,7 @@ class BookingOverview extends StatelessWidget {
               children: [
                 Text('Preis',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 18.0,
                       height: 1.0,
                       fontWeight: FontWeight.w300,
@@ -83,7 +83,7 @@ class BookingOverview extends StatelessWidget {
                 Text(
                   'Vermieter',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     height: 1.0,
                     fontWeight: FontWeight.w300,
@@ -93,7 +93,7 @@ class BookingOverview extends StatelessWidget {
                 Text(
                   '${offerRequest.offer.lessor.firstName} ${offerRequest.offer.lessor.lastName}',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     height: 1.0,
                     fontWeight: FontWeight.w300,

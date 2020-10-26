@@ -86,7 +86,7 @@ class _DataRangePickerState extends State<DateRangePicker> {
 
                 headerStyle: DateRangePickerHeaderStyle(
                   textStyle: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     fontWeight: FontWeight.w300,
                     letterSpacing: 1.2,
@@ -99,7 +99,7 @@ class _DataRangePickerState extends State<DateRangePicker> {
                   firstDayOfWeek: 1,
                   viewHeaderStyle: DateRangePickerViewHeaderStyle(
                     textStyle: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ),
                   dayFormat: 'EE',
@@ -110,8 +110,9 @@ class _DataRangePickerState extends State<DateRangePicker> {
                 // Style
                 backgroundColor: Color(0xFF202020),
                 monthCellStyle: DateRangePickerMonthCellStyle(
-                  textStyle: TextStyle(color: Colors.white),
-                  todayTextStyle: TextStyle(color: Colors.white),
+                  textStyle: TextStyle(color: Theme.of(context).primaryColor),
+                  todayTextStyle:
+                      TextStyle(color: Theme.of(context).primaryColor),
                   todayCellDecoration: BoxDecoration(
                     color: Colors.red,
                     border: Border.all(
@@ -129,13 +130,14 @@ class _DataRangePickerState extends State<DateRangePicker> {
                   ),
                 ),
 
-                selectionTextStyle: const TextStyle(color: Colors.white),
+                selectionTextStyle:
+                    TextStyle(color: Theme.of(context).primaryColor),
                 selectionColor: Colors.blue,
                 startRangeSelectionColor: Colors.purple,
                 endRangeSelectionColor: Colors.purple,
                 rangeSelectionColor: Colors.purpleAccent,
-                rangeTextStyle: const TextStyle(
-                  color: Colors.white,
+                rangeTextStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
                   fontSize: 20,
                 ),
 

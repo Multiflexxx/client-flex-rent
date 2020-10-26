@@ -26,7 +26,7 @@ class _InfoBookingScreenState extends State<InfoBookingScreen> {
                 child: Text(
                   'Deine Buchung wurde erfolgreich stoniert!',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 20.0,
                     fontWeight: FontWeight.w300,
                   ),

@@ -132,7 +132,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
           child: Text(
             'Bilder',
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               fontSize: 21.0,
               letterSpacing: 1.2,
             ),
@@ -200,7 +200,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                             ),
                             errorWidget: (context, url, error) => Icon(
                               Icons.error,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                         ),
@@ -208,7 +208,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                       Positioned.fill(
                         child: Icon(
                           Feather.minus_circle,
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           size: 40.0,
                         ),
                       ),
@@ -225,7 +225,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
           child: Text(
             'Beschreibung',
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               fontSize: 21.0,
               letterSpacing: 1.2,
             ),
@@ -252,12 +252,12 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Color(0xFF202020),
-                    textColor: Colors.white,
+                    textColor: Theme.of(context).primaryColor,
                     padding:
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Colors.white),
+                      side: BorderSide(color: Theme.of(context).primaryColor),
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -294,7 +294,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                       child: Padding(
                         padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
                         child: Text('€ Pro Tag',
-                            style: TextStyle(color: Colors.white)),
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor)),
                       ),
                     )
                   ],
@@ -306,7 +307,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).accentColor,
-                    textColor: Colors.white,
+                    textColor: Theme.of(context).primaryColor,
                     padding: const EdgeInsets.all(16),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(8.0)),

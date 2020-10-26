@@ -23,14 +23,14 @@ class UploadImageScreen extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Feather.arrow_left),
           iconSize: 30.0,
-          color: Colors.white,
+          color: Theme.of(context).primaryColor,
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
           IconButton(
               icon: Icon(Feather.x),
               iconSize: 30.0,
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               onPressed: () {
                 Navigator.popUntil(context, ModalRoute.withName('takePhoto'));
               }),
@@ -52,7 +52,7 @@ class UploadImageScreen extends StatelessWidget {
                   text: TextSpan(
                     text: 'Dein Mietgegenstand ',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 18.0,
                       height: 1.35,
                       fontWeight: FontWeight.w300,
@@ -71,7 +71,7 @@ class UploadImageScreen extends StatelessWidget {
                       TextSpan(
                         text: ' ist jetzt aufgepeppt.',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
                           height: 1.35,
                           fontWeight: FontWeight.w300,
@@ -133,7 +133,7 @@ class UploadImageScreen extends StatelessWidget {
                 width: double.infinity,
                 child: RaisedButton(
                   color: Theme.of(context).accentColor,
-                  textColor: Colors.white,
+                  textColor: Theme.of(context).primaryColor,
                   padding: const EdgeInsets.all(16),
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(10.0)),
@@ -147,7 +147,7 @@ class UploadImageScreen extends StatelessWidget {
                       ? Text(
                           'Bild hochladen',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 18.0,
                             fontWeight: FontWeight.w300,
                             letterSpacing: 1.2,
@@ -156,7 +156,7 @@ class UploadImageScreen extends StatelessWidget {
                       : Text(
                           'Bilder hochladen',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 18.0,
                             fontWeight: FontWeight.w300,
                             letterSpacing: 1.2,

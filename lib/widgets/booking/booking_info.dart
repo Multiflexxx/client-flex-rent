@@ -20,7 +20,7 @@ class BookingInfo extends StatelessWidget {
           Text(
             getInfoTextHeading(true, offerRequest.statusId),
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               fontSize: 25.0,
               height: 1.15,
               fontWeight: FontWeight.w500,
@@ -32,7 +32,7 @@ class BookingInfo extends StatelessWidget {
           Text(
             getInfoTextBody(true, offerRequest.statusId),
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               fontSize: 16.0,
               height: 1.15,
               letterSpacing: 1.0,

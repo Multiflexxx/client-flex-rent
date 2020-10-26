@@ -90,7 +90,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                 Text(
                                   '${offer.title}',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 21.0,
                                     fontWeight: FontWeight.w500,
                                     letterSpacing: 1.2,
@@ -161,11 +161,11 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Icon(
                                       Icons.error,
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                     errorWidget: (context, url, error) => Icon(
                                       Icons.error,
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                           ),

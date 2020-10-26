@@ -30,7 +30,7 @@ class UserBox extends StatelessWidget {
                     Text(
                       'Vermieter/in: ${lessor.firstName} ${lessor.lastName}',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         fontSize: 18.0,
                         height: 1.35,
                         fontWeight: FontWeight.w300,
@@ -68,7 +68,7 @@ class UserBox extends StatelessWidget {
                 Text(
                   '${lessor.numberOfLessorRatings} Bewertungen',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     height: 1.35,
                     fontWeight: FontWeight.w300,
@@ -93,7 +93,7 @@ class UserBox extends StatelessWidget {
                     ? Text(
                         'Identität verifiziert',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
                           height: 1.35,
                           fontWeight: FontWeight.w300,
@@ -102,7 +102,7 @@ class UserBox extends StatelessWidget {
                     : Text(
                         'Identität nicht verifiziert',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
                           height: 1.35,
                           fontWeight: FontWeight.w300,
@@ -128,7 +128,7 @@ class UserBox extends StatelessWidget {
                     child: Text(
                       'Vermieter eine Nachricht schicken',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
                           fontWeight: FontWeight.w300),
                     ),

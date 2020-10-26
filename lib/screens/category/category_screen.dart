@@ -85,7 +85,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           style: TextStyle(
                                               fontSize: 21.0,
                                               fontWeight: FontWeight.w300,
-                                              color: Colors.white,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               letterSpacing: 1.2),
                                         ),
                                       ],
@@ -95,7 +96,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         Icon(
                                           Ionicons.ios_arrow_forward,
                                           size: 30.0,
-                                          color: Colors.white,
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                       ],
                                     ),

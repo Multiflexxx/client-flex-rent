@@ -57,7 +57,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                 ),
                 child: Container(
                   decoration: new BoxDecoration(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     borderRadius: BorderRadius.circular(10.0),
                   ),
                   child: QrImage(
@@ -81,7 +81,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                       child: Text(
                         'Abbrechen',
                         style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 20.0,
                           fontWeight: FontWeight.w300,
                         ),

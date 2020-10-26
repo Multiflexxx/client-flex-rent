@@ -119,7 +119,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 Text(
                   '$city',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 16.0,
                     fontWeight: FontWeight.w300,
                     letterSpacing: 1.2,
@@ -137,7 +137,7 @@ class _AccountScreenState extends State<AccountScreen> {
               child: IconButton(
                 icon: Icon(
                   Feather.settings,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
                 onPressed: () {
                   pushNewScreen(context,

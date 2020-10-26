@@ -79,7 +79,7 @@ class _UpdatePasswordBodyState extends State<_UpdatePasswordBody> {
                 controller: _oldPasswordController,
                 icon: Icon(
                   Icons.vpn_key,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
                 hintText: 'altes Passwort',
                 type: TextInputType.visiblePassword,
@@ -98,7 +98,7 @@ class _UpdatePasswordBodyState extends State<_UpdatePasswordBody> {
                 controller: _newPasswordController,
                 icon: Icon(
                   Icons.vpn_key,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
                 hintText: 'neues Passwort',
                 type: TextInputType.visiblePassword,
@@ -117,7 +117,7 @@ class _UpdatePasswordBodyState extends State<_UpdatePasswordBody> {
                 controller: _verifiedPasswordController,
                 icon: Icon(
                   Icons.vpn_key,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
                 hintText: 'Passwort verifizieren',
                 type: TextInputType.visiblePassword,
@@ -134,7 +134,7 @@ class _UpdatePasswordBodyState extends State<_UpdatePasswordBody> {
               ),
               RaisedButton(
                 color: Theme.of(context).accentColor,
-                textColor: Colors.white,
+                textColor: Theme.of(context).primaryColor,
                 padding: const EdgeInsets.all(16),
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(8.0)),

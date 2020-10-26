@@ -73,7 +73,7 @@ class _OfferScreenState extends State<OfferScreen> {
                   leading: IconButton(
                     icon: Icon(Feather.arrow_left),
                     iconSize: 30.0,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     onPressed: () => Navigator.popUntil(context,
                         ModalRoute.withName(Navigator.defaultRouteName)),
                   ),
@@ -81,7 +81,7 @@ class _OfferScreenState extends State<OfferScreen> {
                     IconButton(
                       icon: Icon(Feather.share),
                       iconSize: 30.0,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
@@ -101,7 +101,7 @@ class _OfferScreenState extends State<OfferScreen> {
                     title: Text(
                       offer.title,
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                         fontSize: 18.0,
                         fontWeight: FontWeight.w500,
                         letterSpacing: 1.2,
@@ -133,11 +133,11 @@ class _OfferScreenState extends State<OfferScreen> {
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Icon(
                                       Icons.error,
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                     errorWidget: (context, url, error) => Icon(
                                       Icons.error,
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                   ),
                           ),
@@ -218,7 +218,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                           messageText: Text(
                                             "Du musst einen Zeitraum auswählen.",
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               fontSize: 18.0,
                                               letterSpacing: 1.2,
                                             ),
@@ -248,7 +249,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                         child: Text(
                                           'Reservieren',
                                           style: TextStyle(
-                                              color: Colors.white,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               fontSize: 20.0,
                                               fontWeight: FontWeight.w300),
                                         ),
@@ -274,7 +276,7 @@ class _OfferScreenState extends State<OfferScreen> {
                           child: AutoSizeText(
                             offer.description,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                               fontSize: 16.0,
                               height: 1.35,
                               fontWeight: FontWeight.w300,
@@ -287,7 +289,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                 Text(
                                   offer.description,
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 16.0,
                                     height: 1.25,
                                     fontWeight: FontWeight.w300,
@@ -379,7 +381,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                           Text(
                                             'Verfügbarkeit',
                                             style: TextStyle(
-                                              color: Colors.white,
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               fontSize: 18.0,
                                               height: 1.35,
                                               fontWeight: FontWeight.w300,
@@ -400,7 +403,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                                     Text(
                                                       '${DateFormat('yMd', 'de').format(_dateRange.fromDate)}',
                                                       style: TextStyle(
-                                                        color: Colors.white,
+                                                        color: Theme.of(context)
+                                                            .primaryColor,
                                                         fontSize: 16.0,
                                                         height: 1.15,
                                                         fontWeight:
@@ -415,8 +419,9 @@ class _OfferScreenState extends State<OfferScreen> {
                                                         ? Text(
                                                             ' bis ${DateFormat('yMd', 'de').format(_dateRange.toDate)}',
                                                             style: TextStyle(
-                                                              color:
-                                                                  Colors.white,
+                                                              color: Theme.of(
+                                                                      context)
+                                                                  .primaryColor,
                                                               fontSize: 16.0,
                                                               height: 1.15,
                                                               fontWeight:

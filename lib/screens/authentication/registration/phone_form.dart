@@ -66,7 +66,8 @@ class _PhoneFormState extends State<PhoneForm> {
                             children: [
                               Theme(
                                 data: ThemeData(
-                                    unselectedWidgetColor: Colors.white),
+                                    unselectedWidgetColor:
+                                        Theme.of(context).primaryColor),
                                 child: Checkbox(
                                   checkColor: Colors.purple,
                                   activeColor: Colors.black,
@@ -106,7 +107,7 @@ class _PhoneFormState extends State<PhoneForm> {
                   SizedBox(height: 16),
                   RaisedButton(
                     color: Theme.of(context).accentColor,
-                    textColor: Colors.white,
+                    textColor: Theme.of(context).primaryColor,
                     padding: const EdgeInsets.all(16),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(8.0)),
@@ -121,13 +122,14 @@ class _PhoneFormState extends State<PhoneForm> {
                     text: TextSpan(
                       text: 'Du hast schon ein FlexRent Konto? ',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                       ),
                       children: <TextSpan>[
                         TextSpan(
                           text: 'Einloggen',
                           style: TextStyle(
-                              fontWeight: FontWeight.bold, color: Colors.white),
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () {
                               BlocProvider.of<AuthenticationBloc>(context)

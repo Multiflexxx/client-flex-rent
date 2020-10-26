@@ -135,7 +135,7 @@ class OfferRequestCard extends StatelessWidget {
                                   Text(
                                     '${offerRequest.offer.title}',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.w600,
                                       letterSpacing: 1.2,
@@ -147,7 +147,7 @@ class OfferRequestCard extends StatelessWidget {
                                   Text(
                                     '${DateFormat('yMd', 'de').format(offerRequest.dateRange.fromDate)} - ${DateFormat('yMd', 'de').format(offerRequest.dateRange.toDate)}',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 16.0,
                                       // fontWeight: FontWeight.w700,
                                     ),
@@ -193,11 +193,11 @@ class OfferRequestCard extends StatelessWidget {
                             fit: BoxFit.cover,
                             placeholder: (context, url) => Icon(
                               Icons.error,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                             errorWidget: (context, url, error) => Icon(
                               Icons.error,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                           ),
                   ),

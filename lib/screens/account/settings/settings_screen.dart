@@ -89,7 +89,7 @@ class _AppSettingsBodyState extends State<_AppSettingsBody> {
                           title: Text(
                             map.mapName,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                               letterSpacing: 1.2,
                             ),
                           ),
@@ -131,7 +131,8 @@ class _AppSettingsBodyState extends State<_AppSettingsBody> {
             children: [
               Text(
                 'Darkmode',
-                style: TextStyle(color: Colors.white, fontSize: 18.0),
+                style: TextStyle(
+                    color: Theme.of(context).primaryColor, fontSize: 18.0),
               ),
               Switch(
                 activeColor: Colors.purple,

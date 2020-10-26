@@ -19,7 +19,9 @@ class PriceTag extends StatelessWidget {
         Text(
           ' € / Tag',
           style: TextStyle(
-              color: Colors.white, fontSize: 18.0, fontWeight: FontWeight.w300),
+              color: Theme.of(context).primaryColor,
+              fontSize: 18.0,
+              fontWeight: FontWeight.w300),
         ),
       ],
     );

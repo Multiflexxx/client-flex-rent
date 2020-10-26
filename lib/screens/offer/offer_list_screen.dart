@@ -94,7 +94,7 @@ class _ProductListBodyState extends State<ProductListBody> {
             text: TextSpan(
               text: 'Für die Kategorie ',
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 fontSize: 18.0,
                 height: 1.35,
                 fontWeight: FontWeight.w300,
@@ -113,7 +113,7 @@ class _ProductListBodyState extends State<ProductListBody> {
                 TextSpan(
                   text: ' sind noch keine Mietgegenstände eingestellt worden.',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     height: 1.35,
                     fontWeight: FontWeight.w300,

@@ -87,7 +87,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                               Text(
                                 'Mietzeitraum',
                                 style: TextStyle(
-                                  color: Colors.white,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 18.0,
                                   height: 1.35,
                                   fontWeight: FontWeight.w300,
@@ -112,7 +112,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                       Text(
                                         '${DateFormat('yMd', 'de').format(_dateRange.fromDate)}',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context).primaryColor,
                                           fontSize: 16.0,
                                           height: 1.15,
                                           fontWeight: FontWeight.w300,
@@ -122,7 +122,8 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                           ? Text(
                                               ' bis ${DateFormat('yMd', 'de').format(_dateRange.toDate)}',
                                               style: TextStyle(
-                                                color: Colors.white,
+                                                color: Theme.of(context)
+                                                    .primaryColor,
                                                 fontSize: 16.0,
                                                 height: 1.15,
                                                 fontWeight: FontWeight.w300,
@@ -163,7 +164,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                     child: Text(
                                       'Bearbeiten',
                                       style: TextStyle(
-                                        color: Colors.white,
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: 16.0,
                                         height: 1.15,
                                         fontWeight: FontWeight.w300,
@@ -207,7 +208,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                         Text(
                           'Preisübersicht',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 18.0,
                             height: 1.35,
                             fontWeight: FontWeight.w300,
@@ -231,7 +232,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
               width: double.infinity,
               child: RaisedButton(
                 color: Theme.of(context).accentColor,
-                textColor: Colors.white,
+                textColor: Theme.of(context).primaryColor,
                 padding: const EdgeInsets.all(16),
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0)),
@@ -239,7 +240,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                 child: Text(
                   'Bestätigen & Reservieren',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     fontWeight: FontWeight.w300,
                   ),

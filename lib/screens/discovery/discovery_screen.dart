@@ -63,7 +63,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
           _icons[index],
           size: 25.0,
           color: _selectedIndex == index
-              ? Colors.white
+              ? Theme.of(context).primaryColor
               : Theme.of(context).accentColor,
         ),
       ),

@@ -45,7 +45,7 @@ class OfferCard extends StatelessWidget {
                                   Text(
                                     '${offer.title}',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 20.0,
                                       fontWeight: FontWeight.w700,
                                       letterSpacing: 1.2,
@@ -56,7 +56,7 @@ class OfferCard extends StatelessWidget {
                                   Text(
                                     '${offer.description}',
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 16.0,
                                       fontWeight: FontWeight.w300,
                                       letterSpacing: 1.2,
@@ -70,7 +70,7 @@ class OfferCard extends StatelessWidget {
                                       Text(
                                         '4.9',
                                         style: TextStyle(
-                                          color: Colors.white,
+                                          color: Theme.of(context).primaryColor,
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w300,
                                           letterSpacing: 1.2,
@@ -124,11 +124,11 @@ class OfferCard extends StatelessWidget {
                               fit: BoxFit.cover,
                               placeholder: (context, url) => Icon(
                                 Icons.error,
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                               ),
                               errorWidget: (context, url, error) => Icon(
                                 Icons.error,
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                               ),
                             ),
                     ),

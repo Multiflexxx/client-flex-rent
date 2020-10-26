@@ -54,7 +54,7 @@ class _AuthForm extends StatelessWidget {
         Text(
           'Register and become an User',
           style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               fontSize: 50,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2),

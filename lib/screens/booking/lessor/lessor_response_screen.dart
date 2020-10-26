@@ -139,7 +139,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                           width: double.infinity,
                           child: RaisedButton(
                             color: Theme.of(context).accentColor,
-                            textColor: Colors.white,
+                            textColor: Theme.of(context).primaryColor,
                             padding: const EdgeInsets.all(16),
                             shape: new RoundedRectangleBorder(
                                 borderRadius: new BorderRadius.circular(8.0)),
@@ -156,7 +156,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                           width: double.infinity,
                           child: RaisedButton(
                             color: Colors.transparent,
-                            textColor: Colors.white,
+                            textColor: Theme.of(context).primaryColor,
                             padding: const EdgeInsets.all(16),
                             shape: new RoundedRectangleBorder(
                               borderRadius: new BorderRadius.circular(8.0),
@@ -187,7 +187,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                 child: Text(
                                   'QR Code scannen',
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: Theme.of(context).primaryColor,
                                     fontSize: 20.0,
                                     fontWeight: FontWeight.w300,
                                   ),
@@ -224,7 +224,8 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                         child: Text(
                                           'QR Code anzeigen',
                                           style: TextStyle(
-                                            color: Colors.white,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             fontSize: 20.0,
                                             fontWeight: FontWeight.w300,
                                           ),

@@ -5,7 +5,6 @@ import 'package:flutter/cupertino.dart';
 class RatingBox extends StatelessWidget {
   final recession;
 
-
   RatingBox({this.recession});
 
   @override
@@ -24,7 +23,7 @@ class RatingBox extends StatelessWidget {
             Text(
               'Deine Bewertung:',
               style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                   fontSize: 18.0,
                   height: 1.34,
                   fontWeight: FontWeight.w300),
@@ -65,7 +64,7 @@ class RatingBox extends StatelessWidget {
                 ),
                 Icon(
                   Icons.star,
-                  color: Colors.white,
+                  color: Theme.of(context).primaryColor,
                 ),
               ],
             ),
@@ -76,7 +75,7 @@ class RatingBox extends StatelessWidget {
             Text(
               recession == '' ? 'Bewerte das Produkt' : recession,
               style: TextStyle(
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 fontSize: 16.0,
                 height: 1.35,
                 fontWeight: FontWeight.w300,
@@ -100,7 +99,7 @@ class RatingBox extends StatelessWidget {
                     child: Text(
                       'Bewertung Anpassen',
                       style: TextStyle(
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
                           fontWeight: FontWeight.w300),
                     ),

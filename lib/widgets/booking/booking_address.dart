@@ -82,7 +82,7 @@ class _BookingAddressState extends State<BookingAddress> {
                           title: Text(
                             map.mapName,
                             style: TextStyle(
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                               letterSpacing: 1.2,
                             ),
                           ),
@@ -130,7 +130,7 @@ class _BookingAddressState extends State<BookingAddress> {
                 ),
                 Text('Adresse',
                     style: TextStyle(
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 20.0,
                       height: 1.35,
                       fontWeight: FontWeight.w600,
@@ -150,12 +150,12 @@ class _BookingAddressState extends State<BookingAddress> {
                         Icon(
                           Feather.map,
                           size: 24.0,
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                         ),
                         Text(
                           'Zur Karte',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 18.0,
                             height: 1.0,
                             fontWeight: FontWeight.w300,
@@ -175,7 +175,7 @@ class _BookingAddressState extends State<BookingAddress> {
                           Text(
                             '${widget.offerRequest.offer.lessor.street} ${widget.offerRequest.offer.lessor.houseNumber}',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 18.0,
                                 height: 1.0,
                                 fontWeight: FontWeight.w300,
@@ -192,7 +192,7 @@ class _BookingAddressState extends State<BookingAddress> {
                           Text(
                             '${widget.offerRequest.offer.lessor.postCode} ${widget.offerRequest.offer.lessor.city}',
                             style: TextStyle(
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                                 fontSize: 18.0,
                                 height: 1.0,
                                 fontWeight: FontWeight.w300,
@@ -213,7 +213,7 @@ class _BookingAddressState extends State<BookingAddress> {
                     child: Text(
                       'loading map..',
                       style: TextStyle(
-                        color: Colors.white,
+                        color: Theme.of(context).primaryColor,
                       ),
                     ),
                   )

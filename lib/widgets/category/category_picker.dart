@@ -47,7 +47,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
                             title: Text(
                               _category.name,
                               style: TextStyle(
-                                color: Colors.white,
+                                color: Theme.of(context).primaryColor,
                                 letterSpacing: 1.2,
                               ),
                             ),
@@ -55,7 +55,7 @@ class _CategoryPickerState extends State<CategoryPicker> {
                                 // add SVG
                                 Icon(
                               Icons.photo,
-                              color: Colors.white,
+                              color: Theme.of(context).primaryColor,
                             ),
                             onTap: () => Navigator.pop(context, _category),
                           );

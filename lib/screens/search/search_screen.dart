@@ -206,7 +206,7 @@ class _SearchScreenState extends State<SearchScreen> {
             style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w300,
-                color: Colors.white,
+                color: Theme.of(context).primaryColor,
                 letterSpacing: 1.2),
           ),
           GestureDetector(
@@ -256,7 +256,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   style: TextStyle(
                       fontSize: 18.0,
                       fontWeight: FontWeight.w300,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                       letterSpacing: 1.2),
                 ),
               ),

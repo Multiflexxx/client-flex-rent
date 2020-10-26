@@ -56,7 +56,7 @@ class _MyItemsState extends State<MyItems> {
                     Icon(
                       Feather.mail,
                       size: 30.0,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     ),
                     SizedBox(
                       width: 25.0,
@@ -66,7 +66,7 @@ class _MyItemsState extends State<MyItems> {
                       style: TextStyle(
                           fontSize: 21.0,
                           fontWeight: FontWeight.w300,
-                          color: Colors.white,
+                          color: Theme.of(context).primaryColor,
                           letterSpacing: 1.2),
                     ),
                   ],
@@ -76,7 +76,7 @@ class _MyItemsState extends State<MyItems> {
                     Icon(
                       Ionicons.ios_arrow_forward,
                       size: 30.0,
-                      color: Colors.white,
+                      color: Theme.of(context).primaryColor,
                     ),
                   ],
                 ),
@@ -100,7 +100,7 @@ class _MyItemsState extends State<MyItems> {
           child: Text(
             '+',
             style: TextStyle(
-              color: Colors.white,
+              color: Theme.of(context).primaryColor,
               fontSize: 40.0,
               fontWeight: FontWeight.w300,
             ),
