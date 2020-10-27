@@ -52,7 +52,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.black,
-        accentColor: Colors.deepPurple,
+        accentColor: Colors.purple,
         backgroundColor: Color(0xFFE9E9E9),
         cardColor: Color(0xFFCCCCCC),
         iconTheme: IconThemeData(color: Colors.black),

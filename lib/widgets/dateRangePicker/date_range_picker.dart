@@ -133,8 +133,8 @@ class _DataRangePickerState extends State<DateRangePicker> {
                 selectionTextStyle:
                     TextStyle(color: Theme.of(context).primaryColor),
                 selectionColor: Colors.blue,
-                startRangeSelectionColor: Colors.purple,
-                endRangeSelectionColor: Colors.purple,
+                startRangeSelectionColor: Theme.of(context).accentColor,
+                endRangeSelectionColor: Theme.of(context).accentColor,
                 rangeSelectionColor: Colors.purpleAccent,
                 rangeTextStyle: TextStyle(
                   color: Theme.of(context).primaryColor,

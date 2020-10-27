@@ -105,7 +105,7 @@ class _AddImagesState extends State<AddImages> {
                                 TextSpan(
                                   text: offer.title,
                                   style: TextStyle(
-                                    color: Colors.purple,
+                                    color: Theme.of(context).accentColor,
                                     fontSize: 18.0,
                                     height: 1.35,
                                     fontWeight: FontWeight.w500,

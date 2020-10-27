@@ -116,7 +116,7 @@ class _LeseeBookingBodyState extends State<LeseeBookingBody> {
                           padding: const EdgeInsets.all(10.0),
                           height: 50.0,
                           decoration: BoxDecoration(
-                              color: Colors.purple,
+                              color: Theme.of(context).accentColor,
                               borderRadius: BorderRadius.circular(10.0)),
                           child: Center(
                             child: Text(
@@ -141,7 +141,7 @@ class _LeseeBookingBodyState extends State<LeseeBookingBody> {
                               padding: const EdgeInsets.all(10.0),
                               height: 50.0,
                               decoration: BoxDecoration(
-                                  color: Colors.purple,
+                                  color: Theme.of(context).accentColor,
                                   borderRadius: BorderRadius.circular(10.0)),
                               child: Center(
                                 child: Text(

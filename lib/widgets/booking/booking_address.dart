@@ -124,7 +124,7 @@ class _BookingAddressState extends State<BookingAddress> {
           children: [
             Row(
               children: [
-                Icon(Feather.map_pin, color: Colors.purple),
+                Icon(Feather.map_pin, color: Theme.of(context).accentColor),
                 SizedBox(
                   width: 10.0,
                 ),

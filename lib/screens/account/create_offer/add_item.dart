@@ -97,7 +97,8 @@ class _AddItemState extends State<AddItem> {
                                       borderRadius:
                                           new BorderRadius.circular(8.0),
                                       side: BorderSide(
-                                          color: Colors.purple, width: 1.75)),
+                                          color: Theme.of(context).accentColor,
+                                          width: 1.75)),
                                   onPressed: () async {
                                     barcodeResult =
                                         await FlutterBarcodeScanner.scanBarcode(

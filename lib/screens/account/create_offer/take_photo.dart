@@ -87,7 +87,7 @@ class _TakePhotoState extends State<TakePhoto> {
                                 child: Container(
                                   child: Icon(
                                     Feather.arrow_left,
-                                    color: Colors.purple,
+                                    color: Theme.of(context).accentColor,
                                     size: 36.0,
                                   ),
                                 ),
@@ -107,7 +107,7 @@ class _TakePhotoState extends State<TakePhoto> {
                                 child: Container(
                                   child: Icon(
                                     Icons.camera,
-                                    color: Colors.purple,
+                                    color: Theme.of(context).accentColor,
                                     size: 40.0,
                                   ),
                                 ),
@@ -190,7 +190,7 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
                             child: Container(
                               child: Icon(
                                 Feather.arrow_left,
-                                color: Colors.purple,
+                                color: Theme.of(context).accentColor,
                                 size: 36.0,
                               ),
                             ),
@@ -217,7 +217,7 @@ class _DisplayImageScreenState extends State<DisplayImageScreen> {
                             child: Container(
                               child: Icon(
                                 Icons.check,
-                                color: Colors.purple,
+                                color: Theme.of(context).accentColor,
                                 size: 40.0,
                               ),
                             ),

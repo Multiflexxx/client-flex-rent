@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/exceptions/exceptions.dart';
 import 'package:rent/logic/models/models.dart';
@@ -79,9 +80,15 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                     primary: true,
                     forceElevated: innerBoxIsScrolled,
                     toolbarHeight: 0.3 * MediaQuery.of(context).size.height,
+                    leading: IconButton(
+                      icon: Icon(Feather.arrow_left),
+                      iconSize: 30.0,
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () => Navigator.pop(context),
+                    ),
                     bottom: TabBar(
-                      indicator:
-                          CircleTabIndicator(color: Colors.purple, radius: 3.0),
+                      indicator: CircleTabIndicator(
+                          color: Theme.of(context).accentColor, radius: 3.0),
                       tabs: _tabs
                           .map(
                             (String name) => Tab(

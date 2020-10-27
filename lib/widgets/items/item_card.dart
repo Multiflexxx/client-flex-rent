@@ -78,7 +78,7 @@ class ItemCard extends StatelessWidget {
                                       Text(
                                         'Bearbeiten',
                                         style: TextStyle(
-                                          color: Colors.purple,
+                                          color: Theme.of(context).accentColor,
                                           fontSize: 15.0,
                                           fontWeight: FontWeight.w300,
                                           letterSpacing: 1.0,

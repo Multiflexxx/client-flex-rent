@@ -86,7 +86,7 @@ class _MyItemsState extends State<MyItems> {
         ),
         Divider(
           height: 20.0,
-          color: Colors.purple,
+          color: Theme.of(context).accentColor,
         ),
         FlatButton(
           color: Theme.of(context).backgroundColor,

@@ -52,7 +52,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                 padding: EdgeInsets.all(80.0),
                 decoration: new BoxDecoration(
                   color: Theme.of(context).cardColor,
-                  border: Border.all(color: Colors.purple),
+                  border: Border.all(color: Theme.of(context).accentColor),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Container(
@@ -75,7 +75,7 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                     padding: const EdgeInsets.all(10.0),
                     height: 50.0,
                     decoration: BoxDecoration(
-                        color: Colors.purple,
+                        color: Theme.of(context).accentColor,
                         borderRadius: BorderRadius.circular(10.0)),
                     child: Center(
                       child: Text(

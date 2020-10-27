@@ -106,7 +106,7 @@ class DescriptionBox extends StatelessWidget {
                 child: Text(
                   "Show more",
                   style: TextStyle(
-                    color: Colors.purple,
+                    color: Theme.of(context).accentColor,
                     fontSize: 16.0,
                   ),
                 ),

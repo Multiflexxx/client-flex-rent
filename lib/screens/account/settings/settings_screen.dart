@@ -135,7 +135,7 @@ class _AppSettingsBodyState extends State<_AppSettingsBody> {
                     color: Theme.of(context).primaryColor, fontSize: 18.0),
               ),
               Switch(
-                activeColor: Colors.purple,
+                activeColor: Theme.of(context).accentColor,
                 onChanged: (bool) {
                   setState(() {
                     darkmode = bool;

@@ -167,7 +167,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                           ),
                           child: Icon(
                             Feather.plus_circle,
-                            color: Colors.purple,
+                            color: Theme.of(context).accentColor,
                             size: 40.0,
                           ),
                         ),

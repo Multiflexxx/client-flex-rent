@@ -81,7 +81,7 @@ class OfferCard extends StatelessWidget {
                                       ),
                                       Icon(
                                         Icons.star,
-                                        color: Colors.purple,
+                                        color: Theme.of(context).accentColor,
                                       ),
                                     ],
                                   ),

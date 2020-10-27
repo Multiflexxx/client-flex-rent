@@ -78,7 +78,7 @@ class DetailPriceOverview extends StatelessWidget {
           thickness: 1.0,
           indent: 15.0,
           endIndent: 15.0,
-          color: Colors.purple,
+          color: Theme.of(context).accentColor,
         ),
         Padding(
           padding: const EdgeInsets.all(16.0),

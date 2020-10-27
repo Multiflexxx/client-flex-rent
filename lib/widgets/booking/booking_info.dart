@@ -10,7 +10,7 @@ class BookingInfo extends StatelessWidget {
     return Container(
       margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.purple),
+        border: Border.all(color: Theme.of(context).accentColor),
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10.0),
       ),

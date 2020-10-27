@@ -24,7 +24,7 @@ class BookingOverview extends StatelessWidget {
           children: [
             Row(
               children: [
-                Icon(Feather.calendar, color: Colors.purple),
+                Icon(Feather.calendar, color: Theme.of(context).accentColor),
                 SizedBox(
                   width: 10.0,
                 ),

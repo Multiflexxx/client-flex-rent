@@ -12,7 +12,7 @@ class PriceTag extends StatelessWidget {
         Text(
           '$price',
           style: TextStyle(
-              color: Colors.purple,
+              color: Theme.of(context).accentColor,
               fontSize: 18.0,
               fontWeight: FontWeight.w600),
         ),

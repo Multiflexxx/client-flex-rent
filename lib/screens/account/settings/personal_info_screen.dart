@@ -239,7 +239,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                               ),
                               Icon(
                                 Feather.star,
-                                color: Colors.purple,
+                                color: Theme.of(context).accentColor,
                               ),
                               SizedBox(
                                 width: 15.0,
@@ -279,7 +279,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                               ),
                               Icon(
                                 Feather.star,
-                                color: Colors.purple,
+                                color: Theme.of(context).accentColor,
                               ),
                               SizedBox(
                                 width: 15.0,
@@ -494,8 +494,9 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                         padding: const EdgeInsets.all(16),
                         shape: new RoundedRectangleBorder(
                             borderRadius: new BorderRadius.circular(8.0),
-                            side:
-                                BorderSide(color: Colors.purple, width: 1.75)),
+                            side: BorderSide(
+                                color: Theme.of(context).accentColor,
+                                width: 1.75)),
                         child: Text('Passwort ändern'),
                         onPressed: () => pushNewScreen(
                           context,

@@ -69,7 +69,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 child: TextField(
                   controller: _searchController,
                   autofocus: true,
-                  cursorColor: Colors.purple,
+                  cursorColor: Theme.of(context).accentColor,
                   style: TextStyle(
                     color: Colors.white70,
                     fontWeight: FontWeight.w500,
@@ -115,7 +115,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                       borderSide: BorderSide(
-                        color: Colors.purple,
+                        color: Theme.of(context).accentColor,
                         width: 0.75,
                       ),
                     ),
@@ -214,7 +214,7 @@ class _SearchScreenState extends State<SearchScreen> {
             child: Text(
               'Löschen',
               style: TextStyle(
-                color: Colors.purple,
+                color: Theme.of(context).accentColor,
                 fontSize: 16.0,
                 fontWeight: FontWeight.w300,
                 letterSpacing: 1.2,
@@ -240,7 +240,7 @@ class _SearchScreenState extends State<SearchScreen> {
           border: Border(
             bottom: BorderSide(
               width: 0.2,
-              color: Colors.purple,
+              color: Theme.of(context).accentColor,
             ),
           ),
         ),

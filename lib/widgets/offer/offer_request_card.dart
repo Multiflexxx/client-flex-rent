@@ -158,7 +158,7 @@ class OfferRequestCard extends StatelessWidget {
                                   Text(
                                     getInfoText(lessor, offerRequest.statusId),
                                     style: TextStyle(
-                                      color: Colors.purple,
+                                      color: Theme.of(context).accentColor,
                                       fontSize: 16.0,
                                     ),
                                     maxLines: 2,

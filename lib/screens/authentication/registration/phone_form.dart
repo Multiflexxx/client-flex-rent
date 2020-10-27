@@ -69,7 +69,7 @@ class _PhoneFormState extends State<PhoneForm> {
                                     unselectedWidgetColor:
                                         Theme.of(context).primaryColor),
                                 child: Checkbox(
-                                  checkColor: Colors.purple,
+                                  checkColor: Theme.of(context).accentColor,
                                   activeColor:
                                       Theme.of(context).backgroundColor,
                                   value: _agbCheckBox,

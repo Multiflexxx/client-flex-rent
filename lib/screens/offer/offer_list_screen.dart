@@ -103,7 +103,7 @@ class _ProductListBodyState extends State<ProductListBody> {
                 TextSpan(
                   text: widget.category.name,
                   style: TextStyle(
-                    color: Colors.purple,
+                    color: Theme.of(context).accentColor,
                     fontSize: 18.0,
                     height: 1.35,
                     fontWeight: FontWeight.w500,

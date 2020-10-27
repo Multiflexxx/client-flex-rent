@@ -227,7 +227,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                           icon: Icon(
                                             Icons.info_outline,
                                             size: 28.0,
-                                            color: Colors.purple,
+                                            color:
+                                                Theme.of(context).accentColor,
                                           ),
                                           duration: Duration(seconds: 3),
                                           margin: EdgeInsets.all(10.0),
@@ -242,7 +243,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                           MediaQuery.of(context).size.width,
                                       height: 50.0,
                                       decoration: BoxDecoration(
-                                          color: Colors.purple,
+                                          color: Theme.of(context).accentColor,
                                           borderRadius:
                                               BorderRadius.circular(10.0)),
                                       child: Center(
@@ -314,7 +315,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                   child: Text(
                                     "Show more",
                                     style: TextStyle(
-                                      color: Colors.purple,
+                                      color: Theme.of(context).accentColor,
                                       fontSize: 16.0,
                                     ),
                                   ),
@@ -373,7 +374,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                         children: [
                                           Icon(
                                             Feather.calendar,
-                                            color: Colors.purple,
+                                            color:
+                                                Theme.of(context).accentColor,
                                           ),
                                           SizedBox(
                                             width: 10.0,

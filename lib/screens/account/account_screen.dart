@@ -96,7 +96,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       child: AutoSizeText(
                         name,
                         style: TextStyle(
-                          color: Colors.purple,
+                          color: Theme.of(context).accentColor,
                           fontSize: 20.0,
                           letterSpacing: 1.2,
                         ),
@@ -110,7 +110,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             flex: 1,
                             child: Icon(
                               Feather.user_check,
-                              color: Colors.purple,
+                              color: Theme.of(context).accentColor,
                             ),
                           )
                         : Container(),
@@ -162,7 +162,7 @@ class _AccountScreenState extends State<AccountScreen> {
             userCard(name: _name, city: _user.city, verified: _user.verified),
             Divider(
               height: 20.0,
-              color: Colors.purple,
+              color: Theme.of(context).accentColor,
             ),
             Expanded(
               child: MyItems(),

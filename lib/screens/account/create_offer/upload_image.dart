@@ -61,7 +61,7 @@ class UploadImageScreen extends StatelessWidget {
                       TextSpan(
                         text: offer.title,
                         style: TextStyle(
-                          color: Colors.purple,
+                          color: Theme.of(context).accentColor,
                           fontSize: 18.0,
                           height: 1.35,
                           fontWeight: FontWeight.w500,
@@ -106,7 +106,7 @@ class UploadImageScreen extends StatelessWidget {
                           ),
                           child: Icon(
                             Feather.plus_circle,
-                            color: Colors.purple,
+                            color: Theme.of(context).accentColor,
                             size: 40.0,
                           ),
                         ),

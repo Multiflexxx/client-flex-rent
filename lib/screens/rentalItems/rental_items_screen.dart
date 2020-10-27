@@ -78,8 +78,8 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                   forceElevated: innerBoxIsScrolled,
                   toolbarHeight: 0.3 * MediaQuery.of(context).size.height,
                   bottom: TabBar(
-                    indicator:
-                        CircleTabIndicator(color: Colors.purple, radius: 3.0),
+                    indicator: CircleTabIndicator(
+                        color: Theme.of(context).accentColor, radius: 3.0),
                     tabs: _tabs
                         .map(
                           (String name) => Tab(

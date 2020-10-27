@@ -12,7 +12,7 @@ class SlideBar extends StatelessWidget {
           height: 5.0,
           width: 50.0,
           decoration: BoxDecoration(
-            color: Colors.purple,
+            color: Theme.of(context).accentColor,
             borderRadius: BorderRadius.circular(5.0),
           ),
         ),

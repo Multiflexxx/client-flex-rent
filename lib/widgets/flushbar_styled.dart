@@ -14,7 +14,7 @@ Widget showFlushbar({BuildContext context, String message}) {
     icon: Icon(
       Icons.info_outline,
       size: 28.0,
-      color: Colors.purple,
+      color: Theme.of(context).accentColor,
     ),
     duration: Duration(seconds: 3),
     margin: EdgeInsets.all(10.0),

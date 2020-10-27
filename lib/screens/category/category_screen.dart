@@ -57,7 +57,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 border: Border(
                                   bottom: BorderSide(
                                     width: 0.25,
-                                    color: Colors.purple,
+                                    color: Theme.of(context).accentColor,
                                   ),
                                 ),
                               ),
@@ -74,7 +74,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                           width: 50.0,
                                           child: SvgPicture.network(
                                             category.pictureLink,
-                                            color: Colors.purple,
+                                            color:
+                                                Theme.of(context).accentColor,
                                           ),
                                         ),
                                         SizedBox(

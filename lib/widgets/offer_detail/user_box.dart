@@ -60,7 +60,7 @@ class UserBox extends StatelessWidget {
               children: <Widget>[
                 Icon(
                   Icons.star,
-                  color: Colors.purple,
+                  color: Theme.of(context).accentColor,
                 ),
                 SizedBox(
                   width: 10.0,
@@ -84,7 +84,7 @@ class UserBox extends StatelessWidget {
               children: <Widget>[
                 Icon(
                   Icons.verified_user,
-                  color: Colors.purple,
+                  color: Theme.of(context).accentColor,
                 ),
                 SizedBox(
                   width: 10.0,
@@ -122,7 +122,7 @@ class UserBox extends StatelessWidget {
                   width: MediaQuery.of(context).size.width,
                   height: 50.0,
                   decoration: BoxDecoration(
-                      color: Colors.purple,
+                      color: Theme.of(context).accentColor,
                       borderRadius: BorderRadius.circular(10.0)),
                   child: Center(
                     child: Text(

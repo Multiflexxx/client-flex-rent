@@ -79,7 +79,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                             children: [
                               Icon(
                                 Feather.calendar,
-                                color: Colors.purple,
+                                color: Theme.of(context).accentColor,
                               ),
                               SizedBox(
                                 width: 10.0,
@@ -200,7 +200,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                       children: [
                         Icon(
                           Feather.calendar,
-                          color: Colors.purple,
+                          color: Theme.of(context).accentColor,
                         ),
                         SizedBox(
                           width: 10.0,

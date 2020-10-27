@@ -76,8 +76,9 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           height: 120.0,
                           width: 200.0,
                           decoration: BoxDecoration(
-                            border:
-                                Border.all(width: 1.0, color: Colors.purple),
+                            border: Border.all(
+                                width: 1.0,
+                                color: Theme.of(context).accentColor),
                             color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
@@ -103,7 +104,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                     Icon(
                                       Feather.activity,
                                       size: 16.0,
-                                      color: Colors.purple,
+                                      color: Theme.of(context).accentColor,
                                     ),
                                     SizedBox(
                                       width: 5.0,
@@ -112,7 +113,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                       child: AutoSizeText(
                                         offer.category.name,
                                         style: TextStyle(
-                                          color: Colors.purple,
+                                          color: Theme.of(context).accentColor,
                                           fontSize: 16.0,
                                           fontWeight: FontWeight.w500,
                                           letterSpacing: 1.2,
