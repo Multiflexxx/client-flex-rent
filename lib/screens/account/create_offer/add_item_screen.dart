@@ -30,14 +30,22 @@ class _AddItemBody extends StatefulWidget {
 }
 
 class _AddItemBodyState extends State<_AddItemBody> {
-  final _formKey = GlobalKey<FormState>();
+  final _key = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descritpionController = TextEditingController();
   final _priceController = TextEditingController();
 
+  http.Response apiResult;
+
   String barcodeResult = '';
   Category _category;
-  http.Response apiResult;
+  AutovalidateMode _validateMode;
+
+  @override
+  void initState() {
+    super.initState();
+    _validateMode = AutovalidateMode.disabled;
+  }
 
   void _selectCategory({BuildContext parentContext}) async {
     final Category _selectedCategory = await showCupertinoModalBottomSheet(
@@ -57,21 +65,26 @@ class _AddItemBodyState extends State<_AddItemBody> {
   }
 
   void _createOffer() {
-    Offer offer = Offer(
-      title: _titleController.text,
-      description: _descritpionController.text,
-      category: _category,
-      price: double.parse(_priceController.text),
-    );
-
-    Future<Offer> backendOffer = ApiOfferService().createOffer(newOffer: offer);
-    pushNewScreen(
-      context,
-      screen: AddImages(
-        offer: backendOffer,
-      ),
-      withNavBar: false,
-    );
+    setState(() {
+      _validateMode = AutovalidateMode.always;
+    });
+    if (_key.currentState.validate() && _category != null) {
+      Offer offer = Offer(
+        title: _titleController.text,
+        description: _descritpionController.text,
+        category: _category,
+        price: double.parse(_priceController.text),
+      );
+      Future<Offer> backendOffer =
+          ApiOfferService().createOffer(newOffer: offer);
+      pushNewScreen(
+        context,
+        screen: AddImages(
+          offer: backendOffer,
+        ),
+        withNavBar: false,
+      );
+    }
   }
 
   @override
@@ -140,13 +153,19 @@ class _AddItemBodyState extends State<_AddItemBody> {
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Form(
-            key: _formKey,
+            key: _key,
+            autovalidateMode: _validateMode,
             child: Column(
               children: [
                 FormFieldStyled(
                   controller: _titleController,
                   hintText: "Produktname",
                   autocorrect: true,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Produktname notwendig';
+                    }
+                  },
                 ),
                 SizedBox(height: 16.0),
                 SizedBox(
@@ -158,7 +177,12 @@ class _AddItemBodyState extends State<_AddItemBody> {
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
-                      side: BorderSide(color: Theme.of(context).primaryColor),
+                      side: BorderSide(
+                        color: (_validateMode == AutovalidateMode.always &&
+                                _category == null)
+                            ? Colors.red
+                            : Theme.of(context).primaryColor,
+                      ),
                     ),
                     child: Align(
                       alignment: Alignment.centerLeft,
@@ -177,6 +201,11 @@ class _AddItemBodyState extends State<_AddItemBody> {
                   hintText: "Beschreibung",
                   autocorrect: true,
                   maxLines: 8,
+                  validator: (String value) {
+                    if (value.isEmpty) {
+                      return 'Beschreibung notwendig';
+                    }
+                  },
                 ),
                 SizedBox(height: 16.0),
                 Row(
@@ -188,7 +217,14 @@ class _AddItemBodyState extends State<_AddItemBody> {
                         hintText: "Preis",
                         autocorrect: true,
                         type: TextInputType.numberWithOptions(
-                            signed: false, decimal: true),
+                          signed: false,
+                          decimal: true,
+                        ),
+                        validator: (String value) {
+                          if (value.isEmpty) {
+                            return 'Produktname notwendig';
+                          }
+                        },
                       ),
                     ),
                     Expanded(
@@ -219,6 +255,9 @@ class _AddItemBodyState extends State<_AddItemBody> {
               ],
             ),
           ),
+        ),
+        SizedBox(
+          height: 75.0,
         ),
       ],
     );
