@@ -30,7 +30,6 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
   List<String> _imageList;
   List<String> _deleteImageList;
   Offer _offer;
-  List<Category> categoryList;
 
   Category _category;
 

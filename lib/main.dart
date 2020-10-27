@@ -53,13 +53,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.black,
         accentColor: Colors.purple,
-        backgroundColor: Color(0xFFE9E9E9),
-        cardColor: Color(0xFFCCCCCC),
+        backgroundColor: Color(0xFFDBD7DB),
+        cardColor: Color(0xFFE9E9E9),
         iconTheme: IconThemeData(color: Colors.black),
         textTheme: TextTheme(
           bodyText2: TextStyle(color: Colors.black),
         ),
-        scaffoldBackgroundColor: Color(0xFFE9E9E9),
+        scaffoldBackgroundColor: Color(0xFFDBD7DB),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData(

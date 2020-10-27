@@ -4,41 +4,63 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/category/category.dart';
 import 'package:rent/logic/models/offer/offer.dart';
 import 'package:rent/logic/services/services.dart';
 import 'package:rent/screens/account/create_offer/add_images.dart';
+import 'package:rent/widgets/category/category_picker.dart';
 import 'package:rent/widgets/formfieldstyled.dart';
+import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
 
-class AddItem extends StatefulWidget {
+class AddItemScreen extends StatelessWidget {
   @override
-  _AddItemState createState() => _AddItemState();
+  Widget build(BuildContext context) {
+    return StandardSliverAppBarList(
+      title: 'Produkt einstellen',
+      bodyWidget: _AddItemBody(),
+    );
+  }
 }
 
-class _AddItemState extends State<AddItem> {
+class _AddItemBody extends StatefulWidget {
+  @override
+  _AddItemBodyState createState() => _AddItemBodyState();
+}
+
+class _AddItemBodyState extends State<_AddItemBody> {
   final _formKey = GlobalKey<FormState>();
   final _titleController = TextEditingController();
   final _descritpionController = TextEditingController();
   final _priceController = TextEditingController();
 
   String barcodeResult = '';
-  Category category;
-
+  Category _category;
   http.Response apiResult;
-  Future<List<Category>> categoryList;
 
-  @override
-  void initState() {
-    super.initState();
-    categoryList = ApiOfferService().getAllCategory();
+  void _selectCategory({BuildContext parentContext}) async {
+    final Category _selectedCategory = await showCupertinoModalBottomSheet(
+      expand: false,
+      useRootNavigator: true,
+      context: context,
+      barrierColor: Colors.black45,
+      builder: (context, scrollController) => CategoryPicker(
+        scrollController: scrollController,
+      ),
+    );
+    if (_selectedCategory != null) {
+      setState(() {
+        _category = _selectedCategory;
+      });
+    }
   }
 
   void _createOffer() {
     Offer offer = Offer(
       title: _titleController.text,
       description: _descritpionController.text,
-      category: category,
+      category: _category,
       price: double.parse(_priceController.text),
     );
 
@@ -54,196 +76,151 @@ class _AddItemState extends State<AddItem> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Ein Produkt einstellen'),
-        centerTitle: true,
-      ),
-      body: GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SafeArea(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Flexible(
-                child: Form(
-                  key: _formKey,
-                  child: SingleChildScrollView(
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Expanded(
-                                flex: 1,
-                                child: Center(
-                                  child: Text('Manuell oder'),
-                                ),
-                              ),
-                              Expanded(
-                                flex: 1,
-                                child: RaisedButton.icon(
-                                  icon: Icon(
-                                    Icons.qr_code_scanner_outlined,
-                                    color: Theme.of(context).primaryColor,
-                                  ),
-                                  color: Colors.transparent,
-                                  padding: EdgeInsets.all(16.0),
-                                  shape: new RoundedRectangleBorder(
-                                      borderRadius:
-                                          new BorderRadius.circular(8.0),
-                                      side: BorderSide(
-                                          color: Theme.of(context).accentColor,
-                                          width: 1.75)),
-                                  onPressed: () async {
-                                    barcodeResult =
-                                        await FlutterBarcodeScanner.scanBarcode(
-                                            '#FF5733',
-                                            'Abbrechen',
-                                            true,
-                                            ScanMode.BARCODE);
-                                    String url =
-                                        'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
-                                    String differentUrl =
-                                        'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
-                                    if (barcodeResult != "-1") {
-                                      //-1 heißt der barcode scanner wurde abgebrochen
-                                      apiResult = await http.get(url);
-                                      //apiResult = new http.Response(" error=0\n---\nasin=\nname=Spekulatius\ndetailname=netto spekulatius\nvendor=santa claus town\nmaincat=Süsswaren, Snacks\nsubcat=Bisquits, Kekse, Konfekt\nmaincatnum=20\nsubcatnum=0\ncontents=0\npack=0\norigin=Deutschland\ndescr=\nname_en=\ndetailname_en=\ndescr_en=\nvalidated=50 %\n---", 400);
-                                      try {
-                                        setState(() {
-                                          Offer product =
-                                              apiResponseToOffer(apiResult);
-                                          _titleController.text = product.title;
-                                          _descritpionController.text =
-                                              product.description;
-                                        });
-                                      } catch (e) {
-                                        _showError(e);
-                                        //error handling
-                                      }
-                                    }
-                                  },
-                                  label: Text(
-                                    'Scan',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: 16.0),
-                          FormFieldStyled(
-                            controller: _titleController,
-                            hintText: "Produktname",
-                            autocorrect: true,
-                          ),
-                          SizedBox(height: 16.0),
-                          FutureBuilder<List<Category>>(
-                            future: categoryList,
-                            builder: (context, categories) {
-                              if (categories.hasData) {
-                                return SizedBox(
-                                  width: double.infinity,
-                                  child: DropdownButton<Category>(
-                                    isExpanded: true,
-                                    dropdownColor:
-                                        Theme.of(context).backgroundColor,
-                                    hint: Text(
-                                      'Kategorie',
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor),
-                                    ),
-                                    items: categories.data
-                                        .map<DropdownMenuItem<Category>>(
-                                            (Category category) {
-                                      return DropdownMenuItem<Category>(
-                                        value: category,
-                                        child: Text(
-                                          category.name,
-                                          style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor),
-                                        ),
-                                      );
-                                    }).toList(),
-                                    onChanged: (value) {
-                                      setState(() {
-                                        category = value;
-                                      });
-                                    },
-                                    value: category,
-                                  ),
-                                );
-                              } else {
-                                return Center(
-                                    child: CircularProgressIndicator());
-                              }
-                            },
-                          ),
-                          SizedBox(height: 16.0),
-                          FormFieldStyled(
-                            controller: _descritpionController,
-                            hintText: "Beschreibung",
-                            autocorrect: true,
-                            maxLines: 8,
-                          ),
-                          SizedBox(height: 16.0),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Expanded(
-                                child: FormFieldStyled(
-                                  controller: _priceController,
-                                  hintText: "Preis",
-                                  autocorrect: true,
-                                  type: TextInputType.numberWithOptions(
-                                      signed: false, decimal: true),
-                                ),
-                              ),
-                              Expanded(
-                                child: Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
-                                  child: Text('€ Pro Tag',
-                                      style: TextStyle(
-                                          color:
-                                              Theme.of(context).primaryColor)),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: 16.0),
-                          SizedBox(
-                            width: double.infinity,
-                            child: RaisedButton(
-                              color: Theme.of(context).accentColor,
-                              textColor: Theme.of(context).primaryColor,
-                              padding: const EdgeInsets.all(16),
-                              shape: new RoundedRectangleBorder(
-                                  borderRadius: new BorderRadius.circular(8.0)),
-                              child: Text('Speichern'),
-                              onPressed: () {
-                                _createOffer();
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: <Widget>[
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+          child: Row(
+            children: [
+              Expanded(
+                flex: 1,
+                child: Center(
+                  child: Text('Manuell oder'),
                 ),
               ),
+              Expanded(
+                flex: 1,
+                child: RaisedButton.icon(
+                  icon: Icon(
+                    Icons.qr_code_scanner_outlined,
+                    color: Theme.of(context).primaryColor,
+                  ),
+                  color: Colors.transparent,
+                  padding: EdgeInsets.all(16.0),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(8.0),
+                      side: BorderSide(
+                          color: Theme.of(context).accentColor, width: 1.75)),
+                  onPressed: () async {
+                    barcodeResult = await FlutterBarcodeScanner.scanBarcode(
+                        '#FF5733', 'Abbrechen', true, ScanMode.BARCODE);
+                    String url =
+                        'http://opengtindb.org/?ean=$barcodeResult&cmd=query&queryid=400000000';
+                    String differentUrl =
+                        'https://api.barcodelookup.com/v2/products?barcode=$barcodeResult&formatted=y&key=6y8fd1esob8wg7lq6wbt65bpx45tar';
+                    if (barcodeResult != "-1") {
+                      //-1 heißt der barcode scanner wurde abgebrochen
+                      apiResult = await http.get(url);
+                      try {
+                        setState(() {
+                          Offer product = apiResponseToOffer(apiResult);
+                          _titleController.text = product.title;
+                          _descritpionController.text = product.description;
+                        });
+                      } catch (e) {
+                        _showError(e);
+                      }
+                    }
+                  },
+                  label: Text(
+                    'Scan',
+                    style: TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                ),
+              )
             ],
           ),
         ),
-      ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+          decoration: new BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                FormFieldStyled(
+                  controller: _titleController,
+                  hintText: "Produktname",
+                  autocorrect: true,
+                ),
+                SizedBox(height: 16.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    color: Theme.of(context).cardColor,
+                    textColor: Theme.of(context).primaryColor,
+                    padding:
+                        EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      side: BorderSide(color: Theme.of(context).primaryColor),
+                    ),
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        _category != null ? _category.name : 'Kategorie',
+                        style: TextStyle(
+                            fontSize: 16.0, fontWeight: FontWeight.w400),
+                      ),
+                    ),
+                    onPressed: () => _selectCategory(parentContext: context),
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                FormFieldStyled(
+                  controller: _descritpionController,
+                  hintText: "Beschreibung",
+                  autocorrect: true,
+                  maxLines: 8,
+                ),
+                SizedBox(height: 16.0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: FormFieldStyled(
+                        controller: _priceController,
+                        hintText: "Preis",
+                        autocorrect: true,
+                        type: TextInputType.numberWithOptions(
+                            signed: false, decimal: true),
+                      ),
+                    ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.fromLTRB(10.0, 0, 0, 0),
+                        child: Text('€ Pro Tag',
+                            style: TextStyle(
+                                color: Theme.of(context).primaryColor)),
+                      ),
+                    )
+                  ],
+                ),
+                SizedBox(height: 16.0),
+                SizedBox(
+                  width: double.infinity,
+                  child: RaisedButton(
+                    color: Theme.of(context).accentColor,
+                    textColor: Theme.of(context).primaryColor,
+                    padding: const EdgeInsets.all(16),
+                    shape: new RoundedRectangleBorder(
+                        borderRadius: new BorderRadius.circular(8.0)),
+                    child: Text('Speichern'),
+                    onPressed: () {
+                      _createOffer();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 
@@ -315,7 +292,6 @@ class _AddItemState extends State<AddItem> {
       //16=---
       //print(lines);
       offer.title = lines[4];
-      //offer.category=lines[6]; Kategorie scheint objekt zu sein
       offer.description = lines[13];
     } else if (error == "1") {
       throw Exception('Artikel nicht gefunden');
@@ -328,33 +304,6 @@ class _AddItemState extends State<AddItem> {
     } else {
       throw Exception('API Fehler');
     }
-    /*
-    switch (error) {
-      case "0":
-        {
-          offer.description = result;
-          //result.split('---');
-          //decoded = result[1];
-          LineSplitter ls = new LineSplitter();
-          List<String> lines = ls.convert(result);
-        }
-        break;
-      case '1':
-        {
-          throw Exception('Artikel nicht gefunden');
-        }
-        break;
-      case '2':
-        {
-          throw Exception('Fehler bei der Übertragung');
-        }
-        break;
-      case '3':
-        {
-          throw Exception('Fehler beim Scannen des Codes');
-        }
-        break;
-    }*/
     return offer;
   }
 

@@ -93,7 +93,7 @@ class _MyItemsState extends State<MyItems> {
           onPressed: () {
             pushNewScreen(
               context,
-              screen: AddItem(),
+              screen: AddItemScreen(),
               withNavBar: false,
             );
           },

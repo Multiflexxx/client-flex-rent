@@ -79,6 +79,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
             return RefreshIndicator(
               onRefresh: () => _fetchDiscoveryOffer(),
               backgroundColor: Theme.of(context).accentColor,
+              color: Colors.white,
               child: SingleChildScrollView(
                 child: ConstrainedBox(
                   constraints: BoxConstraints(
