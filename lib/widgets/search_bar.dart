@@ -14,7 +14,7 @@ class _SearchBarState extends State<SearchBar> {
       child: TextField(
         readOnly: true,
         style: TextStyle(
-          color: Colors.white70,
+          color: Theme.of(context).primaryColor,
           fontWeight: FontWeight.w500,
           letterSpacing: 1.2,
         ),
@@ -28,25 +28,25 @@ class _SearchBarState extends State<SearchBar> {
         decoration: InputDecoration(
           filled: true,
           fillColor: Theme.of(context).backgroundColor,
-          hintStyle: TextStyle(color: Colors.white70),
+          hintStyle: TextStyle(color: Theme.of(context).primaryColor),
           hintText: "Suche",
           contentPadding: EdgeInsets.symmetric(vertical: 0.0),
           prefixIcon: Icon(
             Icons.search,
-            color: Colors.white70,
+            color: Theme.of(context).primaryColor,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.0),
             borderSide: BorderSide(
-              color: Colors.white54,
-              width: 0.75,
+              color: Theme.of(context).primaryColor,
+              width: 1.5,
             ),
           ),
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15.0),
             borderSide: BorderSide(
-              color: Colors.white54,
-              width: 0.75,
+              color: Theme.of(context).primaryColor,
+              width: 1.5,
             ),
           ),
         ),

@@ -71,7 +71,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   autofocus: true,
                   cursorColor: Theme.of(context).accentColor,
                   style: TextStyle(
-                    color: Colors.white70,
+                    color: Theme.of(context).primaryColor,
                     fontWeight: FontWeight.w500,
                     letterSpacing: 1.2,
                   ),
@@ -81,11 +81,11 @@ class _SearchScreenState extends State<SearchScreen> {
                   decoration: InputDecoration(
                     filled: true,
                     fillColor: Theme.of(context).backgroundColor,
-                    hintStyle: TextStyle(color: Colors.white70),
+                    hintStyle: TextStyle(color: Theme.of(context).primaryColor),
                     hintText: "Suche",
                     contentPadding: EdgeInsets.symmetric(vertical: 0.0),
                     prefixIcon: BackButton(
-                      color: Colors.white70,
+                      color: Theme.of(context).primaryColor,
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
@@ -95,7 +95,7 @@ class _SearchScreenState extends State<SearchScreen> {
                             icon: Icon(
                               Feather.x,
                             ),
-                            color: Colors.white70,
+                            color: Theme.of(context).primaryColor,
                             onPressed: () {
                               setState(() {
                                 getSuggestions();
@@ -108,15 +108,15 @@ class _SearchScreenState extends State<SearchScreen> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                       borderSide: BorderSide(
-                        color: Colors.white54,
-                        width: 0.75,
+                        color: Theme.of(context).primaryColor,
+                        width: 1.5,
                       ),
                     ),
                     focusedBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(15.0),
                       borderSide: BorderSide(
                         color: Theme.of(context).accentColor,
-                        width: 0.75,
+                        width: 1.5,
                       ),
                     ),
                   ),
@@ -263,7 +263,7 @@ class _SearchScreenState extends State<SearchScreen> {
               Icon(
                 Ionicons.ios_arrow_forward,
                 size: 24.0,
-                color: Colors.white70,
+                color: Theme.of(context).primaryColor,
               ),
             ],
           ),
