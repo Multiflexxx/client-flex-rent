@@ -11,7 +11,7 @@ class UpdateOfferScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
-      title: 'Änderungen',
+      title: 'Bearbeiten',
       bodyWidget: UpdateOfferBody(
         offer: offer,
       ),

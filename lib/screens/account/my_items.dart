@@ -23,6 +23,15 @@ class _MyItemsState extends State<MyItems> {
     offerList = ApiOfferService().getOfferbyUser();
   }
 
+  void _addItem() async {
+    final offer = await pushNewScreen(
+      context,
+      screen: AddItemScreen(),
+      withNavBar: false,
+    );
+    _goToEditOfferView(offer: offer);
+  }
+
   void _goToEditOfferView({Offer offer}) async {
     await pushNewScreen(
       context,
@@ -90,13 +99,7 @@ class _MyItemsState extends State<MyItems> {
         ),
         FlatButton(
           color: Theme.of(context).backgroundColor,
-          onPressed: () {
-            pushNewScreen(
-              context,
-              screen: AddItemScreen(),
-              withNavBar: false,
-            );
-          },
+          onPressed: () => _addItem(),
           child: Text(
             '+',
             style: TextStyle(
