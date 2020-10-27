@@ -158,7 +158,7 @@ class _OfferScreenState extends State<OfferScreen> {
                             vertical: 12.0, horizontal: 18.0),
                         height: 80,
                         decoration: BoxDecoration(
-                          color: Color(0xFF202020),
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Padding(
@@ -268,7 +268,7 @@ class _OfferScreenState extends State<OfferScreen> {
                         margin: EdgeInsets.symmetric(
                             vertical: 12.0, horizontal: 18.0),
                         decoration: BoxDecoration(
-                          color: Color(0xFF202020),
+                          color: Theme.of(context).cardColor,
                           borderRadius: BorderRadius.circular(10.0),
                         ),
                         child: Padding(
@@ -357,7 +357,7 @@ class _OfferScreenState extends State<OfferScreen> {
                               vertical: 12.0, horizontal: 18.0),
                           padding: EdgeInsets.symmetric(vertical: 8.0),
                           decoration: new BoxDecoration(
-                            color: Color(0xFF202020),
+                            color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(

@@ -43,7 +43,7 @@ class UploadImageScreen extends StatelessWidget {
             Container(
               margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
               decoration: BoxDecoration(
-                color: Color(0xFF202020),
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
               child: Padding(
@@ -101,7 +101,7 @@ class UploadImageScreen extends StatelessWidget {
                           height: 180,
                           width: 180,
                           decoration: BoxDecoration(
-                            color: Color(0xFF202020),
+                            color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Icon(

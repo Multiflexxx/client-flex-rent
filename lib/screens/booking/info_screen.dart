@@ -19,7 +19,7 @@ class _InfoBookingScreenState extends State<InfoBookingScreen> {
             Container(
                 padding: EdgeInsets.all(10.0),
                 decoration: new BoxDecoration(
-                  color: Color(0xFF202020),
+                  color: Theme.of(context).cardColor,
                   border: Border.all(color: Colors.purple),
                   borderRadius: BorderRadius.circular(10.0),
                 ),

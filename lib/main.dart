@@ -52,14 +52,14 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: Colors.black,
-        accentColor: Colors.purple,
-        backgroundColor: Color(0xFFF2F2F2),
-        cardColor: Color(0xFFDDDDDD),
+        accentColor: Colors.deepPurple,
+        backgroundColor: Color(0xFFE9E9E9),
+        cardColor: Color(0xFFCCCCCC),
         iconTheme: IconThemeData(color: Colors.black),
         textTheme: TextTheme(
           bodyText2: TextStyle(color: Colors.black),
         ),
-        scaffoldBackgroundColor: Color(0xFFF2F2F2),
+        scaffoldBackgroundColor: Color(0xFFE9E9E9),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       darkTheme: ThemeData(

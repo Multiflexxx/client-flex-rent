@@ -142,7 +142,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
           margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
           decoration: new BoxDecoration(
-            color: Color(0xFF202020),
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Container(
@@ -235,7 +235,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
           margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
           decoration: new BoxDecoration(
-            color: Color(0xFF202020),
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: Form(
@@ -251,7 +251,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                 SizedBox(
                   width: double.infinity,
                   child: RaisedButton(
-                    color: Color(0xFF202020),
+                    color: Theme.of(context).cardColor,
                     textColor: Theme.of(context).primaryColor,
                     padding:
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),

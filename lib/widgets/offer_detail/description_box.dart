@@ -15,7 +15,7 @@ class DescriptionBox extends StatelessWidget {
     return Container(
       margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
       decoration: BoxDecoration(
-        color: Color(0xFF202020),
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(
@@ -53,7 +53,7 @@ class DescriptionBox extends StatelessWidget {
                     context: context,
                     barrierColor: Colors.black45,
                     builder: (context, scrollController) => Material(
-                          color: Color(0xFF202020),
+                          color: Theme.of(context).cardColor,
                           child: SafeArea(
                             top: false,
                             child: Column(

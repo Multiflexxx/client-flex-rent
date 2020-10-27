@@ -64,7 +64,7 @@ class _DataRangePickerState extends State<DateRangePicker> {
     _controller.selectedDate = date;
     _controller.selectedRange = range;
     return Material(
-      color: Color(0xFF202020),
+      color: Theme.of(context).cardColor,
       child: SafeArea(
         top: false,
         child: Column(
@@ -108,7 +108,7 @@ class _DataRangePickerState extends State<DateRangePicker> {
                 ),
 
                 // Style
-                backgroundColor: Color(0xFF202020),
+                backgroundColor: Theme.of(context).cardColor,
                 monthCellStyle: DateRangePickerMonthCellStyle(
                   textStyle: TextStyle(color: Theme.of(context).primaryColor),
                   todayTextStyle:

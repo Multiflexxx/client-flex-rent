@@ -153,7 +153,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
               margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
               decoration: new BoxDecoration(
-                color: Color(0xFF202020),
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Row(
@@ -307,7 +307,7 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
               margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
               padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
               decoration: new BoxDecoration(
-                color: Color(0xFF202020),
+                color: Theme.of(context).cardColor,
                 borderRadius: BorderRadius.circular(20.0),
               ),
               child: Form(

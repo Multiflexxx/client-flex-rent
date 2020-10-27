@@ -11,7 +11,7 @@ class ProductDescription extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: Color(0xFF202020),
+      color: Theme.of(context).cardColor,
       child: SafeArea(
         top: false,
         child: Column(

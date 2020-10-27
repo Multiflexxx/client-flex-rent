@@ -87,7 +87,7 @@ class _ProductListBodyState extends State<ProductListBody> {
           margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
           padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
           decoration: new BoxDecoration(
-            color: Color(0xFF202020),
+            color: Theme.of(context).cardColor,
             borderRadius: BorderRadius.circular(20.0),
           ),
           child: RichText(

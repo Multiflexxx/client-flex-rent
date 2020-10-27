@@ -88,8 +88,8 @@ class _MyItemsState extends State<MyItems> {
           height: 20.0,
           color: Colors.purple,
         ),
-        RaisedButton(
-          color: Colors.transparent,
+        FlatButton(
+          color: Theme.of(context).backgroundColor,
           onPressed: () {
             pushNewScreen(
               context,

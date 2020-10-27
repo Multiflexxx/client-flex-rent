@@ -14,7 +14,7 @@ class DateRangeButtonBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Color(0xFF202020),
+      color: Theme.of(context).cardColor,
       child: ButtonBar(
         children: <Widget>[
           FlatButton(

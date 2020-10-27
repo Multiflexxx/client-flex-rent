@@ -49,7 +49,7 @@ class _AddImagesState extends State<AddImages> {
                     margin:
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
                     decoration: BoxDecoration(
-                      color: Color(0xFF202020),
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Padding(
@@ -84,7 +84,7 @@ class _AddImagesState extends State<AddImages> {
                     margin:
                         EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
                     decoration: BoxDecoration(
-                      color: Color(0xFF202020),
+                      color: Theme.of(context).cardColor,
                       borderRadius: BorderRadius.circular(10.0),
                     ),
                     child: Padding(

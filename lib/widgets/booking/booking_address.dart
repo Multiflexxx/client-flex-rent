@@ -69,7 +69,7 @@ class _BookingAddressState extends State<BookingAddress> {
             children: <Widget>[
               for (var map in availableMaps)
                 Material(
-                  color: Color(0xFF202020),
+                  color: Theme.of(context).cardColor,
                   child: SafeArea(
                     child: Column(
                       mainAxisSize: MainAxisSize.min,
@@ -113,7 +113,7 @@ class _BookingAddressState extends State<BookingAddress> {
     return Container(
       margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
-        color: Color(0xFF202020),
+        color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: Padding(

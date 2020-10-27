@@ -78,7 +78,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                           decoration: BoxDecoration(
                             border:
                                 Border.all(width: 1.0, color: Colors.purple),
-                            color: Color(0xFF202020),
+                            color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(10.0),
                           ),
                           child: Padding(
