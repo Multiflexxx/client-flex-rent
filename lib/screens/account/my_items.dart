@@ -29,7 +29,9 @@ class _MyItemsState extends State<MyItems> {
       screen: AddItemScreen(),
       withNavBar: false,
     );
-    _goToEditOfferView(offer: offer);
+    if (offer != null) {
+      _goToEditOfferView(offer: offer);
+    }
   }
 
   void _goToEditOfferView({Offer offer}) async {

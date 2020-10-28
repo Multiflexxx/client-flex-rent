@@ -15,8 +15,8 @@ class DateRangePicker extends StatefulWidget {
   final DateTime displayDate;
   final List<DateRange> blockedDates;
 
-  DateRangePicker(
-    this.scrollController, {
+  DateRangePicker({
+    this.scrollController,
     this.date,
     this.range,
     this.minDate,

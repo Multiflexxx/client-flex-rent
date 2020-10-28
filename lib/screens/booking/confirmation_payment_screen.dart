@@ -142,7 +142,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                                         barrierColor: Colors.black45,
                                         builder: (context, scrollController) =>
                                             DateRangePicker(
-                                          scrollController,
+                                          scrollController: scrollController,
                                           date: null,
                                           range: _picker.PickerDateRange(
                                             _dateRange.fromDate,

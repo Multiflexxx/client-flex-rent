@@ -33,23 +33,27 @@ class _OfferScreenState extends State<OfferScreen> {
 
   @override
   void initState() {
+    super.initState();
     _dateRange = DateRange(fromDate: null, toDate: null);
     initializeDateFormatting('de_DE', null);
     offer = ApiOfferService().getOfferById(offerId: widget.offer.offerId);
-    super.initState();
   }
 
   void _onSelectedRangeChanged(_picker.PickerDateRange dateRange) {
     final DateTime startDateValue = dateRange.startDate;
     DateTime endDateValue = dateRange.endDate;
     endDateValue ??= startDateValue;
-    setState(() {
-      if (startDateValue.isAfter(endDateValue)) {
-        _dateRange = DateRange(fromDate: endDateValue, toDate: startDateValue);
-      } else {
-        _dateRange = DateRange(fromDate: startDateValue, toDate: endDateValue);
-      }
-    });
+    setState(
+      () {
+        if (startDateValue.isAfter(endDateValue)) {
+          _dateRange =
+              DateRange(fromDate: endDateValue, toDate: startDateValue);
+        } else {
+          _dateRange =
+              DateRange(fromDate: startDateValue, toDate: endDateValue);
+        }
+      },
+    );
   }
 
   @override
@@ -335,7 +339,7 @@ class _OfferScreenState extends State<OfferScreen> {
                             barrierColor: Colors.black45,
                             builder: (context, scrollController) =>
                                 DateRangePicker(
-                              scrollController,
+                              scrollController: scrollController,
                               date: null,
                               range: _picker.PickerDateRange(
                                 _dateRange.fromDate,

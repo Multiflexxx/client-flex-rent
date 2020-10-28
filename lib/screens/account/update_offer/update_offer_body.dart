@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:rent/logic/models/models.dart';
 import 'package:rent/logic/services/services.dart';
+import 'package:rent/screens/account/update_offer/block_offer_screen.dart';
+import 'package:rent/widgets/calendar/calendar.dart';
 import 'package:rent/widgets/camera/image_source.dart';
 import 'package:rent/widgets/category/category_picker.dart';
 
@@ -124,6 +127,19 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        RaisedButton(
+          onPressed: () => showCupertinoModalBottomSheet<dynamic>(
+            expand: true,
+            useRootNavigator: true,
+            context: context,
+            barrierColor: Colors.black45,
+            builder: (context, scrollController) => Calendar(
+              scrollController: scrollController,
+              offer: _offer,
+            ),
+          ),
+          child: Text('Blockiere deinen Mietgegenstand für dich.'),
+        ),
         Padding(
           padding: EdgeInsets.only(left: 28.0),
           child: Text(
