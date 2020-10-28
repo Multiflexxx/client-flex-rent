@@ -3,13 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/services.dart';
-import 'package:rent/widgets/calendar/calendar.dart';
-import 'package:rent/widgets/camera/image_source.dart';
-import 'package:rent/widgets/category/category_picker.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/widgets/calendar/calendar.dart';
+import 'package:flexrent/widgets/camera/image_source.dart';
+import 'package:flexrent/widgets/category/category_picker.dart';
 
-import 'package:rent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/formfieldstyled.dart';
 
 class UpdateOfferBody extends StatefulWidget {
   final Offer offer;

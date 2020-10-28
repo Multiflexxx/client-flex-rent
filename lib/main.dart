@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent/app.dart';
-import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
-import 'package:rent/logic/blocs/user/bloc/user_bloc.dart';
-import 'package:rent/screens/authentication/login/login.dart';
-import 'package:rent/screens/authentication/registration/register.dart';
+import 'package:flexrent/app.dart';
+import 'package:flexrent/logic/blocs/authentication/bloc/authentication_bloc.dart';
+import 'package:flexrent/logic/blocs/user/bloc/user_bloc.dart';
+import 'package:flexrent/screens/authentication/login/login.dart';
+import 'package:flexrent/screens/authentication/registration/register.dart';
 
 import 'logic/services/services.dart';
 

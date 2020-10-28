@@ -2,10 +2,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/blocs/register/bloc/register_bloc.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/widgets/formfieldstyled.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/blocs/register/bloc/register_bloc.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/widgets/formfieldstyled.dart';
 
 class PersonalForm extends StatefulWidget {
   final String phoneNumber;

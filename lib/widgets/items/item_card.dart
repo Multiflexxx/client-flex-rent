@@ -1,8 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/logic/models/offer/offer.dart';
-import 'package:rent/widgets/price/price_tag.dart';
+import 'package:flexrent/logic/models/offer/offer.dart';
+import 'package:flexrent/widgets/price/price_tag.dart';
 
 class ItemCard extends StatelessWidget {
   final Offer offer;

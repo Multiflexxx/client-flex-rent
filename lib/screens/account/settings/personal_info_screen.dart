@@ -10,14 +10,14 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/logic/blocs/authentication/bloc/authentication_bloc.dart';
-import 'package:rent/logic/blocs/user/bloc/user_bloc.dart';
-import 'package:rent/logic/models/user/user.dart';
-import 'package:rent/screens/account/settings/update_password_screen.dart';
-import 'package:rent/widgets/camera/image_source.dart';
-import 'package:rent/widgets/flushbar_styled.dart';
-import 'package:rent/widgets/formfieldstyled.dart';
-import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flexrent/logic/blocs/authentication/bloc/authentication_bloc.dart';
+import 'package:flexrent/logic/blocs/user/bloc/user_bloc.dart';
+import 'package:flexrent/logic/models/user/user.dart';
+import 'package:flexrent/screens/account/settings/update_password_screen.dart';
+import 'package:flexrent/widgets/camera/image_source.dart';
+import 'package:flexrent/widgets/flushbar_styled.dart';
+import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class PersonalInfoScreen extends StatelessWidget {
   @override

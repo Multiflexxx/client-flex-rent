@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:rent/logic/models/models.dart';
+import 'package:flexrent/logic/models/models.dart';
 
 class OfferRequestCard extends StatelessWidget {
   final OfferRequest offerRequest;

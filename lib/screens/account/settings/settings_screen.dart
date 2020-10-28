@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class AppSettingsScreen extends StatelessWidget {
   @override

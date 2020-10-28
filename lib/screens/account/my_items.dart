@@ -2,13 +2,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/logic/exceptions/exceptions.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/services.dart';
-import 'package:rent/screens/account/create_offer/add_item_screen.dart';
-import 'package:rent/screens/account/update_offer/update_offer_screen.dart';
-import 'package:rent/screens/booking/lessor/lessor_rental_item_screen.dart';
-import 'package:rent/widgets/items/item_card.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/screens/account/create_offer/add_item_screen.dart';
+import 'package:flexrent/screens/account/update_offer/update_offer_screen.dart';
+import 'package:flexrent/screens/booking/lessor/lessor_rental_item_screen.dart';
+import 'package:flexrent/widgets/items/item_card.dart';
 
 class MyItems extends StatefulWidget {
   @override

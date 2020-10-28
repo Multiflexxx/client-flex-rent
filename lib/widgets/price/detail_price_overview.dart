@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:rent/logic/models/date_range/date_range.dart';
+import 'package:flexrent/logic/models/date_range/date_range.dart';
 
 class DetailPriceOverview extends StatelessWidget {
   final double price;

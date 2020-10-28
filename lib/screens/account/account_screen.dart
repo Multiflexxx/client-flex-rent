@@ -7,10 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/screens/account/my_items.dart';
-import 'package:rent/screens/account/settings/account_settings_screen.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/screens/account/my_items.dart';
+import 'package:flexrent/screens/account/settings/account_settings_screen.dart';
 
 class AccountScreen extends StatefulWidget {
   const AccountScreen({Key key}) : super(key: key);

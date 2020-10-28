@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rent/screens/search/search_screen.dart';
+import 'package:flexrent/screens/search/search_screen.dart';
 
 class SearchBar extends StatefulWidget {
   @override

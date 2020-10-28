@@ -7,14 +7,14 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
-import 'package:rent/screens/booking/confirmation_payment_screen.dart';
-import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
-import 'package:rent/widgets/price/price_overview.dart';
-import 'package:rent/widgets/price/price_tag.dart';
-import 'package:rent/widgets/offer/offer_description.dart';
-import 'package:rent/widgets/offer_detail/user_box.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/offer_service.dart';
+import 'package:flexrent/screens/booking/confirmation_payment_screen.dart';
+import 'package:flexrent/widgets/dateRangePicker/date_range_picker.dart';
+import 'package:flexrent/widgets/price/price_overview.dart';
+import 'package:flexrent/widgets/price/price_tag.dart';
+import 'package:flexrent/widgets/offer/offer_description.dart';
+import 'package:flexrent/widgets/offer_detail/user_box.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 

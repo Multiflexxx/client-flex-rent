@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
-import 'package:rent/main.dart';
-import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
-import 'package:rent/widgets/price/detail_price_overview.dart';
-import 'package:rent/widgets/offer/offer_card.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/offer_service.dart';
+import 'package:flexrent/main.dart';
+import 'package:flexrent/widgets/dateRangePicker/date_range_picker.dart';
+import 'package:flexrent/widgets/price/detail_price_overview.dart';
+import 'package:flexrent/widgets/offer/offer_card.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 

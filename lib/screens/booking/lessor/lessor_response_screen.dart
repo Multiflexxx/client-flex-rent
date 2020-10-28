@@ -3,13 +3,13 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/logic/exceptions/exceptions.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/services.dart';
-import 'package:rent/screens/booking/qrcode_screen.dart';
-import 'package:rent/widgets/booking/booking_overview.dart';
-import 'package:rent/widgets/flushbar_styled.dart';
-import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/screens/booking/qrcode_screen.dart';
+import 'package:flexrent/widgets/booking/booking_overview.dart';
+import 'package:flexrent/widgets/flushbar_styled.dart';
+import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class LessorResponseScreen extends StatelessWidget {
   final OfferRequest offerRequest;

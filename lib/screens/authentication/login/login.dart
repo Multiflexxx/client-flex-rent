@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/blocs/login/login.dart';
-import 'package:rent/logic/services/services.dart';
-import 'package:rent/screens/authentication/login/sign_in_form.dart';
-import 'package:rent/widgets/background/logo.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/blocs/login/login.dart';
+import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/screens/authentication/login/sign_in_form.dart';
+import 'package:flexrent/widgets/background/logo.dart';
 
 class LoginScreen extends StatelessWidget {
   @override

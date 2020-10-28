@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
-import 'package:rent/logic/models/models.dart';
+import 'package:flexrent/logic/models/models.dart';
 
 import '../exceptions/exceptions.dart';
 
@@ -196,7 +196,6 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
       final Offer offer = Offer.fromJson(jsonBody);
-      inspect(offer);
       return offer;
     } else {
       inspect(response);

@@ -4,10 +4,10 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/exceptions/exceptions.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/register_service.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/register_service.dart';
 
 part 'register_event.dart';
 part 'register_state.dart';

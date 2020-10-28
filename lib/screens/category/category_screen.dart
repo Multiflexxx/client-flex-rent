@@ -2,10 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/services.dart';
-import 'package:rent/screens/offer/offer_list_screen.dart';
-import 'package:rent/widgets/search_bar.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/screens/offer/offer_list_screen.dart';
+import 'package:flexrent/widgets/search_bar.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key key}) : super(key: key);

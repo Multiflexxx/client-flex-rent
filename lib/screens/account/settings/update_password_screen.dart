@@ -1,12 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/blocs/user/user.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/widgets/flushbar_styled.dart';
-import 'package:rent/widgets/formfieldstyled.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/blocs/user/user.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/widgets/flushbar_styled.dart';
+import 'package:flexrent/widgets/formfieldstyled.dart';
 
 class UpdatePasswordScreen extends StatelessWidget {
   @override

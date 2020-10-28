@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/models/profile_options_model.dart';
-import 'package:rent/screens/404.dart';
-import 'package:rent/screens/account/settings/personal_info_screen.dart';
-import 'package:rent/screens/account/settings/settings_screen.dart';
-import 'package:rent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/models/profile_options_model.dart';
+import 'package:flexrent/screens/404.dart';
+import 'package:flexrent/screens/account/settings/personal_info_screen.dart';
+import 'package:flexrent/screens/account/settings/settings_screen.dart';
+import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class AccountSettingsScreen extends StatelessWidget {
   @override

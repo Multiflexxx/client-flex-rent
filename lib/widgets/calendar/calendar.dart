@@ -1,11 +1,12 @@
 import 'dart:developer';
 
+import 'package:flexrent/logic/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/widgets/calendar/calendar_delete_change.dart';
-import 'package:rent/widgets/dateRangePicker/date_range_picker.dart';
-import 'package:rent/widgets/slide_bar.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/widgets/calendar/calendar_delete_change.dart';
+import 'package:flexrent/widgets/dateRangePicker/date_range_picker.dart';
+import 'package:flexrent/widgets/slide_bar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
@@ -38,26 +39,60 @@ class _CalendarState extends State<Calendar> {
       appointments.add(
         Appointment(
           startTime: dateRange.fromDate,
-          endTime: dateRange.toDate,
+          endTime: dateRange.toDate.add(Duration(hours: 1)),
           subject: dateRange.blockedByLessor ? 'Blockiert' : 'Vermietet',
           color: dateRange.blockedByLessor ? Colors.blue : Colors.purple,
         ),
       );
     }
-
-    appointments.add(
-      Appointment(
-        startTime: DateTime.now().add(Duration(days: 10)),
-        endTime: DateTime.now().add(Duration(days: 12)),
-        subject: 'Blockiert',
-        color: Colors.blue,
-      ),
-    );
-
     return _AppointmentDataSource(appointments);
   }
 
-  void changeBlockDates({DateRange dateRange}) async {
+  void onCalendarTap({CalendarTapDetails details}) async {
+    List<Appointment> _appointments = details.appointments;
+    DateTime _date = details.date;
+    DateRange dateRange;
+    // Add new one
+    inspect(details);
+    if (_appointments.length == 0) {
+      dateRange = DateRange(fromDate: _date, toDate: _date);
+      changeBlockDates(dateRange: dateRange, flag: 0);
+    } else {
+      if (_appointments.first.subject == 'Blockiert') {
+        dateRange = DateRange(
+          fromDate: _appointments.first.startTime,
+          toDate: _appointments.first.endTime,
+          blockedByLessor: true,
+        );
+
+        final String option = await showCupertinoModalBottomSheet<dynamic>(
+          expand: false,
+          useRootNavigator: true,
+          context: context,
+          barrierColor: Colors.black45,
+          builder: (context, scrollController) => CalendarDeleteChange(
+            scrollController: scrollController,
+          ),
+        );
+
+        if (option == 'change') {
+          changeBlockDates(dateRange: dateRange, flag: 1);
+        } else if (option == 'delete') {
+          setState(() {
+            _dateRange = dateRange;
+          });
+          _updateBlockedDates(flag: 2);
+        }
+      }
+    }
+  }
+
+  void changeBlockDates({DateRange dateRange, int flag}) async {
+    Offer offer = _offer;
+    if (flag == 1) {
+      offer = _deleteBlockedDate(offer: offer, dateRange: dateRange);
+    }
+
     final range = await showCupertinoModalBottomSheet<dynamic>(
       expand: true,
       context: context,
@@ -73,45 +108,12 @@ class _CalendarState extends State<Calendar> {
         maxDate: DateTime.now().add(
           Duration(days: 90),
         ),
-        blockedDates: widget.offer.blockedDates,
+        blockedDates: offer.blockedDates,
       ),
     );
-
     if (range != null) {
       _onSelectedRangeChanged(range);
-    }
-  }
-
-  void onCalendarTap({CalendarTapDetails details}) async {
-    List<Appointment> _appointments = details.appointments;
-    DateTime _date = details.date;
-    DateRange dateRange;
-    if (_appointments.length == 0) {
-      dateRange = DateRange(fromDate: _date, toDate: _date);
-      changeBlockDates(dateRange: dateRange);
-    } else {
-      if (_appointments.first.subject == 'Blockiert') {
-        inspect(_appointments.first);
-        dateRange = DateRange(
-            fromDate: _appointments.first.startTime,
-            toDate: _appointments.first.endTime);
-
-        final String option = await showCupertinoModalBottomSheet<dynamic>(
-          expand: false,
-          useRootNavigator: true,
-          context: context,
-          barrierColor: Colors.black45,
-          builder: (context, scrollController) => CalendarDeleteChange(
-            scrollController: scrollController,
-          ),
-        );
-
-        if (option == 'change') {
-          changeBlockDates(dateRange: dateRange);
-        } else if (option == 'delete') {
-          print('delete');
-        }
-      }
+      _updateBlockedDates(flag: 0, oldRange: dateRange);
     }
   }
 
@@ -122,14 +124,57 @@ class _CalendarState extends State<Calendar> {
     setState(
       () {
         if (startDateValue.isAfter(endDateValue)) {
-          _dateRange =
-              DateRange(fromDate: endDateValue, toDate: startDateValue);
+          _dateRange = DateRange(
+              fromDate: endDateValue,
+              toDate: startDateValue,
+              blockedByLessor: true);
         } else {
-          _dateRange =
-              DateRange(fromDate: startDateValue, toDate: endDateValue);
+          _dateRange = DateRange(
+              fromDate: startDateValue,
+              toDate: endDateValue,
+              blockedByLessor: true);
         }
       },
     );
+  }
+
+  void _updateBlockedDates({int flag, DateRange oldRange}) {
+    Offer offer = _offer;
+    switch (flag) {
+      // Add
+      case 0:
+        {
+          offer.blockedDates.add(_dateRange);
+        }
+        break;
+      // Change
+      case 1:
+        {
+          offer = _deleteBlockedDate(offer: offer, dateRange: oldRange);
+          offer.blockedDates.add(_dateRange);
+        }
+        break;
+      // Delete
+      case 2:
+        {
+          offer = _deleteBlockedDate(offer: offer, dateRange: _dateRange);
+        }
+        break;
+    }
+    _updateOffer(updateOffer: offer);
+  }
+
+  Offer _deleteBlockedDate({Offer offer, DateRange dateRange}) {
+    offer.blockedDates.remove(dateRange);
+    return offer;
+  }
+
+  void _updateOffer({Offer updateOffer}) async {
+    Offer offer = await ApiOfferService()
+        .updateOffer(updateOffer: updateOffer, images: List<String>());
+    setState(() {
+      _offer = offer;
+    });
   }
 
   @override

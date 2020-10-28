@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/widgets/slide_bar.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/widgets/slide_bar.dart';
 
 class ProductDescription extends StatelessWidget {
   final Offer offer;

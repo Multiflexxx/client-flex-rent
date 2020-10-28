@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/offer_service.dart';
 
 class QrCodeScreen extends StatefulWidget {
   final OfferRequest offerRequest;

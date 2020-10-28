@@ -1,11 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/blocs/register/register.dart';
-import 'package:rent/logic/services/register_service.dart';
-import 'package:rent/screens/authentication/registration/personal_form.dart';
-import 'package:rent/widgets/background/logo.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/blocs/register/register.dart';
+import 'package:flexrent/logic/services/register_service.dart';
+import 'package:flexrent/screens/authentication/registration/personal_form.dart';
+import 'package:flexrent/widgets/background/logo.dart';
 import 'phone_form.dart';
 
 class RegisterScreen extends StatelessWidget {

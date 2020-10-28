@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/services.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/services.dart';
 
-import 'package:rent/widgets/discovery_carousel.dart';
-import 'package:rent/widgets/search_bar.dart';
+import 'package:flexrent/widgets/discovery_carousel.dart';
+import 'package:flexrent/widgets/search_bar.dart';
 
 class DiscoveryScreen extends StatefulWidget {
   @override

@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:rent/logic/models/models.dart';
+import 'package:flexrent/logic/models/models.dart';
 part 'offer_request.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)

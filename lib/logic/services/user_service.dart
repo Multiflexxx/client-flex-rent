@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:rent/logic/exceptions/exceptions.dart';
-import 'package:rent/logic/models/models.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/models/models.dart';
 import 'package:http/http.dart' as http;
 
 abstract class UserService {

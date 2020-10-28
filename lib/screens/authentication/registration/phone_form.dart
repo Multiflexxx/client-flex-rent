@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rent/logic/blocs/authentication/authentication.dart';
-import 'package:rent/logic/blocs/register/register.dart';
-import 'package:rent/widgets/formfieldstyled.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/blocs/register/register.dart';
+import 'package:flexrent/widgets/formfieldstyled.dart';
 
 class PhoneForm extends StatefulWidget {
   @override

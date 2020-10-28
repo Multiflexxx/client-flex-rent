@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:rent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
 
 import '../models/models.dart';
 

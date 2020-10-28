@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/intl.dart';
-import 'package:rent/logic/models/offer_request/offer_request.dart';
-import 'package:rent/widgets/price/price_tag.dart';
+import 'package:flexrent/logic/models/offer_request/offer_request.dart';
+import 'package:flexrent/widgets/price/price_tag.dart';
 
 class BookingOverview extends StatelessWidget {
   final OfferRequest offerRequest;

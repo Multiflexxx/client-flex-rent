@@ -5,13 +5,13 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:rent/logic/exceptions/exceptions.dart';
-import 'package:rent/logic/models/models.dart';
-import 'package:rent/logic/services/offer_service.dart';
-import 'package:rent/screens/booking/lessor/lessor_response_screen.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/offer_service.dart';
+import 'package:flexrent/screens/booking/lessor/lessor_response_screen.dart';
 
-import 'package:rent/widgets/circle_tab_indicator.dart';
-import 'package:rent/widgets/offer/offer_request_card.dart';
+import 'package:flexrent/widgets/circle_tab_indicator.dart';
+import 'package:flexrent/widgets/offer/offer_request_card.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
 class LessorRentalItemScreen extends StatefulWidget {
