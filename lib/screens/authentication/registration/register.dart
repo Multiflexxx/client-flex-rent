@@ -1,13 +1,13 @@
+import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/screens/authentication/registration/phone_form.dart';
 import 'package:flexrent/screens/authentication/registration/register_start_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
-import 'package:flexrent/logic/services/register_service.dart';
 import 'package:flexrent/screens/authentication/registration/personal_form.dart';
 import 'package:flexrent/widgets/background/logo.dart';
-import 'phone_form.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -48,6 +48,7 @@ class _AuthForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final registerService = RepositoryProvider.of<RegisterService>(context);
+    final googleService = RepositoryProvider.of<GoogleService>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -62,9 +63,15 @@ class _AuthForm extends StatelessWidget {
         ),
         BlocProvider<RegisterBloc>(
           create: (context) => RegisterBloc(
-              BlocProvider.of<AuthenticationBloc>(context), registerService),
+            BlocProvider.of<AuthenticationBloc>(context),
+            registerService,
+            googleService,
+          ),
           child: BlocBuilder<RegisterBloc, RegisterState>(
             builder: (context, state) {
+              if (state is RegisterPhoneLoading) {
+                return PhoneForm();
+              }
               if (state is RegisterPhoneSuccess) {
                 return PersonalForm(phoneNumber: state.phoneNumber);
               } else if (state is RegisterPersonalLoading) {

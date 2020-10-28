@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
 import 'package:flexrent/widgets/formfieldstyled.dart';
 
@@ -115,30 +113,6 @@ class _PhoneFormState extends State<PhoneForm> {
                     child: Text('Weiter'),
                     onPressed:
                         state is RegisterPhoneLoading ? () {} : _onNextPressed,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: 'Du hast schon ein FlexRent Konto? ',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Einloggen',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              BlocProvider.of<AuthenticationBloc>(context)
-                                  .add(UserSignIn());
-                            },
-                        ),
-                      ],
-                    ),
                   ),
                 ],
               ),

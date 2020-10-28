@@ -1,4 +1,3 @@
-import 'package:flexrent/screens/authentication/registration/register_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/app.dart';
@@ -20,6 +19,9 @@ void main() => runApp(
             ),
             RepositoryProvider<UserService>(
               create: (context) => ApiUserService(),
+            ),
+            RepositoryProvider<GoogleService>(
+              create: (context) => ApiGoogleService(),
             ),
           ],
           child: MultiBlocProvider(

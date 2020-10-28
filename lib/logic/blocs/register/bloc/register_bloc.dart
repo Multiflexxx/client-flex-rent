@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flexrent/logic/services/google_service.dart';
 import 'package:meta/meta.dart';
 
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
@@ -15,13 +17,16 @@ part 'register_state.dart';
 class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthenticationBloc _authenticationBloc;
   final RegisterService _registerService;
+  final GoogleService _googleService;
 
-  RegisterBloc(
-      AuthenticationBloc authenticationBloc, RegisterService registerService)
+  RegisterBloc(AuthenticationBloc authenticationBloc,
+      RegisterService registerService, GoogleService googleService)
       : assert(authenticationBloc != null),
         assert(registerService != null),
+        assert(googleService != null),
         _authenticationBloc = authenticationBloc,
         _registerService = registerService,
+        _googleService = googleService,
         super(null);
 
   RegisterState get initalState => RegisterInitial();
@@ -30,6 +35,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
     if (event is RegisterPhoneForm) {
       yield* _mapPhoneFormToState(event);
+    }
+
+    if (event is RegisterWithGoogle) {
+      yield* _mapRegisterWithGoogleToState(event);
     }
 
     if (event is RegisterNextPressed) {
@@ -42,17 +51,27 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   }
 
   Stream<RegisterState> _mapPhoneFormToState(RegisterPhoneForm event) async* {
-    yield RegisterInitial();
+    yield RegisterPhoneLoading(signUpOption: event.signUpOption);
+  }
+
+  Stream<RegisterState> _mapRegisterWithGoogleToState(
+      RegisterWithGoogle event) async* {
+    User googleUser = await _googleService.signIn();
+    inspect(googleUser);
+    yield RegisterPhoneLoading(
+        signUpOption: event.signUpOption, thirdPartyUser: googleUser);
   }
 
   Stream<RegisterState> _mapPersonalFormToState(
       RegisterNextPressed event) async* {
-    yield RegisterPhoneSuccess(phoneNumber: event.phoneNumber);
+    yield RegisterPhoneSuccess(
+        signUpOption: event.signUpOption, phoneNumber: event.phoneNumber);
   }
 
   Stream<RegisterState> _mapRegisterToState(
       RegisterSubmitPressed event) async* {
-    yield RegisterPersonalLoading(phoneNumber: event.user.phoneNumber);
+    yield RegisterPersonalLoading(
+        signUpOption: event.signUpOption, phoneNumber: event.user.phoneNumber);
     try {
       final user = await _registerService.registerUser(event.user);
       if (user != null) {
@@ -62,14 +81,18 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       } else {
         yield RegisterPersonalFailure(
             error: 'Das war ein Schuss in den ...',
+            signUpOption: event.signUpOption,
             phoneNumber: event.user.phoneNumber);
       }
     } on RegisterException catch (e) {
       yield RegisterPersonalFailure(
-          error: e.message, phoneNumber: event.user.phoneNumber);
+          error: e.message,
+          phoneNumber: event.user.phoneNumber,
+          signUpOption: event.signUpOption);
     } catch (err) {
       yield RegisterPersonalFailure(
           error: err.message ?? 'An unknown error occured',
+          signUpOption: event.signUpOption,
           phoneNumber: event.user.phoneNumber);
     }
   }
