@@ -44,6 +44,16 @@ class _CalendarState extends State<Calendar> {
         ),
       );
     }
+
+    appointments.add(
+      Appointment(
+        startTime: DateTime.now().add(Duration(days: 10)),
+        endTime: DateTime.now().add(Duration(days: 12)),
+        subject: 'Blockiert',
+        color: Colors.blue,
+      ),
+    );
+
     return _AppointmentDataSource(appointments);
   }
 
@@ -54,7 +64,7 @@ class _CalendarState extends State<Calendar> {
       barrierColor: Colors.black45,
       builder: (context, scrollController) => DateRangePicker(
         scrollController: scrollController,
-        date: null,
+        date: dateRange.fromDate,
         range: _picker.PickerDateRange(
           dateRange.fromDate,
           dateRange.toDate,
@@ -63,7 +73,6 @@ class _CalendarState extends State<Calendar> {
         maxDate: DateTime.now().add(
           Duration(days: 90),
         ),
-        displayDate: null,
         blockedDates: widget.offer.blockedDates,
       ),
     );
@@ -77,13 +86,12 @@ class _CalendarState extends State<Calendar> {
     List<Appointment> _appointments = details.appointments;
     DateTime _date = details.date;
     DateRange dateRange;
-    if (_appointments.length != 0) {
+    if (_appointments.length == 0) {
       dateRange = DateRange(fromDate: _date, toDate: _date);
       changeBlockDates(dateRange: dateRange);
     } else {
       if (_appointments.first.subject == 'Blockiert') {
-        // if (true) {
-
+        inspect(_appointments.first);
         dateRange = DateRange(
             fromDate: _appointments.first.startTime,
             toDate: _appointments.first.endTime);
@@ -122,7 +130,6 @@ class _CalendarState extends State<Calendar> {
         }
       },
     );
-    inspect(_dateRange);
   }
 
   @override
