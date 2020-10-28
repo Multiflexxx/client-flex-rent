@@ -447,7 +447,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                 Icon(
                                   Ionicons.ios_arrow_forward,
                                   size: 30.0,
-                                  color: Colors.white70,
+                                  color: Theme.of(context).primaryColor,
                                 ),
                               ],
                             ),

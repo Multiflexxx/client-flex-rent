@@ -125,19 +125,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        RaisedButton(
-          onPressed: () => showCupertinoModalBottomSheet<dynamic>(
-            expand: true,
-            useRootNavigator: true,
-            context: context,
-            barrierColor: Colors.black45,
-            builder: (context, scrollController) => Calendar(
-              scrollController: scrollController,
-              offer: _offer,
-            ),
-          ),
-          child: Text('Blockiere deinen Mietgegenstand für dich.'),
-        ),
+       
         Padding(
           padding: EdgeInsets.only(left: 28.0),
           child: Text(
@@ -227,6 +215,70 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   ),
                 );
               },
+            ),
+          ),
+        ),
+        SizedBox(height: 20.0),
+        Padding(
+          padding: EdgeInsets.only(left: 28.0),
+          child: Text(
+            'Verfügbarkeit',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 21.0,
+              letterSpacing: 1.2,
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: () => showCupertinoModalBottomSheet<dynamic>(
+            expand: true,
+            useRootNavigator: true,
+            context: context,
+            barrierColor: Colors.black45,
+            builder: (context, scrollController) => Calendar(
+              scrollController: scrollController,
+              offer: _offer,
+            ),
+          ),
+          child: Container(
+            margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
+            padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+            decoration: new BoxDecoration(
+              color: Theme.of(context).cardColor,
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Feather.calendar,
+                      color: Theme.of(context).accentColor,
+                    ),
+                    SizedBox(
+                      width: 10.0,
+                    ),
+                    Text(
+                      'Verfügbarkeit verändern',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 18.0,
+                        height: 1.35,
+                        fontWeight: FontWeight.w300,
+                      ),
+                      maxLines: 6,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
+                Icon(
+                  Ionicons.ios_arrow_forward,
+                  size: 30.0,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ],
             ),
           ),
         ),
