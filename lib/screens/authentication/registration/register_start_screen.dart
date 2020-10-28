@@ -1,0 +1,64 @@
+import 'package:flexrent/logic/blocs/register/register.dart';
+import 'package:flexrent/widgets/divider_with_text.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_icons/flutter_icons.dart';
+
+class RegisterStartScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<RegisterBloc, RegisterState>(
+      builder: (context, state) {
+        return Column(
+          children: <Widget>[
+            RaisedButton(
+              color: Theme.of(context).accentColor,
+              textColor: Theme.of(context).primaryColor,
+              padding: const EdgeInsets.all(16),
+              shape: new RoundedRectangleBorder(
+                  borderRadius: new BorderRadius.circular(8.0)),
+              child: Text('Erstelle einen FlexRent Account'),
+              onPressed: () => null,
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
+            DividerWithText(
+              dividerText: 'Sign in with',
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                IconButton(
+                  icon: Icon(
+                    Ionicons.logo_google,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: () => BlocProvider.of<RegisterBloc>(context)
+                      .add(RegisterPhoneForm()),
+                ),
+                IconButton(
+                  icon: Icon(
+                    Ionicons.logo_apple,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: null,
+                ),
+                IconButton(
+                  icon: Icon(
+                    Ionicons.logo_facebook,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                  onPressed: null,
+                ),
+              ],
+            )
+          ],
+        );
+      },
+    );
+  }
+}

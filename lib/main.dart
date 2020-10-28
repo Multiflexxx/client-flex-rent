@@ -1,3 +1,4 @@
+import 'package:flexrent/screens/authentication/registration/register_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/app.dart';
@@ -81,23 +82,25 @@ class MyApp extends StatelessWidget {
               key: appKey,
             );
           }
-          // if (state is AuthenticationSignUp) {
-          return AnimatedSwitcher(
-              duration: Duration(milliseconds: 500),
-              transitionBuilder: (Widget child, Animation<double> animation) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: const Offset(0, 0.25),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              },
-              child: state is AuthenticationSignUp
-                  ? RegisterScreen()
-                  : LoginScreen());
-          // }
-          // return LoginScreen();
+          if (state is AuthenticationSignUp) {
+            return RegisterScreen();
+            // return AnimatedSwitcher(
+            //     duration: Duration(milliseconds: 500),
+            //     transitionBuilder: (Widget child, Animation<double> animation) {
+            //       return SlideTransition(
+            //         position: Tween<Offset>(
+            //           begin: const Offset(0, 0.25),
+            //           end: Offset.zero,
+            //         ).animate(animation),
+            //         child: child,
+            //       );
+            //     },
+            //     child: state is AuthenticationSignUp
+            //         ? RegisterScreen()
+            // : LoginScreen());
+          }
+          return LoginScreen();
+          // return SignInDemo();
         },
       ),
     );

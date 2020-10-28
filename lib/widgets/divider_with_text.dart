@@ -12,13 +12,17 @@ class DividerWithText extends StatelessWidget {
         Expanded(
             child: Padding(
           padding: const EdgeInsets.only(right: 8.0),
-          child: Divider(),
+          child: Divider(
+            color: Theme.of(context).primaryColor,
+          ),
         )),
         Text(dividerText),
         Expanded(
             child: Padding(
           padding: const EdgeInsets.only(left: 8.0),
-          child: Divider(),
+          child: Divider(
+            color: Theme.of(context).primaryColor,
+          ),
         )),
       ],
     );
