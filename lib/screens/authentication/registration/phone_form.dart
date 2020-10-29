@@ -1,8 +1,7 @@
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
 import 'package:flexrent/widgets/formfieldstyled.dart';
 
@@ -24,10 +23,15 @@ class _PhoneFormState extends State<PhoneForm> {
 
   @override
   Widget build(BuildContext context) {
-    _onNextPressed() {
+    _onNextPressed({String signInOption, User thirdPartyUser}) {
       if (_key.currentState.validate() && _agbCheckBox == true) {
-        BlocProvider.of<RegisterBloc>(context)
-            .add(RegisterNextPressed(phoneNumber: _phoneController.text));
+        BlocProvider.of<RegisterBloc>(context).add(
+          RegisterNextPressed(
+            signUpOption: signInOption,
+            phoneNumber: _phoneController.text,
+            thirdPartyUser: thirdPartyUser,
+          ),
+        );
       }
     }
 
@@ -109,36 +113,19 @@ class _PhoneFormState extends State<PhoneForm> {
                   RaisedButton(
                     color: Theme.of(context).accentColor,
                     textColor: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.all(16),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('Weiter'),
-                    onPressed:
-                        state is RegisterPhoneLoading ? () {} : _onNextPressed,
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: 'Du hast schon ein FlexRent Konto? ',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Einloggen',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () {
-                              BlocProvider.of<AuthenticationBloc>(context)
-                                  .add(UserSignIn());
-                            },
-                        ),
-                      ],
+                    padding: EdgeInsets.all(16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
                     ),
+                    child: Text('Weiter'),
+                    onPressed: () {
+                      if (state is RegisterPhoneLoading) {
+                        _onNextPressed(
+                          signInOption: state.signUpOption,
+                          thirdPartyUser: state.thirdPartyUser,
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

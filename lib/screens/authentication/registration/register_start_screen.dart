@@ -1,5 +1,7 @@
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
 import 'package:flexrent/widgets/divider_with_text.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -18,13 +20,15 @@ class RegisterStartScreen extends StatelessWidget {
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(8.0)),
               child: Text('Erstelle einen FlexRent Account'),
-              onPressed: () => null,
+              onPressed: () {
+                BlocProvider.of<RegisterBloc>(context).add(RegisterPhoneForm());
+              },
             ),
             SizedBox(
               height: 30.0,
             ),
             DividerWithText(
-              dividerText: 'Sign in with',
+              dividerText: 'Einloggen mit',
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -35,8 +39,10 @@ class RegisterStartScreen extends StatelessWidget {
                     color: Colors.white,
                     size: 30,
                   ),
-                  onPressed: () => BlocProvider.of<RegisterBloc>(context)
-                      .add(RegisterPhoneForm()),
+                  onPressed: () {
+                    BlocProvider.of<RegisterBloc>(context)
+                        .add(RegisterWithGoogle(signUpOption: 'google'));
+                  },
                 ),
                 IconButton(
                   icon: Icon(
@@ -55,7 +61,31 @@ class RegisterStartScreen extends StatelessWidget {
                   onPressed: null,
                 ),
               ],
-            )
+            ),
+            SizedBox(
+              height: 30.0,
+            ),
+            RichText(
+              text: TextSpan(
+                text: 'Du hast schon ein FlexRent Konto? ',
+                style: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+                children: <TextSpan>[
+                  TextSpan(
+                    text: 'Einloggen',
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: Theme.of(context).primaryColor),
+                    recognizer: TapGestureRecognizer()
+                      ..onTap = () {
+                        BlocProvider.of<AuthenticationBloc>(context)
+                            .add(UserSignIn());
+                      },
+                  ),
+                ],
+              ),
+            ),
           ],
         );
       },

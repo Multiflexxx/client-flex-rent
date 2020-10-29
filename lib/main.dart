@@ -1,4 +1,3 @@
-import 'package:flexrent/screens/authentication/registration/register_google.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/app.dart';
@@ -21,6 +20,9 @@ void main() => runApp(
             RepositoryProvider<UserService>(
               create: (context) => ApiUserService(),
             ),
+            RepositoryProvider<GoogleService>(
+              create: (context) => ApiGoogleService(),
+            ),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -28,8 +30,11 @@ void main() => runApp(
                 create: (context) {
                   final authService =
                       RepositoryProvider.of<AuthenticationService>(context);
+                  final googleService =
+                      RepositoryProvider.of<GoogleService>(context);
                   return AuthenticationBloc(
                     authService,
+                    googleService,
                   )..add(AppLoaded());
                 },
               ),
@@ -100,7 +105,6 @@ class MyApp extends StatelessWidget {
             // : LoginScreen());
           }
           return LoginScreen();
-          // return SignInDemo();
         },
       ),
     );

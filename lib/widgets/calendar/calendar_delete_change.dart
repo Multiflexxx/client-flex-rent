@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:flexrent/widgets/slide_bar.dart';
 
 class CalendarDeleteChange extends StatelessWidget {

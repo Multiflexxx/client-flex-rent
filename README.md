@@ -4,3 +4,6 @@
   <img src="https://badgen.net/github/tag/Multiflexxx/client-flex-rent/?color=purple">
   <img src="https://badgen.net/github/release/Multiflexxx/client-flex-rent/?color=pink">
 </p>
+
+## Download latest version
+[Download](https://flexrent.multiflexxx.de/Releases/flexrent.apk)

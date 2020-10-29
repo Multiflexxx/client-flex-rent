@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 
@@ -8,7 +9,7 @@ import '../models/models.dart';
 import 'package:http/http.dart' as http;
 
 abstract class RegisterService {
-  Future<User> registerUser(User user);
+  Future<User> registerUser({User user, String signInOption});
 }
 
 class ApiRegisterService extends RegisterService {
@@ -16,14 +17,26 @@ class ApiRegisterService extends RegisterService {
   final _storage = FlutterSecureStorage();
 
   @override
-  Future<User> registerUser(User user) async {
+  Future<User> registerUser({User user, String signInOption}) async {
     final response = await http.put(
       url,
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(
-        <String, dynamic>{'user': user.toJson()},
+        <String, dynamic>{
+          'user': user.toJson(),
+          'sign_in_method': signInOption,
+        },
       ),
     );
+
+    print(jsonEncode(
+      <String, dynamic>{
+        'user': user.toJson(),
+        'sign_in_method': signInOption,
+      },
+    ));
+
+    inspect(response);
 
     final Map<String, dynamic> jsonBody = json.decode(response.body);
 

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -42,6 +41,8 @@ class SignInDemoState extends State<SignInDemo> {
             (result) => result.authentication.then(
               (googleKey) {
                 inspect(_googleSignIn);
+                print(googleKey.serverAuthCode);
+                print(googleKey.accessToken);
                 print(googleKey.idToken);
               },
             ),

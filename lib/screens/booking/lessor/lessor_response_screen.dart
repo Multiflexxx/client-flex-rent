@@ -236,7 +236,32 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                   ),
                                 )
                               : _offerRequest.statusId == 5
-                                  ? Text('Wir hoffen es hat alles geklappt!')
+                                  ? Container(
+                                      margin: EdgeInsets.all(10.0),
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color:
+                                                Theme.of(context).accentColor),
+                                        color: Theme.of(context).cardColor,
+                                        borderRadius:
+                                            BorderRadius.circular(10.0),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(children: <Widget>[
+                                          Text(
+                                            'Wir hoffen es hat alles geklappt!',
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 25.0,
+                                              height: 1.15,
+                                              fontWeight: FontWeight.w500,
+                                            ),
+                                          ),
+                                        ]),
+                                      ),
+                                    )
                                   : Container(),
             ],
           );

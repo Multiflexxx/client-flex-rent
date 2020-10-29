@@ -11,10 +11,14 @@ part 'authentication_state.dart';
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
   final AuthenticationService _authenticationService;
+  final GoogleService _googleService;
 
-  AuthenticationBloc(AuthenticationService authenticationService)
+  AuthenticationBloc(
+      AuthenticationService authenticationService, GoogleService googleService)
       : assert(authenticationService != null),
+        assert(googleService != null),
         _authenticationService = authenticationService,
+        _googleService = googleService,
         super(
           null,
         );
@@ -76,6 +80,7 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapUserLoggedOutToState(
       UserLoggedOut event) async* {
+    await _googleService.signOut();
     await _authenticationService.signOut();
     yield AuthenticationNotAuthenticated();
   }
