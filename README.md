@@ -6,4 +6,4 @@
 </p>
 
 ## Download latest version
-[Download](https://flexrent.multiflexxx.de/BuildApp/Releases/flexrent.apk)
+[Download](https://flexrent.multiflexxx.de/Releases/flexrent.apk)
