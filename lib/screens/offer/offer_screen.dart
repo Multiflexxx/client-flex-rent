@@ -83,12 +83,13 @@ class _OfferScreenState extends State<OfferScreen> {
                   ),
                   actions: <Widget>[
                     IconButton(
-                      icon: Icon(Feather.share),
+                      icon: Icon(Feather.share_2),
                       iconSize: 30.0,
                       color: Theme.of(context).primaryColor,
                       onPressed: () => Navigator.pop(context),
                     ),
                   ],
+                  backgroundColor: Theme.of(context).backgroundColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
                       bottomLeft: Radius.circular(20),

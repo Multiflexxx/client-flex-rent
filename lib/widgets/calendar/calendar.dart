@@ -53,7 +53,6 @@ class _CalendarState extends State<Calendar> {
     DateTime _date = details.date;
     DateRange dateRange;
     // Add new one
-    inspect(details);
     if (_appointments.length == 0) {
       dateRange = DateRange(fromDate: _date, toDate: _date);
       changeBlockDates(dateRange: dateRange, flag: 0);
@@ -165,7 +164,10 @@ class _CalendarState extends State<Calendar> {
   }
 
   Offer _deleteBlockedDate({Offer offer, DateRange dateRange}) {
-    offer.blockedDates.remove(dateRange);
+    DateTime _date = dateRange.toDate.subtract(Duration(hours: 1));
+    DateRange _dateRange = DateRange(
+        fromDate: dateRange.fromDate, toDate: _date, blockedByLessor: true);
+    offer.blockedDates.remove(_dateRange);
     return offer;
   }
 

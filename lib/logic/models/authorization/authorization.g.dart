@@ -13,7 +13,8 @@ Auth _$AuthFromJson(Map<String, dynamic> json) {
         : Login.fromJson(json['login'] as Map<String, dynamic>)
     ..session = json['session'] == null
         ? null
-        : Session.fromJson(json['session'] as Map<String, dynamic>);
+        : Session.fromJson(json['session'] as Map<String, dynamic>)
+    ..token = json['token'] as String;
 }
 
 Map<String, dynamic> _$AuthToJson(Auth instance) {
@@ -27,6 +28,7 @@ Map<String, dynamic> _$AuthToJson(Auth instance) {
 
   writeNotNull('login', instance.login);
   writeNotNull('session', instance.session);
+  writeNotNull('token', instance.token);
   return val;
 }
 

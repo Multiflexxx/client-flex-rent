@@ -28,7 +28,7 @@ class RegisterStartScreen extends StatelessWidget {
               height: 30.0,
             ),
             DividerWithText(
-              dividerText: 'Einloggen mit',
+              dividerText: 'Registrieren mit',
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,

@@ -5,11 +5,13 @@ part 'authorization.g.dart';
 class Auth {
   Login login;
   Session session;
+  String token;
 
   Auth();
 
   Auth.login({this.login});
   Auth.session({this.session});
+  Auth.idToken({this.token});
 
   factory Auth.fromJson(Map<String, dynamic> json) => _$AuthFromJson(json);
   Map<String, dynamic> toJson() => _$AuthToJson(this);
