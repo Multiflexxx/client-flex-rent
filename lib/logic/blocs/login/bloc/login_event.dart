@@ -16,3 +16,5 @@ class LoginWithEmailButtonPressed extends LoginEvent {
 }
 
 class LoginWithGoogleButtonPressed extends LoginEvent {}
+
+class LoginWithFacebookButtonPressed extends LoginEvent {}
