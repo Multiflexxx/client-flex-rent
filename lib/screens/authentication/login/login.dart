@@ -63,6 +63,7 @@ class _AuthForm extends StatelessWidget {
   Widget build(BuildContext context) {
     final authService = RepositoryProvider.of<AuthenticationService>(context);
     final googleService = RepositoryProvider.of<GoogleService>(context);
+    final facebookService = RepositoryProvider.of<FacebookService>(context);
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -84,6 +85,7 @@ class _AuthForm extends StatelessWidget {
               BlocProvider.of<AuthenticationBloc>(context),
               authService,
               googleService,
+              facebookService,
             ),
             child: SignInForm(),
           ),
