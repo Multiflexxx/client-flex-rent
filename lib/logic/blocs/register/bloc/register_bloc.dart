@@ -61,7 +61,7 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Stream<RegisterState> _mapRegisterWithGoogleToState(
       RegisterWithGoogle event) async* {
-    User googleUser = await _googleService.signIn();
+    User googleUser = await _googleService.signUp();
     if (googleUser != null) {
       yield RegisterPhoneLoading(
           signUpOption: event.signUpOption, thirdPartyUser: googleUser);

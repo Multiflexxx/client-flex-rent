@@ -1,9 +1,12 @@
+import 'dart:developer';
+
 import 'package:flexrent/logic/models/models.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 abstract class GoogleService {
-  Future<User> signIn();
+  Future<User> signUp();
+  Future<String> signIn();
   signOut();
 }
 
@@ -16,7 +19,7 @@ class ApiGoogleService extends GoogleService {
   );
 
   @override
-  Future<User> signIn() async {
+  Future<User> signUp() async {
     String _idToken;
     try {
       GoogleSignInAccount account = await _googleSignIn.signIn();
@@ -30,6 +33,20 @@ class ApiGoogleService extends GoogleService {
         email: _decodedToken['email'],
       );
       return googleUser;
+    } catch (error) {
+      print(error);
+      return null;
+    }
+  }
+
+  @override
+  Future<String> signIn() async {
+    String _idToken;
+    try {
+      GoogleSignInAccount account = await _googleSignIn.signIn();
+      GoogleSignInAuthentication authentication = await account.authentication;
+      _idToken = authentication.idToken;
+      return _idToken;
     } catch (error) {
       print(error);
       return null;

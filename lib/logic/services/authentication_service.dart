@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import '../models/models.dart';
@@ -8,6 +9,7 @@ import 'package:http/http.dart' as http;
 abstract class AuthenticationService {
   Future<User> getCurrentUser();
   Future<User> signInWithEmailAndPassword(String email, String password);
+  Future<User> signInWithGoogle(String idToken);
   Future<void> signOut();
 }
 
@@ -65,6 +67,31 @@ class ApiAuthenticationService extends AuthenticationService {
       }
     } else {
       // no userid in storage
+      return null;
+    }
+  }
+
+  @override
+  Future<User> signInWithGoogle(String token) async {
+    final Auth auth = Auth.idToken(token: token);
+    final response = await http.post(
+      'https://flexrent.multiflexxx.de/user/google',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+        <String, dynamic>{'auth': auth.toJson()},
+      ),
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      final Map<String, dynamic> jsonBody = json.decode(response.body);
+      final Map<String, dynamic> jsonUser = jsonBody['user'];
+      final sessionId = jsonBody['session_id'];
+
+      final User user = User.fromJson(jsonUser);
+      await _storage.write(key: 'sessionId', value: sessionId);
+      await _storage.write(key: 'userId', value: user.userId);
+      return user;
+    } else {
       return null;
     }
   }

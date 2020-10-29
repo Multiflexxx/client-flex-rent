@@ -73,7 +73,6 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
     setState(() {
       _user = state.user;
     });
-    inspect(_user);
   }
 
   @override

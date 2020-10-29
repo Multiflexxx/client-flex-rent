@@ -80,7 +80,6 @@ class ApiOfferService extends OfferService {
 
     final Map<String, dynamic> jsonBody = json.decode(response.body);
     Offer offer = Offer.fromJson(jsonBody);
-    inspect(jsonBody);
     return offer;
   }
 
@@ -354,7 +353,6 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
       final OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
-      inspect(offerRequest);
       return offerRequest;
     }
     return null;
@@ -379,7 +377,6 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
       final OfferRequest offerRequest = OfferRequest.fromJson(jsonBody);
-      inspect(offerRequest);
       return offerRequest;
     } else {
       inspect(response);

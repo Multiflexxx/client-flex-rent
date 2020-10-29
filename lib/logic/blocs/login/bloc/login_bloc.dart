@@ -14,13 +14,16 @@ part 'login_state.dart';
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final AuthenticationBloc _authenticationBloc;
   final AuthenticationService _authenticationService;
+  final GoogleService _googleService;
 
   LoginBloc(AuthenticationBloc authenticationBloc,
-      AuthenticationService authenticationService)
+      AuthenticationService authenticationService, GoogleService googleService)
       : assert(authenticationBloc != null),
         assert(authenticationService != null),
+        assert(googleService != null),
         _authenticationBloc = authenticationBloc,
         _authenticationService = authenticationService,
+        _googleService = googleService,
         super(null);
 
   LoginState get initialState => LoginInitial();
@@ -29,6 +32,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(LoginEvent event) async* {
     if (event is LoginWithEmailButtonPressed) {
       yield* _mapLoginWithEmailToState(event);
+    }
+    if (event is LoginWithGoogleButtonPressed) {
+      yield* _mapLoginWithGoogleToState(event);
     }
   }
 
@@ -48,6 +54,33 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     } on AuthenticationException catch (e) {
       yield LoginFailure(error: e.message);
     } catch (err) {
+      yield LoginFailure(error: err.message ?? 'An unknown error occured');
+    }
+  }
+
+  Stream<LoginState> _mapLoginWithGoogleToState(
+      LoginWithGoogleButtonPressed event) async* {
+    yield LoginLoading();
+    try {
+      final token = await _googleService.signIn();
+      if (token != null) {
+        final user = await _authenticationService.signInWithGoogle(token);
+        if (user != null) {
+          _authenticationBloc.add(UserLoggedIn(user: user));
+          yield LoginSuccess();
+          yield LoginInitial();
+        } else {
+          _googleService.signOut();
+          yield LoginFailure(error: 'Das war ein Schuss in den ...');
+        }
+      } else {
+        yield LoginFailure(error: 'Google sign in failed');
+      }
+    } on AuthenticationException catch (e) {
+      _googleService.signOut();
+      yield LoginFailure(error: e.message);
+    } catch (err) {
+      _googleService.signOut();
       yield LoginFailure(error: err.message ?? 'An unknown error occured');
     }
   }
