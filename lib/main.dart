@@ -30,8 +30,11 @@ void main() => runApp(
                 create: (context) {
                   final authService =
                       RepositoryProvider.of<AuthenticationService>(context);
+                  final googleService =
+                      RepositoryProvider.of<GoogleService>(context);
                   return AuthenticationBloc(
                     authService,
+                    googleService,
                   )..add(AppLoaded());
                 },
               ),
@@ -102,7 +105,6 @@ class MyApp extends StatelessWidget {
             // : LoginScreen());
           }
           return LoginScreen();
-          // return SignInDemo();
         },
       ),
     );

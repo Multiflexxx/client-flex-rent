@@ -17,7 +17,6 @@ class ProfileOption {
 List<ProfileOption> profileOptions = [
   ProfileOption('personalInfo', 'Meine Informationen', Feather.user),
   ProfileOption('paymentinfo', 'Zahlungsinformationen', Feather.credit_card),
-  // ProfileOption('karmainfos', 'Mein Karma-Score', MaterialIcons.stars),
   ProfileOption('settings', 'Einstellungen', Feather.settings),
   ProfileOption('logout', 'Abmelden', Feather.log_out),
 ];

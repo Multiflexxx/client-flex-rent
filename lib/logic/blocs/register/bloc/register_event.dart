@@ -5,18 +5,41 @@ abstract class RegisterEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class RegisterWithGoogle extends RegisterEvent {}
+class RegisterSetInital extends RegisterEvent {}
 
-class RegisterPhoneForm extends RegisterEvent {}
+class RegisterWithGoogle extends RegisterEvent {
+  final String signUpOption;
+
+  RegisterWithGoogle({
+    this.signUpOption,
+  });
+}
+
+class RegisterPhoneForm extends RegisterEvent {
+  final String signUpOption;
+  final User thirdPartyUser;
+
+  RegisterPhoneForm({
+    this.signUpOption,
+    this.thirdPartyUser,
+  });
+}
 
 class RegisterNextPressed extends RegisterEvent {
+  final String signUpOption;
   final String phoneNumber;
+  final User thirdPartyUser;
 
-  RegisterNextPressed({@required this.phoneNumber});
+  RegisterNextPressed({
+    this.signUpOption,
+    @required this.phoneNumber,
+    this.thirdPartyUser,
+  });
 }
 
 class RegisterSubmitPressed extends RegisterEvent {
+  final String signUpOption;
   final User user;
 
-  RegisterSubmitPressed({@required this.user});
+  RegisterSubmitPressed({@required this.signUpOption, @required this.user});
 }

@@ -9,8 +9,9 @@ import 'package:flexrent/widgets/formfieldstyled.dart';
 
 class PersonalForm extends StatefulWidget {
   final String phoneNumber;
+  final User thirdPartyUser;
 
-  PersonalForm({this.phoneNumber});
+  PersonalForm({this.phoneNumber, this.thirdPartyUser});
 
   @override
   _PersonalFormState createState() => _PersonalFormState();
@@ -27,6 +28,16 @@ class _PersonalFormState extends State<PersonalForm> {
   final _cityController = TextEditingController();
   final _passwordController = TextEditingController();
   final _verifiedPasswordController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.thirdPartyUser != null) {
+      _firstNameController.text = widget.thirdPartyUser.firstName;
+      _lastNameController.text = widget.thirdPartyUser.lastName;
+      _emailController.text = widget.thirdPartyUser.email;
+    }
+  }
 
   Widget _buildFirstNameField() {
     return FormFieldStyled(
@@ -179,7 +190,7 @@ class _PersonalFormState extends State<PersonalForm> {
 
   @override
   Widget build(BuildContext context) {
-    _onRegisterSubmitPressed() {
+    _onRegisterSubmitPressed({String signInOption}) {
       final f = new DateFormat('yyyy-MM-dd');
 
       User user = User(
@@ -203,13 +214,13 @@ class _PersonalFormState extends State<PersonalForm> {
 
       if (_key.currentState.validate()) {
         BlocProvider.of<RegisterBloc>(context)
-            .add(RegisterSubmitPressed(user: user));
+            .add(RegisterSubmitPressed(signUpOption: signInOption, user: user));
       }
     }
 
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
-        if (state is RegisterPersonalFailure) {
+        if (state is RegisterFailure) {
           _showError(state.error);
         }
       },
@@ -288,11 +299,18 @@ class _PersonalFormState extends State<PersonalForm> {
                       textColor: Theme.of(context).primaryColor,
                       padding: const EdgeInsets.all(16),
                       shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0)),
+                        borderRadius: new BorderRadius.circular(8.0),
+                      ),
                       child: Text('Register'),
-                      onPressed: state is RegisterLoading
-                          ? () {}
-                          : _onRegisterSubmitPressed,
+                      onPressed: () {
+                        if (state is RegisterPhoneSuccess) {
+                          _onRegisterSubmitPressed(
+                            signInOption: state.signUpOption,
+                          );
+                        } else {
+                          print('adsfa');
+                        }
+                      },
                     ),
                     SizedBox(
                       height: 16,
@@ -312,7 +330,7 @@ class _PersonalFormState extends State<PersonalForm> {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
                                 BlocProvider.of<RegisterBloc>(context)
-                                    .add(RegisterPhoneForm());
+                                    .add(RegisterSetInital());
                                 BlocProvider.of<AuthenticationBloc>(context)
                                     .add(UserSignIn());
                               },

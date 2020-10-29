@@ -1,3 +1,4 @@
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,10 +23,15 @@ class _PhoneFormState extends State<PhoneForm> {
 
   @override
   Widget build(BuildContext context) {
-    _onNextPressed() {
+    _onNextPressed({String signInOption, User thirdPartyUser}) {
       if (_key.currentState.validate() && _agbCheckBox == true) {
-        BlocProvider.of<RegisterBloc>(context)
-            .add(RegisterNextPressed(phoneNumber: _phoneController.text));
+        BlocProvider.of<RegisterBloc>(context).add(
+          RegisterNextPressed(
+            signUpOption: signInOption,
+            phoneNumber: _phoneController.text,
+            thirdPartyUser: thirdPartyUser,
+          ),
+        );
       }
     }
 
@@ -107,12 +113,19 @@ class _PhoneFormState extends State<PhoneForm> {
                   RaisedButton(
                     color: Theme.of(context).accentColor,
                     textColor: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.all(16),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0)),
+                    padding: EdgeInsets.all(16),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
                     child: Text('Weiter'),
-                    onPressed:
-                        state is RegisterPhoneLoading ? () {} : _onNextPressed,
+                    onPressed: () {
+                      if (state is RegisterPhoneLoading) {
+                        _onNextPressed(
+                          signInOption: state.signUpOption,
+                          thirdPartyUser: state.thirdPartyUser,
+                        );
+                      }
+                    },
                   ),
                 ],
               ),

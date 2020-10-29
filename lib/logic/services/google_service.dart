@@ -1,11 +1,10 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/models/models.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 
 abstract class GoogleService {
   Future<User> signIn();
+  signOut();
 }
 
 class ApiGoogleService extends GoogleService {
@@ -34,6 +33,13 @@ class ApiGoogleService extends GoogleService {
     } catch (error) {
       print(error);
       return null;
+    }
+  }
+
+  @override
+  void signOut() async {
+    if (await _googleSignIn.isSignedIn()) {
+      _googleSignIn.signOut();
     }
   }
 }

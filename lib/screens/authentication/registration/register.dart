@@ -73,12 +73,17 @@ class _AuthForm extends StatelessWidget {
                 return PhoneForm();
               }
               if (state is RegisterPhoneSuccess) {
-                return PersonalForm(phoneNumber: state.phoneNumber);
-              } else if (state is RegisterPersonalLoading) {
-                return PersonalForm(phoneNumber: state.phoneNumber);
-              } else if (state is RegisterPersonalFailure) {
-                return PersonalForm(phoneNumber: state.phoneNumber);
+                return PersonalForm(
+                  phoneNumber: state.phoneNumber,
+                  thirdPartyUser: state.thirdPartyUser,
+                );
               }
+              // else if (state is RegisterPersonalLoading) {
+              //   return PersonalForm(
+              //     phoneNumber: state.phoneNumber,
+              //     thirdPartyUser: state.thirdPartyUser,
+              //   );
+              // }
               return RegisterStartScreen();
             },
           ),

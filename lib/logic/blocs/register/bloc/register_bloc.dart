@@ -33,6 +33,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   @override
   Stream<RegisterState> mapEventToState(RegisterEvent event) async* {
+    if (event is RegisterSetInital) {
+      yield* _mapRegisterSetInitalToState(event);
+    }
+
     if (event is RegisterPhoneForm) {
       yield* _mapPhoneFormToState(event);
     }
@@ -50,8 +54,9 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 
-  Stream<RegisterState> _mapPhoneFormToState(RegisterPhoneForm event) async* {
-    yield RegisterPhoneLoading(signUpOption: event.signUpOption);
+  Stream<RegisterState> _mapRegisterSetInitalToState(
+      RegisterSetInital event) async* {
+    yield RegisterInitial();
   }
 
   Stream<RegisterState> _mapRegisterWithGoogleToState(
@@ -62,38 +67,50 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         signUpOption: event.signUpOption, thirdPartyUser: googleUser);
   }
 
+  Stream<RegisterState> _mapPhoneFormToState(RegisterPhoneForm event) async* {
+    yield RegisterPhoneLoading(signUpOption: event.signUpOption);
+  }
+
   Stream<RegisterState> _mapPersonalFormToState(
       RegisterNextPressed event) async* {
     yield RegisterPhoneSuccess(
-        signUpOption: event.signUpOption, phoneNumber: event.phoneNumber);
+      signUpOption: event.signUpOption,
+      phoneNumber: event.phoneNumber,
+      thirdPartyUser: event.thirdPartyUser,
+    );
   }
 
   Stream<RegisterState> _mapRegisterToState(
       RegisterSubmitPressed event) async* {
-    yield RegisterPersonalLoading(
-        signUpOption: event.signUpOption, phoneNumber: event.user.phoneNumber);
+    // yield RegisterPersonalLoading(
+    //   phoneNumber: event.user.phoneNumber,
+    //   signUpOption: event.signUpOption,
+    //   thirdPartyUser: event.user,
+    // );
+    print(event.signUpOption);
     try {
-      final user = await _registerService.registerUser(event.user);
+      final user = await _registerService.registerUser(
+          user: event.user, signInOption: event.signUpOption);
       if (user != null) {
         _authenticationBloc.add(UserLoggedIn(user: user));
         yield RegisterSuccess();
         yield RegisterInitial();
       } else {
-        yield RegisterPersonalFailure(
-            error: 'Das war ein Schuss in den ...',
-            signUpOption: event.signUpOption,
-            phoneNumber: event.user.phoneNumber);
+        await _googleService.signOut();
+        yield RegisterFailure(
+          error: 'Das war ein Schuss in den ...',
+        );
       }
     } on RegisterException catch (e) {
-      yield RegisterPersonalFailure(
-          error: e.message,
-          phoneNumber: event.user.phoneNumber,
-          signUpOption: event.signUpOption);
+      await _googleService.signOut();
+      yield RegisterFailure(
+        error: e.message,
+      );
     } catch (err) {
-      yield RegisterPersonalFailure(
-          error: err.message ?? 'An unknown error occured',
-          signUpOption: event.signUpOption,
-          phoneNumber: event.user.phoneNumber);
+      await _googleService.signOut();
+      yield RegisterFailure(
+        error: err.message ?? 'An unknown error occured',
+      );
     }
   }
 }

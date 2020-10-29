@@ -41,7 +41,7 @@ class RegisterStartScreen extends StatelessWidget {
                   ),
                   onPressed: () {
                     BlocProvider.of<RegisterBloc>(context)
-                        .add(RegisterWithGoogle());
+                        .add(RegisterWithGoogle(signUpOption: 'google'));
                   },
                 ),
                 IconButton(

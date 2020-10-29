@@ -16,7 +16,10 @@ class RegisterPhoneLoading extends RegisterState {
   final String signUpOption;
   final User thirdPartyUser;
 
-  RegisterPhoneLoading({@required this.signUpOption, this.thirdPartyUser});
+  RegisterPhoneLoading({
+    @required this.signUpOption,
+    this.thirdPartyUser,
+  });
 
   @override
   List<Object> get props => [signUpOption, thirdPartyUser];
@@ -54,27 +57,11 @@ class RegisterPhoneSuccess extends RegisterState {
 class RegisterSuccess extends RegisterState {}
 
 // Failure
-class RegisterPhoneFailure extends RegisterState {
+class RegisterFailure extends RegisterState {
   final String error;
 
-  RegisterPhoneFailure({@required this.error});
+  RegisterFailure({@required this.error});
 
   @override
   List<Object> get props => [error];
-}
-
-class RegisterPersonalFailure extends RegisterState {
-  final String error;
-  final String signUpOption;
-  final String phoneNumber;
-  final User thirdPartyUser;
-
-  RegisterPersonalFailure(
-      {@required this.error,
-      @required this.signUpOption,
-      @required this.phoneNumber,
-      this.thirdPartyUser});
-
-  @override
-  List<Object> get props => [error, phoneNumber];
 }
