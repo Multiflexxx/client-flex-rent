@@ -56,6 +56,7 @@ dependencies:
   map_launcher: ^0.12.2
   google_sign_in: ^4.5.5
   jwt_decoder: ^1.0.3
+  flutter_facebook_login: ^3.0.0
 
 dev_dependencies:
   flutter_test:

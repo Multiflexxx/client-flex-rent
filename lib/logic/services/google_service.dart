@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/models/models.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
@@ -7,7 +5,7 @@ import 'package:jwt_decoder/jwt_decoder.dart';
 abstract class GoogleService {
   Future<User> signUp();
   Future<String> signIn();
-  signOut();
+  void signOut();
 }
 
 class ApiGoogleService extends GoogleService {

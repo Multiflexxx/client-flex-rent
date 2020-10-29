@@ -1,5 +1,6 @@
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
+import 'package:flexrent/logic/services/facebook_service.dart';
 import 'package:flexrent/widgets/divider_with_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -58,7 +59,10 @@ class RegisterStartScreen extends StatelessWidget {
                     color: Colors.white,
                     size: 30,
                   ),
-                  onPressed: null,
+                  onPressed: () {
+                    BlocProvider.of<RegisterBloc>(context)
+                        .add(RegisterWithFacebook(signUpOption: 'facebook'));
+                  },
                 ),
               ],
             ),
