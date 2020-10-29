@@ -1,9 +1,8 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flexrent/logic/services/google_service.dart';
+import 'package:flexrent/logic/services/services.dart';
 import 'package:meta/meta.dart';
 
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
@@ -18,15 +17,21 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   final AuthenticationBloc _authenticationBloc;
   final RegisterService _registerService;
   final GoogleService _googleService;
+  final FacebookService _facebookService;
 
-  RegisterBloc(AuthenticationBloc authenticationBloc,
-      RegisterService registerService, GoogleService googleService)
+  RegisterBloc(
+      AuthenticationBloc authenticationBloc,
+      RegisterService registerService,
+      GoogleService googleService,
+      FacebookService facebookService)
       : assert(authenticationBloc != null),
         assert(registerService != null),
         assert(googleService != null),
+        assert(facebookService != null),
         _authenticationBloc = authenticationBloc,
         _registerService = registerService,
         _googleService = googleService,
+        _facebookService = facebookService,
         super(null);
 
   RegisterState get initalState => RegisterInitial();
@@ -43,6 +48,10 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
     if (event is RegisterWithGoogle) {
       yield* _mapRegisterWithGoogleToState(event);
+    }
+
+    if (event is RegisterWithFacebook) {
+      yield* _mapRegisterWithFacebookToState(event);
     }
 
     if (event is RegisterNextPressed) {
@@ -65,6 +74,18 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     if (googleUser != null) {
       yield RegisterPhoneLoading(
           signUpOption: event.signUpOption, thirdPartyUser: googleUser);
+    } else {
+      yield RegisterInitial();
+    }
+  }
+
+  Stream<RegisterState> _mapRegisterWithFacebookToState(
+      RegisterWithFacebook event) async* {
+    print('test');
+    User facebookUser = await _facebookService.signUp();
+    if (facebookUser != null) {
+      yield RegisterPhoneLoading(
+          signUpOption: event.signUpOption, thirdPartyUser: facebookUser);
     } else {
       yield RegisterInitial();
     }
@@ -99,18 +120,18 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
         yield RegisterSuccess();
         yield RegisterInitial();
       } else {
-        await _googleService.signOut();
+        _googleService.signOut();
         yield RegisterFailure(
           error: 'Das war ein Schuss in den ...',
         );
       }
     } on RegisterException catch (e) {
-      await _googleService.signOut();
+      _googleService.signOut();
       yield RegisterFailure(
         error: e.message,
       );
     } catch (err) {
-      await _googleService.signOut();
+      _googleService.signOut();
       yield RegisterFailure(
         error: err.message ?? 'An unknown error occured',
       );

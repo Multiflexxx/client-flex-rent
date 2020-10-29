@@ -23,6 +23,9 @@ void main() => runApp(
             RepositoryProvider<GoogleService>(
               create: (context) => ApiGoogleService(),
             ),
+            RepositoryProvider<FacebookService>(
+              create: (context) => ApiFacebookService(),
+            ),
           ],
           child: MultiBlocProvider(
             providers: [

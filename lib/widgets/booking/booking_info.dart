@@ -48,87 +48,67 @@ class BookingInfo extends StatelessWidget {
     if (lessor) {
       switch (statusId) {
         case 1:
-          {
-            return 'Warten auf Bestätigung';
-          }
+          return 'Warten auf Bestätigung';
           break;
         case 2:
-          {
-            return 'Deine Buchung wurde Bestätigt!';
-          }
+          return 'Deine Buchung wurde Bestätigt!';
           break;
         case 3:
-          {
-            return 'Deine Buchung wurde Abgelehnt!';
-          }
+          return 'Deine Buchung wurde Abgelehnt!';
           break;
         case 4:
-          {
-            return 'Du hast deine Buchung abgeholt!';
-          }
+          return 'Du hast deine Buchung abgeholt!';
           break;
         case 5:
-          {
-            return 'Du hast deine Buchung zurückgegeben!';
-          }
+          return 'Du hast deine Buchung zurückgegeben!';
+
           break;
         case 6:
-          {
-            return 'Deine Buchung wurde Abgebrochen gemacht!';
-          }
+          return 'Deine Buchung wurde Abgebrochen gemacht!';
+
           break;
         case 7:
-          {
-            return 'Du hast deine Buchung abgebrochen!';
-          }
+          return 'Du hast deine Buchung abgebrochen!';
+
           break;
         default:
-          {
-            return 'Da lief was schief';
-          }
+          return 'Da lief was schief';
+
           break;
       }
     } else {
       switch (statusId) {
         case 1:
-          {
-            return 'Offene Anfrage';
-          }
+          return 'Offene Anfrage';
+
           break;
         case 2:
-          {
-            return 'Abholung ausstehend';
-          }
+          return 'Abholung ausstehend';
+
           break;
         case 3:
-          {
-            return 'Abgelehnt';
-          }
+          return 'Abgelehnt';
+
           break;
         case 4:
-          {
-            return 'Ausgeliehen';
-          }
+          return 'Ausgeliehen';
+
           break;
         case 5:
-          {
-            return 'Abgeschlossen';
-          }
+          return 'Abgeschlossen';
+
           break;
         case 6:
-          {
-            return 'Selber Abgebrochen';
-          }
+          return 'Selber Abgebrochen';
+
           break;
         case 7:
-          {
-            return 'Abgebrochen von Mieter';
-          }
+          return 'Abgebrochen von Mieter';
+
           break;
         default:
-          {
-            return 'Da lief was schief';
-          }
+          return 'Da lief was schief';
+
           break;
       }
     }

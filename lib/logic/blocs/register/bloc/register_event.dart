@@ -15,6 +15,14 @@ class RegisterWithGoogle extends RegisterEvent {
   });
 }
 
+class RegisterWithFacebook extends RegisterEvent {
+  final String signUpOption;
+
+  RegisterWithFacebook({
+    this.signUpOption,
+  });
+}
+
 class RegisterPhoneForm extends RegisterEvent {
   final String signUpOption;
   final User thirdPartyUser;
