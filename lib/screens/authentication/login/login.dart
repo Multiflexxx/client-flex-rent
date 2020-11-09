@@ -9,16 +9,15 @@ import 'package:flexrent/widgets/background/logo.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: UniqueKey(),
-      body: Stack(children: <Widget>[
-        Background(top: 30),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: SafeArea(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: Stack(children: <Widget>[
+          Background(top: 30),
+          SafeArea(
             minimum: const EdgeInsets.all(16),
             child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (context, state) {
@@ -52,8 +51,8 @@ class LoginScreen extends StatelessWidget {
               },
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }

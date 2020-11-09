@@ -1,4 +1,3 @@
-import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/divider_with_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
