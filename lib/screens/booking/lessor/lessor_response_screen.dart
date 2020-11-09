@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -125,10 +126,11 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              // TODO: Overview for lessor not lessee: Profile of lessor
-              // BookingInfo(
-              //   offerRequest: widget.offerRequest,
-              // ),
+            
+              BookingInfo(
+                lessor: true,
+                offerRequest: widget.offerRequest,
+              ),
               BookingOverview(
                 offerRequest: _offerRequest,
               ),

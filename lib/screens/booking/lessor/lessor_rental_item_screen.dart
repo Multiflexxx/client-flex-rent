@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexrent/screens/booking/lessor/lessor_finish_rent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -191,7 +192,7 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                         (BuildContext context, int index) {
                                           return GestureDetector(
                                             onTap: () => pushNewScreen(context,
-                                                screen: LessorResponseScreen(),
+                                                screen: LessorFinishScreen(offerRequest: closedOfferRequestList[index]),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:
