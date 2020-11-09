@@ -38,10 +38,12 @@ class ApiFacebookService extends FacebookService {
         }
         break;
       case FacebookLoginStatus.cancelledByUser:
+      await _facebookLogin.logOut();
         print('Login cancelled by the user.');
         return null;
         break;
       case FacebookLoginStatus.error:
+      await _facebookLogin.logOut();
         print('Something went wrong with the login process.\n'
             'Here\'s the error Facebook gave us: ${result.errorMessage}');
         return null;
@@ -56,13 +58,16 @@ class ApiFacebookService extends FacebookService {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final token = result.accessToken.token;
+        await _facebookLogin.logOut();
         return token;
         break;
       case FacebookLoginStatus.cancelledByUser:
         print('Login cancelled by the user.');
+        await _facebookLogin.logOut();
         return null;
         break;
       case FacebookLoginStatus.error:
+      await _facebookLogin.logOut();
         print('Something went wrong with the login process.\n'
             'Here\'s the error Facebook gave us: ${result.errorMessage}');
         return null;

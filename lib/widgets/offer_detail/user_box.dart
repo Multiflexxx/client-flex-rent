@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -48,11 +49,28 @@ class UserBox extends StatelessWidget {
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
-                  child: Image(
-                    width: 75,
-                    height: 75,
-                    image: AssetImage('assets/images/jett.jpg'),
-                  ),
+                  child: lessor.profilePicture != ''
+                      ? CachedNetworkImage(
+                          imageUrl: lessor.profilePicture,
+                          width: 75,
+                          height: 75,
+                          fit: BoxFit.cover,
+                          placeholder: (context, url) => Image(
+                            width: 75,
+                            height: 75,
+                            image: AssetImage('assets/images/jett.jpg'),
+                          ),
+                          errorWidget: (context, url, error) => Image(
+                            width: 75,
+                            height: 75,
+                            image: AssetImage('assets/images/jett.jpg'),
+                          ),
+                        )
+                      : Image(
+                          width: 75,
+                          height: 75,
+                          image: AssetImage('assets/images/jett.jpg'),
+                        ),
                 ),
               ],
             ),
