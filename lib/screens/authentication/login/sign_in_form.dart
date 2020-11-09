@@ -1,4 +1,3 @@
-import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/divider_with_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
@@ -44,118 +43,124 @@ class _SignInFormState extends State<SignInForm> {
           return Form(
             key: _key,
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  FormFieldStyled(
-                    controller: _emailController,
-                    autocorrect: false,
-                    hintText: 'Email',
-                    type: TextInputType.emailAddress,
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Email ist notwendig';
-                      } else if (!RegExp(
-                              r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
-                          .hasMatch(value)) {
-                        return 'Bitte gebe eine gültige Nummer ein';
-                      }
-                    },
-                  ),
-                  SizedBox(
-                    height: 12,
-                  ),
-                  FormFieldStyled(
-                    controller: _passwordController,
-                    autocorrect: false,
-                    hintText: 'Password',
-                    obscureText: true,
-                    validator: (String value) {
-                      if (value.isEmpty) {
-                        return 'Passwort ist notwendig.';
-                      }
-                      return null;
-                    },
-                  ),
-                  SizedBox(
-                    height: 16,
-                  ),
-                  RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    textColor: Theme.of(context).primaryColor,
-                    padding: const EdgeInsets.all(16),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('Login'),
-                    onPressed:
-                        state is LoginLoading ? () {} : _onLoginButtonPressed,
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  DividerWithText(
-                    dividerText: 'Einloggen mit',
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      IconButton(
-                        icon: Icon(
-                          Ionicons.logo_google,
-                          color: Colors.white,
-                          size: 30,
+            child: Flexible(
+              fit: FlexFit.loose,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    FormFieldStyled(
+                      controller: _emailController,
+                      autocorrect: false,
+                      hintText: 'Email',
+                      type: TextInputType.emailAddress,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return 'Email ist notwendig';
+                        } else if (!RegExp(
+                                r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
+                            .hasMatch(value)) {
+                          return 'Bitte gebe eine gültige Nummer ein';
+                        }
+                      },
+                    ),
+                    SizedBox(
+                      height: 12,
+                    ),
+                    FormFieldStyled(
+                      controller: _passwordController,
+                      autocorrect: false,
+                      hintText: 'Password',
+                      obscureText: true,
+                      validator: (String value) {
+                        if (value.isEmpty) {
+                          return 'Passwort ist notwendig.';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        color: Theme.of(context).accentColor,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(16),
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(8.0)),
+                        child: Text('Login'),
+                        onPressed: state is LoginLoading
+                            ? () {}
+                            : _onLoginButtonPressed,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    DividerWithText(
+                      dividerText: 'Einloggen mit',
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            Ionicons.logo_google,
+                            color: Theme.of(context).primaryColor,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<LoginBloc>(context)
+                                .add(LoginWithGoogleButtonPressed());
+                          },
                         ),
-                        onPressed: () {
-                          BlocProvider.of<LoginBloc>(context)
-                              .add(LoginWithGoogleButtonPressed());
-                        },
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Ionicons.logo_apple,
-                          color: Colors.white,
-                          size: 30,
+                        IconButton(
+                          icon: Icon(
+                            Ionicons.logo_apple,
+                            color: Theme.of(context).primaryColor,
+                            size: 30,
+                          ),
+                          onPressed: null,
                         ),
-                        onPressed: null,
-                      ),
-                      IconButton(
-                        icon: Icon(
-                          Ionicons.logo_facebook,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                        onPressed: () {
-                          BlocProvider.of<LoginBloc>(context)
-                              .add(LoginWithFacebookButtonPressed());
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(
-                    height: 30.0,
-                  ),
-                  RichText(
-                    text: TextSpan(
-                      text: 'Du hast noch kein Konto? ',
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: 'Registrieren',
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Theme.of(context).primaryColor),
-                          recognizer: TapGestureRecognizer()
-                            ..onTap = () =>
-                                BlocProvider.of<AuthenticationBloc>(context)
-                                    .add(UserSignUp()),
+                        IconButton(
+                          icon: Icon(
+                            Ionicons.logo_facebook,
+                            color: Theme.of(context).primaryColor,
+                            size: 30,
+                          ),
+                          onPressed: () {
+                            BlocProvider.of<LoginBloc>(context)
+                                .add(LoginWithFacebookButtonPressed());
+                          },
                         ),
                       ],
                     ),
-                  ),
-                ],
+                    SizedBox(
+                      height: 30.0,
+                    ),
+                    RichText(
+                      text: TextSpan(
+                        text: 'Du hast noch kein Konto? ',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        children: <TextSpan>[
+                          TextSpan(
+                            text: 'Registrieren',
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Theme.of(context).primaryColor),
+                            recognizer: TapGestureRecognizer()
+                              ..onTap = () =>
+                                  BlocProvider.of<AuthenticationBloc>(context)
+                                      .add(UserSignUp()),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           );

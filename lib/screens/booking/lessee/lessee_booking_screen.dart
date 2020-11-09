@@ -94,6 +94,7 @@ class _LeseeBookingBodyState extends State<LeseeBookingBody> {
             children: <Widget>[
               BookingInfo(
                 offerRequest: _offerRequest,
+                lessor: false,
               ),
               BookingOverview(
                 offerRequest: _offerRequest,

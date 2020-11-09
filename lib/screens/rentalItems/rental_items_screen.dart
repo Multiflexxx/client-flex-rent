@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexrent/screens/booking/lessee/lessee_finish_rent.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -181,7 +182,9 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                         (BuildContext context, int index) {
                                           return GestureDetector(
                                             onTap: () => pushNewScreen(context,
-                                                screen: LeseeBookingScreen(),
+                                                screen: LeseeFinishScreen(
+                                                  offerRequest: closedOfferRequestList[index],
+                                                ),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:

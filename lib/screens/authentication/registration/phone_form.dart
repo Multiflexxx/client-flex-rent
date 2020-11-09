@@ -1,5 +1,7 @@
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
@@ -44,7 +46,6 @@ class _PhoneFormState extends State<PhoneForm> {
             fit: FlexFit.loose,
             child: SingleChildScrollView(
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
                   FormFieldStyled(
                     controller: _phoneController,
@@ -110,22 +111,49 @@ class _PhoneFormState extends State<PhoneForm> {
                     },
                   ),
                   SizedBox(height: 16),
-                  RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    textColor: Theme.of(context).primaryColor,
-                    padding: EdgeInsets.all(16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
+                  SizedBox(
+                    width: double.infinity,
+                    child: RaisedButton(
+                      color: Theme.of(context).accentColor,
+                      textColor: Colors.white,
+                      padding: EdgeInsets.all(16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: Text('Weiter'),
+                      onPressed: () {
+                        if (state is RegisterPhoneLoading) {
+                          _onNextPressed(
+                            signInOption: state.signUpOption,
+                            thirdPartyUser: state.thirdPartyUser,
+                          );
+                        }
+                      },
                     ),
-                    child: Text('Weiter'),
-                    onPressed: () {
-                      if (state is RegisterPhoneLoading) {
-                        _onNextPressed(
-                          signInOption: state.signUpOption,
-                          thirdPartyUser: state.thirdPartyUser,
-                        );
-                      }
-                    },
+                  ),
+                  SizedBox(
+                    height: 30.0,
+                  ),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Du hast schon ein FlexRent Konto? ',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: 'Einloggen',
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              BlocProvider.of<AuthenticationBloc>(context)
+                                  .add(UserSignIn());
+                            },
+                        ),
+                      ],
+                    ),
                   ),
                 ],
               ),

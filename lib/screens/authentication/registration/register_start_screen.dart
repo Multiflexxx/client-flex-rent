@@ -1,6 +1,5 @@
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
-import 'package:flexrent/logic/services/facebook_service.dart';
 import 'package:flexrent/widgets/divider_with_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +15,7 @@ class RegisterStartScreen extends StatelessWidget {
           children: <Widget>[
             RaisedButton(
               color: Theme.of(context).accentColor,
-              textColor: Theme.of(context).primaryColor,
+              textColor: Colors.white,
               padding: const EdgeInsets.all(16),
               shape: new RoundedRectangleBorder(
                   borderRadius: new BorderRadius.circular(8.0)),
@@ -37,7 +36,7 @@ class RegisterStartScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Ionicons.logo_google,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     size: 30,
                   ),
                   onPressed: () {
@@ -48,7 +47,7 @@ class RegisterStartScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Ionicons.logo_apple,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     size: 30,
                   ),
                   onPressed: null,
@@ -56,7 +55,7 @@ class RegisterStartScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Ionicons.logo_facebook,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     size: 30,
                   ),
                   onPressed: () {

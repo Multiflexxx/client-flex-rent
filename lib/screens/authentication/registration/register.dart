@@ -12,18 +12,15 @@ import 'package:flexrent/widgets/background/logo.dart';
 class RegisterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: UniqueKey(),
-      body: Stack(children: <Widget>[
-        Background(
-          top: 30,
-        ),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: SafeArea(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: Stack(children: <Widget>[
+          Background(top: 30),
+          SafeArea(
             minimum: const EdgeInsets.all(16),
             child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (context, state) {
@@ -38,8 +35,8 @@ class RegisterScreen extends StatelessWidget {
               },
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }
@@ -53,12 +50,13 @@ class _AuthForm extends StatelessWidget {
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Register and become an User',
+          'Werde ein Flexer',
           style: TextStyle(
               color: Theme.of(context).primaryColor,
-              fontSize: 50,
+              fontSize: 42,
               fontWeight: FontWeight.bold,
               letterSpacing: 1.2),
         ),
@@ -80,12 +78,6 @@ class _AuthForm extends StatelessWidget {
                   thirdPartyUser: state.thirdPartyUser,
                 );
               }
-              // else if (state is RegisterPersonalLoading) {
-              //   return PersonalForm(
-              //     phoneNumber: state.phoneNumber,
-              //     thirdPartyUser: state.thirdPartyUser,
-              //   );
-              // }
               return RegisterStartScreen();
             },
           ),

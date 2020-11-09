@@ -63,7 +63,10 @@ class _FormFieldStyledState extends State<FormFieldStyled> {
                 },
               )
             : null,
-        helperStyle: TextStyle(color: Colors.white60, height: 1.25),
+        helperStyle: TextStyle(
+          color: Theme.of(context).primaryColor,
+          height: 1.25,
+        ),
         helperMaxLines: 3,
         helperText: widget.helperText,
         border: OutlineInputBorder(

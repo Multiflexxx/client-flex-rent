@@ -3,11 +3,13 @@ import 'package:flexrent/logic/models/models.dart';
 
 class BookingInfo extends StatelessWidget {
   final OfferRequest offerRequest;
-  BookingInfo({this.offerRequest});
+  final bool lessor;
+  BookingInfo({this.offerRequest, this.lessor});
 
   @override
   Widget build(BuildContext context) {
     return Container(
+      width: double.infinity,
       margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).accentColor),
@@ -18,7 +20,7 @@ class BookingInfo extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(children: <Widget>[
           Text(
-            getInfoTextHeading(true, offerRequest.statusId),
+            getInfoTextHeading(lessor, offerRequest.statusId),
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 25.0,
@@ -30,7 +32,7 @@ class BookingInfo extends StatelessWidget {
             height: 20.0,
           ),
           Text(
-            getInfoTextBody(true, offerRequest.statusId),
+            getInfoTextBody(lessor, offerRequest.statusId),
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 16.0,
@@ -45,7 +47,7 @@ class BookingInfo extends StatelessWidget {
   }
 
   String getInfoTextHeading(bool lessor, int statusId) {
-    if (lessor) {
+    if (!lessor) {
       switch (statusId) {
         case 1:
           return 'Warten auf Bestätigung';
@@ -115,7 +117,7 @@ class BookingInfo extends StatelessWidget {
   }
 
   String getInfoTextBody(bool lessor, int statusId) {
-    if (lessor) {
+    if (!lessor) {
       switch (statusId) {
         case 1:
           {

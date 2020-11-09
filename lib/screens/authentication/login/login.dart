@@ -9,16 +9,15 @@ import 'package:flexrent/widgets/background/logo.dart';
 class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      key: UniqueKey(),
-      body: Stack(children: <Widget>[
-        Background(top: 30),
-        GestureDetector(
-          behavior: HitTestBehavior.opaque,
-          onTap: () {
-            FocusScope.of(context).unfocus();
-          },
-          child: SafeArea(
+    return GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
+      child: Scaffold(
+        body: Stack(children: <Widget>[
+          Background(top: 30),
+          SafeArea(
             minimum: const EdgeInsets.all(16),
             child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
               builder: (context, state) {
@@ -52,8 +51,8 @@ class LoginScreen extends StatelessWidget {
               },
             ),
           ),
-        ),
-      ]),
+        ]),
+      ),
     );
   }
 }
@@ -69,26 +68,26 @@ class _AuthForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Login',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 50,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(
+            'Login',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 42,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: BlocProvider<LoginBloc>(
-            create: (context) => LoginBloc(
-              BlocProvider.of<AuthenticationBloc>(context),
-              authService,
-              googleService,
-              facebookService,
-            ),
-            child: SignInForm(),
+        BlocProvider<LoginBloc>(
+          create: (context) => LoginBloc(
+            BlocProvider.of<AuthenticationBloc>(context),
+            authService,
+            googleService,
+            facebookService,
           ),
+          child: SignInForm(),
         ),
       ],
     );

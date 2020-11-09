@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
