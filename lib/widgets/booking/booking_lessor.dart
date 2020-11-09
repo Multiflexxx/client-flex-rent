@@ -33,8 +33,8 @@ class BookingLessor extends StatelessWidget {
                       ),
                       Text(
                         'VermieterIn: ' +
-                            offerRequest.offer.lessor.firstName +
-                            offerRequest.offer.lessor.firstName,
+                            offerRequest.offer.lessor.firstName + ' ' +
+                            offerRequest.offer.lessor.lastName,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
