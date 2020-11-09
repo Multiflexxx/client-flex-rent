@@ -36,7 +36,7 @@ class RegisterStartScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Ionicons.logo_google,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     size: 30,
                   ),
                   onPressed: () {
@@ -47,7 +47,7 @@ class RegisterStartScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Ionicons.logo_apple,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     size: 30,
                   ),
                   onPressed: null,
@@ -55,7 +55,7 @@ class RegisterStartScreen extends StatelessWidget {
                 IconButton(
                   icon: Icon(
                     Ionicons.logo_facebook,
-                    color: Colors.white,
+                    color: Theme.of(context).primaryColor,
                     size: 30,
                   ),
                   onPressed: () {

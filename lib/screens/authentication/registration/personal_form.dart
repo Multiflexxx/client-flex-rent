@@ -238,7 +238,6 @@ class _PersonalFormState extends State<PersonalForm> {
               fit: FlexFit.loose,
               child: SingleChildScrollView(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
                     SizedBox(
                       height: 20,
@@ -294,43 +293,44 @@ class _PersonalFormState extends State<PersonalForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    RaisedButton(
-                      color: Theme.of(context).accentColor,
-                      textColor: Theme.of(context).primaryColor,
-                      padding: const EdgeInsets.all(16),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0),
+                    SizedBox(
+                      width: double.infinity,
+                      child: RaisedButton(
+                        color: Theme.of(context).accentColor,
+                        textColor: Colors.white,
+                        padding: const EdgeInsets.all(16),
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(8.0),
+                        ),
+                        child: Text('Register'),
+                        onPressed: () {
+                          if (state is RegisterPhoneSuccess) {
+                            _onRegisterSubmitPressed(
+                              signInOption: state.signUpOption,
+                            );
+                          } else {
+                            print('');
+                          }
+                        },
                       ),
-                      child: Text('Register'),
-                      onPressed: () {
-                        if (state is RegisterPhoneSuccess) {
-                          _onRegisterSubmitPressed(
-                            signInOption: state.signUpOption,
-                          );
-                        } else {
-                          print('adsfa');
-                        }
-                      },
                     ),
                     SizedBox(
                       height: 16,
                     ),
                     RichText(
                       text: TextSpan(
-                        text: 'Du hast noch kein Konto? ',
+                        text: 'Du hast schon ein FlexRent Konto? ',
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                         ),
                         children: <TextSpan>[
                           TextSpan(
-                            text: 'Login',
+                            text: 'Einloggen',
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor),
                             recognizer: TapGestureRecognizer()
                               ..onTap = () {
-                                BlocProvider.of<RegisterBloc>(context)
-                                    .add(RegisterSetInital());
                                 BlocProvider.of<AuthenticationBloc>(context)
                                     .add(UserSignIn());
                               },
