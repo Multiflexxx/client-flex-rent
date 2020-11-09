@@ -68,26 +68,26 @@ class _AuthForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Login',
-          style: TextStyle(
-            color: Theme.of(context).primaryColor,
-            fontSize: 50,
-            fontWeight: FontWeight.bold,
-            letterSpacing: 1.2,
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
+          child: Text(
+            'Login',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 42,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.2,
+            ),
           ),
         ),
-        Container(
-          alignment: Alignment.center,
-          child: BlocProvider<LoginBloc>(
-            create: (context) => LoginBloc(
-              BlocProvider.of<AuthenticationBloc>(context),
-              authService,
-              googleService,
-              facebookService,
-            ),
-            child: SignInForm(),
+        BlocProvider<LoginBloc>(
+          create: (context) => LoginBloc(
+            BlocProvider.of<AuthenticationBloc>(context),
+            authService,
+            googleService,
+            facebookService,
           ),
+          child: SignInForm(),
         ),
       ],
     );
