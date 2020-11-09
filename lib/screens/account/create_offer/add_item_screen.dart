@@ -8,7 +8,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flexrent/logic/models/category/category.dart';
 import 'package:flexrent/logic/models/offer/offer.dart';
 import 'package:flexrent/logic/services/services.dart';
-import 'package:flexrent/screens/account/update_offer/update_offer_screen.dart';
 import 'package:flexrent/widgets/category/category_picker.dart';
 import 'package:flexrent/widgets/formfieldstyled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';

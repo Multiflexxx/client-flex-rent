@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';

@@ -80,7 +80,7 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapUserLoggedOutToState(
       UserLoggedOut event) async* {
-    await _googleService.signOut();
+    _googleService.signOut();
     await _authenticationService.signOut();
     yield AuthenticationNotAuthenticated();
   }
