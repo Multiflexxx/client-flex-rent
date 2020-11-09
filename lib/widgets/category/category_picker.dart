@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/slide_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 class CategoryPicker extends StatefulWidget {
   final ScrollController scrollController;
@@ -51,11 +52,13 @@ class _CategoryPickerState extends State<CategoryPicker> {
                                 letterSpacing: 1.2,
                               ),
                             ),
-                            leading:
-                                // add SVG
-                                Icon(
-                              Icons.photo,
-                              color: Theme.of(context).primaryColor,
+                            leading: Container(
+                              height: 25.0,
+                              width: 25.0,
+                              child: SvgPicture.network(
+                                _category.pictureLink,
+                                color: Theme.of(context).accentColor,
+                              ),
                             ),
                             onTap: () => Navigator.pop(context, _category),
                           );
