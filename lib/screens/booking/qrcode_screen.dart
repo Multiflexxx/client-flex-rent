@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
@@ -41,7 +42,12 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dein QR Code'),
+        title: Text('Dein QR Code',
+        style: TextStyle(color: Theme.of(context).primaryColor),),
+        backgroundColor: Theme.of(context).backgroundColor,
+        iconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor
+        ),
       ),
       body: SafeArea(
         child: Center(
