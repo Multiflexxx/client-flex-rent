@@ -195,7 +195,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                         child: Text(
                                           'Preisübersicht',
                                           style: TextStyle(
-                                            color: Colors.white70,
+                                            color: Theme.of(context).primaryColor,
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w300,
                                             decoration:

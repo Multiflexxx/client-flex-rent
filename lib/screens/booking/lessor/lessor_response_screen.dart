@@ -128,7 +128,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
             children: <Widget>[
               BookingInfo(
                 lessor: true,
-                offerRequest: widget.offerRequest,
+                offerRequest: _offerRequest,
               ),
               BookingOverview(
                 offerRequest: _offerRequest,
@@ -137,8 +137,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                   ? Column(
                       children: [
                         Container(
-                          margin: EdgeInsets.symmetric(
-                             horizontal: 10.0),
+                          margin: EdgeInsets.symmetric(horizontal: 10.0),
                           padding: EdgeInsets.symmetric(vertical: 8.0),
                           child: SizedBox(
                             width: double.infinity,
@@ -159,8 +158,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                           height: 10.0,
                         ),
                         Container(
-                          margin: EdgeInsets.symmetric(
-                             horizontal: 10.0),
+                          margin: EdgeInsets.symmetric(horizontal: 10.0),
                           padding: EdgeInsets.symmetric(vertical: 8.0),
                           child: SizedBox(
                             width: double.infinity,
@@ -208,69 +206,64 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                             ),
                           ),
                         )
-                      : _offerRequest.statusId == 3
-                          ? Text('Abgelehnt')
-                          : _offerRequest.statusId == 4
-                              ? Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: GestureDetector(
-                                    onTap: () => _offerRequest.qrCodeId != ''
-                                        ? pushNewScreen(
-                                            context,
-                                            screen: QrCodeScreen(
-                                              offerRequest: _offerRequest,
-                                            ),
-                                          )
-                                        : showFlushbar(
-                                            context: context,
-                                            message:
-                                                'QR Code nicht verfügbar!'),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(10.0),
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).accentColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      child: Center(
-                                        child: Text(
-                                          'QR Code anzeigen',
-                                          style: TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 20.0,
-                                            fontWeight: FontWeight.w300,
-                                          ),
+                      : _offerRequest.statusId == 4
+                          ? Padding(
+                              padding: const EdgeInsets.all(20.0),
+                              child: GestureDetector(
+                                onTap: () => _offerRequest.qrCodeId != ''
+                                    ? pushNewScreen(
+                                        context,
+                                        screen: QrCodeScreen(
+                                          offerRequest: _offerRequest,
                                         ),
+                                      )
+                                    : showFlushbar(
+                                        context: context,
+                                        message: 'QR Code nicht verfügbar!'),
+                                child: Container(
+                                  padding: const EdgeInsets.all(10.0),
+                                  height: 50.0,
+                                  decoration: BoxDecoration(
+                                      color: Theme.of(context).accentColor,
+                                      borderRadius:
+                                          BorderRadius.circular(10.0)),
+                                  child: Center(
+                                    child: Text(
+                                      'QR Code anzeigen',
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 20.0,
+                                        fontWeight: FontWeight.w300,
                                       ),
                                     ),
                                   ),
+                                ),
+                              ),
+                            )
+                          : _offerRequest.statusId == 5
+                              ? Container(
+                                  margin: EdgeInsets.all(10.0),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Theme.of(context).cardColor,
+                                    borderRadius: BorderRadius.circular(10.0),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Column(children: <Widget>[
+                                      Text(
+                                        'Wir hoffen es hat alles geklappt!',
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 18.0,
+                                          height: 1.15,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ]),
+                                  ),
                                 )
-                              : _offerRequest.statusId == 5
-                                  ? Container(
-                                      margin: EdgeInsets.all(10.0),
-                                      width: double.infinity,
-                                      decoration: BoxDecoration(
-                                        color: Theme.of(context).cardColor,
-                                        borderRadius:
-                                            BorderRadius.circular(10.0),
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(children: <Widget>[
-                                          Text(
-                                            'Wir hoffen es hat alles geklappt!',
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 18.0,
-                                              height: 1.15,
-                                              fontWeight: FontWeight.w500,
-                                            ),
-                                          ),
-                                        ]),
-                                      ),
-                                    )
-                                  : Container(),
+                              : Container(),
             ],
           );
         } else if (snapshot.hasError) {
