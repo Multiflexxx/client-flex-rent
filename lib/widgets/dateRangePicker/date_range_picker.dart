@@ -122,22 +122,21 @@ class _DataRangePickerState extends State<DateRangePicker> {
                     shape: BoxShape.circle,
                   ),
                   weekendTextStyle: TextStyle(color: Colors.red),
-                  disabledDatesTextStyle: TextStyle(color: Colors.white38),
+                  disabledDatesTextStyle: TextStyle(color: Colors.grey ),
                   blackoutDateTextStyle: TextStyle(
-                    color: Colors.white38,
+                    color: Colors.grey,
                     decoration: TextDecoration.lineThrough,
                     decorationThickness: 2.0,
                   ),
                 ),
 
-                selectionTextStyle:
-                    TextStyle(color: Theme.of(context).primaryColor),
+                selectionTextStyle: TextStyle(color: Colors.white),
                 selectionColor: Colors.blue,
                 startRangeSelectionColor: Theme.of(context).accentColor,
                 endRangeSelectionColor: Theme.of(context).accentColor,
                 rangeSelectionColor: Colors.purpleAccent,
                 rangeTextStyle: TextStyle(
-                  color: Theme.of(context).primaryColor,
+                  color: Colors.white,
                   fontSize: 20,
                 ),
 

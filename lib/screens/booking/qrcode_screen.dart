@@ -42,12 +42,12 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Dein QR Code',
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
+        title: Text('Dein QR Code',
+        style: TextStyle(color: Theme.of(context).primaryColor),),
         backgroundColor: Theme.of(context).backgroundColor,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        iconTheme: IconThemeData(
+          color: Theme.of(context).primaryColor
+        ),
       ),
       body: SafeArea(
         child: Center(
@@ -57,11 +57,15 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
               Container(
                 padding: EdgeInsets.all(80.0),
                 decoration: new BoxDecoration(
-                  color: Color(0xFFE9E9E9),
+                  color: Theme.of(context).cardColor,
                   border: Border.all(color: Theme.of(context).accentColor),
                   borderRadius: BorderRadius.circular(10.0),
                 ),
                 child: Container(
+                  decoration: new BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
                   child: QrImage(
                     data: widget.offerRequest.qrCodeId,
                     version: QrVersions.auto,

@@ -125,7 +125,6 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-       
         Padding(
           padding: EdgeInsets.only(left: 28.0),
           child: Text(
@@ -315,7 +314,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).cardColor,
-                    textColor: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
                     padding:
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
                     shape: RoundedRectangleBorder(
@@ -370,7 +369,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).accentColor,
-                    textColor: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
                     padding: const EdgeInsets.all(16),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(8.0)),

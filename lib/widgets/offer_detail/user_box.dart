@@ -40,7 +40,7 @@ class UserBox extends StatelessWidget {
                     Text(
                       'Flexer seit August 2020',
                       style: TextStyle(
-                        color: Colors.white70,
+                        color: Theme.of(context).primaryColor,
                         fontSize: 16.0,
                         fontWeight: FontWeight.w300,
                       ),
@@ -146,7 +146,7 @@ class UserBox extends StatelessWidget {
                     child: Text(
                       'Vermieter eine Nachricht schicken',
                       style: TextStyle(
-                          color: Theme.of(context).primaryColor,
+                          color: Colors.white,
                           fontSize: 18.0,
                           fontWeight: FontWeight.w300),
                     ),

@@ -232,7 +232,7 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
               width: double.infinity,
               child: RaisedButton(
                 color: Theme.of(context).accentColor,
-                textColor: Theme.of(context).primaryColor,
+                textColor: Colors.white,
                 padding: const EdgeInsets.all(16),
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0)),
@@ -240,9 +240,9 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
                 child: Text(
                   'Bestätigen & Reservieren',
                   style: TextStyle(
-                    color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     fontWeight: FontWeight.w300,
+                    color: Colors.white,
                   ),
                 ),
               ),
