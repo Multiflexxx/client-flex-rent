@@ -228,21 +228,25 @@ class _ConfirmationPaymentScreenState extends State<ConfirmationPaymentScreen> {
               ),
             ),
 
-            SizedBox(
-              width: double.infinity,
-              child: RaisedButton(
-                color: Theme.of(context).accentColor,
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(16),
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(10.0)),
-                onPressed: () => _bookOffer(),
-                child: Text(
-                  'Bestätigen & Reservieren',
-                  style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w300,
-                    color: Colors.white,
+            Container(
+              margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 10.0),
+              padding: EdgeInsets.symmetric(vertical: 8.0),
+              child: SizedBox(
+                width: double.infinity,
+                child: RaisedButton(
+                  color: Theme.of(context).accentColor,
+                  textColor: Colors.white,
+                  padding: const EdgeInsets.all(16),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0)),
+                  onPressed: () => _bookOffer(),
+                  child: Text(
+                    'Bestätigen & Reservieren',
+                    style: TextStyle(
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.w300,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),

@@ -136,39 +136,49 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
               _offerRequest.statusId == 1
                   ? Column(
                       children: [
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            color: Theme.of(context).accentColor,
-                            textColor: Colors.white,
-                            padding: const EdgeInsets.all(16),
-                            shape: new RoundedRectangleBorder(
-                                borderRadius: new BorderRadius.circular(8.0)),
-                            child: Text('Annhemen'),
-                            onPressed: () {
-                              _acceptOffer(updateOfferRequest: _offerRequest);
-                            },
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                             horizontal: 10.0),
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Theme.of(context).accentColor,
+                              textColor: Colors.white,
+                              padding: const EdgeInsets.all(16),
+                              shape: new RoundedRectangleBorder(
+                                  borderRadius: new BorderRadius.circular(8.0)),
+                              child: Text('Annehmen'),
+                              onPressed: () {
+                                _acceptOffer(updateOfferRequest: _offerRequest);
+                              },
+                            ),
                           ),
                         ),
                         SizedBox(
                           height: 10.0,
                         ),
-                        SizedBox(
-                          width: double.infinity,
-                          child: RaisedButton(
-                            color: Colors.transparent,
-                            textColor: Theme.of(context).primaryColor,
-                            padding: const EdgeInsets.all(16),
-                            shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(8.0),
-                              side: BorderSide(
-                                  color: Theme.of(context).accentColor,
-                                  width: 1.75),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                             horizontal: 10.0),
+                          padding: EdgeInsets.symmetric(vertical: 8.0),
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: RaisedButton(
+                              color: Colors.transparent,
+                              textColor: Theme.of(context).primaryColor,
+                              padding: const EdgeInsets.all(16),
+                              shape: new RoundedRectangleBorder(
+                                borderRadius: new BorderRadius.circular(8.0),
+                                side: BorderSide(
+                                    color: Theme.of(context).accentColor,
+                                    width: 1.75),
+                              ),
+                              child: Text('Ablehnen'),
+                              onPressed: () {
+                                _rejectOffer(updateOfferRequest: _offerRequest);
+                              },
                             ),
-                            child: Text('Ablehnen'),
-                            onPressed: () {
-                              _rejectOffer(updateOfferRequest: _offerRequest);
-                            },
                           ),
                         ),
                       ],
@@ -226,8 +236,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                         child: Text(
                                           'QR Code anzeigen',
                                           style: TextStyle(
-                                            color:
-                                                Colors.white,
+                                            color: Colors.white,
                                             fontSize: 20.0,
                                             fontWeight: FontWeight.w300,
                                           ),
@@ -239,6 +248,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                               : _offerRequest.statusId == 5
                                   ? Container(
                                       margin: EdgeInsets.all(10.0),
+                                      width: double.infinity,
                                       decoration: BoxDecoration(
                                         color: Theme.of(context).cardColor,
                                         borderRadius:
