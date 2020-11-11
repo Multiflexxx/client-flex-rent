@@ -81,6 +81,31 @@ class BookingOverview extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
+                  'Mieter',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                    letterSpacing: 1.2,
+                  ),
+                ),
+                Text(
+                  '${offerRequest.user.firstName} ${offerRequest.user.lastName}',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    height: 1.0,
+                    fontWeight: FontWeight.w300,
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10,),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
                   'Vermieter',
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
