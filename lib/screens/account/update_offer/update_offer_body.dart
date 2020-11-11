@@ -314,7 +314,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).cardColor,
-                    textColor: Colors.white,
+                    textColor: Theme.of(context).primaryColor,
                     padding:
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
                     shape: RoundedRectangleBorder(
