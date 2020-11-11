@@ -148,14 +148,46 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                               );
                             } else if (snapshot.hasError) {
                               OfferException e = snapshot.error;
-                              return Center(
-                                  child: Text(
-                                e.message,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  letterSpacing: 1.2,
-                                ),
-                              ));
+                              return CustomScrollView(
+                                key: PageStorageKey<String>(name),
+                                slivers: <Widget>[
+                                  SliverOverlapInjector(
+                                    handle: NestedScrollView
+                                        .sliverOverlapAbsorberHandleFor(
+                                            context),
+                                  ),
+                                  SliverPadding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    sliver: SliverList(
+                                      delegate: SliverChildListDelegate(
+                                        <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 12.0,
+                                                horizontal: 16.0),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16.0,
+                                                horizontal: 12.0),
+                                            decoration: new BoxDecoration(
+                                              color:
+                                                  Theme.of(context).cardColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            child: Text(
+                                              e.message,
+                                              style: TextStyle(
+                                                fontSize: 18.0,
+                                                letterSpacing: 1.2,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
                             }
                             return Center(child: CircularProgressIndicator());
                           },
@@ -183,7 +215,9 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                                           return GestureDetector(
                                             onTap: () => pushNewScreen(context,
                                                 screen: LeseeFinishScreen(
-                                                  offerRequest: closedOfferRequestList[index],
+                                                  offerRequest:
+                                                      closedOfferRequestList[
+                                                          index],
                                                 ),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
@@ -202,14 +236,46 @@ class _RentalItemsScreenState extends State<RentalItemsScreen> {
                               );
                             } else if (snapshot.hasError) {
                               OfferException e = snapshot.error;
-                              return Center(
-                                  child: Text(
-                                e.message,
-                                style: TextStyle(
-                                  fontSize: 18.0,
-                                  letterSpacing: 1.2,
-                                ),
-                              ));
+                              return CustomScrollView(
+                                key: PageStorageKey<String>(name),
+                                slivers: <Widget>[
+                                  SliverOverlapInjector(
+                                    handle: NestedScrollView
+                                        .sliverOverlapAbsorberHandleFor(
+                                            context),
+                                  ),
+                                  SliverPadding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    sliver: SliverList(
+                                      delegate: SliverChildListDelegate(
+                                        <Widget>[
+                                          Container(
+                                            margin: EdgeInsets.symmetric(
+                                                vertical: 12.0,
+                                                horizontal: 16.0),
+                                            padding: EdgeInsets.symmetric(
+                                                vertical: 16.0,
+                                                horizontal: 12.0),
+                                            decoration: new BoxDecoration(
+                                              color:
+                                                  Theme.of(context).cardColor,
+                                              borderRadius:
+                                                  BorderRadius.circular(20.0),
+                                            ),
+                                            child: Text(
+                                              e.message,
+                                              style: TextStyle(
+                                                fontSize: 18.0,
+                                                letterSpacing: 1.2,
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              );
                             }
                             return Center(child: CircularProgressIndicator());
                           },
