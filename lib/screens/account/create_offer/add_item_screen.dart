@@ -174,7 +174,7 @@ class _AddItemBodyState extends State<_AddItemBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).cardColor,
-                    textColor: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
                     padding:
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
                     shape: RoundedRectangleBorder(
@@ -244,7 +244,7 @@ class _AddItemBodyState extends State<_AddItemBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).accentColor,
-                    textColor: Theme.of(context).primaryColor,
+                    textColor: Colors.white,
                     padding: const EdgeInsets.all(16),
                     shape: new RoundedRectangleBorder(
                         borderRadius: new BorderRadius.circular(8.0)),

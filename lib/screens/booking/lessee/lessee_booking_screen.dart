@@ -123,7 +123,7 @@ class _LeseeBookingBodyState extends State<LeseeBookingBody> {
                             child: Text(
                               'QR Code anzeigen',
                               style: TextStyle(
-                                color: Theme.of(context).primaryColor,
+                                color: Colors.white,
                                 fontSize: 20.0,
                                 fontWeight: FontWeight.w300,
                               ),
