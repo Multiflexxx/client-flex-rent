@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
@@ -59,7 +58,10 @@ class _LeseeFinishBodyState extends State<LeseeFinishBody> {
             return Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                BookingInfo(offerRequest: _offerRequest, lessor: false,),
+                BookingInfo(
+                  offerRequest: _offerRequest,
+                  lessor: false,
+                ),
                 BookingOverview(offerRequest: _offerRequest),
                 BookingLessor(offerRequest: _offerRequest),
               ],
