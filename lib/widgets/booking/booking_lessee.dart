@@ -33,8 +33,8 @@ class BookingLessee extends StatelessWidget {
                       ),
                       Text(
                         'Mieterin: ' +
-                            offerRequest.user.firstName +
-                            offerRequest.user.firstName,
+                            offerRequest.user.firstName + ' ' +
+                            offerRequest.user.lastName,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
@@ -67,9 +67,9 @@ class BookingLessee extends StatelessWidget {
                 ),
                 ClipRRect(
                   borderRadius: BorderRadius.circular(20.0),
-                  child: offerRequest.user.profilePicture != ''
+                  child: offerRequest.offer.lessor.profilePicture != ''
                       ? CachedNetworkImage(
-                          imageUrl: offerRequest.user.profilePicture,
+                          imageUrl: offerRequest.offer.lessor.profilePicture,
                           width: 70,
                           height: 70,
                           fit: BoxFit.cover,

@@ -21,7 +21,8 @@ class RegisterStartScreen extends StatelessWidget {
                   borderRadius: new BorderRadius.circular(8.0)),
               child: Text('Erstelle einen FlexRent Account'),
               onPressed: () {
-                BlocProvider.of<RegisterBloc>(context).add(RegisterPhoneForm());
+                BlocProvider.of<RegisterBloc>(context)
+                    .add(RegisterPhoneForm(signUpOption: 'email'));
               },
             ),
             SizedBox(

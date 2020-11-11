@@ -126,7 +126,6 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
           return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-            
               BookingInfo(
                 lessor: true,
                 offerRequest: widget.offerRequest,
@@ -241,9 +240,6 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                   ? Container(
                                       margin: EdgeInsets.all(10.0),
                                       decoration: BoxDecoration(
-                                        border: Border.all(
-                                            color:
-                                                Theme.of(context).accentColor),
                                         color: Theme.of(context).cardColor,
                                         borderRadius:
                                             BorderRadius.circular(10.0),
@@ -256,7 +252,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                             style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              fontSize: 25.0,
+                                              fontSize: 18.0,
                                               height: 1.15,
                                               fontWeight: FontWeight.w500,
                                             ),
