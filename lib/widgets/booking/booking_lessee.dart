@@ -33,13 +33,13 @@ class BookingLessee extends StatelessWidget {
                       ),
                       Text(
                         'Mieterin: ' +
-                            offerRequest.user.firstName + ' ' +
+                            offerRequest.user.firstName +
+                            ' ' +
                             offerRequest.user.lastName,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
                           height: 1.2,
-                          
                           fontWeight: FontWeight.w300,
                           letterSpacing: 1.2,
                         ),
@@ -162,7 +162,7 @@ class BookingLessee extends StatelessWidget {
                     borderRadius: new BorderRadius.circular(8.0)),
                 child: Text('Bewerte den Mieter'),
                 onPressed: () {
-                  ;
+                  print('Missing function');
                 },
               ),
             ),

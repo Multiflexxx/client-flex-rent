@@ -162,7 +162,7 @@ class BookingLessor extends StatelessWidget {
                     borderRadius: new BorderRadius.circular(8.0)),
                 child: Text('Bewerte den Vermieter'),
                 onPressed: () {
-                  ;
+                  print('Missing function');
                 },
               ),
             ),
