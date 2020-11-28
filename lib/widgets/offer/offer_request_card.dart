@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/dictionary/request_status_text.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -11,90 +12,16 @@ class OfferRequestCard extends StatelessWidget {
 
   String getInfoText(bool lessor, int statusId) {
     if (!lessor) {
-      switch (statusId) {
-        case 1:
-          {
-            return 'Warten auf Bestätigung';
-          }
-          break;
-        case 2:
-          {
-            return 'Buchung angenommen';
-          }
-          break;
-        case 3:
-          {
-            return 'Buchung abgelehnt';
-          }
-          break;
-        case 4:
-          {
-            return 'Abgeholt';
-          }
-          break;
-        case 5:
-          {
-            return 'Zurückgebracht';
-          }
-          break;
-        case 6:
-          {
-            return 'Abgebrochen von Mieter';
-          }
-          break;
-        case 7:
-          {
-            return 'Selber abgebrochen';
-          }
-          break;
-        default:
-          {
-            return 'Da lief was schief';
-          }
-          break;
+      try {
+        return lesseeStatusText[statusId - 1];
+      } catch (e) {
+        return lesseeStatusText[lesseeStatusText.length - 1];
       }
     } else {
-      switch (statusId) {
-        case 1:
-          {
-            return 'Anfrage';
-          }
-          break;
-        case 2:
-          {
-            return 'Abholung ausstehend';
-          }
-          break;
-        case 3:
-          {
-            return 'Abgelehnt';
-          }
-          break;
-        case 4:
-          {
-            return 'Ausgeliehen';
-          }
-          break;
-        case 5:
-          {
-            return 'Abgeschlossen';
-          }
-          break;
-        case 6:
-          {
-            return 'Selber abgebrochen';
-          }
-          break;
-        case 7:
-          {
-            return 'Abgebrochen von Mieter';
-          }
-          break;
-        default:
-          {
-            return 'Da lief was schief';
-          }
-          break;
+      try {
+        return lessorStatusText[statusId - 1];
+      } catch (e) {
+        return lessorStatusText[lessorStatusText.length - 1];
       }
     }
   }
