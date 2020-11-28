@@ -9,7 +9,7 @@ import 'package:flexrent/widgets/calendar/calendar.dart';
 import 'package:flexrent/widgets/camera/image_source.dart';
 import 'package:flexrent/widgets/category/category_picker.dart';
 
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 
 class UpdateOfferBody extends StatefulWidget {
   final Offer offer;

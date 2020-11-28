@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 
 class PhoneForm extends StatefulWidget {
   @override

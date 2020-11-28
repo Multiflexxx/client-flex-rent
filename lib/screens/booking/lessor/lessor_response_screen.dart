@@ -9,7 +9,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/booking/qrcode_screen.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
-import 'package:flexrent/widgets/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class LessorResponseScreen extends StatelessWidget {

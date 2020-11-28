@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/bloc/register_bloc.dart';
 import 'package:flexrent/logic/models/models.dart';
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 
 class PersonalForm extends StatefulWidget {
   final String phoneNumber;

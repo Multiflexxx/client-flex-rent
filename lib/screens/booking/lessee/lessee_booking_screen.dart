@@ -10,7 +10,7 @@ import 'package:flexrent/widgets/booking/booking_address.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flexrent/widgets/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class LeseeBookingScreen extends StatelessWidget {

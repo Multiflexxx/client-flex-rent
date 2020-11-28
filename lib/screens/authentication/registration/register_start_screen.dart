@@ -1,6 +1,6 @@
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
-import 'package:flexrent/widgets/divider_with_text.dart';
+import 'package:flexrent/widgets/styles/divider_with_text.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

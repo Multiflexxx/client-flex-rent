@@ -63,54 +63,42 @@ class BookingInfo extends StatelessWidget {
           break;
         case 5:
           return 'Du hast deine Buchung zurückgegeben!';
-
           break;
         case 6:
           return 'Deine Buchung wurde Abgebrochen gemacht!';
-
           break;
         case 7:
           return 'Du hast deine Buchung abgebrochen!';
-
           break;
         default:
           return 'Da lief was schief';
-
           break;
       }
     } else {
       switch (statusId) {
         case 1:
           return 'Offene Anfrage';
-
           break;
         case 2:
           return 'Abholung ausstehend';
-
           break;
         case 3:
           return 'Abgelehnt';
-
           break;
         case 4:
           return 'Ausgeliehen';
-
           break;
         case 5:
           return 'Abgeschlossen';
-
           break;
         case 6:
           return 'Selber Abgebrochen';
-
           break;
         case 7:
           return 'Abgebrochen von Mieter';
-
           break;
         default:
           return 'Da lief was schief';
-
           break;
       }
     }

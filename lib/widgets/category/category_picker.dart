@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
-import 'package:flexrent/widgets/slide_bar.dart';
+import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CategoryPicker extends StatefulWidget {

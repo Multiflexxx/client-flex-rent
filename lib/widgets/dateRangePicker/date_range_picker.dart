@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
-import 'package:flexrent/widgets/slide_bar.dart';
+import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
@@ -122,7 +122,7 @@ class _DataRangePickerState extends State<DateRangePicker> {
                     shape: BoxShape.circle,
                   ),
                   weekendTextStyle: TextStyle(color: Colors.red),
-                  disabledDatesTextStyle: TextStyle(color: Colors.grey ),
+                  disabledDatesTextStyle: TextStyle(color: Colors.grey),
                   blackoutDateTextStyle: TextStyle(
                     color: Colors.grey,
                     decoration: TextDecoration.lineThrough,

@@ -8,7 +8,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart' as MapLauncher;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flexrent/logic/models/offer_request/offer_request.dart';
-import 'package:flexrent/widgets/slide_bar.dart';
+import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 
 class BookingAddress extends StatefulWidget {
   final OfferRequest offerRequest;

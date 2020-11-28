@@ -10,7 +10,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/screens/booking/lessor/lessor_response_screen.dart';
 
-import 'package:flexrent/widgets/circle_tab_indicator.dart';
+import 'package:flexrent/widgets/styles/circle_tab_indicator.dart';
 import 'package:flexrent/widgets/offer/offer_request_card.dart';
 import 'package:intl/date_symbol_data_local.dart';
 
@@ -224,7 +224,10 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                         (BuildContext context, int index) {
                                           return GestureDetector(
                                             onTap: () => pushNewScreen(context,
-                                                screen: LessorFinishScreen(offerRequest: closedOfferRequestList[index]),
+                                                screen: LessorFinishScreen(
+                                                    offerRequest:
+                                                        closedOfferRequestList[
+                                                            index]),
                                                 withNavBar: false),
                                             child: OfferRequestCard(
                                               offerRequest:

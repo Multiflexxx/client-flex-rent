@@ -14,8 +14,8 @@ import 'package:flexrent/logic/blocs/user/bloc/user_bloc.dart';
 import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/screens/account/settings/update_password_screen.dart';
 import 'package:flexrent/widgets/camera/image_source.dart';
-import 'package:flexrent/widgets/flushbar_styled.dart';
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class PersonalInfoScreen extends StatelessWidget {

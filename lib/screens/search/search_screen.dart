@@ -6,7 +6,7 @@ import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/offer/offer_screen.dart';
-import 'package:flexrent/widgets/divider_with_text.dart';
+import 'package:flexrent/widgets/styles/divider_with_text.dart';
 import 'package:flexrent/widgets/offer/offer_card.dart';
 import '../../logic/models/models.dart';
 

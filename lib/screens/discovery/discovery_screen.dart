@@ -6,7 +6,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 
 import 'package:flexrent/widgets/discovery_carousel.dart';
-import 'package:flexrent/widgets/search_bar.dart';
+import 'package:flexrent/widgets/styles/search_bar.dart';
 
 class DiscoveryScreen extends StatefulWidget {
   @override

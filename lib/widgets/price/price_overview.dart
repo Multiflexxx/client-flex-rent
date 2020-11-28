@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/widgets/price/detail_price_overview.dart';
-import 'package:flexrent/widgets/slide_bar.dart';
+import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 
 class PriceOverview extends StatelessWidget {
   final double price;

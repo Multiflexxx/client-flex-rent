@@ -1,15 +1,12 @@
-import 'dart:convert';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:http/http.dart' as http;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flexrent/logic/models/category/category.dart';
 import 'package:flexrent/logic/models/offer/offer.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/category/category_picker.dart';
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class AddItemScreen extends StatelessWidget {

@@ -5,8 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/user/user.dart';
 import 'package:flexrent/logic/models/models.dart';
-import 'package:flexrent/widgets/flushbar_styled.dart';
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 
 class UpdatePasswordScreen extends StatelessWidget {
   @override
