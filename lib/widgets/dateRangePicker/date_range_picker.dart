@@ -1,3 +1,4 @@
+import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/widgets/slideIns/slide_bar.dart';
@@ -63,107 +64,99 @@ class _DataRangePickerState extends State<DateRangePicker> {
   Widget build(BuildContext context) {
     _controller.selectedDate = date;
     _controller.selectedRange = range;
-    return Material(
-      color: Theme.of(context).cardColor,
-      child: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            SlideBar(),
-            Flexible(
-              child: SfDateRangePicker(
-                controller: _controller,
-                view: DateRangePickerView.month,
-                selectionMode: DateRangePickerSelectionMode.range,
-                showNavigationArrow: false,
-                initialDisplayDate: widget.date,
-                minDate: widget.minDate,
-                maxDate: widget.maxDate,
-                enablePastDates: false,
+    return SlideIn(
+      top: false,
+      widgetList: [
+        Flexible(
+          child: SfDateRangePicker(
+            controller: _controller,
+            view: DateRangePickerView.month,
+            selectionMode: DateRangePickerSelectionMode.range,
+            showNavigationArrow: false,
+            initialDisplayDate: widget.date,
+            minDate: widget.minDate,
+            maxDate: widget.maxDate,
+            enablePastDates: false,
 
-                navigationDirection:
-                    DateRangePickerNavigationDirection.vertical,
+            navigationDirection: DateRangePickerNavigationDirection.vertical,
 
-                headerStyle: DateRangePickerHeaderStyle(
-                  textStyle: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-                headerHeight: 100,
-
-                monthViewSettings: DateRangePickerMonthViewSettings(
-                  enableSwipeSelection: false,
-                  firstDayOfWeek: 1,
-                  viewHeaderStyle: DateRangePickerViewHeaderStyle(
-                    textStyle: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                  dayFormat: 'EE',
-                  weekendDays: List<int>()..add(7),
-                  blackoutDates: _getBlackOutDates(),
-                ),
-
-                // Style
-                backgroundColor: Theme.of(context).cardColor,
-                monthCellStyle: DateRangePickerMonthCellStyle(
-                  textStyle: TextStyle(color: Theme.of(context).primaryColor),
-                  todayTextStyle:
-                      TextStyle(color: Theme.of(context).primaryColor),
-                  todayCellDecoration: BoxDecoration(
-                    color: Colors.red,
-                    border: Border.all(
-                      color: Colors.red,
-                      width: 1.0,
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                  weekendTextStyle: TextStyle(color: Colors.red),
-                  disabledDatesTextStyle: TextStyle(color: Colors.grey),
-                  blackoutDateTextStyle: TextStyle(
-                    color: Colors.grey,
-                    decoration: TextDecoration.lineThrough,
-                    decorationThickness: 2.0,
-                  ),
-                ),
-
-                selectionTextStyle: TextStyle(color: Colors.white),
-                selectionColor: Colors.blue,
-                startRangeSelectionColor: Theme.of(context).accentColor,
-                endRangeSelectionColor: Theme.of(context).accentColor,
-                rangeSelectionColor: Colors.purpleAccent,
-                rangeTextStyle: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                ),
-
-                onSelectionChanged:
-                    (_picker.DateRangePickerSelectionChangedArgs details) {
-                  setState(() {
-                    if (range == null) {
-                      date = details.value;
-                    } else {
-                      range = details.value;
-                    }
-                  });
-                },
+            headerStyle: DateRangePickerHeaderStyle(
+              textStyle: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 18.0,
+                fontWeight: FontWeight.w300,
+                letterSpacing: 1.2,
               ),
             ),
-            DateRangeButtonBar(
-              pickerContext: context,
-              date: date,
-              range: range,
-              blackoutDates: List<DateTime>()
-                ..add(
-                  DateTime(2020, 09, 26),
+            headerHeight: 100,
+
+            monthViewSettings: DateRangePickerMonthViewSettings(
+              enableSwipeSelection: false,
+              firstDayOfWeek: 1,
+              viewHeaderStyle: DateRangePickerViewHeaderStyle(
+                textStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
                 ),
+              ),
+              dayFormat: 'EE',
+              weekendDays: List<int>()..add(7),
+              blackoutDates: _getBlackOutDates(),
             ),
-          ],
+
+            // Style
+            backgroundColor: Theme.of(context).cardColor,
+            monthCellStyle: DateRangePickerMonthCellStyle(
+              textStyle: TextStyle(color: Theme.of(context).primaryColor),
+              todayTextStyle: TextStyle(color: Theme.of(context).primaryColor),
+              todayCellDecoration: BoxDecoration(
+                color: Colors.red,
+                border: Border.all(
+                  color: Colors.red,
+                  width: 1.0,
+                ),
+                shape: BoxShape.circle,
+              ),
+              weekendTextStyle: TextStyle(color: Colors.red),
+              disabledDatesTextStyle: TextStyle(color: Colors.grey),
+              blackoutDateTextStyle: TextStyle(
+                color: Colors.grey,
+                decoration: TextDecoration.lineThrough,
+                decorationThickness: 2.0,
+              ),
+            ),
+
+            selectionTextStyle: TextStyle(color: Colors.white),
+            selectionColor: Colors.blue,
+            startRangeSelectionColor: Theme.of(context).accentColor,
+            endRangeSelectionColor: Theme.of(context).accentColor,
+            rangeSelectionColor: Colors.purpleAccent,
+            rangeTextStyle: TextStyle(
+              color: Colors.white,
+              fontSize: 20,
+            ),
+
+            onSelectionChanged:
+                (_picker.DateRangePickerSelectionChangedArgs details) {
+              setState(() {
+                if (range == null) {
+                  date = details.value;
+                } else {
+                  range = details.value;
+                }
+              });
+            },
+          ),
         ),
-      ),
+        DateRangeButtonBar(
+          pickerContext: context,
+          date: date,
+          range: range,
+          blackoutDates: List<DateTime>()
+            ..add(
+              DateTime(2020, 09, 26),
+            ),
+        ),
+      ],
     );
   }
 }

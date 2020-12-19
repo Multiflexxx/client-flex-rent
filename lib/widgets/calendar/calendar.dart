@@ -1,4 +1,5 @@
 import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/material.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -179,63 +180,55 @@ class _CalendarState extends State<Calendar> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).cardColor,
-      child: SafeArea(
-        top: false,
-        child: Column(
-          children: [
-            SlideBar(),
-            Flexible(
-              child: SfCalendar(
-                view: CalendarView.month,
-                onTap: (CalendarTapDetails details) =>
-                    onCalendarTap(details: details),
-                dataSource: _getCalendarDataSource(),
-                showNavigationArrow: false,
-                firstDayOfWeek: 1,
-                cellBorderColor: Colors.transparent,
-                todayHighlightColor: Colors.red,
+    return SlideIn(
+      top: false,
+      widgetList: [
+        Flexible(
+          child: SfCalendar(
+            view: CalendarView.month,
+            onTap: (CalendarTapDetails details) =>
+                onCalendarTap(details: details),
+            dataSource: _getCalendarDataSource(),
+            showNavigationArrow: false,
+            firstDayOfWeek: 1,
+            cellBorderColor: Colors.transparent,
+            todayHighlightColor: Colors.red,
+            backgroundColor: Theme.of(context).cardColor,
+            headerStyle: CalendarHeaderStyle(
+              textStyle: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 18.0,
+                fontWeight: FontWeight.w300,
+                letterSpacing: 1.2,
+              ),
+            ),
+            viewHeaderStyle: ViewHeaderStyle(
+              dayTextStyle: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            headerHeight: 100,
+            todayTextStyle: TextStyle(color: Theme.of(context).primaryColor),
+            appointmentTextStyle: TextStyle(
+              fontSize: 46,
+              color: Theme.of(context).primaryColor,
+            ),
+            monthViewSettings: MonthViewSettings(
+              appointmentDisplayMode: MonthAppointmentDisplayMode.appointment,
+              showAgenda: false,
+              showTrailingAndLeadingDates: false,
+              navigationDirection: MonthNavigationDirection.vertical,
+              monthCellStyle: MonthCellStyle(
                 backgroundColor: Theme.of(context).cardColor,
-                headerStyle: CalendarHeaderStyle(
-                  textStyle: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.w300,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-                viewHeaderStyle: ViewHeaderStyle(
-                  dayTextStyle: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                headerHeight: 100,
-                todayTextStyle:
-                    TextStyle(color: Theme.of(context).primaryColor),
-                appointmentTextStyle: TextStyle(
-                  fontSize: 46,
+                textStyle: TextStyle(
                   color: Theme.of(context).primaryColor,
-                ),
-                monthViewSettings: MonthViewSettings(
-                  appointmentDisplayMode:
-                      MonthAppointmentDisplayMode.appointment,
-                  showAgenda: false,
-                  showTrailingAndLeadingDates: false,
-                  navigationDirection: MonthNavigationDirection.vertical,
-                  monthCellStyle: MonthCellStyle(
-                    backgroundColor: Theme.of(context).cardColor,
-                    textStyle: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
                 ),
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
