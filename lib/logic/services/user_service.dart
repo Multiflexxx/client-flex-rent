@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flexrent/logic/config/config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -32,7 +33,7 @@ class ApiUserService extends UserService {
       }
 
       final response = await http.patch(
-        'https://flexrent.multiflexxx.de/user',
+        '${CONFIG.url}/user',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(_body),
       );
@@ -64,7 +65,7 @@ class ApiUserService extends UserService {
     var multipartFile = await http.MultipartFile.fromPath('image', imagePath,
         filename: imagePath);
 
-    var uri = Uri.parse('https://flexrent.multiflexxx.de/user/images');
+    var uri = Uri.parse('${CONFIG.url}/user/images');
     var request = http.MultipartRequest('POST', uri)
       ..fields['session_id'] = sessionId
       ..fields['user_id'] = userId
