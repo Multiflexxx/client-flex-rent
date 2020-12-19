@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -68,37 +69,30 @@ class _BookingAddressState extends State<BookingAddress> {
           child: Wrap(
             children: <Widget>[
               for (var map in availableMaps)
-                Material(
-                  color: Theme.of(context).cardColor,
-                  child: SafeArea(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SlideBar(),
-                        ListTile(
-                          onTap: () => map.showDirections(
-                            destination: coords,
-                          ),
-                          title: Text(
-                            map.mapName,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                          leading: Image(
-                            image: map.icon,
-                            height: 30.0,
-                            width: 30.0,
-                          ),
+                SlideIn(
+                  widgetList: [
+                    ListTile(
+                      onTap: () => map.showDirections(
+                        destination: coords,
+                      ),
+                      title: Text(
+                        map.mapName,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          letterSpacing: 1.2,
                         ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                      ],
+                      ),
+                      leading: Image(
+                        image: map.icon,
+                        height: 30.0,
+                        width: 30.0,
+                      ),
                     ),
-                  ),
-                ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                )
             ],
           ),
         ),

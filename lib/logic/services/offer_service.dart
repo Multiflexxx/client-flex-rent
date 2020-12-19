@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flexrent/logic/config/config.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -36,8 +37,7 @@ class ApiOfferService extends OfferService {
     int category,
     String search,
   }) async {
-    String url =
-        'https://flexrent.multiflexxx.de/offer/all?post_code=$postCode&';
+    String url = '${CONFIG.url}/offer/all?post_code=$postCode&';
 
     if (distance != null) {
       url += 'distance=$distance&';
@@ -75,8 +75,7 @@ class ApiOfferService extends OfferService {
 
   @override
   Future<Offer> getOfferById({String offerId}) async {
-    final response =
-        await http.get('https://flexrent.multiflexxx.de/offer/$offerId');
+    final response = await http.get('${CONFIG.url}/offer/$offerId');
 
     final Map<String, dynamic> jsonBody = json.decode(response.body);
     Offer offer = Offer.fromJson(jsonBody);
@@ -85,8 +84,7 @@ class ApiOfferService extends OfferService {
 
   @override
   Future<Map<String, List<Offer>>> getDiscoveryOffer({String postCode}) async {
-    final response = await http
-        .get('https://flexrent.multiflexxx.de/offer/?post_code=$postCode');
+    final response = await http.get('${CONFIG.url}/offer/?post_code=$postCode');
 
     final jsonBody = json.decode(response.body);
 
@@ -119,8 +117,7 @@ class ApiOfferService extends OfferService {
   Future<List<Offer>> getOfferbyUser() async {
     final String userId = await _storage.read(key: 'userId');
 
-    final response = await http
-        .get('https://flexrent.multiflexxx.de/offer/user-offers/$userId');
+    final response = await http.get('${CONFIG.url}/offer/user-offers/$userId');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);
@@ -140,8 +137,7 @@ class ApiOfferService extends OfferService {
 
   @override
   Future<List<Category>> getAllCategory() async {
-    final response =
-        await http.get('https://flexrent.multiflexxx.de/offer/categories');
+    final response = await http.get('${CONFIG.url}/offer/categories');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);
@@ -160,7 +156,7 @@ class ApiOfferService extends OfferService {
 
     Session session = Session(sessionId: sessionId, userId: userId);
 
-    final response = await http.put('https://flexrent.multiflexxx.de/offer/',
+    final response = await http.put('${CONFIG.url}/offer/',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(<String, dynamic>{
           'session': session.toJson(),
@@ -183,14 +179,14 @@ class ApiOfferService extends OfferService {
 
     Session session = Session(sessionId: sessionId, userId: userId);
 
-    final response = await http.patch(
-        'https://flexrent.multiflexxx.de/offer/${updateOffer.offerId}',
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(<String, dynamic>{
-          'session': session.toJson(),
-          'offer': updateOffer.toJson(),
-          'delete_images': images,
-        }));
+    final response =
+        await http.patch('${CONFIG.url}/offer/${updateOffer.offerId}',
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(<String, dynamic>{
+              'session': session.toJson(),
+              'offer': updateOffer.toJson(),
+              'delete_images': images,
+            }));
 
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
@@ -210,7 +206,7 @@ class ApiOfferService extends OfferService {
     var multipartFile = await http.MultipartFile.fromPath('images', imagePath,
         filename: imagePath);
 
-    var uri = Uri.parse('https://flexrent.multiflexxx.de/offer/images');
+    var uri = Uri.parse('${CONFIG.url}/offer/images');
     var request = http.MultipartRequest('POST', uri)
       ..fields['session_id'] = sessionId
       ..fields['offer_id'] = offer.offerId
@@ -276,8 +272,7 @@ class ApiOfferService extends OfferService {
 
     Session session = Session(sessionId: sessionId, userId: userId);
 
-    final response = await http.post(
-        'https://flexrent.multiflexxx.de/offer/$offerId',
+    final response = await http.post('${CONFIG.url}/offer/$offerId',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(<String, dynamic>{
           'session': session.toJson(),
@@ -303,7 +298,7 @@ class ApiOfferService extends OfferService {
     Session session = Session(sessionId: sessionId, userId: userId);
 
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/offer/user-requests',
+      '${CONFIG.url}/offer/user-requests',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, dynamic>{
         'session': session.toJson(),
@@ -342,7 +337,7 @@ class ApiOfferService extends OfferService {
     Session session = Session(sessionId: sessionId, userId: userId);
 
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/offer/user-requests',
+      '${CONFIG.url}/offer/user-requests',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, dynamic>{
         'session': session.toJson(),
@@ -366,7 +361,7 @@ class ApiOfferService extends OfferService {
     Session session = Session(sessionId: sessionId, userId: userId);
 
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/offer/handle-requests',
+      '${CONFIG.url}/offer/handle-requests',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, dynamic>{
         'session': session.toJson(),

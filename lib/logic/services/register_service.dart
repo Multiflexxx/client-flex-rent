@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:core';
 import 'dart:developer';
+import 'package:flexrent/logic/config/config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 
@@ -13,7 +14,7 @@ abstract class RegisterService {
 }
 
 class ApiRegisterService extends RegisterService {
-  String url = 'https://flexrent.multiflexxx.de/user';
+  String url = '${CONFIG.url}/user';
   final _storage = FlutterSecureStorage();
 
   @override
