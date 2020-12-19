@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -469,39 +471,20 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                     SizedBox(
                       height: 30.0,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: RaisedButton(
-                        color: Theme.of(context).accentColor,
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(16),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(8.0)),
-                        child: Text('Speichern'),
-                        onPressed: () => _saveChanges(),
-                      ),
+                    PurpleButton(
+                      text: Text('Speichern'),
+                      onPressed: () => _saveChanges(),
                     ),
                     SizedBox(
                       height: 16.0,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: RaisedButton(
-                        color: Theme.of(context).backgroundColor,
-                        textColor: Theme.of(context).primaryColor,
-                        padding: const EdgeInsets.all(16),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(8.0),
-                            side: BorderSide(
-                                color: Theme.of(context).accentColor,
-                                width: 1.75)),
-                        child: Text('Passwort ändern'),
-                        onPressed: () => pushNewScreen(
-                          context,
-                          screen: UpdatePasswordScreen(),
-                        ),
-                        // _updatePassword(),
+                    TransparentButton(
+                      text: Text('Passwort ändern'),
+                      onPressed: () => pushNewScreen(
+                        context,
+                        screen: UpdatePasswordScreen(),
                       ),
+                      // _updatePassword(),
                     ),
                   ],
                 ),

@@ -1,3 +1,4 @@
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -293,26 +294,17 @@ class _PersonalFormState extends State<PersonalForm> {
                     SizedBox(
                       height: 10,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: RaisedButton(
-                        color: Theme.of(context).accentColor,
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(16),
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(8.0),
-                        ),
-                        child: Text('Register'),
-                        onPressed: () {
-                          if (state is RegisterPhoneSuccess) {
-                            _onRegisterSubmitPressed(
-                              signInOption: state.signUpOption,
-                            );
-                          } else {
-                            print('');
-                          }
-                        },
-                      ),
+                    PurpleButton(
+                      text: Text('Register'),
+                      onPressed: () {
+                        if (state is RegisterPhoneSuccess) {
+                          _onRegisterSubmitPressed(
+                            signInOption: state.signUpOption,
+                          );
+                        } else {
+                          print('');
+                        }
+                      },
                     ),
                     SizedBox(
                       height: 16,

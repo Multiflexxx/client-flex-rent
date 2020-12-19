@@ -1,3 +1,4 @@
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/divider_with_text.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flutter/cupertino.dart';
@@ -82,19 +83,10 @@ class _SignInFormState extends State<SignInForm> {
                     SizedBox(
                       height: 16,
                     ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: RaisedButton(
-                        color: Theme.of(context).accentColor,
-                        textColor: Colors.white,
-                        padding: const EdgeInsets.all(16),
-                        shape: new RoundedRectangleBorder(
-                            borderRadius: new BorderRadius.circular(8.0)),
-                        child: Text('Login'),
-                        onPressed: state is LoginLoading
-                            ? () {}
-                            : _onLoginButtonPressed,
-                      ),
+                    PurpleButton(
+                      text: Text('Login'),
+                      onPressed:
+                          state is LoginLoading ? () {} : _onLoginButtonPressed,
                     ),
                     SizedBox(
                       height: 30.0,

@@ -1,5 +1,6 @@
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -128,7 +129,7 @@ class _AddItemBodyState extends State<_AddItemBody> {
                   width: double.infinity,
                   child: RaisedButton(
                     color: Theme.of(context).cardColor,
-                    textColor: Colors.white,
+                    textColor: Theme.of(context).primaryColor,
                     padding:
                         EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
                     shape: RoundedRectangleBorder(
@@ -194,19 +195,11 @@ class _AddItemBodyState extends State<_AddItemBody> {
                   ],
                 ),
                 SizedBox(height: 16.0),
-                SizedBox(
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    textColor: Colors.white,
-                    padding: const EdgeInsets.all(16),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('Speichern'),
-                    onPressed: () {
-                      _createOffer();
-                    },
-                  ),
+                PurpleButton(
+                  text: Text('Speichern'),
+                  onPressed: () {
+                    _createOffer();
+                  },
                 ),
               ],
             ),

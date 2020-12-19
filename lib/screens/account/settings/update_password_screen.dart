@@ -1,3 +1,4 @@
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
@@ -132,13 +133,8 @@ class _UpdatePasswordBodyState extends State<_UpdatePasswordBody> {
               SizedBox(
                 height: 16,
               ),
-              RaisedButton(
-                color: Theme.of(context).accentColor,
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(16),
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(8.0)),
-                child: Text('Speichern'),
+              PurpleButton(          
+                text: Text('Speichern'),
                 onPressed: () => _changePassword(),
               ),
             ],
