@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -131,29 +132,10 @@ class UserBox extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-            Center(
-              child: GestureDetector(
-                onTap: () {
-                  print('kontaktieren');
-                },
-                child: Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 50.0,
-                  decoration: BoxDecoration(
-                      color: Theme.of(context).accentColor,
-                      borderRadius: BorderRadius.circular(10.0)),
-                  child: Center(
-                    child: Text(
-                      'Vermieter eine Nachricht schicken',
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 18.0,
-                          fontWeight: FontWeight.w300),
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            PurpleButton(
+              text: Text('Vermieter eine Nachricht schicken'),
+              onPressed: () => print('kontaktieren'),
+            ),           
           ],
         ),
       ),

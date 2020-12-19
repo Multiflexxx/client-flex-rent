@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:ui';
 
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -42,12 +43,12 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Dein QR Code',
-        style: TextStyle(color: Theme.of(context).primaryColor),),
-        backgroundColor: Theme.of(context).backgroundColor,
-        iconTheme: IconThemeData(
-          color: Theme.of(context).primaryColor
+        title: Text(
+          'Dein QR Code',
+          style: TextStyle(color: Theme.of(context).primaryColor),
         ),
+        backgroundColor: Theme.of(context).backgroundColor,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
       ),
       body: SafeArea(
         child: Center(
@@ -73,27 +74,13 @@ class _QrCodeScreenState extends State<QrCodeScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: GestureDetector(
-                  onTap: () => Navigator.pop(context),
-                  child: Container(
-                    padding: const EdgeInsets.all(10.0),
-                    height: 50.0,
-                    decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.circular(10.0)),
-                    child: Center(
-                      child: Text(
-                        'Abbrechen',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20.0,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
-                    ),
-                  ),
+              Container(
+                margin: EdgeInsets.all(20),
+                child: PurpleButton(
+                  text: Text('Abbrechen'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
               )
             ],

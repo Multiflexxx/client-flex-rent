@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -365,19 +366,11 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                 SizedBox(
                   height: 30.0,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    textColor: Colors.white,
-                    padding: const EdgeInsets.all(16),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('Speichern'),
-                    onPressed: () {
-                      _updateOffer();
-                    },
-                  ),
+                PurpleButton(
+                  text: Text('Speichern'),
+                  onPressed: () {
+                    _updateOffer();
+                  },
                 ),
               ],
             ),
