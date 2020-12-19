@@ -1,3 +1,4 @@
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -131,23 +132,7 @@ class _MyItemsState extends State<MyItems> {
                 );
               } else if (snapshot.hasError) {
                 OfferException e = snapshot.error;
-                return Container(
-                  margin:
-                      EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
-                  padding:
-                      EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
-                  decoration: new BoxDecoration(
-                    color: Theme.of(context).cardColor,
-                    borderRadius: BorderRadius.circular(20.0),
-                  ),
-                  child: Text(
-                    e.message,
-                    style: TextStyle(
-                      fontSize: 18.0,
-                      letterSpacing: 1.2,
-                    ),
-                  ),
-                );
+                return ErrorBox(errorText: e.message);
               }
               return Center(child: CircularProgressIndicator());
             },

@@ -1,3 +1,5 @@
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -108,6 +110,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           );
                         },
                       );
+                    } else if (snapshot.hasError) {
+                      OfferException e = snapshot.error;
+                      return ErrorBox(errorText: e.message);
                     }
                     return Center(
                       child: CircularProgressIndicator(),

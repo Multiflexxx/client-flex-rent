@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -76,13 +78,19 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
       price: double.parse(_priceController.text),
     );
 
-    Offer offer = await ApiOfferService()
-        .updateOffer(updateOffer: updatedOffer, images: _deleteImageList);
+    try {
+      Offer offer = await ApiOfferService()
+          .updateOffer(updateOffer: updatedOffer, images: _deleteImageList);
 
-    setState(() {
-      _offer = offer;
-      initFormValues();
-    });
+      setState(() {
+        _offer = offer;
+        initFormValues();
+      });
+
+      showFlushbar(context: context, message: 'Erfoglreich bearbeitet!');
+    } on OfferException catch (e) {
+      showFlushbar(context: context, message: e.message);
+    }
   }
 
   void _deleteImage({String imagePath}) {

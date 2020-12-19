@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flexrent/screens/booking/lessor/lessor_finish_rent.dart';
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -171,26 +172,8 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                     sliver: SliverList(
                                       delegate: SliverChildListDelegate(
                                         <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 12.0,
-                                                horizontal: 16.0),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 16.0,
-                                                horizontal: 12.0),
-                                            decoration: new BoxDecoration(
-                                              color:
-                                                  Theme.of(context).cardColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            child: Text(
-                                              e.message,
-                                              style: TextStyle(
-                                                fontSize: 18.0,
-                                                letterSpacing: 1.2,
-                                              ),
-                                            ),
+                                          ErrorBox(
+                                            errorText: e.message,
                                           ),
                                         ],
                                       ),
@@ -258,26 +241,8 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                     sliver: SliverList(
                                       delegate: SliverChildListDelegate(
                                         <Widget>[
-                                          Container(
-                                            margin: EdgeInsets.symmetric(
-                                                vertical: 12.0,
-                                                horizontal: 16.0),
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: 16.0,
-                                                horizontal: 12.0),
-                                            decoration: new BoxDecoration(
-                                              color:
-                                                  Theme.of(context).cardColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(20.0),
-                                            ),
-                                            child: Text(
-                                              e.message,
-                                              style: TextStyle(
-                                                fontSize: 18.0,
-                                                letterSpacing: 1.2,
-                                              ),
-                                            ),
+                                          ErrorBox(
+                                            errorText: e.message,
                                           ),
                                         ],
                                       ),
