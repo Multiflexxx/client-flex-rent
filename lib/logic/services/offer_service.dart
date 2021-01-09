@@ -77,9 +77,7 @@ class ApiOfferService extends OfferService {
   Future<Offer> getOfferById({String offerId}) async {
     final response = await http.get('${CONFIG.url}/offer/$offerId');
 
-    inspect(response);
-
-    if (response.statusCode == 201) {
+    if (response.statusCode == 200) {
       final Map<String, dynamic> jsonBody = json.decode(response.body);
       Offer offer = Offer.fromJson(jsonBody);
       return offer;
