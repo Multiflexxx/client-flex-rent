@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';
@@ -117,8 +119,10 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
   void _addImage({ImageSource source}) async {
     final image = await picker.getImage(source: source);
     if (image != null) {
+      final _image = await HelperService.compressFile(File(image.path));
+
       Offer offer = await ApiOfferService()
-          .addImage(offer: _offer, imagePath: image.path);
+          .addImage(offer: _offer, imagePath: _image.path);
 
       setState(() {
         _offer = offer;

@@ -57,6 +57,8 @@ dependencies:
   google_sign_in: ^4.5.5
   jwt_decoder: ^1.0.3
   flutter_facebook_login: ^3.0.0
+  flutter_image_compress: ^0.7.0
+  filesize: ^1.0.4
 
 dev_dependencies:
   flutter_test:
