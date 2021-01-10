@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +17,16 @@ import 'package:flexrent/widgets/price/price_overview.dart';
 import 'package:flexrent/widgets/price/price_tag.dart';
 import 'package:flexrent/widgets/offer/offer_description.dart';
 import 'package:flexrent/widgets/offer_detail/user_box.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
+
+import 'offer_picture_detail_view.dart';
 
 class OfferScreen extends StatefulWidget {
   final Offer offer;
   final String heroTag;
+
   OfferScreen({this.offer, this.heroTag});
 
   @override
@@ -118,33 +124,43 @@ class _OfferScreenState extends State<OfferScreen> {
                         Hero(
                           tag: widget.heroTag,
                           transitionOnUserGestures: true,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              bottomRight: Radius.circular(20.0),
-                            ),
-                            child: offer.pictureLinks.length == 0
-                                ? Image(
-                                    image:
-                                        AssetImage('assets/images/noimage.png'),
-                                    height: 180.0,
-                                    width: 180.0,
-                                    fit: BoxFit.cover,
-                                  )
-                                : CachedNetworkImage(
-                                    imageUrl: offer.pictureLinks[0],
-                                    height: 180.0,
-                                    width: 180.0,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => Icon(
-                                      Icons.error,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    errorWidget: (context, url, error) => Icon(
-                                      Icons.error,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
+                          child: GestureDetector(
+                            onTap: () {
+                              pushNewScreenWithRouteSettings(context,
+                                  screen: PictureDetailView(
+                                    pictures: offer.pictureLinks,
                                   ),
+                                  settings: null);
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0),
+                              ),
+                              child: offer.pictureLinks.length == 0
+                                  ? Image(
+                                      image: AssetImage(
+                                          'assets/images/noimage.png'),
+                                      height: 180.0,
+                                      width: 180.0,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : CachedNetworkImage(
+                                      imageUrl: offer.pictureLinks[0],
+                                      height: 180.0,
+                                      width: 180.0,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Icon(
+                                        Icons.error,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(
+                                        Icons.error,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
+                            ),
                           ),
                         ),
                       ],
@@ -195,7 +211,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                         child: Text(
                                           'Preisübersicht',
                                           style: TextStyle(
-                                            color: Theme.of(context).primaryColor,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w300,
                                             decoration:
@@ -220,7 +237,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                         );
                                       } else {
                                         Flushbar(
-                                          backgroundColor: Theme.of(context).cardColor,
+                                          backgroundColor:
+                                              Theme.of(context).cardColor,
                                           messageText: Text(
                                             "Du musst einen Zeitraum auswählen.",
                                             style: TextStyle(
@@ -455,9 +473,95 @@ class _OfferScreenState extends State<OfferScreen> {
                           ),
                         ),
                       ),
-
                       // User
                       UserBox(lessor: offer.lessor),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            OfferException e = snapshot.error;
+            return CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              slivers: <Widget>[
+                SliverAppBar(
+                  stretch: true,
+                  onStretchTrigger: () {
+                    return;
+                  },
+                  floating: false,
+                  pinned: true,
+                  leading: IconButton(
+                    icon: Icon(Feather.arrow_left),
+                    iconSize: 30.0,
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () => Navigator.popUntil(context,
+                        ModalRoute.withName(Navigator.defaultRouteName)),
+                  ),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(Feather.share_2),
+                      iconSize: 30.0,
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                  ),
+                  expandedHeight: MediaQuery.of(context).size.width,
+                  flexibleSpace: FlexibleSpaceBar(
+                    stretchModes: <StretchMode>[
+                      StretchMode.zoomBackground,
+                      StretchMode.fadeTitle,
+                    ],
+                    centerTitle: true,
+                    title: Text(
+                      'Mietgegenstand',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    background: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        Hero(
+                          tag: widget.heroTag,
+                          transitionOnUserGestures: true,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0),
+                            ),
+                            child: Image(
+                              image: AssetImage('assets/images/noimage.png'),
+                              height: 180.0,
+                              width: 180.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    <Widget>[
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      ErrorBox(
+                        errorText: e.message,
+                      ),
                     ],
                   ),
                 ),

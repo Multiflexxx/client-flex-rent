@@ -66,8 +66,7 @@ class ApiAuthenticationService extends AuthenticationService {
         final User user = User.fromJson(jsonUser);
         return user;
       } else {
-        // sessionid outdated
-        return null;
+        throw AuthenticationException(message: 'Session outdated');
       }
     } else {
       // no userid in storage

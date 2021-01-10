@@ -12,7 +12,14 @@ class AuthenticationInitial extends AuthenticationState {}
 
 class AuthenticationLoading extends AuthenticationState {}
 
-class AuthenticationNotAuthenticated extends AuthenticationState {}
+class AuthenticationNotAuthenticated extends AuthenticationState {
+  final String message;
+
+  AuthenticationNotAuthenticated({this.message});
+
+  @override
+  List<Object> get props => [message];
+}
 
 class AuthenticationAuthenticated extends AuthenticationState {
   final User user;

@@ -219,7 +219,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
           );
         } else if (snapshot.hasError) {
           OfferException exception = snapshot.error;
-          Text(exception.message);
+          return Text(exception.message);
         }
         return Center(child: CircularProgressIndicator());
       },

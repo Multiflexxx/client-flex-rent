@@ -1,3 +1,5 @@
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +73,15 @@ class _AddItemBodyState extends State<_AddItemBody> {
         category: _category,
         price: double.parse(_priceController.text),
       );
-      Offer backendOffer = await ApiOfferService().createOffer(newOffer: offer);
+
+      try {
+        Offer backendOffer =
+            await ApiOfferService().createOffer(newOffer: offer);
+        Navigator.pop(context, backendOffer);
+      } on OfferException catch (e) {
+        showFlushbar(context: context, message: e.message);
+      }
+
       // Keep that!!!!
       // Navigator.of(context).pushAndRemoveUntil(
       //   CupertinoPageRoute(
@@ -83,7 +93,7 @@ class _AddItemBodyState extends State<_AddItemBody> {
       //   ),
       //   ModalRoute.withName(Navigator.defaultRouteName),
       // );
-      Navigator.pop(context, backendOffer);
+
     }
   }
 

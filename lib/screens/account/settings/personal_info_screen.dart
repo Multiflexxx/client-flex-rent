@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
 import 'package:flutter/cupertino.dart';
@@ -98,7 +99,8 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
   void _updateImage({ImageSource source}) async {
     final image = await picker.getImage(source: source);
     if (image != null) {
-      final _image = File(image.path);
+      final _image = await HelperService.compressFile(File(image.path));
+
       setState(() {
         profileImage = _image;
       });

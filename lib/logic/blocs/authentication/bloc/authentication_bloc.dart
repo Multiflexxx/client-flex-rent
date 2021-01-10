@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:meta/meta.dart';
 
+import '../../../exceptions/exceptions.dart';
 import '../../../models/models.dart';
 import '../../../services/services.dart';
 
@@ -53,15 +54,16 @@ class AuthenticationBloc
     yield AuthenticationLoading();
     try {
       final currentUser = await _authenticationService.getCurrentUser();
-
       if (currentUser != null) {
         yield AuthenticationAuthenticated(user: currentUser);
       } else {
         yield AuthenticationNotAuthenticated();
       }
-    } catch (e) {
+    } on AuthenticationException catch (e) {
+      yield AuthenticationNotAuthenticated(message: e.message);
+    } catch (err) {
       yield AuthenticationFailure(
-          message: e.message ?? 'An unknown error occurred');
+          message: err.message ?? 'An unknown error occurred');
     }
   }
 

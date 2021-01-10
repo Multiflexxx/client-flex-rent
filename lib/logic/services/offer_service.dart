@@ -78,9 +78,13 @@ class ApiOfferService extends OfferService {
   Future<Offer> getOfferById({String offerId}) async {
     final response = await http.get('${CONFIG.url}/offer/$offerId');
 
-    final Map<String, dynamic> jsonBody = json.decode(response.body);
-    Offer offer = Offer.fromJson(jsonBody);
-    return offer;
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonBody = json.decode(response.body);
+      Offer offer = Offer.fromJson(jsonBody);
+      return offer;
+    } else {
+      throw OfferException(message: 'Der Gegenstand ist nicht verfügbar');
+    }
   }
 
   @override
@@ -157,11 +161,11 @@ class ApiOfferService extends OfferService {
         return offerList;
       } else {
         return Future.error(
-            OfferException(message: 'Fange jetzt an zu Vermieten!'));
+            OfferException(message: 'Fange jetzt an zu vermieten!'));
       }
     }
     return Future.error(
-        OfferException(message: 'Fange jetzt an zu Vermieten!'));
+        OfferException(message: 'Fange jetzt an zu vermieten!'));
   }
 
   @override
@@ -174,7 +178,8 @@ class ApiOfferService extends OfferService {
           (jsonBody).map((i) => Category.fromJson(i)).toList();
       return categoryList;
     } else {
-      return null;
+      throw OfferException(
+          message: 'Derzeit können keine Kategorien geladen werden.');
     }
   }
 
@@ -197,7 +202,8 @@ class ApiOfferService extends OfferService {
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
-      return null;
+      throw OfferException(
+          message: 'Dein Produkt konnte nicht angelgt werden.');
     }
   }
 
@@ -222,8 +228,8 @@ class ApiOfferService extends OfferService {
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
-      inspect(response);
-      return null;
+      throw OfferException(
+          message: 'Dein Produkt konnte nicht geupdated werden.');
     }
   }
 
@@ -344,8 +350,10 @@ class ApiOfferService extends OfferService {
             (jsonBody).map((i) => OfferRequest.fromJson(i)).toList();
         return offerRequestList;
       } else {
+        String text = 'Fange jetzt an zu ';
+        text += lessor ? 'vermieten!' : 'mieten!';
         return Future.error(
-          OfferException(message: 'Fange jetzt an zu mieten'),
+          OfferException(message: text),
         );
       }
     } else {
@@ -408,3 +416,5 @@ class ApiOfferService extends OfferService {
     return null;
   }
 }
+
+// test

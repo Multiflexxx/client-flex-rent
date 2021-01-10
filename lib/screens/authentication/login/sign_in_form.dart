@@ -1,5 +1,6 @@
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/divider_with_text.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class _SignInFormState extends State<SignInForm> {
     return BlocListener<LoginBloc, LoginState>(
       listener: (context, state) {
         if (state is LoginFailure) {
-          _showError(state.error);
+          showFlushbar(context: context, message: state.error);
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -159,12 +160,5 @@ class _SignInFormState extends State<SignInForm> {
         },
       ),
     );
-  }
-
-  void _showError(String error) {
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(error),
-      backgroundColor: Theme.of(context).errorColor,
-    ));
   }
 }
