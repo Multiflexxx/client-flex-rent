@@ -45,9 +45,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           return GestureDetector(
                             onTap: () => Navigator.push(
                               context,
-                              new CupertinoPageRoute(
+                              CupertinoPageRoute(
                                 builder: (BuildContext context) =>
-                                    new ProductListScreen(category: category),
+                                    ProductListScreen(category: category),
                               ),
                             ),
                             child: Container(

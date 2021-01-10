@@ -1,5 +1,8 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/screens/discovery/discovery_offer_list_screen.dart';
+import 'package:flexrent/screens/offer/offer_list_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -35,7 +38,13 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                 ),
               ),
               GestureDetector(
-                onTap: () => print('See all'),
+                onTap: () => Navigator.push(
+                  context,
+                  CupertinoPageRoute(
+                    builder: (BuildContext context) =>
+                        DiscoveryOfferListScreen(carouselTitle: widget.carouselTitle),
+                  ),
+                ),
                 child: Text(
                   'See all',
                   style: TextStyle(

@@ -12,6 +12,7 @@ abstract class OfferService {
   Future<List<Offer>> getAllOffers();
   Future<Offer> getOfferById();
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
+  Future<List<Offer>> getAllDiscoveryOffers();
   Future<List<Category>> getAllCategory();
   Future<Offer> createOffer();
   Future<Offer> updateOffer();
@@ -111,6 +112,35 @@ class ApiOfferService extends OfferService {
           .toList(),
     );
     return discoveryOffer;
+  }
+
+  @override
+  Future<List<Offer>> getAllDiscoveryOffers({
+    @required String postCode,
+    @required String discoveryTitle,
+  }) async {
+    final response = await http.get('${CONFIG.url}/offer/?post_code=$postCode');
+    List<dynamic> jsonBody;
+    if (response.statusCode == 200) {
+      if (discoveryTitle == 'Neuste') {
+        jsonBody = json.decode(response.body)['latest_offers'];
+      } else if (discoveryTitle == 'Topseller') {
+        jsonBody = json.decode(response.body)['best_offers'];
+      } else if (discoveryTitle == 'Beste Vermieter') {
+        jsonBody = json.decode(response.body)['best_lessors'];
+      }
+
+      if (jsonBody.isNotEmpty) {
+        final List<Offer> offerList =
+            (jsonBody).map((i) => Offer.fromJson(i)).toList();
+        return offerList;
+      } else {
+        return Future.error(
+            OfferException(message: 'Gerade sind keine Angebote verfügbar!'));
+      }
+    }
+    return Future.error(
+        OfferException(message: 'Gerade sind keine Angebote verfügbar!'));
   }
 
   @override
