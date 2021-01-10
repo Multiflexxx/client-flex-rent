@@ -129,7 +129,6 @@ class ApiOfferService extends OfferService {
       } else if (discoveryTitle == 'Beste Vermieter') {
         jsonBody = json.decode(response.body)['best_lessors'];
       }
-
       if (jsonBody.isNotEmpty) {
         final List<Offer> offerList =
             (jsonBody).map((i) => Offer.fromJson(i)).toList();
