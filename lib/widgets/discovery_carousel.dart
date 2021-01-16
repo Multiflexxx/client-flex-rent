@@ -26,36 +26,35 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                widget.carouselTitle,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              GestureDetector(
-                onTap: () => Navigator.push(
-                  context,
-                  CupertinoPageRoute(
-                    builder: (BuildContext context) =>
-                        DiscoveryOfferListScreen(carouselTitle: widget.carouselTitle),
+          child: GestureDetector(
+              onTap: () => Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (BuildContext context) =>
+                          DiscoveryOfferListScreen(
+                              carouselTitle: widget.carouselTitle),
+                    ),
                   ),
-                ),
-                child: Text(
-                  'See all',
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-            ],
-          ),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      widget.carouselTitle,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ])),
         ),
         Container(
           height: 300.0,
