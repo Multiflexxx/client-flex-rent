@@ -126,11 +126,13 @@ class _OfferScreenState extends State<OfferScreen> {
                           transitionOnUserGestures: true,
                           child: GestureDetector(
                             onTap: () {
-                              pushNewScreenWithRouteSettings(context,
-                                  screen: PictureDetailView(
-                                    pictures: offer.pictureLinks,
-                                  ),
-                                  settings: null);
+                              if (offer.pictureLinks.length != 0) {
+                                pushNewScreenWithRouteSettings(context,
+                                    screen: PictureDetailView(
+                                      pictures: offer.pictureLinks,
+                                    ),
+                                    settings: null);
+                              }
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.only(
