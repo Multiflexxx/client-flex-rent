@@ -19,41 +19,42 @@ class _PictureDetailViewState extends State<PictureDetailView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
       ),
       body: Builder(
         builder: (context) {
           final double height = MediaQuery.of(context).size.height;
-          return CarouselSlider(
-            options: CarouselOptions(
-              height: height,
-              viewportFraction: 1.0,
-              enlargeCenterPage: false,
-              // autoPlay: false,
+          return Center(
+            child: CarouselSlider(
+              options: CarouselOptions(
+                height: height * 0.6,
+                viewportFraction: 0.9,
+                enlargeCenterPage: true,
+                // autoPlay: false,
+              ),
+              items: widget.pictures.map((pictureLink) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return Container(
+                      width: MediaQuery.of(context).size.width * 1.5,
+                      height: MediaQuery.of(context).size.height * 1.5,
+                      child: CachedNetworkImage(
+                        imageUrl: pictureLink,
+                        fit: BoxFit.cover,
+                        placeholder: (context, url) => Icon(
+                          Icons.error,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                        errorWidget: (context, url, error) => Icon(
+                          Icons.error,
+                          color: Theme.of(context).primaryColor,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
             ),
-            items: widget.pictures.map((pictureLink) {
-              return Builder(
-                builder: (BuildContext context) {
-                  return Container(
-                    width: MediaQuery.of(context).size.width,
-                    margin: EdgeInsets.symmetric(horizontal: 5.0),
-                    child: CachedNetworkImage(
-                      imageUrl: pictureLink,
-                      height: 180.0,
-                      width: 180.0,
-                      fit: BoxFit.cover,
-                      placeholder: (context, url) => Icon(
-                        Icons.error,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                      errorWidget: (context, url, error) => Icon(
-                        Icons.error,
-                        color: Theme.of(context).primaryColor,
-                      ),
-                    ),
-                  );
-                },
-              );
-            }).toList(),
           );
         },
       ),
