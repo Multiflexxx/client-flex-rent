@@ -27,7 +27,7 @@ class _PictureDetailViewState extends State<PictureDetailView> {
             child: CarouselSlider(
               options: CarouselOptions(
                 aspectRatio: 0.7,
-                viewportFraction: 0.9,
+                viewportFraction: 1,
                 enlargeCenterPage: true,
                 // autoPlay: false,
               ),

@@ -60,6 +60,7 @@ dependencies:
   flutter_image_compress: ^0.7.0
   filesize: ^1.0.4
   carousel_slider: ^2.3.1
+  photo_view: ^0.10.3
 
 dev_dependencies:
   flutter_test:
