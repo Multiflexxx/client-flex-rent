@@ -23,11 +23,10 @@ class _PictureDetailViewState extends State<PictureDetailView> {
       ),
       body: Builder(
         builder: (context) {
-          final double height = MediaQuery.of(context).size.height;
           return Center(
             child: CarouselSlider(
               options: CarouselOptions(
-                height: height * 0.6,
+                aspectRatio: 0.7,
                 viewportFraction: 0.9,
                 enlargeCenterPage: true,
                 // autoPlay: false,
@@ -36,11 +35,11 @@ class _PictureDetailViewState extends State<PictureDetailView> {
                 return Builder(
                   builder: (BuildContext context) {
                     return Container(
-                      width: MediaQuery.of(context).size.width * 1.5,
-                      height: MediaQuery.of(context).size.height * 1.5,
+                      width: MediaQuery.of(context).size.width,
+                      height: MediaQuery.of(context).size.height,
                       child: CachedNetworkImage(
                         imageUrl: pictureLink,
-                        fit: BoxFit.cover,
+                        fit: BoxFit.contain,
                         placeholder: (context, url) => Icon(
                           Icons.error,
                           color: Theme.of(context).primaryColor,
