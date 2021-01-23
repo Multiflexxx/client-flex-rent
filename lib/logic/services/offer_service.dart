@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:flexrent/logic/config/config.dart';
 import 'package:meta/meta.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
@@ -11,6 +12,7 @@ abstract class OfferService {
   Future<List<Offer>> getAllOffers();
   Future<Offer> getOfferById();
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
+  Future<List<Offer>> getAllDiscoveryOffers();
   Future<List<Category>> getAllCategory();
   Future<Offer> createOffer();
   Future<Offer> updateOffer();
@@ -36,8 +38,7 @@ class ApiOfferService extends OfferService {
     int category,
     String search,
   }) async {
-    String url =
-        'https://flexrent.multiflexxx.de/offer/all?post_code=$postCode&';
+    String url = '${CONFIG.url}/offer/all?post_code=$postCode&';
 
     if (distance != null) {
       url += 'distance=$distance&';
@@ -75,18 +76,20 @@ class ApiOfferService extends OfferService {
 
   @override
   Future<Offer> getOfferById({String offerId}) async {
-    final response =
-        await http.get('https://flexrent.multiflexxx.de/offer/$offerId');
+    final response = await http.get('${CONFIG.url}/offer/$offerId');
 
-    final Map<String, dynamic> jsonBody = json.decode(response.body);
-    Offer offer = Offer.fromJson(jsonBody);
-    return offer;
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonBody = json.decode(response.body);
+      Offer offer = Offer.fromJson(jsonBody);
+      return offer;
+    } else {
+      throw OfferException(message: 'Der Gegenstand ist nicht verfügbar');
+    }
   }
 
   @override
   Future<Map<String, List<Offer>>> getDiscoveryOffer({String postCode}) async {
-    final response = await http
-        .get('https://flexrent.multiflexxx.de/offer/?post_code=$postCode');
+    final response = await http.get('${CONFIG.url}/offer/?post_code=$postCode');
 
     final jsonBody = json.decode(response.body);
 
@@ -116,11 +119,38 @@ class ApiOfferService extends OfferService {
   }
 
   @override
+  Future<List<Offer>> getAllDiscoveryOffers({
+    @required String postCode,
+    @required String discoveryTitle,
+  }) async {
+    final response = await http.get('${CONFIG.url}/offer/?post_code=$postCode');
+    List<dynamic> jsonBody;
+    if (response.statusCode == 200) {
+      if (discoveryTitle == 'Neuste') {
+        jsonBody = json.decode(response.body)['latest_offers'];
+      } else if (discoveryTitle == 'Topseller') {
+        jsonBody = json.decode(response.body)['best_offers'];
+      } else if (discoveryTitle == 'Beste Vermieter') {
+        jsonBody = json.decode(response.body)['best_lessors'];
+      }
+      if (jsonBody.isNotEmpty) {
+        final List<Offer> offerList =
+            (jsonBody).map((i) => Offer.fromJson(i)).toList();
+        return offerList;
+      } else {
+        return Future.error(
+            OfferException(message: 'Gerade sind keine Angebote verfügbar!'));
+      }
+    }
+    return Future.error(
+        OfferException(message: 'Gerade sind keine Angebote verfügbar!'));
+  }
+
+  @override
   Future<List<Offer>> getOfferbyUser() async {
     final String userId = await _storage.read(key: 'userId');
 
-    final response = await http
-        .get('https://flexrent.multiflexxx.de/offer/user-offers/$userId');
+    final response = await http.get('${CONFIG.url}/offer/user-offers/$userId');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);
@@ -131,17 +161,16 @@ class ApiOfferService extends OfferService {
         return offerList;
       } else {
         return Future.error(
-            OfferException(message: 'Fange jetzt an zu Vermieten!'));
+            OfferException(message: 'Fange jetzt an zu vermieten!'));
       }
     }
     return Future.error(
-        OfferException(message: 'Fange jetzt an zu Vermieten!'));
+        OfferException(message: 'Fange jetzt an zu vermieten!'));
   }
 
   @override
   Future<List<Category>> getAllCategory() async {
-    final response =
-        await http.get('https://flexrent.multiflexxx.de/offer/categories');
+    final response = await http.get('${CONFIG.url}/offer/categories');
 
     if (response.statusCode == 200) {
       final List<dynamic> jsonBody = json.decode(response.body);
@@ -149,7 +178,8 @@ class ApiOfferService extends OfferService {
           (jsonBody).map((i) => Category.fromJson(i)).toList();
       return categoryList;
     } else {
-      return null;
+      throw OfferException(
+          message: 'Derzeit können keine Kategorien geladen werden.');
     }
   }
 
@@ -160,7 +190,7 @@ class ApiOfferService extends OfferService {
 
     Session session = Session(sessionId: sessionId, userId: userId);
 
-    final response = await http.put('https://flexrent.multiflexxx.de/offer/',
+    final response = await http.put('${CONFIG.url}/offer/',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(<String, dynamic>{
           'session': session.toJson(),
@@ -172,7 +202,8 @@ class ApiOfferService extends OfferService {
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
-      return null;
+      throw OfferException(
+          message: 'Dein Produkt konnte nicht angelgt werden.');
     }
   }
 
@@ -183,22 +214,22 @@ class ApiOfferService extends OfferService {
 
     Session session = Session(sessionId: sessionId, userId: userId);
 
-    final response = await http.patch(
-        'https://flexrent.multiflexxx.de/offer/${updateOffer.offerId}',
-        headers: {"Content-Type": "application/json"},
-        body: jsonEncode(<String, dynamic>{
-          'session': session.toJson(),
-          'offer': updateOffer.toJson(),
-          'delete_images': images,
-        }));
+    final response =
+        await http.patch('${CONFIG.url}/offer/${updateOffer.offerId}',
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(<String, dynamic>{
+              'session': session.toJson(),
+              'offer': updateOffer.toJson(),
+              'delete_images': images,
+            }));
 
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
-      inspect(response);
-      return null;
+      throw OfferException(
+          message: 'Dein Produkt konnte nicht geupdated werden.');
     }
   }
 
@@ -210,7 +241,7 @@ class ApiOfferService extends OfferService {
     var multipartFile = await http.MultipartFile.fromPath('images', imagePath,
         filename: imagePath);
 
-    var uri = Uri.parse('https://flexrent.multiflexxx.de/offer/images');
+    var uri = Uri.parse('${CONFIG.url}/offer/images');
     var request = http.MultipartRequest('POST', uri)
       ..fields['session_id'] = sessionId
       ..fields['offer_id'] = offer.offerId
@@ -276,8 +307,7 @@ class ApiOfferService extends OfferService {
 
     Session session = Session(sessionId: sessionId, userId: userId);
 
-    final response = await http.post(
-        'https://flexrent.multiflexxx.de/offer/$offerId',
+    final response = await http.post('${CONFIG.url}/offer/$offerId',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(<String, dynamic>{
           'session': session.toJson(),
@@ -303,7 +333,7 @@ class ApiOfferService extends OfferService {
     Session session = Session(sessionId: sessionId, userId: userId);
 
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/offer/user-requests',
+      '${CONFIG.url}/offer/user-requests',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, dynamic>{
         'session': session.toJson(),
@@ -320,8 +350,10 @@ class ApiOfferService extends OfferService {
             (jsonBody).map((i) => OfferRequest.fromJson(i)).toList();
         return offerRequestList;
       } else {
+        String text = 'Fange jetzt an zu ';
+        text += lessor ? 'vermieten!' : 'mieten!';
         return Future.error(
-          OfferException(message: 'Fange jetzt an zu mieten'),
+          OfferException(message: text),
         );
       }
     } else {
@@ -342,7 +374,7 @@ class ApiOfferService extends OfferService {
     Session session = Session(sessionId: sessionId, userId: userId);
 
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/offer/user-requests',
+      '${CONFIG.url}/offer/user-requests',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, dynamic>{
         'session': session.toJson(),
@@ -366,7 +398,7 @@ class ApiOfferService extends OfferService {
     Session session = Session(sessionId: sessionId, userId: userId);
 
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/offer/handle-requests',
+      '${CONFIG.url}/offer/handle-requests',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(<String, dynamic>{
         'session': session.toJson(),
@@ -384,3 +416,5 @@ class ApiOfferService extends OfferService {
     return null;
   }
 }
+
+// test

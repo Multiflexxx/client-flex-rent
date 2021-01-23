@@ -1,8 +1,8 @@
+import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/widgets/price/detail_price_overview.dart';
-import 'package:flexrent/widgets/slide_bar.dart';
 
 class PriceOverview extends StatelessWidget {
   final double price;
@@ -20,27 +20,20 @@ class PriceOverview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      color: Theme.of(context).cardColor,
-      child: SafeArea(
-        top: false,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            SlideBar(),
-            SizedBox(
-              height: 10.0,
-            ),
-            DetailPriceOverview(
-              price: price,
-              dateRange: dateRange,
-            ),
-            SizedBox(
-              height: 10.0,
-            ),
-          ],
+    return SlideIn(
+      top: false,
+      widgetList: [
+        SizedBox(
+          height: 10.0,
         ),
-      ),
+        DetailPriceOverview(
+          price: price,
+          dateRange: dateRange,
+        ),
+        SizedBox(
+          height: 10.0,
+        ),
+      ],
     );
   }
 }

@@ -1,11 +1,9 @@
 import 'dart:async';
-import 'dart:ui';
 
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/booking/booking_lessee.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
-import 'package:flexrent/widgets/booking/booking_lessor.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexrent/logic/models/models.dart';

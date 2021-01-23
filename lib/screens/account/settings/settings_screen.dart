@@ -18,7 +18,6 @@ class _AppSettingsBody extends StatefulWidget {
 }
 
 class _AppSettingsBodyState extends State<_AppSettingsBody> {
-  bool darkmode = true;
 
   @override
   Widget build(BuildContext context) {
@@ -34,20 +33,7 @@ class _AppSettingsBodyState extends State<_AppSettingsBody> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Darkmode',
-                style: TextStyle(
-                    color: Theme.of(context).primaryColor, fontSize: 18.0),
-              ),
-              Switch(
-                activeColor: Theme.of(context).accentColor,
-                onChanged: (bool) {
-                  setState(() {
-                    darkmode = bool;
-                  });
-                },
-                value: darkmode,
-              )
+              Text("Nothing to show yet")
             ],
           ),
         ],

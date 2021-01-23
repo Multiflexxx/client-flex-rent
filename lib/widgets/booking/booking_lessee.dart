@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/offer_request/offer_request.dart';
 
@@ -33,13 +34,13 @@ class BookingLessee extends StatelessWidget {
                       ),
                       Text(
                         'Mieterin: ' +
-                            offerRequest.user.firstName + ' ' +
+                            offerRequest.user.firstName +
+                            ' ' +
                             offerRequest.user.lastName,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 18.0,
                           height: 1.2,
-                          
                           fontWeight: FontWeight.w300,
                           letterSpacing: 1.2,
                         ),
@@ -152,19 +153,12 @@ class BookingLessee extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-            SizedBox(
-              width: double.infinity,
-              child: RaisedButton(
-                color: Theme.of(context).accentColor,
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(16),
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(8.0)),
-                child: Text('Bewerte den Mieter'),
-                onPressed: () {
-                  ;
-                },
-              ),
+
+            PurpleButton(
+              text: Text('Bewerte den Mieter'),
+              onPressed: () {
+                print('Missing function');
+              },
             ),
           ],
         ),

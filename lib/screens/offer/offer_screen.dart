@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +17,16 @@ import 'package:flexrent/widgets/price/price_overview.dart';
 import 'package:flexrent/widgets/price/price_tag.dart';
 import 'package:flexrent/widgets/offer/offer_description.dart';
 import 'package:flexrent/widgets/offer_detail/user_box.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
+
+import 'offer_picture_detail_view.dart';
 
 class OfferScreen extends StatefulWidget {
   final Offer offer;
   final String heroTag;
+
   OfferScreen({this.offer, this.heroTag});
 
   @override
@@ -53,6 +59,18 @@ class _OfferScreenState extends State<OfferScreen> {
               DateRange(fromDate: startDateValue, toDate: endDateValue);
         }
       },
+    );
+  }
+
+  void _onReservation(Offer offer) {
+    Navigator.push(
+      context,
+      new CupertinoPageRoute(
+        builder: (BuildContext context) => new OverviewPaymentScreen(
+          offer: offer,
+          dateRange: _dateRange,
+        ),
+      ),
     );
   }
 
@@ -118,33 +136,45 @@ class _OfferScreenState extends State<OfferScreen> {
                         Hero(
                           tag: widget.heroTag,
                           transitionOnUserGestures: true,
-                          child: ClipRRect(
-                            borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(20.0),
-                              bottomRight: Radius.circular(20.0),
+                          child: GestureDetector(
+                            onTap: () {
+                              if (offer.pictureLinks.length != 0) {
+                                pushNewScreenWithRouteSettings(context,
+                                    screen: PictureDetailView(
+                                      pictures: offer.pictureLinks,
+                                    ),
+                                    settings: null);
+                              }
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.only(
+                                bottomLeft: Radius.circular(20.0),
+                                bottomRight: Radius.circular(20.0),
+                              ),
+                              child: offer.pictureLinks.length == 0
+                                  ? Image(
+                                      image: AssetImage(
+                                          'assets/images/noimage.png'),
+                                      height: 180.0,
+                                      width: 180.0,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : CachedNetworkImage(
+                                      imageUrl: offer.pictureLinks[0],
+                                      height: 180.0,
+                                      width: 180.0,
+                                      fit: BoxFit.cover,
+                                      placeholder: (context, url) => Icon(
+                                        Icons.error,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(
+                                        Icons.error,
+                                        color: Theme.of(context).primaryColor,
+                                      ),
+                                    ),
                             ),
-                            child: offer.pictureLinks.length == 0
-                                ? Image(
-                                    image:
-                                        AssetImage('assets/images/noimage.png'),
-                                    height: 180.0,
-                                    width: 180.0,
-                                    fit: BoxFit.cover,
-                                  )
-                                : CachedNetworkImage(
-                                    imageUrl: offer.pictureLinks[0],
-                                    height: 180.0,
-                                    width: 180.0,
-                                    fit: BoxFit.cover,
-                                    placeholder: (context, url) => Icon(
-                                      Icons.error,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                    errorWidget: (context, url, error) => Icon(
-                                      Icons.error,
-                                      color: Theme.of(context).primaryColor,
-                                    ),
-                                  ),
                           ),
                         ),
                       ],
@@ -195,7 +225,8 @@ class _OfferScreenState extends State<OfferScreen> {
                                         child: Text(
                                           'Preisübersicht',
                                           style: TextStyle(
-                                            color: Theme.of(context).primaryColor,
+                                            color:
+                                                Theme.of(context).primaryColor,
                                             fontSize: 14.0,
                                             fontWeight: FontWeight.w300,
                                             decoration:
@@ -206,42 +237,37 @@ class _OfferScreenState extends State<OfferScreen> {
                                     ],
                                   ),
                                   GestureDetector(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (_dateRange.fromDate != null) {
-                                        Navigator.push(
-                                          context,
-                                          new CupertinoPageRoute(
-                                            builder: (BuildContext context) =>
-                                                new ConfirmationPaymentScreen(
-                                              offer: offer,
-                                              dateRange: _dateRange,
+                                        _onReservation(offer);
+                                      } else {
+                                        final range =
+                                            await showCupertinoModalBottomSheet<
+                                                dynamic>(
+                                          expand: true,
+                                          context: context,
+                                          barrierColor: Colors.black45,
+                                          builder:
+                                              (context, scrollController) =>
+                                                  DateRangePicker(
+                                            scrollController: scrollController,
+                                            date: null,
+                                            range: _picker.PickerDateRange(
+                                              _dateRange.fromDate,
+                                              _dateRange.toDate,
                                             ),
+                                            minDate: DateTime.now(),
+                                            maxDate: DateTime.now().add(
+                                              Duration(days: 90),
+                                            ),
+                                            displayDate: _dateRange.fromDate,
+                                            blockedDates: offer.blockedDates,
                                           ),
                                         );
-                                      } else {
-                                        Flushbar(
-                                          backgroundColor: Theme.of(context).cardColor,
-                                          messageText: Text(
-                                            "Du musst einen Zeitraum auswählen.",
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 18.0,
-                                              letterSpacing: 1.2,
-                                            ),
-                                          ),
-                                          icon: Icon(
-                                            Icons.info_outline,
-                                            size: 28.0,
-                                            color:
-                                                Theme.of(context).accentColor,
-                                          ),
-                                          duration: Duration(seconds: 3),
-                                          margin: EdgeInsets.all(10.0),
-                                          padding: EdgeInsets.all(16.0),
-                                          // flushbarPosition: FlushbarPosition.TOP,
-                                          borderRadius: 8,
-                                        )..show(context);
+                                        if (range != null) {
+                                          _onSelectedRangeChanged(range);
+                                          _onReservation(offer);
+                                        }
                                       }
                                     },
                                     child: Container(
@@ -266,67 +292,6 @@ class _OfferScreenState extends State<OfferScreen> {
                                 ],
                               ),
                             ],
-                          ),
-                        ),
-                      ),
-                      // Description
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 18.0),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: AutoSizeText(
-                            offer.description,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16.0,
-                              height: 1.35,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            minFontSize: 16.0,
-                            maxLines: 6,
-                            overflowReplacement: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  offer.description,
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16.0,
-                                    height: 1.25,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                  maxLines: 6,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                GestureDetector(
-                                  onTap: () => showCupertinoModalBottomSheet(
-                                    expand: false,
-                                    context: context,
-                                    barrierColor: Colors.black45,
-                                    builder: (context, scrollController) =>
-                                        ProductDescription(
-                                      offer: offer,
-                                      scrollController: scrollController,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Show more",
-                                    style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                      fontSize: 16.0,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
                           ),
                         ),
                       ),
@@ -455,9 +420,156 @@ class _OfferScreenState extends State<OfferScreen> {
                           ),
                         ),
                       ),
-
+                      // Description
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 18.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: AutoSizeText(
+                            offer.description,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 16.0,
+                              height: 1.35,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            minFontSize: 16.0,
+                            maxLines: 6,
+                            overflowReplacement: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  offer.description,
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16.0,
+                                    height: 1.25,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  maxLines: 6,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                GestureDetector(
+                                  onTap: () => showCupertinoModalBottomSheet(
+                                    expand: false,
+                                    context: context,
+                                    barrierColor: Colors.black45,
+                                    builder: (context, scrollController) =>
+                                        ProductDescription(
+                                      offer: offer,
+                                      scrollController: scrollController,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Show more",
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
                       // User
                       UserBox(lessor: offer.lessor),
+                    ],
+                  ),
+                ),
+              ],
+            );
+          } else if (snapshot.hasError) {
+            OfferException e = snapshot.error;
+            return CustomScrollView(
+              physics: BouncingScrollPhysics(),
+              slivers: <Widget>[
+                SliverAppBar(
+                  stretch: true,
+                  onStretchTrigger: () {
+                    return;
+                  },
+                  floating: false,
+                  pinned: true,
+                  leading: IconButton(
+                    icon: Icon(Feather.arrow_left),
+                    iconSize: 30.0,
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () => Navigator.popUntil(context,
+                        ModalRoute.withName(Navigator.defaultRouteName)),
+                  ),
+                  actions: <Widget>[
+                    IconButton(
+                      icon: Icon(Feather.share_2),
+                      iconSize: 30.0,
+                      color: Theme.of(context).primaryColor,
+                      onPressed: () => Navigator.pop(context),
+                    ),
+                  ],
+                  backgroundColor: Theme.of(context).backgroundColor,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    ),
+                  ),
+                  expandedHeight: MediaQuery.of(context).size.width,
+                  flexibleSpace: FlexibleSpaceBar(
+                    stretchModes: <StretchMode>[
+                      StretchMode.zoomBackground,
+                      StretchMode.fadeTitle,
+                    ],
+                    centerTitle: true,
+                    title: Text(
+                      'Mietgegenstand',
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w500,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    background: Stack(
+                      fit: StackFit.expand,
+                      children: <Widget>[
+                        Hero(
+                          tag: widget.heroTag,
+                          transitionOnUserGestures: true,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.only(
+                              bottomLeft: Radius.circular(20.0),
+                              bottomRight: Radius.circular(20.0),
+                            ),
+                            child: Image(
+                              image: AssetImage('assets/images/noimage.png'),
+                              height: 180.0,
+                              width: 180.0,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                SliverList(
+                  delegate: SliverChildListDelegate(
+                    <Widget>[
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      ErrorBox(
+                        errorText: e.message,
+                      ),
                     ],
                   ),
                 ),

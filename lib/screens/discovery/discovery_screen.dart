@@ -1,12 +1,14 @@
+import 'package:flexrent/screens/offer/offer_list_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 
 import 'package:flexrent/widgets/discovery_carousel.dart';
-import 'package:flexrent/widgets/search_bar.dart';
+import 'package:flexrent/widgets/styles/search_bar.dart';
+import 'package:flutter_svg/svg.dart';
 
 class DiscoveryScreen extends StatefulWidget {
   @override
@@ -15,15 +17,25 @@ class DiscoveryScreen extends StatefulWidget {
 
 class _DiscoveryScreen extends State<DiscoveryScreen> {
   Future<Map<String, List<Offer>>> discoveryOffer;
-  User user;
-
-  int _selectedIndex = 0;
-  List<IconData> _icons = [
-    FontAwesome.laptop,
-    Feather.smartphone,
-    Feather.speaker,
-    Feather.printer
+  List<Category> _categoryTopItems = [
+    Category(
+        categoryId: 3,
+        name: "TV & Audio",
+        pictureLink: "https://multiflexxx.de/Flexrent/assets/tv.svg"),
+    Category(
+        categoryId: 4,
+        name: "Smartphone & Zubehör",
+        pictureLink: "https://multiflexxx.de/Flexrent/assets/smartphone.svg"),
+    Category(
+        categoryId: 7,
+        name: "Sport & Freizeit",
+        pictureLink: "https://multiflexxx.de/Flexrent/assets/sport.svg"),
+    Category(
+        categoryId: 8,
+        name: "Heimwerken & Garten",
+        pictureLink: "https://multiflexxx.de/Flexrent/assets/garden.svg")
   ];
+  User user;
 
   @override
   initState() {
@@ -45,26 +57,23 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   Widget _buildIcon(int index) {
     return GestureDetector(
-      onTap: () {
-        setState(() {
-          _selectedIndex = index;
-        });
-      },
+      onTap: () => Navigator.push(
+          context,
+          CupertinoPageRoute(
+            builder: (BuildContext context) =>
+                ProductListScreen(category: _categoryTopItems[index]),
+          )),
       child: Container(
-        height: 60.0,
-        width: 60.0,
+        height: 40.0,
+        width: 40.0,
         decoration: BoxDecoration(
-          color: _selectedIndex == index
-              ? Theme.of(context).accentColor
-              : Theme.of(context).backgroundColor,
+          color: Theme.of(context).backgroundColor,
           borderRadius: BorderRadius.circular(30.0),
         ),
-        child: Icon(
-          _icons[index],
-          size: 25.0,
-          color: _selectedIndex == index
-              ? Colors.white
-              : Theme.of(context).accentColor,
+        child: SvgPicture.network(
+          _categoryTopItems[index].pictureLink,
+          color: Theme.of(context).accentColor,
+          fit: BoxFit.contain,
         ),
       ),
     );
@@ -105,7 +114,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: _icons
+                          children: _categoryTopItems
                               .asMap()
                               .entries
                               .map(

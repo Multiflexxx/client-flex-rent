@@ -3,11 +3,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
-import 'package:flexrent/models/profile_options_model.dart';
 import 'package:flexrent/screens/404.dart';
 import 'package:flexrent/screens/account/settings/personal_info_screen.dart';
 import 'package:flexrent/screens/account/settings/settings_screen.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
+
+class ProfileOption {
+  String optionId;
+  String name;
+  IconData icon;
+
+  ProfileOption(String optionId, String name, IconData icon) {
+    this.optionId = optionId;
+    this.name = name;
+    this.icon = icon;
+  }
+}
+
+List<ProfileOption> profileOptions = [
+  ProfileOption('personalInfo', 'Meine Informationen', Feather.user),
+  ProfileOption('paymentinfo', 'Zahlungsinformationen', Feather.credit_card),
+  ProfileOption('settings', 'Einstellungen', Feather.settings),
+  ProfileOption('logout', 'Abmelden', Feather.log_out),
+];
 
 class AccountSettingsScreen extends StatelessWidget {
   @override

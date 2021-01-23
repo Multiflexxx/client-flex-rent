@@ -1,4 +1,9 @@
+import 'dart:io';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,7 +14,7 @@ import 'package:flexrent/widgets/calendar/calendar.dart';
 import 'package:flexrent/widgets/camera/image_source.dart';
 import 'package:flexrent/widgets/category/category_picker.dart';
 
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 
 class UpdateOfferBody extends StatefulWidget {
   final Offer offer;
@@ -76,13 +81,19 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
       price: double.parse(_priceController.text),
     );
 
-    Offer offer = await ApiOfferService()
-        .updateOffer(updateOffer: updatedOffer, images: _deleteImageList);
+    try {
+      Offer offer = await ApiOfferService()
+          .updateOffer(updateOffer: updatedOffer, images: _deleteImageList);
 
-    setState(() {
-      _offer = offer;
-      initFormValues();
-    });
+      setState(() {
+        _offer = offer;
+        initFormValues();
+      });
+
+      showFlushbar(context: context, message: 'Erfoglreich bearbeitet!');
+    } on OfferException catch (e) {
+      showFlushbar(context: context, message: e.message);
+    }
   }
 
   void _deleteImage({String imagePath}) {
@@ -108,8 +119,10 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
   void _addImage({ImageSource source}) async {
     final image = await picker.getImage(source: source);
     if (image != null) {
+      final _image = await HelperService.compressFile(File(image.path));
+
       Offer offer = await ApiOfferService()
-          .addImage(offer: _offer, imagePath: image.path);
+          .addImage(offer: _offer, imagePath: _image.path);
 
       setState(() {
         _offer = offer;
@@ -365,19 +378,11 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
                 SizedBox(
                   height: 30.0,
                 ),
-                SizedBox(
-                  width: double.infinity,
-                  child: RaisedButton(
-                    color: Theme.of(context).accentColor,
-                    textColor: Colors.white,
-                    padding: const EdgeInsets.all(16),
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0)),
-                    child: Text('Speichern'),
-                    onPressed: () {
-                      _updateOffer();
-                    },
-                  ),
+                PurpleButton(
+                  text: Text('Speichern'),
+                  onPressed: () {
+                    _updateOffer();
+                  },
                 ),
               ],
             ),

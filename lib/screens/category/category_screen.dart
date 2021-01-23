@@ -1,3 +1,5 @@
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -5,7 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/offer/offer_list_screen.dart';
-import 'package:flexrent/widgets/search_bar.dart';
+import 'package:flexrent/widgets/styles/search_bar.dart';
 
 class CategoryScreen extends StatefulWidget {
   const CategoryScreen({Key key}) : super(key: key);
@@ -45,9 +47,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           return GestureDetector(
                             onTap: () => Navigator.push(
                               context,
-                              new CupertinoPageRoute(
+                              CupertinoPageRoute(
                                 builder: (BuildContext context) =>
-                                    new ProductListScreen(category: category),
+                                    ProductListScreen(category: category),
                               ),
                             ),
                             child: Container(
@@ -108,6 +110,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           );
                         },
                       );
+                    } else if (snapshot.hasError) {
+                      OfferException e = snapshot.error;
+                      return ErrorBox(errorText: e.message);
                     }
                     return Center(
                       child: CircularProgressIndicator(),

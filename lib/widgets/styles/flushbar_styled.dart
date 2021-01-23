@@ -7,13 +7,13 @@ Widget showFlushbar({BuildContext context, String message}) {
       message,
       style: TextStyle(
         color: Theme.of(context).primaryColor,
-        fontSize: 18.0,
+        fontSize: 16.0,
         letterSpacing: 1.2,
       ),
     ),
     icon: Icon(
       Icons.info_outline,
-      size: 28.0,
+      size: 24.0,
       color: Theme.of(context).accentColor,
     ),
     duration: Duration(seconds: 3),

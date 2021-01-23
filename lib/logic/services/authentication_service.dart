@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import '../models/models.dart';
+import '../config/config.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -23,10 +24,13 @@ class ApiAuthenticationService extends AuthenticationService {
 
   @override
   Future<User> signInWithEmailAndPassword(String email, String password) async {
-    final Auth auth =
-        Auth.login(login: Login(email: email, passwordHash: password));
+    final Auth auth = Auth.login(
+      login: Login(email: email, passwordHash: password),
+    );
 
-    final response = await http.post('https://flexrent.multiflexxx.de/user',
+    print('${CONFIG.url}/user');
+
+    final response = await http.post('${CONFIG.url}/user',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(<String, dynamic>{'auth': auth.toJson()}));
 
@@ -52,7 +56,7 @@ class ApiAuthenticationService extends AuthenticationService {
       final Auth auth =
           Auth.session(session: Session(sessionId: sessionId, userId: userId));
 
-      final response = await http.post('https://flexrent.multiflexxx.de/user',
+      final response = await http.post('${CONFIG.url}/user',
           headers: {"Content-Type": "application/json"},
           body: jsonEncode(<String, dynamic>{'auth': auth.toJson()}));
 
@@ -62,8 +66,7 @@ class ApiAuthenticationService extends AuthenticationService {
         final User user = User.fromJson(jsonUser);
         return user;
       } else {
-        // sessionid outdated
-        return null;
+        throw AuthenticationException(message: 'Session outdated');
       }
     } else {
       // no userid in storage
@@ -75,7 +78,7 @@ class ApiAuthenticationService extends AuthenticationService {
   Future<User> signInWithGoogle(String token) async {
     final Auth auth = Auth.idToken(token: token);
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/user/google',
+      '${CONFIG.url}/user/google',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(
         <String, dynamic>{'auth': auth.toJson()},
@@ -100,7 +103,7 @@ class ApiAuthenticationService extends AuthenticationService {
   Future<User> signInWithFacebook(String token) async {
     final Auth auth = Auth.idToken(token: token);
     final response = await http.post(
-      'https://flexrent.multiflexxx.de/user/facebook',
+      '${CONFIG.url}/user/facebook',
       headers: {"Content-Type": "application/json"},
       body: jsonEncode(
         <String, dynamic>{'auth': auth.toJson()},

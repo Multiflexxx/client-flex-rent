@@ -1,3 +1,4 @@
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
@@ -5,8 +6,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/user/user.dart';
 import 'package:flexrent/logic/models/models.dart';
-import 'package:flexrent/widgets/flushbar_styled.dart';
-import 'package:flexrent/widgets/formfieldstyled.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
 
 class UpdatePasswordScreen extends StatelessWidget {
   @override
@@ -132,13 +133,8 @@ class _UpdatePasswordBodyState extends State<_UpdatePasswordBody> {
               SizedBox(
                 height: 16,
               ),
-              RaisedButton(
-                color: Theme.of(context).accentColor,
-                textColor: Colors.white,
-                padding: const EdgeInsets.all(16),
-                shape: new RoundedRectangleBorder(
-                    borderRadius: new BorderRadius.circular(8.0)),
-                child: Text('Speichern'),
+              PurpleButton(          
+                text: Text('Speichern'),
                 onPressed: () => _changePassword(),
               ),
             ],

@@ -1,5 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/screens/discovery/discovery_offer_list_screen.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -23,33 +25,38 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
       children: <Widget>[
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                widget.carouselTitle,
-                style: TextStyle(
-                  fontSize: 22.0,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.2,
-                ),
-              ),
-              GestureDetector(
-                onTap: () => print('See all'),
-                child: Text(
-                  'See all',
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w600,
+          child: GestureDetector(
+              onTap: () => Navigator.push(
+                    context,
+                    CupertinoPageRoute(
+                      builder: (BuildContext context) =>
+                          DiscoveryOfferListScreen(
+                              carouselTitle: widget.carouselTitle),
+                    ),
                   ),
-                ),
-              ),
-            ],
-          ),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Text(
+                      widget.carouselTitle,
+                      style: TextStyle(
+                        fontSize: 22.0,
+                        fontWeight: FontWeight.bold,
+                        letterSpacing: 1.2,
+                      ),
+                    ),
+                    Text(
+                      'See all',
+                      style: TextStyle(
+                        color: Theme.of(context).accentColor,
+                        fontSize: 16.0,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ])),
         ),
         Container(
-          height: 300.0,
+          height: 230.0,
           child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: widget.offerList.length,
@@ -65,16 +72,16 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                   withNavBar: false,
                 ),
                 child: Container(
-                  margin: EdgeInsets.all(10.0),
-                  width: 210.0,
+                  margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),
+                  width: 170.0,
                   child: Stack(
                     alignment: Alignment.topCenter,
                     children: <Widget>[
                       Positioned(
                         bottom: 15.0,
                         child: Container(
-                          height: 120.0,
-                          width: 200.0,
+                          height: 80.0,
+                          width: 160.0,
                           decoration: BoxDecoration(
                             color: Theme.of(context).cardColor,
                             borderRadius: BorderRadius.circular(10.0),
@@ -89,18 +96,19 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                   '${offer.title}',
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 21.0,
+                                    fontSize: 16.0,
                                     fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
+                                    letterSpacing: 1.5,
+                                    height: 1.75,
                                   ),
-                                  maxLines: 2,
+                                  maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 Row(
                                   children: [
                                     Icon(
                                       Feather.activity,
-                                      size: 16.0,
+                                      size: 14.0,
                                       color: Theme.of(context).accentColor,
                                     ),
                                     SizedBox(
@@ -111,12 +119,12 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                         offer.category.name,
                                         style: TextStyle(
                                           color: Theme.of(context).accentColor,
-                                          fontSize: 16.0,
+                                          fontSize: 14.0,
                                           fontWeight: FontWeight.w500,
                                           letterSpacing: 1.2,
                                         ),
                                         maxLines: 1,
-                                        minFontSize: 16.0,
+                                        minFontSize: 14.0,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                     ),
@@ -148,14 +156,14 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                 ? Image(
                                     image:
                                         AssetImage('assets/images/noimage.png'),
-                                    height: 180.0,
-                                    width: 180.0,
+                                    height: 140.0,
+                                    width: 140.0,
                                     fit: BoxFit.cover,
                                   )
                                 : CachedNetworkImage(
                                     imageUrl: offer.pictureLinks[0],
-                                    height: 180.0,
-                                    width: 180.0,
+                                    height: 140.0,
+                                    width: 140.0,
                                     fit: BoxFit.cover,
                                     placeholder: (context, url) => Icon(
                                       Icons.error,

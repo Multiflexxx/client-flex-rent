@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -8,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:map_launcher/map_launcher.dart' as MapLauncher;
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flexrent/logic/models/offer_request/offer_request.dart';
-import 'package:flexrent/widgets/slide_bar.dart';
+import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 
 class BookingAddress extends StatefulWidget {
   final OfferRequest offerRequest;
@@ -68,37 +69,30 @@ class _BookingAddressState extends State<BookingAddress> {
           child: Wrap(
             children: <Widget>[
               for (var map in availableMaps)
-                Material(
-                  color: Theme.of(context).cardColor,
-                  child: SafeArea(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        SlideBar(),
-                        ListTile(
-                          onTap: () => map.showDirections(
-                            destination: coords,
-                          ),
-                          title: Text(
-                            map.mapName,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              letterSpacing: 1.2,
-                            ),
-                          ),
-                          leading: Image(
-                            image: map.icon,
-                            height: 30.0,
-                            width: 30.0,
-                          ),
+                SlideIn(
+                  widgetList: [
+                    ListTile(
+                      onTap: () => map.showDirections(
+                        destination: coords,
+                      ),
+                      title: Text(
+                        map.mapName,
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          letterSpacing: 1.2,
                         ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                      ],
+                      ),
+                      leading: Image(
+                        image: map.icon,
+                        height: 30.0,
+                        width: 30.0,
+                      ),
                     ),
-                  ),
-                ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
+                  ],
+                )
             ],
           ),
         ),

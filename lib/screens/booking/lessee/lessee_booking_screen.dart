@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -10,13 +11,14 @@ import 'package:flexrent/widgets/booking/booking_address.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:flexrent/widgets/flushbar_styled.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class LeseeBookingScreen extends StatelessWidget {
   final OfferRequest offerRequest;
 
   LeseeBookingScreen({this.offerRequest});
+
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
@@ -100,10 +102,10 @@ class _LeseeBookingBodyState extends State<LeseeBookingBody> {
                 offerRequest: _offerRequest,
               ),
               _offerRequest.statusId == 2
-                  ? Padding(
-                      padding: const EdgeInsets.all(20.0),
-                      child: GestureDetector(
-                        onTap: () => _offerRequest.qrCodeId != ''
+                  ? Container(
+                      margin: EdgeInsets.symmetric(horizontal: 10.0),
+                      child: PurpleButton(
+                        onPressed: () => _offerRequest.qrCodeId != ''
                             ? pushNewScreen(
                                 context,
                                 screen: QrCodeScreen(
@@ -113,48 +115,16 @@ class _LeseeBookingBodyState extends State<LeseeBookingBody> {
                             : showFlushbar(
                                 context: context,
                                 message: 'QR Code nicht verfügbar!'),
-                        child: Container(
-                          padding: const EdgeInsets.all(10.0),
-                          height: 50.0,
-                          decoration: BoxDecoration(
-                              color: Theme.of(context).accentColor,
-                              borderRadius: BorderRadius.circular(10.0)),
-                          child: Center(
-                            child: Text(
-                              'QR Code anzeigen',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 20.0,
-                                fontWeight: FontWeight.w300,
-                              ),
-                            ),
-                          ),
-                        ),
+                        text: Text('QR Code anzeigen'),
                       ),
                     )
                   : _offerRequest.statusId == 4
-                      ? Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: GestureDetector(
-                            onTap: () =>
+                      ? Container(
+                          margin: EdgeInsets.symmetric(horizontal: 10.0),
+                          child: PurpleButton(
+                            text: Text('QR Code scannen'),
+                            onPressed: () =>
                                 _scanQrCode(updateOfferRequest: _offerRequest),
-                            child: Container(
-                              padding: const EdgeInsets.all(10.0),
-                              height: 50.0,
-                              decoration: BoxDecoration(
-                                  color: Theme.of(context).accentColor,
-                                  borderRadius: BorderRadius.circular(10.0)),
-                              child: Center(
-                                child: Text(
-                                  'QR Code scannen',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 20.0,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                ),
-                              ),
-                            ),
                           ),
                         )
                       : Container(),

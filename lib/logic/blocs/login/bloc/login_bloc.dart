@@ -58,7 +58,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         yield LoginSuccess();
         yield LoginInitial();
       } else {
-        yield LoginFailure(error: 'Das war ein Schuss in den ...');
+        yield LoginFailure(error: 'An unknown error occured');
       }
     } on AuthenticationException catch (e) {
       yield LoginFailure(error: e.message);
@@ -80,7 +80,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           yield LoginInitial();
         } else {
           _googleService.signOut();
-          yield LoginFailure(error: 'Das war ein Schuss in den ...');
+          yield LoginFailure(error: 'An unknown error occured');
         }
       } else {
         yield LoginFailure(error: 'Google sign in failed');
@@ -107,7 +107,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           yield LoginInitial();
         } else {
           _googleService.signOut();
-          yield LoginFailure(error: 'Das war ein Schuss in den ...');
+          yield LoginFailure(error: 'An unknown error occured');
         }
       } else {
         yield LoginFailure(error: 'Facebook sign in failed');
