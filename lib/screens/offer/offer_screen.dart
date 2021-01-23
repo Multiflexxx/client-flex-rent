@@ -62,6 +62,18 @@ class _OfferScreenState extends State<OfferScreen> {
     );
   }
 
+  void _onReservation(Offer offer) {
+    Navigator.push(
+      context,
+      new CupertinoPageRoute(
+        builder: (BuildContext context) => new OverviewPaymentScreen(
+          offer: offer,
+          dateRange: _dateRange,
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -225,43 +237,37 @@ class _OfferScreenState extends State<OfferScreen> {
                                     ],
                                   ),
                                   GestureDetector(
-                                    onTap: () {
+                                    onTap: () async {
                                       if (_dateRange.fromDate != null) {
-                                        Navigator.push(
-                                          context,
-                                          new CupertinoPageRoute(
-                                            builder: (BuildContext context) =>
-                                                new ConfirmationPaymentScreen(
-                                              offer: offer,
-                                              dateRange: _dateRange,
+                                        _onReservation(offer);
+                                      } else {
+                                        final range =
+                                            await showCupertinoModalBottomSheet<
+                                                dynamic>(
+                                          expand: true,
+                                          context: context,
+                                          barrierColor: Colors.black45,
+                                          builder:
+                                              (context, scrollController) =>
+                                                  DateRangePicker(
+                                            scrollController: scrollController,
+                                            date: null,
+                                            range: _picker.PickerDateRange(
+                                              _dateRange.fromDate,
+                                              _dateRange.toDate,
                                             ),
+                                            minDate: DateTime.now(),
+                                            maxDate: DateTime.now().add(
+                                              Duration(days: 90),
+                                            ),
+                                            displayDate: _dateRange.fromDate,
+                                            blockedDates: offer.blockedDates,
                                           ),
                                         );
-                                      } else {
-                                        Flushbar(
-                                          backgroundColor:
-                                              Theme.of(context).cardColor,
-                                          messageText: Text(
-                                            "Du musst einen Zeitraum auswählen.",
-                                            style: TextStyle(
-                                              color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 18.0,
-                                              letterSpacing: 1.2,
-                                            ),
-                                          ),
-                                          icon: Icon(
-                                            Icons.info_outline,
-                                            size: 28.0,
-                                            color:
-                                                Theme.of(context).accentColor,
-                                          ),
-                                          duration: Duration(seconds: 3),
-                                          margin: EdgeInsets.all(10.0),
-                                          padding: EdgeInsets.all(16.0),
-                                          // flushbarPosition: FlushbarPosition.TOP,
-                                          borderRadius: 8,
-                                        )..show(context);
+                                        if (range != null) {
+                                          _onSelectedRangeChanged(range);
+                                          _onReservation(offer);
+                                        }
                                       }
                                     },
                                     child: Container(

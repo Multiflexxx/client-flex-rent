@@ -18,6 +18,7 @@ class LeseeBookingScreen extends StatelessWidget {
   final OfferRequest offerRequest;
 
   LeseeBookingScreen({this.offerRequest});
+
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
