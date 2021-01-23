@@ -289,67 +289,6 @@ class _OfferScreenState extends State<OfferScreen> {
                           ),
                         ),
                       ),
-                      // Description
-                      Container(
-                        margin: EdgeInsets.symmetric(
-                            vertical: 12.0, horizontal: 18.0),
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).cardColor,
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: AutoSizeText(
-                            offer.description,
-                            style: TextStyle(
-                              color: Theme.of(context).primaryColor,
-                              fontSize: 16.0,
-                              height: 1.35,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            minFontSize: 16.0,
-                            maxLines: 6,
-                            overflowReplacement: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: <Widget>[
-                                Text(
-                                  offer.description,
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16.0,
-                                    height: 1.25,
-                                    fontWeight: FontWeight.w300,
-                                  ),
-                                  maxLines: 6,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                SizedBox(
-                                  height: 5.0,
-                                ),
-                                GestureDetector(
-                                  onTap: () => showCupertinoModalBottomSheet(
-                                    expand: false,
-                                    context: context,
-                                    barrierColor: Colors.black45,
-                                    builder: (context, scrollController) =>
-                                        ProductDescription(
-                                      offer: offer,
-                                      scrollController: scrollController,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    "Show more",
-                                    style: TextStyle(
-                                      color: Theme.of(context).accentColor,
-                                      fontSize: 16.0,
-                                    ),
-                                  ),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
                       // Availabilty
                       GestureDetector(
                         onTap: () async {
@@ -470,6 +409,67 @@ class _OfferScreenState extends State<OfferScreen> {
                                   size: 30.0,
                                   color: Theme.of(context).primaryColor,
                                 ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      // Description
+                      Container(
+                        margin: EdgeInsets.symmetric(
+                            vertical: 12.0, horizontal: 18.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.circular(10.0),
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: AutoSizeText(
+                            offer.description,
+                            style: TextStyle(
+                              color: Theme.of(context).primaryColor,
+                              fontSize: 16.0,
+                              height: 1.35,
+                              fontWeight: FontWeight.w300,
+                            ),
+                            minFontSize: 16.0,
+                            maxLines: 6,
+                            overflowReplacement: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  offer.description,
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 16.0,
+                                    height: 1.25,
+                                    fontWeight: FontWeight.w300,
+                                  ),
+                                  maxLines: 6,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                SizedBox(
+                                  height: 5.0,
+                                ),
+                                GestureDetector(
+                                  onTap: () => showCupertinoModalBottomSheet(
+                                    expand: false,
+                                    context: context,
+                                    barrierColor: Colors.black45,
+                                    builder: (context, scrollController) =>
+                                        ProductDescription(
+                                      offer: offer,
+                                      scrollController: scrollController,
+                                    ),
+                                  ),
+                                  child: Text(
+                                    "Show more",
+                                    style: TextStyle(
+                                      color: Theme.of(context).accentColor,
+                                      fontSize: 16.0,
+                                    ),
+                                  ),
+                                )
                               ],
                             ),
                           ),
