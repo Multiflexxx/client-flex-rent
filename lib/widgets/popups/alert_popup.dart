@@ -1,4 +1,3 @@
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,9 +14,11 @@ class AlertPopup extends StatelessWidget {
   Widget build(BuildContext context) {
     return AlertDialog(
       backgroundColor: Theme.of(context).backgroundColor,
-      title: Text(
-        title,
-        style: TextStyle(color: Theme.of(context).primaryColor),
+      title: Flexible(
+        child: Text(
+          title,
+          style: TextStyle(color: Theme.of(context).primaryColor),
+        ),
       ),
       contentPadding: EdgeInsets.all(10.0),
       content: Column(
@@ -30,22 +31,28 @@ class AlertPopup extends StatelessWidget {
         ],
       ),
       actions: [
-        PurpleButton(
-          text: Text(
-            "Fortsetzen",
-            style: TextStyle(color: Theme.of(context).primaryColor),
+        Expanded(
+          child: Column(
+            children: [
+              PurpleButton(
+                text: Text(
+                  "Fortsetzen",
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                onPressed: goon,
+              ),
+              TransparentButton(
+                text: Text(
+                  "Abbrechen",
+                  style: TextStyle(color: Theme.of(context).primaryColor),
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
           ),
-          onPressed: goon,
         ),
-        TransparentButton(
-          text: Text(
-            "Abbrechen",
-            style: TextStyle(color: Theme.of(context).primaryColor),
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        )
       ],
     );
   }

@@ -25,6 +25,7 @@ abstract class OfferService {
   Future<List<OfferRequest>> getAllOfferRequestsbyStatusCode();
   Future<OfferRequest> getOfferRequestbyRequest();
   Future<OfferRequest> updateOfferRequest();
+  Future<Offer> deleteOffer();
 }
 
 class ApiOfferService extends OfferService {
@@ -415,6 +416,32 @@ class ApiOfferService extends OfferService {
     }
     return null;
   }
-}
 
-// test
+  @override
+  Future<Offer> deleteOffer({Offer offer}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response =
+        await http.patch('${CONFIG.url}/offer/delete-offer/${offer.offerId}',
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(<String, dynamic>{
+              'session': session.toJson(),
+            }));
+
+    inspect(response);
+
+    return null;
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBody = json.decode(response.body);
+      final Offer offer = Offer.fromJson(jsonBody);
+      return offer;
+    } else {
+      throw OfferException(
+          message: 'Dein Produkt konnte nicht gelöscht werden.');
+    }
+  }
+}

@@ -159,12 +159,14 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                                           .toList(),
                                     ),
                                   ),
-                                  Container(
-                                    height: 40,
-                                    child: VerticalDivider(
-                                      color: Colors.purple,
-                                    ),
-                                  ),
+
+                                  // TODO
+                                  // Container(
+                                  //   height: 40,
+                                  //   child: VerticalDivider(
+                                  //     color: Colors.purple,
+                                  //   ),
+                                  // ),
                                   SizedBox(height: 20.0),
                                   DiscoveryCarousel(
                                     snapshot.data['latestOffers'],

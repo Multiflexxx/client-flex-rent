@@ -1,15 +1,21 @@
+import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/popups/alert_popup.dart';
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/account/update_offer/update_offer_body.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:http/http.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class UpdateOfferScreen extends StatelessWidget {
   final Offer offer;
 
   UpdateOfferScreen({this.offer});
+
+  deleteOffer() async {
+    Offer offer = await ApiOfferService().deleteOffer(offer: this.offer);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +32,20 @@ class UpdateOfferScreen extends StatelessWidget {
                     widgetList: [
                       GestureDetector(
                         onTap: () {
-                          showDialog(
-                              context: context,
-                              barrierDismissible: false,
-                              builder: (BuildContext context) {
-                                return AlertPopup(
-                                  title: "Produkt löschen",
-                                  message:
-                                      "Bist du sicher, dass du dieses Produkt löschen willst? Diese Aktion kann nicht rückgängig gemacht werden.",
-                                  goon: () {},
-                                );
-                              });
+                          deleteOffer();
+                          // showDialog(
+                          //     context: context,
+                          //     barrierDismissible: false,
+                          //     builder: (BuildContext context) {
+                          //       return AlertPopup(
+                          //         title: "Produkt löschen",
+                          //         message:
+                          //             "Bist du sicher, dass du dieses Produkt löschen willst? Diese Aktion kann nicht rückgängig gemacht werden.",
+                          //         goon: () {
+                          //           deleteOffer();
+                          //         },
+                          //       );
+                          //     });
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
