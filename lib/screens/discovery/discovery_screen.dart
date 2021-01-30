@@ -66,13 +66,9 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
       child: Container(
         height: 40.0,
         width: 40.0,
-        decoration: BoxDecoration(
-          color: Theme.of(context).backgroundColor,
-          borderRadius: BorderRadius.circular(30.0),
-        ),
         child: SvgPicture.network(
           _categoryTopItems[index].pictureLink,
-          color: Theme.of(context).accentColor,
+          color: Theme.of(context).primaryColor,
           fit: BoxFit.contain,
         ),
       ),
@@ -112,16 +108,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                         SizedBox(
                           height: 10.0,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: _categoryTopItems
-                              .asMap()
-                              .entries
-                              .map(
-                                (MapEntry map) => _buildIcon(map.key),
-                              )
-                              .toList(),
-                        ),
                         FutureBuilder<Map<String, List<Offer>>>(
                           future: discoveryOffer,
                           builder: (context, snapshot) {
@@ -132,6 +118,52 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                                   DiscoveryCarousel(
                                     snapshot.data['bestOffer'],
                                     'Topseller',
+                                  ),
+                                  SizedBox(height: 20.0),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 20.0),
+                                        child: Text(
+                                          'Top Kategorien',
+                                          style: TextStyle(
+                                            fontSize: 22.0,
+                                            fontWeight: FontWeight.bold,
+                                            letterSpacing: 1.2,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Container(
+                                    margin: EdgeInsets.symmetric(
+                                        vertical: 12.0, horizontal: 8.0),
+                                    padding: EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 10.0),
+                                    decoration: new BoxDecoration(
+                                      color: Theme.of(context).cardColor,
+                                      borderRadius: BorderRadius.circular(20.0),
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceAround,
+                                      children: _categoryTopItems
+                                          .asMap()
+                                          .entries
+                                          .map(
+                                            (MapEntry map) =>
+                                                _buildIcon(map.key),
+                                          )
+                                          .toList(),
+                                    ),
+                                  ),
+                                  Container(
+                                    height: 40,
+                                    child: VerticalDivider(
+                                      color: Colors.purple,
+                                    ),
                                   ),
                                   SizedBox(height: 20.0),
                                   DiscoveryCarousel(
