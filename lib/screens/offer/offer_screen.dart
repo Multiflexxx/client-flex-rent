@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/screens/booking/confirmation_payment_screen.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/cupertino.dart';

@@ -4,8 +4,9 @@ import 'package:flutter_icons/flutter_icons.dart';
 class StandardSliverAppBarList extends StatelessWidget {
   final String title;
   final Widget bodyWidget;
+  final List<Widget> actions;
 
-  StandardSliverAppBarList({this.title, this.bodyWidget});
+  StandardSliverAppBarList({this.title, this.bodyWidget, this.actions});
 
   @override
   Widget build(BuildContext context) {
@@ -31,6 +32,7 @@ class StandardSliverAppBarList extends StatelessWidget {
                 color: Theme.of(context).primaryColor,
                 onPressed: () => Navigator.pop(context),
               ),
+              actions: actions,
               expandedHeight: 0.3 * MediaQuery.of(context).size.height,
               backgroundColor: Theme.of(context).backgroundColor,
               flexibleSpace: FlexibleSpaceBar(
