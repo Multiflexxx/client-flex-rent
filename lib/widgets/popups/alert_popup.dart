@@ -54,47 +54,56 @@ class AlertPopup extends StatelessWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  child: GestureDetector(
-                    onTap: () => Navigator.pop(context),
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 15.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).accentColor,
-                        borderRadius: BorderRadius.only(
-                          bottomLeft: Radius.circular(10.0),
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                      color: Theme.of(context).accentColor, width: 0.5),
+                ),
+              ),
+              child: Row(
+                children: <Widget>[
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: () => Navigator.pop(context),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).accentColor,
+                          borderRadius: BorderRadius.only(
+                            bottomLeft: Radius.circular(10.0),
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        "Abbrechen",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
+                        child: Text(
+                          "Abbrechen",
+                          style: TextStyle(color: Colors.white),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),
-                ),
-                Expanded(
-                  child: GestureDetector(
-                    onTap: goon,
-                    child: Container(
-                      padding: EdgeInsets.symmetric(vertical: 15.0),
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).cardColor,
-                        borderRadius: BorderRadius.only(
-                          bottomRight: Radius.circular(10.0),
+                  Expanded(
+                    child: GestureDetector(
+                      onTap: goon,
+                      child: Container(
+                        padding: EdgeInsets.symmetric(vertical: 15.0),
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).cardColor,
+                          borderRadius: BorderRadius.only(
+                            bottomRight: Radius.circular(10.0),
+                          ),
                         ),
-                      ),
-                      child: Text(
-                        "Fortsetzten",
-                        style: TextStyle(color: Colors.white),
-                        textAlign: TextAlign.center,
+                        child: Text(
+                          "Fortsetzten",
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ],
         ),

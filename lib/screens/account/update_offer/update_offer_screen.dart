@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/popups/alert_popup.dart';
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
