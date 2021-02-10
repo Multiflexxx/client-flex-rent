@@ -431,10 +431,6 @@ class ApiOfferService extends OfferService {
               'session': session.toJson(),
             }));
 
-    inspect(response);
-
-    return null;
-
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
       final Offer offer = Offer.fromJson(jsonBody);

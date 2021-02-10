@@ -1,6 +1,11 @@
+import 'dart:developer';
+
 import 'package:flexrent/logic/services/offer_service.dart';
+import 'package:flexrent/screens/account/account_screen.dart';
+import 'package:flexrent/screens/account/settings/account_settings_screen.dart';
 import 'package:flexrent/widgets/popups/alert_popup.dart';
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/account/update_offer/update_offer_body.dart';
@@ -12,11 +17,32 @@ class UpdateOfferScreen extends StatelessWidget {
 
   UpdateOfferScreen({this.offer});
 
-// TODO: Navigate to start page!
-
   deleteOffer({BuildContext context}) async {
     Offer offer = await ApiOfferService().deleteOffer(offer: this.offer);
-    Navigator.pop(context);
+    Navigator.pop(context, offer);
+  }
+
+  _showDeleteDialog({BuildContext context}) async {
+    Offer offer = await showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return AlertPopup(
+          title: "Produkt löschen",
+          message:
+              "Bist du sicher, dass du dieses Produkt löschen willst? Diese Aktion kann nicht rückgängig gemacht werden.",
+          goon: () {
+            deleteOffer(context: context);
+          },
+        );
+      },
+    );
+
+    if (offer != null) {
+      Navigator.of(context)..pop()..pop('reload');
+    } else {
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -26,58 +52,39 @@ class UpdateOfferScreen extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () => showCupertinoModalBottomSheet(
-              expand: false,
-              context: context,
-              barrierColor: Colors.black45,
-              builder: (context, scrollController) => SlideIn(
-                    top: false,
-                    widgetList: [
-                      GestureDetector(
-                        onTap: () async {
-                          Navigator.pop(context);
-                          Offer offer = await showDialog(
-                            context: context,
-                            barrierDismissible: false,
-                            builder: (BuildContext context) {
-                              return AlertPopup(
-                                title: "Produkt löschen",
-                                message:
-                                    "Bist du sicher, dass du dieses Produkt löschen willst? Diese Aktion kann nicht rückgängig gemacht werden.",
-                                goon: () {
-                                  deleteOffer(context: context);
-                                },
-                              );
-                            },
-                          );
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(10.0),
-                          child: Row(
-                            children: [
-                              Icon(Icons.delete,
-                                  color: Theme.of(context).primaryColor),
-                              SizedBox(
-                                width: 5.0,
-                              ),
-                              Text(
-                                "Produkt löschen",
-                                style: TextStyle(
-                                    color: Theme.of(context).primaryColor),
-                              )
-                            ],
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                          ),
+            expand: false,
+            context: context,
+            barrierColor: Colors.black45,
+            builder: (context, scrollController) => SlideIn(
+              top: false,
+              widgetList: [
+                GestureDetector(
+                  onTap: () {
+                    _showDeleteDialog(context: context);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10.0),
+                    child: Row(
+                      children: [
+                        Icon(Icons.delete,
+                            color: Theme.of(context).primaryColor),
+                        SizedBox(
+                          width: 5.0,
                         ),
-                      )
-                    ],
-                  )
-
-              //     ProductDescription(
-              //   offer: widget.rentProduct,
-              //   scrollController: scrollController,
-              // ),
-              ),
+                        Text(
+                          "Produkt löschen",
+                          style:
+                              TextStyle(color: Theme.of(context).primaryColor),
+                        )
+                      ],
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          ),
           icon: Icon(
             Icons.more_horiz,
             color: Theme.of(context).primaryColor,

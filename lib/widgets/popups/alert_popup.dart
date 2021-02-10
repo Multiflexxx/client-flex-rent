@@ -1,5 +1,3 @@
-import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
-import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -94,7 +92,7 @@ class AlertPopup extends StatelessWidget {
                           ),
                         ),
                         child: Text(
-                          "Fortsetzten",
+                          "Fortsetzen",
                           style:
                               TextStyle(color: Theme.of(context).primaryColor),
                           textAlign: TextAlign.center,
