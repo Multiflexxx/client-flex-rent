@@ -14,6 +14,7 @@ abstract class OfferService {
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Offer>> getAllDiscoveryOffers();
   Future<List<Category>> getAllCategory();
+  Future<List<Category>> getTopCategory();
   Future<Offer> createOffer();
   Future<Offer> updateOffer();
   Future<List<Offer>> getOfferbyUser();
@@ -181,6 +182,21 @@ class ApiOfferService extends OfferService {
     } else {
       throw OfferException(
           message: 'Derzeit können keine Kategorien geladen werden.');
+    }
+  }
+
+  @override
+  Future<List<Category>> getTopCategory() async {
+    final response = await http.get('${CONFIG.url}/offer/top-categories');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBody = json.decode(response.body);
+      final List<Category> categoryList =
+          (jsonBody).map((i) => Category.fromJson(i)).toList();
+      return categoryList;
+    } else {
+      throw OfferException(
+          message: 'Derzeit können die Top-Kategorien geladen werden.');
     }
   }
 

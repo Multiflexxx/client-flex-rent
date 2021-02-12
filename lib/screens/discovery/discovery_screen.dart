@@ -16,26 +16,10 @@ class DiscoveryScreen extends StatefulWidget {
 }
 
 class _DiscoveryScreen extends State<DiscoveryScreen> {
-  Future<Map<String, List<Offer>>> discoveryOffer;
-  List<Category> _categoryTopItems = [
-    Category(
-        categoryId: 3,
-        name: "TV & Audio",
-        pictureLink: "https://multiflexxx.de/Flexrent/assets/tv.svg"),
-    Category(
-        categoryId: 4,
-        name: "Smartphone & Zubehör",
-        pictureLink: "https://multiflexxx.de/Flexrent/assets/smartphone.svg"),
-    Category(
-        categoryId: 7,
-        name: "Sport & Freizeit",
-        pictureLink: "https://multiflexxx.de/Flexrent/assets/sport.svg"),
-    Category(
-        categoryId: 8,
-        name: "Heimwerken & Garten",
-        pictureLink: "https://multiflexxx.de/Flexrent/assets/garden.svg")
-  ];
   User user;
+
+  Future<Map<String, List<Offer>>> discoveryOffer;
+  Future<List<Category>> topCategories;
 
   @override
   initState() {
@@ -43,6 +27,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
         as AuthenticationAuthenticated;
     user = state.user;
     _fetchDiscoveryOffer();
+    _fetchTopCategories();
     super.initState();
   }
 
@@ -55,23 +40,59 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
     return fetchData;
   }
 
-  Widget _buildIcon(int index) {
+  Future<List<Category>> _fetchTopCategories() {
+    var fetchData = ApiOfferService().getTopCategory();
+    setState(() {
+      topCategories = fetchData;
+    });
+    return fetchData;
+  }
+
+  Widget _buildIcon(Category category) {
     return GestureDetector(
       onTap: () => Navigator.push(
           context,
           CupertinoPageRoute(
             builder: (BuildContext context) =>
-                ProductListScreen(category: _categoryTopItems[index]),
+                ProductListScreen(category: category),
           )),
       child: Container(
         height: 40.0,
         width: 40.0,
         child: SvgPicture.network(
-          _categoryTopItems[index].pictureLink,
+          category.pictureLink,
           color: Theme.of(context).primaryColor,
           fit: BoxFit.contain,
         ),
       ),
+    );
+  }
+
+  Widget _buildIconRow({List<Category> categories}) {
+    List<Widget> widgets = [];
+
+    categories.asMap().forEach(
+      (index, category) {
+        widgets.add(
+          _buildIcon(category),
+        );
+        if (index != (categories.length - 1)) {
+          widgets.add(
+            Container(
+              height: 30,
+              child: VerticalDivider(
+                color: Theme.of(context).primaryColor,
+                thickness: 1.0,
+              ),
+            ),
+          );
+        }
+      },
+    );
+
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      children: widgets,
     );
   }
 
@@ -146,27 +167,23 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                                       color: Theme.of(context).cardColor,
                                       borderRadius: BorderRadius.circular(20.0),
                                     ),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: _categoryTopItems
-                                          .asMap()
-                                          .entries
-                                          .map(
-                                            (MapEntry map) =>
-                                                _buildIcon(map.key),
-                                          )
-                                          .toList(),
+                                    child: FutureBuilder<List<Category>>(
+                                      future: topCategories,
+                                      builder: (context, snapshot) {
+                                        if (snapshot.hasData) {
+                                          List<Category> categories =
+                                              snapshot.data;
+                                          return _buildIconRow(
+                                              categories: categories);
+                                        }
+                                        return Center(
+                                          child: CircularProgressIndicator(
+                                            strokeWidth: 2,
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
-
-                                  // TODO
-                                  // Container(
-                                  //   height: 40,
-                                  //   child: VerticalDivider(
-                                  //     color: Colors.purple,
-                                  //   ),
-                                  // ),
                                   SizedBox(height: 20.0),
                                   DiscoveryCarousel(
                                     snapshot.data['latestOffers'],
