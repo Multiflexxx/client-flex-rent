@@ -10,6 +10,20 @@ class forgotPassword extends StatefulWidget {
 
 class _forgotPasswordState extends State<forgotPassword> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final emailController = TextEditingController();
+  var email_sent = false;
+
+  void _resetPassword() async {
+    if (_key.currentState.validate()) {
+      final String _email = emailController.text;
+      //BlocProvider.of<UserBloc>(context).add();
+      setState(() {
+        email_sent = true;
+      });
+    } else {
+      print('falsch');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +54,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                   ),
                 ),
                 SizedBox(
-                  height: 40,
+                  height: 20,
                 ),
                 Form(
                     key: _key,
@@ -50,7 +64,7 @@ class _forgotPasswordState extends State<forgotPassword> {
                         child: SingleChildScrollView(
                             child: Column(children: <Widget>[
                           FormFieldStyled(
-                            controller: null,
+                            controller: emailController,
                             autocorrect: false,
                             hintText: 'Email',
                             type: TextInputType.emailAddress,
@@ -69,10 +83,20 @@ class _forgotPasswordState extends State<forgotPassword> {
                           ),
                           PurpleButton(
                               text: Text('Passwort wiederherstellen'),
-                              onPressed: () {}),
+                              onPressed: () {
+                                _resetPassword();
+                              }),
                           SizedBox(
-                            height: 30.0,
+                            height: 15.0,
                           ),
+                          email_sent
+                              ? Text(
+                                  "Bitte überprüfe Deine E-Mails, um Dein Passwort zurück zu setzen",
+                                  style: TextStyle(
+                                      fontWeight: FontWeight.w400,
+                                      color: Theme.of(context).primaryColor),
+                                )
+                              : Container(),
                         ]))))
               ],
             )),
