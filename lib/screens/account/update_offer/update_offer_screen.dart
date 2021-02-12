@@ -48,54 +48,54 @@ class UpdateOfferScreen extends StatelessWidget {
       title: 'Bearbeiten',
       actions: [
         IconButton(
-          // onPressed: () async {
-          //   final response = await showCupertinoModalBottomSheet(
+          onPressed: () async {
+            final response = await showCupertinoModalBottomSheet(
+              expand: false,
+              useRootNavigator: true,
+              context: context,
+              barrierColor: Colors.black45,
+              builder: (context, scrollController) => DelteModal(
+                offer: this.offer,
+              ),
+            );
+            if (response != null) {
+              Navigator.of(context).pop();
+            }
+          },
+          //   onPressed: () => showCupertinoModalBottomSheet(
           //     expand: false,
-          //     useRootNavigator: true,
           //     context: context,
           //     barrierColor: Colors.black45,
-          //     builder: (context, scrollController) => DelteModal(
-          //       offer: this.offer,
+          //     builder: (context, scrollController) => SlideIn(
+          //       top: false,
+          //       widgetList: [
+          //         GestureDetector(
+          //           onTap: () {
+          //             _showDeleteDialog(context: context);
+          //           },
+          //           child: Padding(
+          //             padding: const EdgeInsets.all(10.0),
+          //             child: Row(
+          //               children: [
+          //                 Icon(Icons.delete,
+          //                     color: Theme.of(context).primaryColor),
+          //                 SizedBox(
+          //                   width: 5.0,
+          //                 ),
+          //                 Text(
+          //                   "Produkt löschen",
+          //                   style:
+          //                       TextStyle(color: Theme.of(context).primaryColor),
+          //                 )
+          //               ],
+          //               crossAxisAlignment: CrossAxisAlignment.center,
+          //               mainAxisAlignment: MainAxisAlignment.start,
+          //             ),
+          //           ),
+          //         )
+          //       ],
           //     ),
-          //   );
-          //   if (response != null) {
-          //     Navigator.of(context).pop();
-          //   }
-          // },
-          onPressed: () => showCupertinoModalBottomSheet(
-            expand: false,
-            context: context,
-            barrierColor: Colors.black45,
-            builder: (context, scrollController) => SlideIn(
-              top: false,
-              widgetList: [
-                GestureDetector(
-                  onTap: () {
-                    _showDeleteDialog(context: context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Row(
-                      children: [
-                        Icon(Icons.delete,
-                            color: Theme.of(context).primaryColor),
-                        SizedBox(
-                          width: 5.0,
-                        ),
-                        Text(
-                          "Produkt löschen",
-                          style:
-                              TextStyle(color: Theme.of(context).primaryColor),
-                        )
-                      ],
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
+          //   ),
           icon: Icon(
             Icons.more_horiz,
             color: Theme.of(context).primaryColor,
