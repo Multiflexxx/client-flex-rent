@@ -1,4 +1,4 @@
-import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
+ import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';

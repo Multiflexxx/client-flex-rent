@@ -1,0 +1,82 @@
+import 'package:flexrent/widgets/background/logo.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
+import 'package:flexrent/widgets/styles/formfield_styled.dart';
+import 'package:flutter/material.dart';
+
+class forgotPassword extends StatefulWidget {
+  @override
+  _forgotPasswordState createState() => _forgotPasswordState();
+}
+
+class _forgotPasswordState extends State<forgotPassword> {
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+      ),
+      body: Stack(children: <Widget>[
+        Background(top: 30),
+        SafeArea(
+            minimum: const EdgeInsets.all(16),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(
+                    'Passwort vergessen',
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 42,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 40,
+                ),
+                Form(
+                    key: _key,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    child: Flexible(
+                        fit: FlexFit.loose,
+                        child: SingleChildScrollView(
+                            child: Column(children: <Widget>[
+                          FormFieldStyled(
+                            controller: null,
+                            autocorrect: false,
+                            hintText: 'Email',
+                            type: TextInputType.emailAddress,
+                            validator: (String value) {
+                              if (value.isEmpty) {
+                                return 'Email ist notwendig';
+                              } else if (!RegExp(
+                                      r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
+                                  .hasMatch(value)) {
+                                return 'Bitte gebe eine gültige E-Mail Adresse ein';
+                              }
+                            },
+                          ),
+                          SizedBox(
+                            height: 12,
+                          ),
+                          PurpleButton(
+                              text: Text('Passwort wiederherstellen'),
+                              onPressed: () {}),
+                          SizedBox(
+                            height: 30.0,
+                          ),
+                        ]))))
+              ],
+            )),
+      ]),
+    );
+  }
+}
