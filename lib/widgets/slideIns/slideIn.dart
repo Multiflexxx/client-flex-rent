@@ -14,13 +14,20 @@ class SlideIn extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     this.widgetList.insert(0, SlideBar());
-    return Material(
-      color: Theme.of(context).cardColor,
-      child: SafeArea(
-        top: top ?? true,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: widgetList,
+    return SafeArea(
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: Material(
+          color: Theme.of(context).cardColor,
+          borderRadius: BorderRadius.circular(12),
+          clipBehavior: Clip.antiAlias,
+          child: SafeArea(
+            top: top ?? true,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: widgetList,
+            ),
+          ),
         ),
       ),
     );

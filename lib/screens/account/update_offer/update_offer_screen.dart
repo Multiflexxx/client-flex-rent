@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/services/offer_service.dart';
-import 'package:flexrent/screens/account/account_screen.dart';
-import 'package:flexrent/screens/account/settings/account_settings_screen.dart';
+import 'package:flexrent/screens/account/offer_delete.dart';
 import 'package:flexrent/widgets/popups/alert_popup.dart';
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/cupertino.dart';
@@ -51,6 +48,20 @@ class UpdateOfferScreen extends StatelessWidget {
       title: 'Bearbeiten',
       actions: [
         IconButton(
+          // onPressed: () async {
+          //   final response = await showCupertinoModalBottomSheet(
+          //     expand: false,
+          //     useRootNavigator: true,
+          //     context: context,
+          //     barrierColor: Colors.black45,
+          //     builder: (context, scrollController) => DelteModal(
+          //       offer: this.offer,
+          //     ),
+          //   );
+          //   if (response != null) {
+          //     Navigator.of(context).pop();
+          //   }
+          // },
           onPressed: () => showCupertinoModalBottomSheet(
             expand: false,
             context: context,
