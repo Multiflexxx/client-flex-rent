@@ -70,6 +70,7 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
+      routeName: 'rootTabScreen',
       controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),

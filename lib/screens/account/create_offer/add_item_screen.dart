@@ -81,19 +81,6 @@ class _AddItemBodyState extends State<_AddItemBody> {
       } on OfferException catch (e) {
         showFlushbar(context: context, message: e.message);
       }
-
-      // Keep that!!!!
-      // Navigator.of(context).pushAndRemoveUntil(
-      //   CupertinoPageRoute(
-      //     builder: (BuildContext context) {
-      //       return UpdateOfferScreen(
-      //         offer: backendOffer,
-      //       );
-      //     },
-      //   ),
-      //   ModalRoute.withName(Navigator.defaultRouteName),
-      // );
-
     }
   }
 

@@ -83,21 +83,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:
-          // App(
-          //   key: appKey,
-          // ),
-          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          if (state is AuthenticationAuthenticated) {
-            return App(
-              key: appKey,
-            );
-          }
-          if (state is AuthenticationSignUp) {
-            return RegisterScreen();
-          }
-          return LoginScreen();
+          return App(
+            key: appKey,
+          );
         },
       ),
     );

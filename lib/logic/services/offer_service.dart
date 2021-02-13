@@ -90,7 +90,13 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future<Map<String, List<Offer>>> getDiscoveryOffer({String postCode}) async {
+  Future<Map<String, List<Offer>>> getDiscoveryOffer({User user}) async {
+    String postCode = '68165';
+
+    if (user != null) {
+      postCode = user.postCode;
+    }
+
     final response = await http.get('${CONFIG.url}/offer/?post_code=$postCode');
 
     final jsonBody = json.decode(response.body);

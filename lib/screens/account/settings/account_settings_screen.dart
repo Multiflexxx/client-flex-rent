@@ -1,7 +1,10 @@
+import 'dart:developer';
+
+import 'package:flexrent/logic/services/helper_service.dart';
+import 'package:flexrent/screens/account/account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/screens/404.dart';
 import 'package:flexrent/screens/account/settings/personal_info_screen.dart';
@@ -28,6 +31,8 @@ List<ProfileOption> profileOptions = [
 ];
 
 class AccountSettingsScreen extends StatelessWidget {
+  static String routeName = 'accountSettingScreen';
+
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
@@ -67,13 +72,15 @@ class _AccountSettingsBody extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if (profileOption.optionId != 'logout') {
-          pushNewScreenWithRouteSettings(
-            context,
-            settings: RouteSettings(name: profileOption.optionId),
+          HelperService.pushToProtectedScreen(
+            context: context,
+            navbar: false,
             screen: routes[profileOption.optionId] ?? PageNotFound(),
+            popRouteName: AccountSettingsScreen.routeName,
           );
         } else {
           BlocProvider.of<AuthenticationBloc>(context).add(UserLoggedOut());
+          Navigator.pop(context);
         }
       },
       child: Container(

@@ -45,6 +45,10 @@ class AuthenticationBloc
       yield* _mapUserSignInToState(event);
     }
 
+    if (event is UserCanceld) {
+      yield* _mapUserCanceldToState(event);
+    }
+
     if (event is UserLoggedOut) {
       yield* _mapUserLoggedOutToState(event);
     }
@@ -78,6 +82,10 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapUserSignInToState(UserSignIn event) async* {
     yield AuthenticationSignIn();
+  }
+
+  Stream<AuthenticationState> _mapUserCanceldToState(UserCanceld evnt) async* {
+    yield AuthenticationCanceld();
   }
 
   Stream<AuthenticationState> _mapUserLoggedOutToState(

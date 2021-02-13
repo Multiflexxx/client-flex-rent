@@ -23,17 +23,24 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   @override
   initState() {
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
-    user = state.user;
+    final state = BlocProvider.of<AuthenticationBloc>(context).state;
+    if (state != null) {
+      user = state.user;
+    }
     _fetchDiscoveryOffer();
     _fetchTopCategories();
     super.initState();
   }
 
+  String _buildName() {
+    if (user != null) {
+      return user.firstName + ' ' + user.lastName;
+    }
+    return '';
+  }
+
   Future<dynamic> _fetchDiscoveryOffer() {
-    var fetchData =
-        ApiOfferService().getDiscoveryOffer(postCode: user.postCode);
+    var fetchData = ApiOfferService().getDiscoveryOffer(user: user);
     setState(() {
       discoveryOffer = fetchData;
     });
@@ -119,7 +126,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                         Padding(
                           padding: EdgeInsets.only(top: 20.0, left: 20.0),
                           child: Text(
-                            'Hallo ${user.firstName} ${user.lastName}',
+                            'Hallo ${_buildName()}',
                             style: TextStyle(
                               fontSize: 30.0,
                               fontWeight: FontWeight.bold,

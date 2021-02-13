@@ -1,3 +1,4 @@
+import 'package:flexrent/screens/account/account_screen.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,16 +25,16 @@ class _MyItemsState extends State<MyItems> {
     offerList = ApiOfferService().getOfferbyUser();
   }
 
-  void _addItem() async {
-    final offer = await pushNewScreen(
-      context,
-      screen: AddItemScreen(),
-      withNavBar: false,
-    );
-    if (offer != null) {
-      _goToEditOfferView(offer: offer);
-    }
-  }
+  // void _addItem() async {
+  //   final offer = await pushNewScreen(
+  //     context,
+  //     screen: AddItemScreen(),
+  //     withNavBar: false,
+  //   );
+  //   if (offer != null) {
+  //     _goToEditOfferView(offer: offer);
+  //   }
+  // }
 
   void _goToEditOfferView({Offer offer}) async {
     await pushNewScreen(
@@ -53,9 +54,11 @@ class _MyItemsState extends State<MyItems> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
         GestureDetector(
-          onTap: () => pushNewScreen(
-            context,
+          onTap: () => HelperService.pushToProtectedScreen(
+            context: context,
             screen: LessorRentalItemScreen(),
+            popRouteName: AccountScreen.routeName,
+            navbar: false,
           ),
           child: Container(
             padding: EdgeInsets.all(10.0),
@@ -102,7 +105,12 @@ class _MyItemsState extends State<MyItems> {
         ),
         FlatButton(
           color: Theme.of(context).backgroundColor,
-          onPressed: () => _addItem(),
+          onPressed: () => HelperService.pushToProtectedScreen(
+            context: context,
+            screen: AddItemScreen(),
+            popRouteName: AccountScreen.routeName,
+            navbar: false,
+          ),
           child: Text(
             '+',
             style: TextStyle(

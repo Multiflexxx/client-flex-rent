@@ -2,10 +2,13 @@ part of 'authentication_bloc.dart';
 
 @immutable
 abstract class AuthenticationState extends Equatable {
-  const AuthenticationState();
+  AuthenticationState({this.loggedIn, this.user});
+
+  final bool loggedIn;
+  final User user;
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [loggedIn, user];
 }
 
 class AuthenticationInitial extends AuthenticationState {}
@@ -33,6 +36,8 @@ class AuthenticationAuthenticated extends AuthenticationState {
 class AuthenticationSignIn extends AuthenticationState {}
 
 class AuthenticationSignUp extends AuthenticationState {}
+
+class AuthenticationCanceld extends AuthenticationState {}
 
 class AuthenticationFailure extends AuthenticationState {
   final String message;
