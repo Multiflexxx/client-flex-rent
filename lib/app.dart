@@ -48,7 +48,11 @@ class AppState extends State<App> {
 
   List<Widget> _buildScreens() {
     return [
-      DiscoveryScreen(),
+      DiscoveryScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
       CategoryScreen(hideNavBarFunction: () {
         setState(() {
           _hideNavBar = !_hideNavBar;

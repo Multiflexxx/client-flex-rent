@@ -9,42 +9,52 @@ import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 import 'package:flexrent/widgets/offer/offer_card.dart';
 
 class DiscoveryOfferListScreen extends StatelessWidget {
-  final String carouselTitle;
+  static String routeName = 'discoveryOfferListScreen';
 
-  DiscoveryOfferListScreen({this.carouselTitle});
+  final String carouselTitle;
+  final VoidCallback hideNavBarFunction;
+
+  const DiscoveryOfferListScreen(
+      {Key key, this.carouselTitle, this.hideNavBarFunction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
       title: carouselTitle,
-      bodyWidget: ProductListBody(
+      bodyWidget: DiscoveryOfferListBody(
         carouselTitle: carouselTitle,
+        hideNavBarFunction: hideNavBarFunction,
       ),
     );
   }
 }
 
-class ProductListBody extends StatefulWidget {
+class DiscoveryOfferListBody extends StatefulWidget {
   final String carouselTitle;
+  final VoidCallback hideNavBarFunction;
 
-  ProductListBody({this.carouselTitle});
+  const DiscoveryOfferListBody(
+      {Key key, this.carouselTitle, this.hideNavBarFunction})
+      : super(key: key);
 
   @override
-  _ProductListBodyState createState() => _ProductListBodyState();
+  _DiscoveryOfferListBodyState createState() => _DiscoveryOfferListBodyState();
 }
 
-class _ProductListBodyState extends State<ProductListBody> {
+class _DiscoveryOfferListBodyState extends State<DiscoveryOfferListBody> {
   Future<List<Offer>> offerList;
   User user;
 
   @override
   initState() {
     super.initState();
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
-    user = state.user;
+    final state = BlocProvider.of<AuthenticationBloc>(context).state;
+    if (state != null) {
+      user = state.user;
+    }
     offerList = ApiOfferService().getAllDiscoveryOffers(
-        postCode: user.postCode,
+        postCode: user != null ? user.postCode : '68165',
         discoveryTitle: widget.carouselTitle);
   }
 
@@ -53,13 +63,15 @@ class _ProductListBodyState extends State<ProductListBody> {
     for (Offer offer in offerList) {
       _offerList.add(
         GestureDetector(
-          onTap: () => pushNewScreen(
+          onTap: () => pushNewScreenWithRouteSettings(
             context,
             screen: OfferScreen(
               offer: offer,
               heroTag: offer.offerId + offer.category.name,
+              hideNavBarFunction: widget.hideNavBarFunction,
             ),
             withNavBar: false,
+            settings: RouteSettings(name: OfferScreen.routeName),
           ),
           child: OfferCard(offer: offer, heroTag: offer.category.name),
         ),

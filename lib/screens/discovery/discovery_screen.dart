@@ -9,8 +9,15 @@ import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/discovery_carousel.dart';
 import 'package:flexrent/widgets/styles/search_bar.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class DiscoveryScreen extends StatefulWidget {
+  static String routeName = 'rootTabScreen';
+
+  final VoidCallback hideNavBarFunction;
+
+  const DiscoveryScreen({Key key, this.hideNavBarFunction}) : super(key: key);
+
   @override
   _DiscoveryScreen createState() => _DiscoveryScreen();
 }
@@ -57,12 +64,14 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   Widget _buildIcon(Category category) {
     return GestureDetector(
-      onTap: () => Navigator.push(
-          context,
-          CupertinoPageRoute(
-            builder: (BuildContext context) =>
-                OfferListScreen(category: category),
-          )),
+      onTap: () => pushNewScreenWithRouteSettings(
+        context,
+        screen: OfferListScreen(
+          category: category,
+          hideNavBarFunction: widget.hideNavBarFunction,
+        ),
+        settings: RouteSettings(name: OfferListScreen.routeName),
+      ),
       child: Container(
         height: 40.0,
         width: 40.0,
@@ -144,8 +153,10 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                                 children: <Widget>[
                                   SizedBox(height: 20.0),
                                   DiscoveryCarousel(
-                                    snapshot.data['bestOffer'],
-                                    'Topseller',
+                                    carouselTitle: 'Topseller',
+                                    offerList: snapshot.data['bestOffer'],
+                                    hideNavBarFunction:
+                                        widget.hideNavBarFunction,
                                   ),
                                   SizedBox(height: 20.0),
                                   Row(
@@ -193,13 +204,17 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                                   ),
                                   SizedBox(height: 20.0),
                                   DiscoveryCarousel(
-                                    snapshot.data['latestOffers'],
-                                    'Neuste',
+                                    carouselTitle: 'Neuste',
+                                    offerList: snapshot.data['latestOffers'],
+                                    hideNavBarFunction:
+                                        widget.hideNavBarFunction,
                                   ),
                                   SizedBox(height: 20.0),
                                   DiscoveryCarousel(
-                                    snapshot.data['bestLessors'],
-                                    'Beste Vermieter',
+                                    carouselTitle: 'Beste Vermieter',
+                                    offerList: snapshot.data['bestLessors'],
+                                    hideNavBarFunction:
+                                        widget.hideNavBarFunction,
                                   ),
                                 ],
                               );
