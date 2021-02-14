@@ -5,7 +5,6 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/widgets/calendar/calendar_delete_change.dart';
 import 'package:flexrent/widgets/dateRangePicker/date_range_picker.dart';
-import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 import 'package:syncfusion_flutter_calendar/calendar.dart';
 
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;

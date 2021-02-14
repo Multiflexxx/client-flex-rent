@@ -1,7 +1,6 @@
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
-import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 

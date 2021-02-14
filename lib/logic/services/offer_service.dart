@@ -14,6 +14,7 @@ abstract class OfferService {
   Future<Map<String, List<Offer>>> getDiscoveryOffer();
   Future<List<Offer>> getAllDiscoveryOffers();
   Future<List<Category>> getAllCategory();
+  Future<List<Category>> getTopCategory();
   Future<Offer> createOffer();
   Future<Offer> updateOffer();
   Future<List<Offer>> getOfferbyUser();
@@ -25,6 +26,7 @@ abstract class OfferService {
   Future<List<OfferRequest>> getAllOfferRequestsbyStatusCode();
   Future<OfferRequest> getOfferRequestbyRequest();
   Future<OfferRequest> updateOfferRequest();
+  Future<Offer> deleteOffer();
 }
 
 class ApiOfferService extends OfferService {
@@ -88,7 +90,13 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future<Map<String, List<Offer>>> getDiscoveryOffer({String postCode}) async {
+  Future<Map<String, List<Offer>>> getDiscoveryOffer({User user}) async {
+    String postCode = '68165';
+
+    if (user != null) {
+      postCode = user.postCode;
+    }
+
     final response = await http.get('${CONFIG.url}/offer/?post_code=$postCode');
 
     final jsonBody = json.decode(response.body);
@@ -180,6 +188,21 @@ class ApiOfferService extends OfferService {
     } else {
       throw OfferException(
           message: 'Derzeit können keine Kategorien geladen werden.');
+    }
+  }
+
+  @override
+  Future<List<Category>> getTopCategory() async {
+    final response = await http.get('${CONFIG.url}/offer/top-categories');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBody = json.decode(response.body);
+      final List<Category> categoryList =
+          (jsonBody).map((i) => Category.fromJson(i)).toList();
+      return categoryList;
+    } else {
+      throw OfferException(
+          message: 'Derzeit können die Top-Kategorien geladen werden.');
     }
   }
 
@@ -415,6 +438,28 @@ class ApiOfferService extends OfferService {
     }
     return null;
   }
-}
 
-// test
+  @override
+  Future<Offer> deleteOffer({Offer offer}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response =
+        await http.patch('${CONFIG.url}/offer/delete-offer/${offer.offerId}',
+            headers: {"Content-Type": "application/json"},
+            body: jsonEncode(<String, dynamic>{
+              'session': session.toJson(),
+            }));
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBody = json.decode(response.body);
+      final Offer offer = Offer.fromJson(jsonBody);
+      return offer;
+    } else {
+      throw OfferException(
+          message: 'Dein Produkt konnte nicht gelöscht werden.');
+    }
+  }
+}

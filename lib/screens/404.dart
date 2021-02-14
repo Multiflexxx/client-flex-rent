@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 class PageNotFound extends StatelessWidget {
+  final VoidCallback hideNavBarFunction;
+
+  const PageNotFound({Key key, this.hideNavBarFunction}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(

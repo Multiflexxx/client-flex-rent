@@ -11,8 +11,11 @@ import 'package:flexrent/screens/offer/offer_screen.dart';
 class DiscoveryCarousel extends StatefulWidget {
   final List<Offer> offerList;
   final String carouselTitle;
+  final VoidCallback hideNavBarFunction;
 
-  DiscoveryCarousel(this.offerList, this.carouselTitle);
+  const DiscoveryCarousel(
+      {Key key, this.offerList, this.carouselTitle, this.hideNavBarFunction})
+      : super(key: key);
 
   @override
   _DiscoveryCarouselState createState() => _DiscoveryCarouselState();
@@ -26,13 +29,14 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           child: GestureDetector(
-              onTap: () => Navigator.push(
+              onTap: () => pushNewScreenWithRouteSettings(
                     context,
-                    CupertinoPageRoute(
-                      builder: (BuildContext context) =>
-                          DiscoveryOfferListScreen(
-                              carouselTitle: widget.carouselTitle),
+                    screen: DiscoveryOfferListScreen(
+                      carouselTitle: widget.carouselTitle,
+                      hideNavBarFunction: widget.hideNavBarFunction,
                     ),
+                    settings:
+                        RouteSettings(name: DiscoveryOfferListScreen.routeName),
                   ),
               child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -63,13 +67,15 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
             itemBuilder: (BuildContext context, int index) {
               Offer offer = widget.offerList[index];
               return GestureDetector(
-                onTap: () => pushNewScreen(
+                onTap: () => pushNewScreenWithRouteSettings(
                   context,
                   screen: OfferScreen(
                     offer: offer,
                     heroTag: offer.offerId + widget.carouselTitle,
+                    hideNavBarFunction: widget.hideNavBarFunction,
                   ),
                   withNavBar: false,
+                  settings: RouteSettings(name: OfferScreen.routeName),
                 ),
                 child: Container(
                   margin: EdgeInsets.symmetric(horizontal: 5.0, vertical: 10.0),

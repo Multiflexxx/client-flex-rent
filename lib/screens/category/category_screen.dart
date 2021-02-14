@@ -8,9 +8,14 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/offer/offer_list_screen.dart';
 import 'package:flexrent/widgets/styles/search_bar.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class CategoryScreen extends StatefulWidget {
-  const CategoryScreen({Key key}) : super(key: key);
+  static String routeName = 'rootTabScreen';
+
+  final VoidCallback hideNavBarFunction;
+
+  const CategoryScreen({Key key, this.hideNavBarFunction}) : super(key: key);
 
   @override
   _CategoryScreenState createState() => _CategoryScreenState();
@@ -32,7 +37,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
         child: Column(
           children: <Widget>[
             Container(
-              child: SearchBar(),
+              child: SearchBar(
+                hideNavBarFunction: widget.hideNavBarFunction,
+              ),
             ),
             Expanded(
               child: Container(
@@ -45,11 +52,14 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         itemBuilder: (context, index) {
                           Category category = snapshot.data[index];
                           return GestureDetector(
-                            onTap: () => Navigator.push(
+                            onTap: () => pushNewScreenWithRouteSettings(
                               context,
-                              CupertinoPageRoute(
-                                builder: (BuildContext context) =>
-                                    ProductListScreen(category: category),
+                              screen: OfferListScreen(
+                                category: category,
+                                hideNavBarFunction: widget.hideNavBarFunction,
+                              ),
+                              settings: RouteSettings(
+                                name: OfferListScreen.routeName,
                               ),
                             ),
                             child: Container(

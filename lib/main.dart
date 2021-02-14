@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/app.dart';
 import 'package:flexrent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:flexrent/logic/blocs/user/bloc/user_bloc.dart';
-import 'package:flexrent/screens/authentication/login/login.dart';
-import 'package:flexrent/screens/authentication/registration/register.dart';
 
 import 'logic/services/services.dart';
 
@@ -83,21 +81,11 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:
-          // App(
-          //   key: appKey,
-          // ),
-          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
         builder: (context, state) {
-          if (state is AuthenticationAuthenticated) {
-            return App(
-              key: appKey,
-            );
-          }
-          if (state is AuthenticationSignUp) {
-            return RegisterScreen();
-          }
-          return LoginScreen();
+          return App(
+            key: appKey,
+          );
         },
       ),
     );

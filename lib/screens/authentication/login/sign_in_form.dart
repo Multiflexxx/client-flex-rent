@@ -1,3 +1,4 @@
+import 'package:flexrent/screens/authentication/login/forgot_password.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/divider_with_text.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';
@@ -9,6 +10,7 @@ import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/login/login.dart';
 import 'package:flexrent/widgets/styles/formfield_styled.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class SignInForm extends StatefulWidget {
   @override
@@ -61,7 +63,7 @@ class _SignInFormState extends State<SignInForm> {
                         } else if (!RegExp(
                                 r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
                             .hasMatch(value)) {
-                          return 'Bitte gebe eine gültige Nummer ein';
+                          return 'Bitte gebe eine gültige E-Mail Adresse ein';
                         }
                       },
                     ),
@@ -79,6 +81,23 @@ class _SignInFormState extends State<SignInForm> {
                         }
                         return null;
                       },
+                    ),
+                    SizedBox(
+                      height: 0,
+                    ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      child: GestureDetector(
+                        onTap: () {
+                          pushNewScreen(context, screen: forgotPassword());
+                        },
+                        child: Text(
+                          "Passwort vergessen?",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Theme.of(context).primaryColor),
+                        ),
+                      ),
                     ),
                     SizedBox(
                       height: 16,
@@ -145,9 +164,10 @@ class _SignInFormState extends State<SignInForm> {
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () =>
-                                  BlocProvider.of<AuthenticationBloc>(context)
-                                      .add(UserSignUp()),
+                              ..onTap = () {
+                                BlocProvider.of<AuthenticationBloc>(context)
+                                    .add(UserSignUp());
+                              },
                           ),
                         ],
                       ),
