@@ -1,5 +1,4 @@
 import 'package:flexrent/screens/authentication/login/forgot_password.dart';
-import 'package:flexrent/screens/authentication/registration/register.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/divider_with_text.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';

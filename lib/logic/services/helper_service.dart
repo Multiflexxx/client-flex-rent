@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:filesize/filesize.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/authentication/no_access_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -28,7 +29,7 @@ class HelperService {
     return result;
   }
 
-  static bool _isLoggedIn({BuildContext context}) {
+  static bool isLoggedIn({BuildContext context}) {
     final state = BlocProvider.of<AuthenticationBloc>(context).state;
     if (state.user != null) {
       return true;
@@ -36,21 +37,37 @@ class HelperService {
     return false;
   }
 
-  static pushToProtectedScreen(
-      {BuildContext context, Widget screen, String popRouteName, bool navbar}) {
-    if (_isLoggedIn(context: context)) {
+  static User getUser({BuildContext context}) {
+    final state = BlocProvider.of<AuthenticationBloc>(context).state;
+    return state.user;
+  }
+
+  static pushToProtectedScreen({
+    BuildContext context,
+    Widget targetScreen,
+    String popRouteName,
+    bool hideNavBar,
+    VoidCallback hideNavBarFunction,
+  }) {
+    if (isLoggedIn(context: context)) {
+      if (hideNavBar) {
+        hideNavBarFunction();
+      }
       pushNewScreen(
         context,
-        withNavBar: navbar,
-        screen: screen,
+        screen: targetScreen,
       );
     } else {
+      hideNavBarFunction();
       pushNewScreenWithRouteSettings(
         context,
         settings: RouteSettings(name: NoAccessScreen.routeName),
         screen: NoAccessScreen(
           popRouteName: popRouteName,
+          targetScreen: targetScreen,
+          hideNavBarFunction: hideNavBarFunction,
         ),
+        pageTransitionAnimation: PageTransitionAnimation.scale,
       );
     }
   }

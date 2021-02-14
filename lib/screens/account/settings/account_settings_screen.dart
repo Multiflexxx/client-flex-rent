@@ -1,65 +1,52 @@
-import 'dart:developer';
-
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
-import 'package:flexrent/screens/account/account_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/screens/404.dart';
 import 'package:flexrent/screens/account/settings/personal_info_screen.dart';
-import 'package:flexrent/screens/account/settings/settings_screen.dart';
+import 'package:flexrent/screens/account/settings/app_settings_screen.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
-class ProfileOption {
-  String optionId;
-  String name;
-  IconData icon;
-
-  ProfileOption(String optionId, String name, IconData icon) {
-    this.optionId = optionId;
-    this.name = name;
-    this.icon = icon;
-  }
-}
-
-List<ProfileOption> profileOptions = [
-  ProfileOption('personalInfo', 'Meine Informationen', Feather.user),
-  ProfileOption('paymentinfo', 'Zahlungsinformationen', Feather.credit_card),
-  ProfileOption('settings', 'Einstellungen', Feather.settings),
-  ProfileOption('logout', 'Abmelden', Feather.log_out),
-];
-
-class AccountSettingsScreen extends StatelessWidget {
+class AccountSettingsScreen extends StatefulWidget {
   static String routeName = 'accountSettingScreen';
 
+  final VoidCallback hideNavBarFunction;
+
+  const AccountSettingsScreen({Key key, this.hideNavBarFunction})
+      : super(key: key);
+
+  @override
+  _AccountSettingsScreenState createState() => _AccountSettingsScreenState();
+}
+
+class _AccountSettingsScreenState extends State<AccountSettingsScreen> {
   @override
   Widget build(BuildContext context) {
-    return StandardSliverAppBarList(
-      title: 'Einstellungen',
-      bodyWidget: _AccountSettingsBody(),
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state is AuthenticationAuthenticated) {
+          setState(() {});
+        }
+        if (state is AuthenticationNotAuthenticated) {
+          setState(() {});
+        }
+      },
+      child: StandardSliverAppBarList(
+        title: 'Einstellungen',
+        bodyWidget: _AccountSettingsBody(
+          hideNavBarFunction: widget.hideNavBarFunction,
+        ),
+      ),
     );
   }
 }
 
 class _AccountSettingsBody extends StatelessWidget {
-  final routes = {
-    'personalInfo': PersonalInfoScreen(),
-    'paymentInfo': PageNotFound(),
-    'settings': AppSettingsScreen(),
-    'logout': PageNotFound(),
-  };
+  final VoidCallback hideNavBarFunction;
 
-  List<Widget> _getWidgetList({BuildContext context}) {
-    List<Widget> _optionList = List<Widget>();
-
-    for (ProfileOption profileOption in profileOptions) {
-      _optionList.add(
-        _listUi(context: context, profileOption: profileOption),
-      );
-    }
-    return _optionList;
-  }
+  _AccountSettingsBody({Key key, this.hideNavBarFunction}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -68,19 +55,72 @@ class _AccountSettingsBody extends StatelessWidget {
     );
   }
 
+  List<Widget> _getWidgetList({BuildContext context}) {
+    List<ProfileOption> profileOptions = [
+      ProfileOption(
+        optionId: 'personalInfo',
+        name: 'Meine Informationen',
+        icon: Feather.user,
+        targetScreen: PersonalInfoScreen(
+          hideNavBarFunction: hideNavBarFunction,
+        ),
+      ),
+      ProfileOption(
+        optionId: 'paymentinfo',
+        name: 'Zahlungsinformationen',
+        icon: Feather.credit_card,
+        targetScreen: PageNotFound(
+          hideNavBarFunction: hideNavBarFunction,
+        ),
+      ),
+      ProfileOption(
+        optionId: 'settings',
+        name: 'Einstellungen',
+        icon: Feather.settings,
+        targetScreen: AppSettingsScreen(
+          hideNavBarFunction: hideNavBarFunction,
+        ),
+      ),
+      ProfileOption(
+        optionId: 'logout',
+        name: 'Abmelden',
+        icon: Feather.log_out,
+      ),
+    ];
+
+    List<Widget> _optionList = List<Widget>();
+
+    for (ProfileOption profileOption in profileOptions) {
+      if (profileOption.optionId == 'logout' &&
+          !HelperService.isLoggedIn(context: context)) {
+        break;
+      }
+
+      _optionList.add(
+        _listUi(context: context, profileOption: profileOption),
+      );
+    }
+    return _optionList;
+  }
+
   Widget _listUi({BuildContext context, ProfileOption profileOption}) {
     return GestureDetector(
       onTap: () {
         if (profileOption.optionId != 'logout') {
           HelperService.pushToProtectedScreen(
             context: context,
-            navbar: false,
-            screen: routes[profileOption.optionId] ?? PageNotFound(),
+            hideNavBar: false,
+            targetScreen: profileOption.targetScreen ??
+                PageNotFound(
+                  hideNavBarFunction: hideNavBarFunction,
+                ),
             popRouteName: AccountSettingsScreen.routeName,
+            hideNavBarFunction: hideNavBarFunction,
           );
         } else {
-          BlocProvider.of<AuthenticationBloc>(context).add(UserLoggedOut());
-          Navigator.pop(context);
+          BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
+          print(ModalRoute.of(context).settings.name);
+          // Navigator.pop(context);
         }
       },
       child: Container(

@@ -51,7 +51,11 @@ class AppState extends State<App> {
       DiscoveryScreen(),
       CategoryScreen(),
       RentalItemsScreen(),
-      AccountScreen()
+      AccountScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
     ];
   }
 
@@ -70,7 +74,9 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
-      routeName: 'rootTabScreen',
+      context,
+      routeAndNavigatorSettings:
+          RouteAndNavigatorSettings(initialRoute: 'rootTabScreen'),
       controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
@@ -81,7 +87,9 @@ class AppState extends State<App> {
       stateManagement: true,
       hideNavigationBarWhenKeyboardShows: true,
       hideNavigationBar: _hideNavBar,
-      decoration: NavBarDecoration(colorBehindNavBar: Colors.indigo),
+      decoration: NavBarDecoration(
+          colorBehindNavBar: Theme.of(context).backgroundColor),
+      bottomScreenMargin: 0.0,
       popAllScreensOnTapOfSelectedTab: true,
       itemAnimationProperties: ItemAnimationProperties(
         duration: Duration(milliseconds: 400),
@@ -92,8 +100,7 @@ class AppState extends State<App> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle:
-          NavBarStyle.style5, // Choose the nav bar style with this property
+      navBarStyle: NavBarStyle.style5,
     );
   }
 }

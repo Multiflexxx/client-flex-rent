@@ -10,20 +10,26 @@ class NoAccessScreen extends StatelessWidget {
   static String routeName = 'noAccessScreen';
 
   final String popRouteName;
+  final Widget targetScreen;
+  final VoidCallback hideNavBarFunction;
 
-  NoAccessScreen({this.popRouteName});
+  const NoAccessScreen(
+      {Key key, this.popRouteName, this.targetScreen, this.hideNavBarFunction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(
-            Feather.x,
-            color: Theme.of(context).primaryColor,
-          ),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
+            icon: Icon(
+              Feather.x,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: () {
+              hideNavBarFunction();
+              Navigator.of(context).popUntil(ModalRoute.withName(popRouteName));
+            }),
         backgroundColor: Colors.transparent,
       ),
       body: Stack(
@@ -43,10 +49,13 @@ class NoAccessScreen extends StatelessWidget {
                     text: Text('Anmelden'),
                     onPressed: () {
                       Navigator.of(context).pushAndRemoveUntil(
-                        CupertinoPageRoute(
+                        MaterialPageRoute(
                           builder: (BuildContext context) {
                             return AuthenticationScreen(
-                                popRouteName: popRouteName);
+                              popRouteName: popRouteName,
+                              targetScreen: targetScreen,
+                              hideNavBarFunction: hideNavBarFunction,
+                            );
                           },
                         ),
                         ModalRoute.withName(popRouteName),

@@ -1,7 +1,6 @@
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/screens/account/offer_delete.dart';
 import 'package:flexrent/widgets/popups/alert_popup.dart';
-import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';

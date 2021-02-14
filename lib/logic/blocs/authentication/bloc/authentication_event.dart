@@ -25,4 +25,4 @@ class UserSignIn extends AuthenticationEvent {}
 
 class UserCanceld extends AuthenticationEvent {}
 
-class UserLoggedOut extends AuthenticationEvent {}
+class UserSignOut extends AuthenticationEvent {}

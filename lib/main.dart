@@ -3,8 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/app.dart';
 import 'package:flexrent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:flexrent/logic/blocs/user/bloc/user_bloc.dart';
-import 'package:flexrent/screens/authentication/login/login.dart';
-import 'package:flexrent/screens/authentication/registration/register.dart';
 
 import 'logic/services/services.dart';
 

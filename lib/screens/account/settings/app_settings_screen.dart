@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class AppSettingsScreen extends StatelessWidget {
+  final VoidCallback hideNavBarFunction;
+
+  const AppSettingsScreen({Key key, this.hideNavBarFunction}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
@@ -18,7 +22,6 @@ class _AppSettingsBody extends StatefulWidget {
 }
 
 class _AppSettingsBodyState extends State<_AppSettingsBody> {
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -32,9 +35,7 @@ class _AppSettingsBodyState extends State<_AppSettingsBody> {
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Nothing to show yet")
-            ],
+            children: [Text("Nothing to show yet")],
           ),
         ],
       ),
