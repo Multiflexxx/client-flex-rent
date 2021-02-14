@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:filesize/filesize.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/authentication/no_access_screen.dart';
@@ -12,8 +11,6 @@ class HelperService {
   static Future<File> compressFile(File file) async {
     final String filePath = file.absolute.path;
 
-    print(filePath);
-
     final lastIndex = filePath.lastIndexOf(new RegExp(r'.jp'));
     final splitted = filePath.substring(0, (lastIndex));
     final outPath = "${splitted}_out${filePath.substring(lastIndex)}";
@@ -22,9 +19,6 @@ class HelperService {
       outPath,
       quality: 25,
     );
-
-    print(filesize(file.lengthSync()));
-    print(filesize(result.lengthSync()));
 
     return result;
   }

@@ -219,7 +219,9 @@ class _AccountScreenState extends State<AccountScreen> {
                       context,
                       screen: AuthenticationScreen(
                         popRouteName: AccountScreen.routeName,
-                        targetScreen: AccountScreen(),
+                        targetScreen: AccountScreen(
+                          hideNavBarFunction: widget.hideNavBarFunction,
+                        ),
                         hideNavBarFunction: widget.hideNavBarFunction,
                       ),
                       pageTransitionAnimation: PageTransitionAnimation.scale,

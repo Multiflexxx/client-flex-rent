@@ -30,15 +30,6 @@ class ApiRegisterService extends RegisterService {
       ),
     );
 
-    print(jsonEncode(
-      <String, dynamic>{
-        'user': user.toJson(),
-        'sign_in_method': signInOption,
-      },
-    ));
-
-    inspect(response);
-
     final Map<String, dynamic> jsonBody = json.decode(response.body);
 
     if (response.statusCode == 200) {

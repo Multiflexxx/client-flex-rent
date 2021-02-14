@@ -119,8 +119,6 @@ class _AccountSettingsBody extends StatelessWidget {
           );
         } else {
           BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
-          print(ModalRoute.of(context).settings.name);
-          // Navigator.pop(context);
         }
       },
       child: Container(
