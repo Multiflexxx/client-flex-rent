@@ -49,7 +49,11 @@ class AppState extends State<App> {
   List<Widget> _buildScreens() {
     return [
       DiscoveryScreen(),
-      CategoryScreen(),
+      CategoryScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
       RentalItemsRootScreen(hideNavBarFunction: () {
         setState(() {
           _hideNavBar = !_hideNavBar;
@@ -92,11 +96,13 @@ class AppState extends State<App> {
       hideNavigationBarWhenKeyboardShows: true,
       hideNavigationBar: _hideNavBar,
       decoration: NavBarDecoration(
-          colorBehindNavBar: Theme.of(context).backgroundColor),
-      bottomScreenMargin: 0.0,
-      popAllScreensOnTapOfSelectedTab: true,
+        colorBehindNavBar: Colors.transparent,
+      ),
+      bottomScreenMargin: 56,
+      popActionScreens: PopActionScreensType.all,
+      popAllScreensOnTapOfSelectedTab: false,
       itemAnimationProperties: ItemAnimationProperties(
-        duration: Duration(milliseconds: 400),
+        duration: Duration(milliseconds: 100),
         curve: Curves.ease,
       ),
       screenTransitionAnimation: ScreenTransitionAnimation(

@@ -14,6 +14,11 @@ import 'package:flexrent/widgets/offer/offer_card.dart';
 import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 
 class OverviewPaymentScreen extends StatelessWidget {
+  static String routeName = 'overviewPaymentScreen';
+
+  // Not necessary!
+  // final VoidCallback hideNavBarFunction;
+
   final Offer offer;
   final DateRange dateRange;
 

@@ -61,7 +61,7 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
           context,
           CupertinoPageRoute(
             builder: (BuildContext context) =>
-                ProductListScreen(category: category),
+                OfferListScreen(category: category),
           )),
       child: Container(
         height: 40.0,

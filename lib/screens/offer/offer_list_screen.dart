@@ -8,43 +8,54 @@ import 'package:flexrent/screens/offer/offer_screen.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 import 'package:flexrent/widgets/offer/offer_card.dart';
 
-class ProductListScreen extends StatelessWidget {
-  final Category category;
+class OfferListScreen extends StatelessWidget {
+  static final routeName = 'offerListScreen';
 
-  ProductListScreen({this.category});
+  final Category category;
+  final VoidCallback hideNavBarFunction;
+
+  const OfferListScreen({Key key, this.category, this.hideNavBarFunction})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
       title: category.name,
-      bodyWidget: ProductListBody(
+      bodyWidget: OfferListBody(
         category: category,
+        hideNavBarFunction: hideNavBarFunction,
       ),
     );
   }
 }
 
-class ProductListBody extends StatefulWidget {
+class OfferListBody extends StatefulWidget {
   final Category category;
+  final VoidCallback hideNavBarFunction;
 
-  ProductListBody({this.category});
+  const OfferListBody({Key key, this.category, this.hideNavBarFunction})
+      : super(key: key);
 
   @override
-  _ProductListBodyState createState() => _ProductListBodyState();
+  _OfferListBodyState createState() => _OfferListBodyState();
 }
 
-class _ProductListBodyState extends State<ProductListBody> {
+class _OfferListBodyState extends State<OfferListBody> {
   Future<List<Offer>> offerList;
   User user;
 
   @override
   initState() {
     super.initState();
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
-    user = state.user;
+    final state = BlocProvider.of<AuthenticationBloc>(context).state;
+    if (state != null) {
+      user = state.user;
+    }
+
+    // TODO: change static postcode
     offerList = ApiOfferService().getAllOffers(
-        postCode: user.postCode, category: widget.category.categoryId);
+        postCode: user != null ? user.postCode : '68165',
+        category: widget.category.categoryId);
   }
 
   List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {
@@ -52,13 +63,17 @@ class _ProductListBodyState extends State<ProductListBody> {
     for (Offer offer in offerList) {
       _offerList.add(
         GestureDetector(
-          onTap: () => pushNewScreen(
+          onTap: () => pushNewScreenWithRouteSettings(
             context,
             screen: OfferScreen(
               offer: offer,
               heroTag: offer.offerId + offer.category.name,
+              hideNavBarFunction: widget.hideNavBarFunction,
             ),
             withNavBar: false,
+            settings: RouteSettings(
+              name: OfferScreen.routeName,
+            ),
           ),
           child: OfferCard(offer: offer, heroTag: offer.category.name),
         ),

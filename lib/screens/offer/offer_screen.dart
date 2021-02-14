@@ -1,6 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/services/helper_service.dart';
 import 'package:flexrent/screens/booking/confirmation_payment_screen.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
@@ -23,10 +24,15 @@ import 'package:syncfusion_flutter_datepicker/datepicker.dart' as _picker;
 import 'offer_picture_detail_view.dart';
 
 class OfferScreen extends StatefulWidget {
+  static final routeName = 'offerScreen';
+
   final Offer offer;
   final String heroTag;
+  final VoidCallback hideNavBarFunction;
 
-  OfferScreen({this.offer, this.heroTag});
+  const OfferScreen(
+      {Key key, this.offer, this.heroTag, this.hideNavBarFunction})
+      : super(key: key);
 
   @override
   _OfferScreenState createState() => _OfferScreenState();
@@ -62,13 +68,14 @@ class _OfferScreenState extends State<OfferScreen> {
   }
 
   void _onReservation(Offer offer) {
-    Navigator.push(
-      context,
-      new CupertinoPageRoute(
-        builder: (BuildContext context) => new OverviewPaymentScreen(
-          offer: offer,
-          dateRange: _dateRange,
-        ),
+    HelperService.pushToProtectedScreen(
+      context: context,
+      hideNavBar: false,
+      hideNavBarFunction: widget.hideNavBarFunction,
+      popRouteName: OfferScreen.routeName,
+      targetScreen: OverviewPaymentScreen(
+        offer: offer,
+        dateRange: _dateRange,
       ),
     );
   }
