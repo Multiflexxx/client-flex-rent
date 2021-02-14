@@ -131,7 +131,9 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        SearchBar(),
+                        SearchBar(
+                          hideNavBarFunction: widget.hideNavBarFunction,
+                        ),
                         Padding(
                           padding: EdgeInsets.only(top: 20.0, left: 20.0),
                           child: Text(

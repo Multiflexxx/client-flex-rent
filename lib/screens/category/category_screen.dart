@@ -37,7 +37,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
         child: Column(
           children: <Widget>[
             Container(
-              child: SearchBar(),
+              child: SearchBar(
+                hideNavBarFunction: widget.hideNavBarFunction,
+              ),
             ),
             Expanded(
               child: Container(

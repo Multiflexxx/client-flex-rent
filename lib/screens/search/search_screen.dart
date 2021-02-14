@@ -11,6 +11,12 @@ import 'package:flexrent/widgets/offer/offer_card.dart';
 import '../../logic/models/models.dart';
 
 class SearchScreen extends StatefulWidget {
+  static String routeName = 'searchScreen';
+
+  final VoidCallback hideNavBarFunction;
+
+  const SearchScreen({Key key, this.hideNavBarFunction}) : super(key: key);
+
   @override
   _SearchScreenState createState() => _SearchScreenState();
 }
@@ -25,9 +31,10 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
-    user = state.user;
+    final state = BlocProvider.of<AuthenticationBloc>(context).state;
+    if (state != null) {
+      user = state.user;
+    }
     getSuggestions();
   }
 
@@ -44,8 +51,10 @@ class _SearchScreenState extends State<SearchScreen> {
 
   void initiateSearch(String query) {
     if (query.length > 2) {
-      _searchOfferList = ApiOfferService()
-          .getAllOffers(postCode: user.postCode, search: query, limit: 3);
+      _searchOfferList = ApiOfferService().getAllOffers(
+          postCode: user != null ? user.postCode : '68165',
+          search: query,
+          limit: 3);
       ApiOfferService().setSuggestion(query: query);
     }
   }
@@ -143,13 +152,17 @@ class _SearchScreenState extends State<SearchScreen> {
                               itemBuilder: (context, index) {
                                 Offer offer = snapshot.data[index];
                                 return GestureDetector(
-                                  onTap: () => pushNewScreen(
+                                  onTap: () => pushNewScreenWithRouteSettings(
                                     context,
                                     screen: OfferScreen(
                                       offer: offer,
                                       heroTag: offer.offerId + 'search',
+                                      hideNavBarFunction:
+                                          widget.hideNavBarFunction,
                                     ),
                                     withNavBar: false,
+                                    settings: RouteSettings(
+                                        name: OfferScreen.routeName),
                                   ),
                                   child: OfferCard(
                                       offer: offer, heroTag: 'search'),
