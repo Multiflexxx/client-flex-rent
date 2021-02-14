@@ -1,17 +1,27 @@
+import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/slideIns/slide_bar.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DelteModal extends StatelessWidget {
   final Offer offer;
+  final VoidCallback updateParentFunction;
 
-  DelteModal({this.offer});
+  const DelteModal({Key key, this.offer, this.updateParentFunction})
+      : super(key: key);
 
   deleteOffer({BuildContext context}) async {
-    Offer offer = await ApiOfferService().deleteOffer(offer: this.offer);
-    Navigator.pop(context, offer);
+    try {
+      Offer offer = await ApiOfferService().deleteOffer(offer: this.offer);
+      updateParentFunction();
+      Navigator.pop(context, offer);
+    } on OfferException catch (e) {
+      showFlushbar(context: context, message: e.message);
+      Navigator.pop(context);
+    }
   }
 
   @override

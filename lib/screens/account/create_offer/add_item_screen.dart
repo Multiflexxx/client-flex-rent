@@ -1,4 +1,6 @@
 import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/screens/account/account_screen.dart';
+import 'package:flexrent/screens/account/update_offer/update_offer_screen.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,16 +15,26 @@ import 'package:flexrent/widgets/styles/formfield_styled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class AddItemScreen extends StatelessWidget {
+  final VoidCallback updateParentFunction;
+
+  const AddItemScreen({Key key, this.updateParentFunction}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
       title: 'Produkt einstellen',
-      bodyWidget: _AddItemBody(),
+      bodyWidget: _AddItemBody(
+        updateParentFunction: updateParentFunction,
+      ),
     );
   }
 }
 
 class _AddItemBody extends StatefulWidget {
+  final VoidCallback updateParentFunction;
+
+  const _AddItemBody({Key key, this.updateParentFunction}) : super(key: key);
+
   @override
   _AddItemBodyState createState() => _AddItemBodyState();
 }
@@ -77,7 +89,17 @@ class _AddItemBodyState extends State<_AddItemBody> {
       try {
         Offer backendOffer =
             await ApiOfferService().createOffer(newOffer: offer);
-        Navigator.pop(context, backendOffer);
+        widget.updateParentFunction();
+        Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(
+            builder: (BuildContext context) {
+              return UpdateOfferScreen(
+                offer: backendOffer,
+              );
+            },
+          ),
+          ModalRoute.withName(AccountScreen.routeName),
+        );
       } on OfferException catch (e) {
         showFlushbar(context: context, message: e.message);
       }

@@ -33,25 +33,18 @@ class _MyItemsState extends State<MyItems> {
     }
   }
 
-  // DONT DELETE
-  // void _addItem() async {
-  //   final offer = await pushNewScreen(
-  //     context,
-  //     screen: AddItemScreen(),
-  //     withNavBar: false,
-  //   );
-  //   if (offer != null) {
-  //     _goToEditOfferView(offer: offer);
-  //   }
-  // }
-
-  void _goToEditOfferView({Offer offer}) async {
-    await pushNewScreen(
+  void _goToEditOfferView({Offer offer}) {
+    pushNewScreenWithRouteSettings(
       context,
       screen: UpdateOfferScreen(
         offer: offer,
+        updateParentFunction: _updateOfferList,
       ),
+      settings: RouteSettings(name: UpdateOfferScreen.routeName),
     );
+  }
+
+  void _updateOfferList() {
     setState(() {
       offerList = ApiOfferService().getOfferbyUser();
     });
@@ -61,12 +54,8 @@ class _MyItemsState extends State<MyItems> {
   Widget build(BuildContext context) {
     return BlocListener<AuthenticationBloc, AuthenticationState>(
       listener: (context, state) {
-        if (state is AuthenticationAuthenticated) {
-          setState(() {
-            offerList = ApiOfferService().getOfferbyUser();
-          });
-        }
-        if (state is AuthenticationNotAuthenticated) {
+        if (state is AuthenticationAuthenticated ||
+            state is AuthenticationNotAuthenticated) {
           setState(() {
             offerList = ApiOfferService().getOfferbyUser();
           });
@@ -128,13 +117,16 @@ class _MyItemsState extends State<MyItems> {
           ),
           FlatButton(
             color: Theme.of(context).backgroundColor,
-            onPressed: () => HelperService.pushToProtectedScreen(
-              context: context,
-              targetScreen: AddItemScreen(),
-              popRouteName: AccountScreen.routeName,
-              hideNavBar: false,
-              hideNavBarFunction: widget.hideNavBarFunction,
-            ),
+            onPressed: () {
+              HelperService.pushToProtectedScreen(
+                context: context,
+                targetScreen:
+                    AddItemScreen(updateParentFunction: _updateOfferList),
+                popRouteName: AccountScreen.routeName,
+                hideNavBar: false,
+                hideNavBarFunction: widget.hideNavBarFunction,
+              );
+            },
             child: Text(
               '+',
               style: TextStyle(

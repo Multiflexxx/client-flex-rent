@@ -18,8 +18,9 @@ import 'package:flexrent/widgets/styles/formfield_styled.dart';
 
 class UpdateOfferBody extends StatefulWidget {
   final Offer offer;
+  final VoidCallback updateParentFunction;
 
-  UpdateOfferBody({this.offer});
+  UpdateOfferBody({this.offer, this.updateParentFunction});
 
   @override
   _UpdateOfferBodyState createState() => _UpdateOfferBodyState();
@@ -89,7 +90,7 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
         _offer = offer;
         initFormValues();
       });
-
+      widget.updateParentFunction();
       showFlushbar(context: context, message: 'Erfoglreich bearbeitet!');
     } on OfferException catch (e) {
       showFlushbar(context: context, message: e.message);
