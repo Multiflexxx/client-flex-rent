@@ -1,4 +1,3 @@
-import 'package:flexrent/screens/account/account_screen.dart';
 import 'package:flexrent/screens/authentication/authentication_screen.dart';
 import 'package:flexrent/screens/rentalItems/rental_items_root_screen.dart';
 import 'package:flexrent/widgets/background/logo.dart';

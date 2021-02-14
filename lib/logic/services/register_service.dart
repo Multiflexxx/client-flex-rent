@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:core';
-import 'dart:developer';
 import 'package:flexrent/logic/config/config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
