@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flexrent/screens/search/search_screen.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class SearchBar extends StatefulWidget {
+  final VoidCallback hideNavBarFunction;
+
+  const SearchBar({Key key, this.hideNavBarFunction}) : super(key: key);
+
   @override
   _SearchBarState createState() => _SearchBarState();
 }
@@ -19,10 +24,12 @@ class _SearchBarState extends State<SearchBar> {
           letterSpacing: 1.2,
         ),
         onTap: () {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => SearchScreen(),
+          pushNewScreenWithRouteSettings(
+            context,
+            screen: SearchScreen(
+              hideNavBarFunction: widget.hideNavBarFunction,
             ),
+            settings: RouteSettings(name: SearchScreen.routeName),
           );
         },
         decoration: InputDecoration(

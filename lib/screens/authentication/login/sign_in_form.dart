@@ -61,7 +61,7 @@ class _SignInFormState extends State<SignInForm> {
                         if (value.isEmpty) {
                           return 'Email ist notwendig';
                         } else if (!RegExp(
-                            r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
+                                r"(^([a-zA-Z0-9_\-\.]+)@([a-zA-Z0-9_\-\.]+)\.([a-zA-Z]{2,5})$)")
                             .hasMatch(value)) {
                           return 'Bitte gebe eine gültige E-Mail Adresse ein';
                         }
@@ -164,9 +164,10 @@ class _SignInFormState extends State<SignInForm> {
                                 fontWeight: FontWeight.bold,
                                 color: Theme.of(context).primaryColor),
                             recognizer: TapGestureRecognizer()
-                              ..onTap = () =>
-                                  BlocProvider.of<AuthenticationBloc>(context)
-                                      .add(UserSignUp()),
+                              ..onTap = () {
+                                BlocProvider.of<AuthenticationBloc>(context)
+                                    .add(UserSignUp());
+                              },
                           ),
                         ],
                       ),

@@ -81,7 +81,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Stream<RegisterState> _mapRegisterWithFacebookToState(
       RegisterWithFacebook event) async* {
-    print('test');
     User facebookUser = await _facebookService.signUp();
     if (facebookUser != null) {
       yield RegisterPhoneLoading(

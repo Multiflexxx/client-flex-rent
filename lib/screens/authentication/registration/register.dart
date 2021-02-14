@@ -8,6 +8,7 @@ import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/blocs/register/register.dart';
 import 'package:flexrent/screens/authentication/registration/personal_form.dart';
 import 'package:flexrent/widgets/background/logo.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class RegisterScreen extends StatelessWidget {
   @override
@@ -18,6 +19,17 @@ class RegisterScreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Feather.x,
+              color: Theme.of(context).primaryColor,
+            ),
+            onPressed: () =>
+                BlocProvider.of<AuthenticationBloc>(context).add(UserCanceld()),
+          ),
+          backgroundColor: Colors.transparent,
+        ),
         body: Stack(children: <Widget>[
           Background(top: 30),
           SafeArea(

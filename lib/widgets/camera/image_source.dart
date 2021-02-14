@@ -1,7 +1,6 @@
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:flexrent/widgets/slideIns/slide_bar.dart';
 
 class ImageSourcePicker extends StatelessWidget {
   final ScrollController scrollController;

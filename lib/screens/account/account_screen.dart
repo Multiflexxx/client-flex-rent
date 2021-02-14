@@ -2,18 +2,25 @@ import 'dart:async';
 
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/services/helper_service.dart';
+import 'package:flexrent/screens/authentication/authentication_screen.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
-import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/account/my_items.dart';
 import 'package:flexrent/screens/account/settings/account_settings_screen.dart';
 
 class AccountScreen extends StatefulWidget {
-  const AccountScreen({Key key}) : super(key: key);
+  static String routeName = 'rootTabScreen';
+
+  final VoidCallback hideNavBarFunction;
+
+  AccountScreen({this.hideNavBarFunction});
 
   @override
   _AccountScreenState createState() => _AccountScreenState();
@@ -21,30 +28,66 @@ class AccountScreen extends StatefulWidget {
 
 class _AccountScreenState extends State<AccountScreen> {
   User _user;
-  Timer timer;
+  Timer _timer;
 
   @override
   void initState() {
     super.initState();
     _fetchUser();
-    timer = Timer.periodic(Duration(seconds: 3), (Timer t) => _fetchUser());
+    // _timer = Timer.periodic(Duration(seconds: 3), (Timer t) => _fetchUser());
   }
 
   void _fetchUser() {
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
     setState(() {
-      _user = state.user;
+      _user = HelperService.getUser(context: context);
     });
   }
 
   @override
   void dispose() {
-    timer?.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
-  Widget userCard({name, city, verified}) {
+  @override
+  Widget build(BuildContext context) {
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state is AuthenticationAuthenticated) {
+          setState(() {
+            _user = state.user;
+          });
+        }
+        if (state is AuthenticationNotAuthenticated) {
+          setState(() {
+            _user = null;
+          });
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: <Widget>[
+              _user != null
+                  ? userCard(user: _user)
+                  : loggedOutUserCard(context: context),
+              Divider(
+                height: 20.0,
+                color: Theme.of(context).accentColor,
+              ),
+              Expanded(
+                child: MyItems(
+                  hideNavBarFunction: widget.hideNavBarFunction,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget userCard({User user}) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
@@ -94,7 +137,7 @@ class _AccountScreenState extends State<AccountScreen> {
                     Flexible(
                       flex: 2,
                       child: AutoSizeText(
-                        name,
+                        _buildName(),
                         style: TextStyle(
                           color: Theme.of(context).accentColor,
                           fontSize: 20.0,
@@ -105,7 +148,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         overflow: TextOverflow.ellipsis,
                       ),
                     ),
-                    verified
+                    _user.verified
                         ? Flexible(
                             flex: 1,
                             child: Icon(
@@ -117,7 +160,7 @@ class _AccountScreenState extends State<AccountScreen> {
                   ],
                 ),
                 Text(
-                  '$city',
+                  _user.city,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 16.0,
@@ -129,47 +172,102 @@ class _AccountScreenState extends State<AccountScreen> {
             ),
           ),
         ),
-        Expanded(
-          flex: 3,
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Center(
-              child: IconButton(
-                icon: Icon(
-                  Feather.settings,
-                  color: Theme.of(context).primaryColor,
-                ),
-                onPressed: () {
-                  pushNewScreen(context,
-                      screen: AccountSettingsScreen(), withNavBar: true);
-                },
-              ),
-            ),
-          ),
-        ),
+        _buildSettingsIcon(),
       ],
     );
   }
 
-  @override
-  Widget build(BuildContext context) {
-    String _name = '${_user.firstName} ${_user.lastName}';
+  Widget loggedOutUserCard({BuildContext context}) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: <Widget>[
+        Expanded(
+          flex: 9,
+          child: Padding(
+            padding: const EdgeInsets.only(left: 10.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Flexible(
+                      flex: 2,
+                      child: AutoSizeText(
+                        'Mein Kundenkonto',
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 20.0,
+                          letterSpacing: 1.2,
+                        ),
+                        maxLines: 2,
+                        minFontSize: 16.0,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 5,
+                ),
+                TransparentButton(
+                  text: Text('Anmelden'),
+                  onPressed: () {
+                    widget.hideNavBarFunction();
+                    pushNewScreen(
+                      context,
+                      screen: AuthenticationScreen(
+                        popRouteName: AccountScreen.routeName,
+                        targetScreen: AccountScreen(
+                          hideNavBarFunction: widget.hideNavBarFunction,
+                        ),
+                        hideNavBarFunction: widget.hideNavBarFunction,
+                      ),
+                      pageTransitionAnimation: PageTransitionAnimation.scale,
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+        _buildSettingsIcon()
+      ],
+    );
+  }
 
-    return Scaffold(
-      body: SafeArea(
-        child: Column(
-          children: <Widget>[
-            userCard(name: _name, city: _user.city, verified: _user.verified),
-            Divider(
-              height: 20.0,
-              color: Theme.of(context).accentColor,
+  Widget _buildSettingsIcon() {
+    return Expanded(
+      flex: 3,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Center(
+          child: IconButton(
+            icon: Icon(
+              Feather.settings,
+              color: Theme.of(context).primaryColor,
             ),
-            Expanded(
-              child: MyItems(),
-            ),
-          ],
+            onPressed: () {
+              pushNewScreenWithRouteSettings(
+                context,
+                screen: AccountSettingsScreen(
+                  hideNavBarFunction: widget.hideNavBarFunction,
+                ),
+                withNavBar: true,
+                settings: RouteSettings(name: AccountSettingsScreen.routeName),
+              );
+            },
+          ),
         ),
       ),
     );
+  }
+
+  String _buildName() {
+    if (_user != null) {
+      return _user.firstName + ' ' + _user.lastName;
+    }
+    return '';
   }
 }

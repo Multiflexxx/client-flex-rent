@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class Background extends StatelessWidget {
- final double top;
- final double left;
+  final double top;
+  final double left;
   Background({this.top, this.left});
 
   @override
@@ -12,11 +12,10 @@ class Background extends StatelessWidget {
     return Positioned(
       top: top ?? 10,
       left: left ?? 1,
-          child: Container(
+      child: Container(
         child: Align(
             alignment: Alignment.topCenter,
             child: Container(
-              
                 margin: EdgeInsets.fromLTRB(0, 90, 0, 0),
                 height: 400,
                 width: 400,

@@ -33,7 +33,7 @@ dependencies:
   flutter_icons: ^1.1.0
   intl: ^0.16.1
   modal_bottom_sheet: ^0.2.0+1
-  persistent_bottom_nav_bar: ^2.0.5
+  persistent_bottom_nav_bar: ^3.1.0
   syncfusion_flutter_calendar: ^18.3.44
   syncfusion_flutter_datepicker: ^18.3.38-beta
   flutter_barcode_scanner: ^1.0.1

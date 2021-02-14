@@ -1,7 +1,6 @@
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/screens/account/offer_delete.dart';
 import 'package:flexrent/widgets/popups/alert_popup.dart';
-import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -10,37 +9,40 @@ import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class UpdateOfferScreen extends StatelessWidget {
-  final Offer offer;
+  static String routeName = 'updateOfferScreen';
 
-  UpdateOfferScreen({this.offer});
+  final Offer offer;
+  final VoidCallback updateParentFunction;
+
+  UpdateOfferScreen({this.offer, this.updateParentFunction});
 
   deleteOffer({BuildContext context}) async {
     Offer offer = await ApiOfferService().deleteOffer(offer: this.offer);
     Navigator.pop(context, offer);
   }
 
-  _showDeleteDialog({BuildContext context}) async {
-    Offer offer = await showDialog(
-      context: context,
-      barrierDismissible: false,
-      builder: (BuildContext context) {
-        return AlertPopup(
-          title: "Produkt löschen",
-          message:
-              "Bist du sicher, dass du dieses Produkt löschen willst? Diese Aktion kann nicht rückgängig gemacht werden.",
-          goon: () {
-            deleteOffer(context: context);
-          },
-        );
-      },
-    );
+  // _showDeleteDialog({BuildContext context}) async {
+  //   Offer offer = await showDialog(
+  //     context: context,
+  //     barrierDismissible: false,
+  //     builder: (BuildContext context) {
+  //       return AlertPopup(
+  //         title: "Produkt löschen",
+  //         message:
+  //             "Bist du sicher, dass du dieses Produkt löschen willst? Diese Aktion kann nicht rückgängig gemacht werden.",
+  //         goon: () {
+  //           deleteOffer(context: context);
+  //         },
+  //       );
+  //     },
+  //   );
 
-    if (offer != null) {
-      Navigator.of(context)..pop()..pop('reload');
-    } else {
-      Navigator.pop(context);
-    }
-  }
+  //   if (offer != null) {
+  //     Navigator.of(context)..pop()..pop('reload');
+  //   } else {
+  //     Navigator.pop(context);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +58,7 @@ class UpdateOfferScreen extends StatelessWidget {
               barrierColor: Colors.black45,
               builder: (context, scrollController) => DelteModal(
                 offer: this.offer,
+                updateParentFunction: updateParentFunction,
               ),
             );
             if (response != null) {
@@ -104,6 +107,7 @@ class UpdateOfferScreen extends StatelessWidget {
       ],
       bodyWidget: UpdateOfferBody(
         offer: offer,
+        updateParentFunction: updateParentFunction,
       ),
     );
   }

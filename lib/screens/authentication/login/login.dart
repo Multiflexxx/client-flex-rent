@@ -5,6 +5,7 @@ import 'package:flexrent/logic/blocs/login/login.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/authentication/login/sign_in_form.dart';
 import 'package:flexrent/widgets/background/logo.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class LoginScreen extends StatelessWidget {
   @override
@@ -15,43 +16,56 @@ class LoginScreen extends StatelessWidget {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-        body: Stack(children: <Widget>[
-          Background(top: 30),
-          SafeArea(
-            minimum: const EdgeInsets.all(16),
-            child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-              builder: (context, state) {
-                if (state is AuthenticationNotAuthenticated ||
-                    state is AuthenticationSignIn) {
-                  return _AuthForm();
-                }
-                if (state is AuthenticationFailure) {
-                  return Center(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(state.message),
-                      FlatButton(
-                        textColor: Theme.of(context).accentColor,
-                        child: Text('Retry'),
-                        onPressed: () {
-                          BlocProvider.of<AuthenticationBloc>(context)
-                              .add(AppLoaded());
-                        },
-                      )
-                    ],
-                  ));
-                }
-                return Center(
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
-                );
-              },
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(
+              Feather.x,
+              color: Theme.of(context).primaryColor,
             ),
+            onPressed: () =>
+                BlocProvider.of<AuthenticationBloc>(context).add(UserCanceld()),
           ),
-        ]),
+          backgroundColor: Colors.transparent,
+        ),
+        body: Stack(
+          children: <Widget>[
+            Background(top: 30),
+            SafeArea(
+              minimum: const EdgeInsets.all(16),
+              child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+                builder: (context, state) {
+                  if (state is AuthenticationNotAuthenticated ||
+                      state is AuthenticationSignIn) {
+                    return _AuthForm();
+                  }
+                  if (state is AuthenticationFailure) {
+                    return Center(
+                        child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(state.message),
+                        FlatButton(
+                          textColor: Theme.of(context).accentColor,
+                          child: Text('Retry'),
+                          onPressed: () {
+                            BlocProvider.of<AuthenticationBloc>(context)
+                                .add(AppLoaded());
+                          },
+                        )
+                      ],
+                    ));
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

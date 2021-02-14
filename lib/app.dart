@@ -1,4 +1,4 @@
-import 'package:flexrent/screens/rentalItems/rental_items_screen.dart';
+import 'package:flexrent/screens/rentalItems/rental_items_root_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -48,10 +48,26 @@ class AppState extends State<App> {
 
   List<Widget> _buildScreens() {
     return [
-      DiscoveryScreen(),
-      CategoryScreen(),
-      RentalItemsScreen(),
-      AccountScreen()
+      DiscoveryScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
+      CategoryScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
+      RentalItemsRootScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
+      AccountScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
     ];
   }
 
@@ -70,6 +86,9 @@ class AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     return PersistentTabView(
+      context,
+      routeAndNavigatorSettings:
+          RouteAndNavigatorSettings(initialRoute: 'rootTabScreen'),
       controller: controller,
       screens: _buildScreens(),
       items: _navBarsItems(),
@@ -80,10 +99,14 @@ class AppState extends State<App> {
       stateManagement: true,
       hideNavigationBarWhenKeyboardShows: true,
       hideNavigationBar: _hideNavBar,
-      decoration: NavBarDecoration(colorBehindNavBar: Colors.indigo),
-      popAllScreensOnTapOfSelectedTab: true,
+      decoration: NavBarDecoration(
+        colorBehindNavBar: Colors.transparent,
+      ),
+      bottomScreenMargin: 56,
+      popActionScreens: PopActionScreensType.all,
+      popAllScreensOnTapOfSelectedTab: false,
       itemAnimationProperties: ItemAnimationProperties(
-        duration: Duration(milliseconds: 400),
+        duration: Duration(milliseconds: 100),
         curve: Curves.ease,
       ),
       screenTransitionAnimation: ScreenTransitionAnimation(
@@ -91,8 +114,7 @@ class AppState extends State<App> {
         curve: Curves.ease,
         duration: Duration(milliseconds: 200),
       ),
-      navBarStyle:
-          NavBarStyle.style5, // Choose the nav bar style with this property
+      navBarStyle: NavBarStyle.style5,
     );
   }
 }

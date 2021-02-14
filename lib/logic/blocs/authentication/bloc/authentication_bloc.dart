@@ -45,7 +45,11 @@ class AuthenticationBloc
       yield* _mapUserSignInToState(event);
     }
 
-    if (event is UserLoggedOut) {
+    if (event is UserCanceld) {
+      yield* _mapUserCanceldToState(event);
+    }
+
+    if (event is UserSignOut) {
       yield* _mapUserLoggedOutToState(event);
     }
   }
@@ -80,8 +84,12 @@ class AuthenticationBloc
     yield AuthenticationSignIn();
   }
 
+  Stream<AuthenticationState> _mapUserCanceldToState(UserCanceld evnt) async* {
+    yield AuthenticationCanceld();
+  }
+
   Stream<AuthenticationState> _mapUserLoggedOutToState(
-      UserLoggedOut event) async* {
+      UserSignOut event) async* {
     _googleService.signOut();
     await _authenticationService.signOut();
     yield AuthenticationNotAuthenticated();

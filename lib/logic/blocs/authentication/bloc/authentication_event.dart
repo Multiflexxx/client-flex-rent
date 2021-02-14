@@ -23,4 +23,6 @@ class UserSignUp extends AuthenticationEvent {}
 
 class UserSignIn extends AuthenticationEvent {}
 
-class UserLoggedOut extends AuthenticationEvent {}
+class UserCanceld extends AuthenticationEvent {}
+
+class UserSignOut extends AuthenticationEvent {}

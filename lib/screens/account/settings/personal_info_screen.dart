@@ -22,6 +22,11 @@ import 'package:flexrent/widgets/styles/formfield_styled.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
 class PersonalInfoScreen extends StatelessWidget {
+  final VoidCallback hideNavBarFunction;
+
+  const PersonalInfoScreen({Key key, this.hideNavBarFunction})
+      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
