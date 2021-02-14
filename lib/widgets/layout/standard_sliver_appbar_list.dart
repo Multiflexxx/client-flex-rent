@@ -5,8 +5,10 @@ class StandardSliverAppBarList extends StatelessWidget {
   final String title;
   final Widget bodyWidget;
   final List<Widget> actions;
+  final Widget leading;
 
-  StandardSliverAppBarList({this.title, this.bodyWidget, this.actions});
+  StandardSliverAppBarList(
+      {this.title, this.bodyWidget, this.actions, this.leading});
 
   @override
   Widget build(BuildContext context) {
@@ -26,12 +28,13 @@ class StandardSliverAppBarList extends StatelessWidget {
               },
               floating: false,
               pinned: true,
-              leading: IconButton(
-                icon: Icon(Feather.arrow_left),
-                iconSize: 30.0,
-                color: Theme.of(context).primaryColor,
-                onPressed: () => Navigator.pop(context),
-              ),
+              leading: leading ??
+                  IconButton(
+                    icon: Icon(Feather.arrow_left),
+                    iconSize: 30.0,
+                    color: Theme.of(context).primaryColor,
+                    onPressed: () => Navigator.pop(context),
+                  ),
               actions: actions,
               expandedHeight: 0.3 * MediaQuery.of(context).size.height,
               backgroundColor: Theme.of(context).backgroundColor,

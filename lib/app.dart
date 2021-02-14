@@ -1,4 +1,4 @@
-import 'package:flexrent/screens/rentalItems/rental_items_screen.dart';
+import 'package:flexrent/screens/rentalItems/rental_items_root_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -50,7 +50,11 @@ class AppState extends State<App> {
     return [
       DiscoveryScreen(),
       CategoryScreen(),
-      RentalItemsScreen(),
+      RentalItemsRootScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
       AccountScreen(hideNavBarFunction: () {
         setState(() {
           _hideNavBar = !_hideNavBar;

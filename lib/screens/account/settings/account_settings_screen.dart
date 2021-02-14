@@ -119,6 +119,8 @@ class _AccountSettingsBody extends StatelessWidget {
           );
         } else {
           BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
+          // TODO: Nice load indicator missing
+          // Navigator.of(context).pop();
         }
       },
       child: Container(
