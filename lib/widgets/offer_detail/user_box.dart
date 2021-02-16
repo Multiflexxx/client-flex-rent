@@ -133,7 +133,7 @@ class UserBox extends StatelessWidget {
               height: 20.0,
             ),
             PurpleButton(
-              text: Text('Vermieter eine Nachricht schicken'),
+              text: Text('Mehr Informatioenen'),
               onPressed: () => print('kontaktieren'),
             ),           
           ],
