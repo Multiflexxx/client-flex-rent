@@ -3,7 +3,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
 import 'package:flexrent/screens/booking/confirmation_payment_screen.dart';
-import 'package:flexrent/widgets/offer_detail/User_rating_box.dart';
+import 'package:flexrent/widgets/offer_detail/user_rating_box.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

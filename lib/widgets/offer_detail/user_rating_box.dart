@@ -1,10 +1,5 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/cupertino.dart';
-import 'package:flexrent/logic/models/models.dart';
 
 class UserRatingBox extends StatelessWidget {
   UserRatingBox();
@@ -23,7 +18,7 @@ class UserRatingBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Hans Peter',
+              'Titel der Beschreibung',
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 18.0,
@@ -69,10 +64,10 @@ class UserRatingBox extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              'Titel der Beschreibung',
+              'Hans Peter',
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
-                fontSize: 18.0,
+                fontSize: 16.0,
                 height: 1.35,
               ),
             ),
