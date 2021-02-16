@@ -27,6 +27,7 @@ abstract class OfferService {
   Future<OfferRequest> getOfferRequestbyRequest();
   Future<OfferRequest> updateOfferRequest();
   Future<Offer> deleteOffer();
+  Future<NewRequestNumbers> getNumberOfNewRequests();
 }
 
 class ApiOfferService extends OfferService {
@@ -461,5 +462,31 @@ class ApiOfferService extends OfferService {
       throw OfferException(
           message: 'Dein Produkt konnte nicht gelöscht werden.');
     }
+  }
+
+  @override
+  Future<NewRequestNumbers> getNumberOfNewRequests() async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response = await http.post(
+      '${CONFIG.url}/offer/get-number-of-new-offer-requests',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, dynamic>{
+        'session': session.toJson(),
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      final dynamic jsonBody = json.decode(response.body);
+      final NewRequestNumbers newRequestNumbers =
+          NewRequestNumbers.fromJson(jsonBody);
+      return newRequestNumbers;
+    } else {
+      inspect(response);
+    }
+    return null;
   }
 }
