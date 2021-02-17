@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/dictionary/request_status_text.dart';
+import 'package:flexrent/screens/rating/rating_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/offer_request/offer_request.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BookingLessor extends StatelessWidget {
   final OfferRequest offerRequest;
@@ -157,7 +160,17 @@ class BookingLessor extends StatelessWidget {
             PurpleButton(
               text: Text('Bewerte den Vermieter'),
               onPressed: () {
-                print('Missing function');
+               
+                pushNewScreenWithRouteSettings(
+                context,
+                screen: RatingScreen(
+                 lessor: offerRequest.offer.lessor,
+                ),
+                withNavBar: true,
+                settings: RouteSettings(name: RatingScreen.routeName),
+                
+          
+              );
               },
             ),
           ],

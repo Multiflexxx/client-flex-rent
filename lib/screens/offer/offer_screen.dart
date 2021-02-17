@@ -42,6 +42,7 @@ class OfferScreen extends StatefulWidget {
 class _OfferScreenState extends State<OfferScreen> {
   Future<Offer> offer;
   DateRange _dateRange;
+ 
 
   @override
   void initState() {
@@ -49,6 +50,16 @@ class _OfferScreenState extends State<OfferScreen> {
     _dateRange = DateRange(fromDate: null, toDate: null);
     initializeDateFormatting('de_DE', null);
     offer = ApiOfferService().getOfferById(offerId: widget.offer.offerId);
+  }
+
+  List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {
+    List<Widget> _offerList = List<Widget>();
+    for (Offer offer in offerList) {
+      _offerList.add(
+        UserRatingBox(),
+      );
+    }
+    return _offerList;
   }
 
   void _onSelectedRangeChanged(_picker.PickerDateRange dateRange) {
@@ -502,10 +513,9 @@ class _OfferScreenState extends State<OfferScreen> {
                         child: Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Column(
-                            
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                                  Text(
+                              Text(
                                 'Bewertungen von anderen FLEXXERN',
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
@@ -539,13 +549,12 @@ class _OfferScreenState extends State<OfferScreen> {
                                   ),
                                 ],
                               ),
-                          SizedBox(height: 10.0),
+                              SizedBox(height: 10.0),
                               Text(
                                 'Das Produkt hat stozle -20 Bewertungen',
                                 style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 16.0,
-                                  
                                   letterSpacing: 1.2,
                                 ),
                               ),
@@ -553,8 +562,6 @@ class _OfferScreenState extends State<OfferScreen> {
                           ),
                         ),
                       ),
-
-                      UserRatingBox(),
                     ],
                   ),
                 ),
