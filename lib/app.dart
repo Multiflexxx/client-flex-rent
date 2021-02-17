@@ -90,8 +90,9 @@ class AppState extends State<App> {
   Widget build(BuildContext context) {
     return BlocListener<OfferBloc, OfferState>(
       listener: (context, state) {
-        if (state is OfferTickSuccess) {
-          List<Widget> newIcons = [
+        List<Widget> newIcons;
+        if (state.count != null) {
+          newIcons = [
             Icon(
               Feather.home,
               size: 22,
@@ -102,7 +103,7 @@ class AppState extends State<App> {
             ),
             Badge(
               showBadge: (state.count != null &&
-                      state.count.numberOfNewAcceptedRequests > 0)
+                      state.count.lesseesTotalNumberOfUpdates > 0)
                   ? true
                   : false,
               position: BadgePosition.topEnd(top: 5),
@@ -113,10 +114,10 @@ class AppState extends State<App> {
               ),
             ),
             Badge(
-              showBadge:
-                  (state.count != null && state.count.numberOfNewRequests > 0)
-                      ? true
-                      : false,
+              showBadge: (state.count != null &&
+                      state.count.lessorsNumberOfNewRequests > 0)
+                  ? true
+                  : false,
               position: BadgePosition.topEnd(top: 5),
               padding: EdgeInsets.all(4),
               child: Icon(
@@ -125,10 +126,29 @@ class AppState extends State<App> {
               ),
             ),
           ];
-          setState(() {
-            icons = newIcons;
-          });
+        } else {
+          newIcons = [
+            Icon(
+              Feather.home,
+              size: 22,
+            ),
+            Icon(
+              Feather.grid,
+              size: 22,
+            ),
+            Icon(
+              Feather.shopping_bag,
+              size: 22,
+            ),
+            Icon(
+              Feather.user,
+              size: 22,
+            )
+          ];
         }
+        setState(() {
+          icons = newIcons;
+        });
       },
       child: PersistentTabView(
         context,
@@ -147,7 +167,6 @@ class AppState extends State<App> {
         decoration: NavBarDecoration(
           colorBehindNavBar: Colors.transparent,
         ),
-        bottomScreenMargin: 56,
         popActionScreens: PopActionScreensType.all,
         popAllScreensOnTapOfSelectedTab: false,
         itemAnimationProperties: ItemAnimationProperties(

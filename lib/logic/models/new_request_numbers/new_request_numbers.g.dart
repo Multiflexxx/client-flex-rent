@@ -8,10 +8,12 @@ part of 'new_request_numbers.dart';
 
 NewRequestNumbers _$NewRequestNumbersFromJson(Map<String, dynamic> json) {
   return NewRequestNumbers(
-    numberOfNewRequests: json['number_of_new_requests'] as int,
-    numberOfNewAcceptedRequests: json['number_of_new_accepted_requests'] as int,
-    numberOfNewRejectedRequests: json['number_of_new_rejected_requests'] as int,
-    totalNumberOfUpdates: json['total_number_of_updates'] as int,
+    lessorsNumberOfNewRequests: json['lessors_number_of_new_requests'] as int,
+    lesseesNumberOfNewAcceptedRequests:
+        json['lessees_number_of_new_accepted_requests'] as int,
+    lesseesNumberOfNewRejectedRequests:
+        json['lessees_number_of_new_rejected_requests'] as int,
+    lesseesTotalNumberOfUpdates: json['lessees_total_number_of_updates'] as int,
   );
 }
 
@@ -24,11 +26,13 @@ Map<String, dynamic> _$NewRequestNumbersToJson(NewRequestNumbers instance) {
     }
   }
 
-  writeNotNull('number_of_new_requests', instance.numberOfNewRequests);
   writeNotNull(
-      'number_of_new_accepted_requests', instance.numberOfNewAcceptedRequests);
+      'lessors_number_of_new_requests', instance.lessorsNumberOfNewRequests);
+  writeNotNull('lessees_number_of_new_accepted_requests',
+      instance.lesseesNumberOfNewAcceptedRequests);
+  writeNotNull('lessees_number_of_new_rejected_requests',
+      instance.lesseesNumberOfNewRejectedRequests);
   writeNotNull(
-      'number_of_new_rejected_requests', instance.numberOfNewRejectedRequests);
-  writeNotNull('total_number_of_updates', instance.totalNumberOfUpdates);
+      'lessees_total_number_of_updates', instance.lesseesTotalNumberOfUpdates);
   return val;
 }

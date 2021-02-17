@@ -4,16 +4,16 @@ part 'new_request_numbers.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class NewRequestNumbers extends Equatable {
-  final int numberOfNewRequests;
-  final int numberOfNewAcceptedRequests;
-  final int numberOfNewRejectedRequests;
-  final int totalNumberOfUpdates;
+  final int lessorsNumberOfNewRequests;
+  final int lesseesNumberOfNewAcceptedRequests;
+  final int lesseesNumberOfNewRejectedRequests;
+  final int lesseesTotalNumberOfUpdates;
 
   NewRequestNumbers(
-      {this.numberOfNewRequests,
-      this.numberOfNewAcceptedRequests,
-      this.numberOfNewRejectedRequests,
-      this.totalNumberOfUpdates});
+      {this.lessorsNumberOfNewRequests,
+      this.lesseesNumberOfNewAcceptedRequests,
+      this.lesseesNumberOfNewRejectedRequests,
+      this.lesseesTotalNumberOfUpdates});
 
   factory NewRequestNumbers.fromJson(Map<String, dynamic> json) =>
       _$NewRequestNumbersFromJson(json);
@@ -21,9 +21,9 @@ class NewRequestNumbers extends Equatable {
 
   @override
   List<Object> get props => [
-        numberOfNewRequests,
-        numberOfNewAcceptedRequests,
-        numberOfNewRejectedRequests,
-        totalNumberOfUpdates
+        lessorsNumberOfNewRequests,
+        lesseesNumberOfNewAcceptedRequests,
+        lesseesNumberOfNewRejectedRequests,
+        lesseesTotalNumberOfUpdates,
       ];
 }

@@ -28,8 +28,6 @@ class ApiAuthenticationService extends AuthenticationService {
       login: Login(email: email, passwordHash: password),
     );
 
-    print('${CONFIG.url}/user');
-
     final response = await http.post('${CONFIG.url}/user',
         headers: {"Content-Type": "application/json"},
         body: jsonEncode(<String, dynamic>{'auth': auth.toJson()}));

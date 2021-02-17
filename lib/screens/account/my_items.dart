@@ -84,17 +84,17 @@ class _MyItemsState extends State<MyItems> {
                     children: <Widget>[
                       BlocBuilder<OfferBloc, OfferState>(
                         builder: (context, state) {
-                          if (state is OfferTickSuccess &&
-                              state.count != null) {
+                          if (state.count != null) {
                             return Badge(
-                              showBadge: state.count.numberOfNewRequests > 0
-                                  ? true
-                                  : false,
+                              showBadge:
+                                  state.count.lessorsNumberOfNewRequests > 0
+                                      ? true
+                                      : false,
                               position: BadgePosition.topEnd(),
                               padding: EdgeInsets.all(5),
                               badgeColor: Theme.of(context).accentColor,
                               badgeContent: Text(
-                                '${state.count.numberOfNewRequests}',
+                                '${state.count.lessorsNumberOfNewRequests}',
                                 style: TextStyle(color: Colors.white),
                               ),
                               child: Icon(Feather.bell),

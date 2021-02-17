@@ -26,10 +26,11 @@ class OfferBloc extends Bloc<OfferEvent, OfferState> {
           .listen((tick) => add(_OfferTickerTicked(tick)));
     }
     if (event is _OfferTickerTicked) {
-      yield OfferTickSuccess(event.tickCount);
+      yield OfferTickSuccess(count: event.tickCount);
     }
 
     if (event is OfferTickerStopped) {
+      await _subscription?.cancel();
       yield OfferInitial();
     }
   }
