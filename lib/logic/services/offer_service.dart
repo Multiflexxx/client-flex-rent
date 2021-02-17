@@ -177,6 +177,28 @@ class ApiOfferService extends OfferService {
   }
 
   @override
+  Future<List<Offer>> getOfferbyLessor({User lessor}) async {
+    final String userId = lessor.userId;
+
+    final response = await http.get('${CONFIG.url}/offer/user-offers/$userId');
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBody = json.decode(response.body);
+
+      if (jsonBody.isNotEmpty) {
+        final List<Offer> offerList =
+            (jsonBody).map((i) => Offer.fromJson(i)).toList();
+        return offerList;
+      } else {
+        return Future.error(
+            OfferException(message: 'Fange jetzt an zu vermieten!'));
+      }
+    }
+    return Future.error(
+        OfferException(message: 'Fange jetzt an zu vermieten!'));
+  }
+
+  @override
   Future<List<Category>> getAllCategory() async {
     final response = await http.get('${CONFIG.url}/offer/categories');
 
