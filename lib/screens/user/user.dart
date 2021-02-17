@@ -1,6 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/widgets/boxes/standard_box.dart';
+import 'package:flexrent/widgets/discovery_carousel.dart';
+import 'package:flexrent/widgets/offer_detail/rating_box.dart';
+import 'package:flexrent/widgets/offer_detail/user_rating_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -58,8 +61,7 @@ class _UserScreenState extends State<UserScreen> {
               icon: Icon(Feather.arrow_left),
               iconSize: 30.0,
               color: Theme.of(context).primaryColor,
-              onPressed: () => Navigator.popUntil(
-                  context, ModalRoute.withName(Navigator.defaultRouteName)),
+              onPressed: () => Navigator.pop(context),
             ),
             actions: <Widget>[
               IconButton(
@@ -136,8 +138,94 @@ class _UserScreenState extends State<UserScreen> {
           SliverList(
               delegate: SliverChildListDelegate(<Widget>[
             StandardBox(
-              content: Text("Test2"),
-            )
+              content: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Mieterbewertung: ",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      Text(
+                        user.lesseeRating.toString(),
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      Text(
+                        "(" + user.numberOfLesseeRatings.toString() + ")",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        "Vermieterbewertung: ",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      Text(
+                        user.lessorRating.toString(),
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      Icon(
+                        Icons.star,
+                        color: Theme.of(context).accentColor,
+                      ),
+                      Text(
+                        "(" + user.numberOfLessorRatings.toString() + ")",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                          fontWeight: FontWeight.w500,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
+            //hier noch nach angeboten suchen
+            /*
+                DiscoveryCarousel(
+                  carouselTitle: 'Beste Vermieter',
+                  offerList: null,
+                  hideNavBarFunction: () {},
+                ),*/
+            //User Ratingbox falls rating da ist, sonst nichts
+            UserRatingBox(),
           ]))
         ]));
   }
