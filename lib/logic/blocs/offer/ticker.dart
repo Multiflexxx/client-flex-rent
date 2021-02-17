@@ -6,6 +6,7 @@ import 'package:rxdart/rxdart.dart';
 
 class Ticker {
   Stream<NewRequestNumbers> getNumberOfNewRequestesAsStream() {
+    // MergeStream
     return MergeStream(
       [
         Stream.fromFuture(ApiOfferService().getNumberOfNewRequests()),
