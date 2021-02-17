@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/models/user/user.dart';
+import 'package:flexrent/widgets/boxes/standard_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -132,6 +133,7 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ),
           ),
+          StandardBox(),
         ]));
   }
 }
