@@ -133,6 +133,12 @@ class _UserScreenState extends State<UserScreen> {
               ),
             ),
           ),
+          SliverList(
+              delegate: SliverChildListDelegate(<Widget>[
+            StandardBox(
+              content: Text("Test"),
+            )
+          ]))
         ]));
   }
 }
