@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexrent/screens/rating/rating_screen.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
@@ -210,6 +211,23 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                           height: 1.15,
                                           fontWeight: FontWeight.w500,
                                         ),
+                                      ),
+                                      SizedBox(height: 10.0,),
+                                      PurpleButton(
+                                        text: Text('Bewerte den Vermieter'),
+                                        onPressed: () {
+                                          pushNewScreenWithRouteSettings(
+                                            context,
+                                            screen: RatingScreen(
+                                              ratedUser:
+                                                  _offerRequest.offer.lessor,
+                                              ratingType: 'lessee',
+                                            ),
+                                            withNavBar: true,
+                                            settings: RouteSettings(
+                                                name: RatingScreen.routeName),
+                                          );
+                                        },
                                       ),
                                     ]),
                                   ),

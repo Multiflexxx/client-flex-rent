@@ -1,5 +1,4 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flexrent/dictionary/request_status_text.dart';
 import 'package:flexrent/screens/rating/rating_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
@@ -153,27 +152,27 @@ class BookingLessor extends StatelessWidget {
                       ),
               ],
             ),
+
+
             SizedBox(
               height: 20.0,
             ),
+            offerRequest.statusId == 5 ?
 
             PurpleButton(
               text: Text('Bewerte den Vermieter'),
               onPressed: () {
-               
                 pushNewScreenWithRouteSettings(
-                context,
-                screen: RatingScreen(
-                 ratedUser: offerRequest.offer.lessor,
-                 ratingType: 'lessor',
-                ),
-                withNavBar: true,
-                settings: RouteSettings(name: RatingScreen.routeName),
-                
-          
-              );
+                  context,
+                  screen: RatingScreen(
+                    ratedUser: offerRequest.offer.lessor,
+                    ratingType: 'lessor',
+                  ),
+                  withNavBar: true,
+                  settings: RouteSettings(name: RatingScreen.routeName),
+                );
               },
-            ),
+            ): SizedBox(height: 0.0,),
           ],
         ),
       ),

@@ -28,7 +28,7 @@ class RatingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
       title: 'Produkt einstellen',
-      
+
       bodyWidget: _RatingBody(
           updateParentFunction: updateParentFunction, ratedUser: ratedUser),
     );
