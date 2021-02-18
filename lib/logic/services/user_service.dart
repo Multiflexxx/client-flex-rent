@@ -10,9 +10,13 @@ import 'package:http/http.dart' as http;
 abstract class UserService {
   Future<User> updateUser({User user, Password password});
   Future<User> updateProfileImage({String imagePath});
-  Future<List<UserRating>> getUserRatingById({User user});
+  Future<UserRatingResponse> getUserRatingById({User user});
   Future<UserRating> createUserRating(
-      {User user, String ratingType, int rating, String headline, String text});
+      {User ratedUser,
+      String ratingType,
+      int rating,
+      String headline,
+      String text});
 }
 
 class ApiUserService extends UserService {
@@ -88,34 +92,35 @@ class ApiUserService extends UserService {
   }
 
   @override
-  Future<List<UserRating>> getUserRatingById(
-      {User user, bool lessorRating}) async {
+  Future<UserRatingResponse> getUserRatingById(
+      {User user, bool lessorRating, int page}) async {
     String ratingType = 'lessee';
     String userType = 'Mieter';
     if (lessorRating) {
       ratingType = 'lessor';
       userType = 'Vermieter';
     }
+
     String url =
-        '${CONFIG.url}/user/rating/${user.userId}?rating_type=$ratingType';
+        '${CONFIG.url}/user/rating/${user.userId}?rating_type=$ratingType&page=${page ?? 1}';
 
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
-      final List<dynamic> jsonBody = json.decode(response.body);
-      if (jsonBody.isNotEmpty) {
-        final List<UserRating> userRatingList =
-            (jsonBody).map((i) => UserRating.fromJson(i)).toList();
-        inspect(userRatingList);
-        return userRatingList;
+      final dynamic jsonBody = json.decode(response.body);
+      final UserRatingResponse userRatingResponse =
+          UserRatingResponse.fromJson(jsonBody);
+
+      if (userRatingResponse.userRatings.isNotEmpty) {
+        return userRatingResponse;
       } else {
-        // TODO: Change Exceptions
-        throw RatingException(
+        throw UserRatingException(
             message:
                 'Der Flexer ${user.firstName} ${user.lastName} hat noch keine Bewertung als $userType.');
       }
     } else {
-      throw RatingException(
+      inspect(response);
+      throw UserRatingException(
           message:
               'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.');
     }
@@ -123,7 +128,7 @@ class ApiUserService extends UserService {
 
   @override
   Future<UserRating> createUserRating(
-      {User user,
+      {User ratedUser,
       String ratingType,
       int rating,
       String headline,
@@ -135,7 +140,7 @@ class ApiUserService extends UserService {
         Auth.session(session: Session(sessionId: sessionId, userId: userId));
 
     UserRatingRequest _userRatingRequest = UserRatingRequest(
-      userId: user.userId,
+      userId: ratedUser.userId,
       ratingType: ratingType,
       rating: rating,
       headline: headline ?? null,
@@ -147,8 +152,6 @@ class ApiUserService extends UserService {
       'rating': _userRatingRequest.toJson()
     };
 
-    inspect(_body);
-
     final response = await http.post(
       '${CONFIG.url}/user/rating',
       headers: {"Content-Type": "application/json"},
@@ -156,13 +159,17 @@ class ApiUserService extends UserService {
     );
 
     if (response.statusCode == 201) {
-      return null;
+      final dynamic jsonBody = json.decode(response.body);
+      final UserRating userRating = UserRating.fromJson(jsonBody);
+      return userRating;
     } else {
       inspect(response);
+      // 400 Invalid input or user = ratedUser
+      // 409 Already rated
       // TODO: Change Exceptions
-      throw RatingException(
-          message:
-              'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
+      // throw RatingException(
+      //     message:
+      //         'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
     }
   }
 }

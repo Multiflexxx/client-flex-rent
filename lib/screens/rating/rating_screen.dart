@@ -28,7 +28,6 @@ class RatingScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
       title: 'Produkt einstellen',
-
       bodyWidget: _RatingBody(
           updateParentFunction: updateParentFunction, ratedUser: ratedUser),
     );
@@ -71,7 +70,7 @@ class _RatingBodyState extends State<_RatingBody> {
       if (widget.ratingType == 'lessor' || widget.ratingType == 'lessee') {
         try {
           UserRating newRating = await ApiUserService().createUserRating(
-            user: widget.ratedUser,
+            ratedUser: widget.ratedUser,
             ratingType: widget.ratingType,
             headline: _headlineController.text,
             text: _textController.text,
@@ -79,12 +78,6 @@ class _RatingBodyState extends State<_RatingBody> {
           );
           inspect(newRating);
           Navigator.of(context).pop();
-          // Navigator.of(context).pushAndRemoveUntil(
-          //   MaterialPageRoute(builder: (BuildContext context) {
-          //     return LeseeBookingScreen();
-          //   }),
-          //   ModalRoute.withName(AccountScreen.routeName),
-          // );
         } on RatingException catch (e) {
           showFlushbar(context: context, message: e.message);
         }
