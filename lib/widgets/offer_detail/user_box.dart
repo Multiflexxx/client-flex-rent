@@ -109,25 +109,17 @@ class UserBox extends StatelessWidget {
                 SizedBox(
                   width: 10.0,
                 ),
-                lessor.verified
-                    ? Text(
-                        'Identität verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
-                    : Text(
-                        'Identität nicht verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
+                Text(
+                  lessor.verified
+                      ? 'Identität verifiziert'
+                      : 'Identität nicht verifiziert',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    height: 1.35,
+                    fontWeight: FontWeight.w300,
+                  ),
+                )
               ],
             ),
             SizedBox(

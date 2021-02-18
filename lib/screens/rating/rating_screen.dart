@@ -27,9 +27,11 @@ class RatingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
-      title: 'Produkt einstellen',
+      title: ratingType == 'lessor' || ratingType == 'lessee'
+          ? ratedUser.firstName + ratedUser.lastName
+          : 'Bewerte das Produkt',
       bodyWidget: _RatingBody(
-          updateParentFunction: updateParentFunction, ratedUser: ratedUser),
+          updateParentFunction: updateParentFunction, ratedUser: ratedUser, ratingType: ratingType,),
     );
   }
 }
@@ -107,10 +109,10 @@ class _RatingBodyState extends State<_RatingBody> {
             children: [
               Text(
                 widget.ratingType == 'lessor'
-                    ? 'Bewertung des Vermieters'
+                    ? 'Bewerte den Vermieter'
                     : widget.ratingType == 'lessee'
-                        ? 'Bewertung des Mieters'
-                        : 'Bewertung des Produkts',
+                        ? 'Bewerte den Mieter'
+                        : 'Bewerte das Produkt',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 26.0,

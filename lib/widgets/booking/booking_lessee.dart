@@ -162,7 +162,7 @@ class BookingLessee extends StatelessWidget {
                 pushNewScreenWithRouteSettings(
                   context,
                   screen: RatingScreen(
-                    ratedUser: offerRequest.offer.lessor,
+                    ratedUser: offerRequest.user,
                     ratingType: 'lessee',
                   ),
                   withNavBar: true,
