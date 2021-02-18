@@ -131,48 +131,41 @@ class BookingLessor extends StatelessWidget {
                 SizedBox(
                   width: 10.0,
                 ),
-                offerRequest.user.verified
-                    ? Text(
-                        'Identität verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
-                    : Text(
-                        'Identität nicht verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
+                Text(
+                  offerRequest.user.verified
+                      ? 'Identität verifiziert'
+                      : 'Identität nicht verifiziert',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    height: 1.35,
+                    fontWeight: FontWeight.w300,
+                  ),
+                )
               ],
             ),
-
 
             SizedBox(
               height: 20.0,
             ),
-            offerRequest.statusId == 5 ?
-
-            PurpleButton(
-              text: Text('Bewerte den Vermieter'),
-              onPressed: () {
-                pushNewScreenWithRouteSettings(
-                  context,
-                  screen: RatingScreen(
-                    ratedUser: offerRequest.offer.lessor,
-                    ratingType: 'lessor',
+            offerRequest.statusId == 5
+                ? PurpleButton(
+                    text: Text('Bewerte den Vermieter'),
+                    onPressed: () {
+                      pushNewScreenWithRouteSettings(
+                        context,
+                        screen: RatingScreen(
+                          ratedUser: offerRequest.offer.lessor,
+                          ratingType: 'lessor',
+                        ),
+                        withNavBar: true,
+                        settings: RouteSettings(name: RatingScreen.routeName),
+                      );
+                    },
+                  )
+                : SizedBox(
+                    height: 0.0,
                   ),
-                  withNavBar: true,
-                  settings: RouteSettings(name: RatingScreen.routeName),
-                );
-              },
-            ): SizedBox(height: 0.0,),
           ],
         ),
       ),

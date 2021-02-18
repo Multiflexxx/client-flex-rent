@@ -221,7 +221,7 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                             screen: RatingScreen(
                                               ratedUser:
                                                   _offerRequest.offer.lessor,
-                                              ratingType: 'lessee',
+                                              ratingType: 'lessor',
                                             ),
                                             withNavBar: true,
                                             settings: RouteSettings(
