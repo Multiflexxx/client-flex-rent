@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flexrent/logic/config/config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -9,6 +10,9 @@ import 'package:http/http.dart' as http;
 abstract class UserService {
   Future<User> updateUser({User user, Password password});
   Future<User> updateProfileImage({String imagePath});
+  Future<List<UserRating>> getUserRatingById({User user});
+  Future<UserRating> createUserRating(
+      {User user, String ratingType, int rating, String headline, String text});
 }
 
 class ApiUserService extends UserService {
@@ -76,13 +80,91 @@ class ApiUserService extends UserService {
 
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
-      // jsonBody['profile_picture'] = jsonBody['profile_picture'] +
-      //     '?refresh=' +
-      //     DateTime.now().millisecondsSinceEpoch.toString();
       final User user = User.fromJson(jsonBody);
       return user;
     } else {
       return null;
+    }
+  }
+
+  @override
+  Future<List<UserRating>> getUserRatingById(
+      {User user, bool lessorRating}) async {
+    String ratingType = 'lessee';
+    String userType = 'Mieter';
+    if (lessorRating) {
+      ratingType = 'lessor';
+      userType = 'Vermieter';
+    }
+    String url =
+        '${CONFIG.url}/user/rating/${user.userId}?rating_type=$ratingType';
+
+    // String url =
+    //     '${CONFIG.url}/user/rating/5e4d12bd-fd4b-4651-ad8d-76a2ae54433a?rating_type=lessee&page=1';
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final List<dynamic> jsonBody = json.decode(response.body);
+      if (jsonBody.isNotEmpty) {
+        final List<UserRating> userRatingList =
+            (jsonBody).map((i) => UserRating.fromJson(i)).toList();
+        inspect(userRatingList);
+        return userRatingList;
+      } else {
+        throw RatingException(
+            message:
+                'Der Flexer ${user.firstName} ${user.lastName} hat noch keine Bewertung als $userType.');
+      }
+    } else {
+      throw RatingException(
+          message:
+              'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.');
+    }
+  }
+
+  @override
+  Future<UserRating> createUserRating(
+      {User user,
+      String ratingType,
+      int rating,
+      String headline,
+      String text}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    final Auth auth =
+        Auth.session(session: Session(sessionId: sessionId, userId: userId));
+
+    UserRatingRequest _userRatingRequest = UserRatingRequest(
+      // userId: user.userId,
+      userId: '096bab98-1f2e-4fa8-85b2-04a28b2a3d58',
+      ratingType: ratingType,
+      rating: rating,
+      headline: headline ?? null,
+      text: text ?? null,
+    );
+
+    Map<String, dynamic> _body = {
+      'auth': auth.toJson(),
+      'rating': _userRatingRequest.toJson()
+    };
+
+    inspect(_body);
+
+    final response = await http.post(
+      '${CONFIG.url}/user/rating',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(_body),
+    );
+
+    if (response.statusCode == 201) {
+      return null;
+    } else {
+      inspect(response);
+      throw RatingException(
+          message:
+              'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
     }
   }
 }
