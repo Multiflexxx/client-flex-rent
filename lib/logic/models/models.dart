@@ -9,5 +9,6 @@ export 'user/user.dart';
 export 'rating/user/rating/user_rating.dart';
 export 'rating/user/rating_response/user_rating_response.dart';
 export 'rating/user/rating_request/user_rating_request.dart';
-export 'rating/offer/rating_response/offer_rating.dart';
+export 'rating/offer/rating/offer_rating.dart';
 export 'rating/offer/rating_request/offer_rating_request.dart';
+export 'rating/offer/rating_response/offer_rating_response.dart';

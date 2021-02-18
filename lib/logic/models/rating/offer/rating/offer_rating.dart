@@ -6,20 +6,19 @@ part 'offer_rating.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class OfferRating extends Equatable {
   final String ratingId;
-  final User ratingOwner;
-  // final Offer offer;
   final int rating;
   final String headline;
   final String ratingText;
-  final DateTime lastUpdated;
+  final DateTime updatedAt;
+  final User ratingOwner;
 
-  OfferRating(
-    this.ratingId, {
-    this.ratingOwner,
+  OfferRating({
+    this.ratingId,
     this.rating,
     this.headline,
     this.ratingText,
-    this.lastUpdated,
+    this.updatedAt,
+    this.ratingOwner,
   });
 
   factory OfferRating.fromJson(Map<String, dynamic> json) =>
@@ -28,5 +27,5 @@ class OfferRating extends Equatable {
 
   @override
   List<Object> get props =>
-      [ratingOwner, rating, headline, ratingText, lastUpdated];
+      [ratingOwner, rating, headline, ratingText, updatedAt];
 }

@@ -10,7 +10,8 @@ import 'package:http/http.dart' as http;
 abstract class UserService {
   Future<User> updateUser({User user, Password password});
   Future<User> updateProfileImage({String imagePath});
-  Future<UserRatingResponse> getUserRatingById({User user});
+  Future<UserRatingResponse> getUserRatingById(
+      {User user, bool lessorRating, int page});
   Future<UserRating> createUserRating(
       {User ratedUser,
       String ratingType,
@@ -143,8 +144,8 @@ class ApiUserService extends UserService {
       userId: ratedUser.userId,
       ratingType: ratingType,
       rating: rating,
-      headline: headline ?? null,
-      text: text ?? null,
+      headline: headline ?? '',
+      text: text ?? '',
     );
 
     Map<String, dynamic> _body = {
@@ -167,9 +168,9 @@ class ApiUserService extends UserService {
       // 400 Invalid input or user = ratedUser
       // 409 Already rated
       // TODO: Change Exceptions
-      // throw RatingException(
-      //     message:
-      //         'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
+      throw UserRatingException(
+          message:
+              'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
     }
   }
 }

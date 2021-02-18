@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/screens/offer/offer_list_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
@@ -155,27 +153,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ),
-                          PurpleButton(
-                            text: Text('Get Rating'),
-                            onPressed: () {
-                              ApiUserService().getUserRatingById(
-                                user: user,
-                                lessorRating: false,
-                              );
-                            },
-                          ),
-                          PurpleButton(
-                            text: Text('Create Rating'),
-                            onPressed: () {
-                              ApiUserService().createUserRating(
-                                ratedUser: user,
-                                ratingType: 'lessee',
-                                rating: 3,
-                                headline: '',
-                                text: '',
-                              );
-                            },
                           ),
                           SizedBox(
                             height: 10.0,

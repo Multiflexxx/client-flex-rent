@@ -8,4 +8,6 @@ class UserRatingException extends RatingException {
   UserRatingException({message}) : super(message: message);
 }
 
-class OfferRatingException extends RatingException {}
+class OfferRatingException extends RatingException {
+  OfferRatingException({message}) : super(message: message);
+}

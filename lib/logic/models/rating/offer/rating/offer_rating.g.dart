@@ -8,16 +8,16 @@ part of 'offer_rating.dart';
 
 OfferRating _$OfferRatingFromJson(Map<String, dynamic> json) {
   return OfferRating(
-    json['rating_id'] as String,
-    ratingOwner: json['rating_owner'] == null
-        ? null
-        : User.fromJson(json['rating_owner'] as Map<String, dynamic>),
+    ratingId: json['rating_id'] as String,
     rating: json['rating'] as int,
     headline: json['headline'] as String,
     ratingText: json['rating_text'] as String,
-    lastUpdated: json['last_updated'] == null
+    updatedAt: json['updated_at'] == null
         ? null
-        : DateTime.parse(json['last_updated'] as String),
+        : DateTime.parse(json['updated_at'] as String),
+    ratingOwner: json['rating_owner'] == null
+        ? null
+        : User.fromJson(json['rating_owner'] as Map<String, dynamic>),
   );
 }
 
@@ -31,10 +31,10 @@ Map<String, dynamic> _$OfferRatingToJson(OfferRating instance) {
   }
 
   writeNotNull('rating_id', instance.ratingId);
-  writeNotNull('rating_owner', instance.ratingOwner);
   writeNotNull('rating', instance.rating);
   writeNotNull('headline', instance.headline);
   writeNotNull('rating_text', instance.ratingText);
-  writeNotNull('last_updated', instance.lastUpdated?.toIso8601String());
+  writeNotNull('updated_at', instance.updatedAt?.toIso8601String());
+  writeNotNull('rating_owner', instance.ratingOwner);
   return val;
 }
