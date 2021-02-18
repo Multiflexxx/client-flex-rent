@@ -99,9 +99,6 @@ class ApiUserService extends UserService {
     String url =
         '${CONFIG.url}/user/rating/${user.userId}?rating_type=$ratingType';
 
-    // String url =
-    //     '${CONFIG.url}/user/rating/5e4d12bd-fd4b-4651-ad8d-76a2ae54433a?rating_type=lessee&page=1';
-
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
@@ -112,6 +109,7 @@ class ApiUserService extends UserService {
         inspect(userRatingList);
         return userRatingList;
       } else {
+        // TODO: Change Exceptions
         throw RatingException(
             message:
                 'Der Flexer ${user.firstName} ${user.lastName} hat noch keine Bewertung als $userType.');
@@ -137,8 +135,7 @@ class ApiUserService extends UserService {
         Auth.session(session: Session(sessionId: sessionId, userId: userId));
 
     UserRatingRequest _userRatingRequest = UserRatingRequest(
-      // userId: user.userId,
-      userId: '096bab98-1f2e-4fa8-85b2-04a28b2a3d58',
+      userId: user.userId,
       ratingType: ratingType,
       rating: rating,
       headline: headline ?? null,
@@ -162,6 +159,7 @@ class ApiUserService extends UserService {
       return null;
     } else {
       inspect(response);
+      // TODO: Change Exceptions
       throw RatingException(
           message:
               'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
