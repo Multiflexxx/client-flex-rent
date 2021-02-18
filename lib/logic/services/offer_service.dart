@@ -157,7 +157,7 @@ class ApiOfferService extends OfferService {
   @override
   Future<List<Offer>> getOfferbyUser({User user}) async {
     final String userId =
-        user != null ? user.userId : _storage.read(key: 'userId');
+        user != null ? user.userId : await _storage.read(key: 'userId');
 
     final response = await http.get('${CONFIG.url}/offer/user-offers/$userId');
 

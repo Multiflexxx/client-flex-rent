@@ -169,9 +169,11 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
                             text: Text('Create Rating'),
                             onPressed: () {
                               ApiUserService().createUserRating(
-                                // user: user,
-                                ratingType: 'lessor',
+                                ratedUser: user,
+                                ratingType: 'lessee',
                                 rating: 3,
+                                headline: '',
+                                text: '',
                               );
                             },
                           ),

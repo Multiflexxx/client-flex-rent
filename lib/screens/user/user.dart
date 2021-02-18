@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/models/offer/offer.dart';
-import 'package:flexrent/logic/models/rating/user/rating_response/user_rating.dart';
 import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/logic/services/services.dart';
@@ -26,24 +26,24 @@ class UserScreen extends StatefulWidget {
 class _UserScreenState extends State<UserScreen> {
   final List<String> _tabs = <String>["Vermieter", "Mieter"];
   Future<List<Offer>> offers;
-  Future<List<UserRating>> lesseeratings;
-  Future<List<UserRating>> lessorratings;
+  Future<UserRatingResponse> lesseeRatings;
+  Future<UserRatingResponse> lessorRatings;
 
   @override
   void initState() {
     super.initState();
     offers = ApiOfferService().getOfferbyUser(user: widget.user);
     try {
-      lesseeratings = ApiUserService()
+      lesseeRatings = ApiUserService()
           .getUserRatingById(user: widget.user, lessorRating: false);
     } catch (e) {
-      lesseeratings = null;
+      lesseeRatings = null;
     }
     try {
-      lessorratings = ApiUserService()
+      lessorRatings = ApiUserService()
           .getUserRatingById(user: widget.user, lessorRating: true);
     } catch (e) {
-      lessorratings = null;
+      lessorRatings = null;
     }
   }
 

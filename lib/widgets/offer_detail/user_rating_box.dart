@@ -61,7 +61,7 @@ class UserRatingBox extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  formatter.format(rating.createdAt),
+                  formatter.format(rating.updatedAt),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 12.0,
