@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/models/offer/offer.dart';
+import 'package:flexrent/logic/models/rating/user/rating_response/user_rating.dart';
 import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/logic/services/offer_service.dart';
+import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/boxes/standard_box.dart';
 import 'package:flexrent/widgets/discovery_carousel.dart';
 import 'package:flexrent/widgets/offer_detail/user_rating_box.dart';
@@ -24,11 +26,25 @@ class UserScreen extends StatefulWidget {
 
 class _UserScreenState extends State<UserScreen> {
   Future<List<Offer>> offers;
+  Future<List<UserRating>> lesseeratings;
+  Future<List<UserRating>> lessorratings;
 
   @override
   void initState() {
     super.initState();
     offers = ApiOfferService().getOfferbyUser(user: widget.user);
+    try {
+      lesseeratings = ApiUserService()
+          .getUserRatingById(user: widget.user, lessorRating: false);
+    } catch (e) {
+      lesseeratings = null;
+    }
+    try {
+      lessorratings = ApiUserService()
+          .getUserRatingById(user: widget.user, lessorRating: true);
+    } catch (e) {
+      lessorratings = null;
+    }
   }
 
   @override
@@ -345,7 +361,18 @@ class _UserScreenState extends State<UserScreen> {
             ),
 
             //User Ratingbox falls rating da ist, sonst nichts
-            UserRatingBox(),
+
+            FutureBuilder(
+                future: lesseeratings,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    return UserRatingBox(
+                      rating: snapshot.data[0],
+                    );
+                  } else {
+                    return Container();
+                  }
+                }),
           ]))
         ]));
   }

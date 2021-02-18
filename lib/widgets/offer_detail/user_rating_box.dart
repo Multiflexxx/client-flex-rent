@@ -1,11 +1,17 @@
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:intl/intl.dart';
 
 class UserRatingBox extends StatelessWidget {
-  UserRatingBox();
+  final UserRating rating;
+
+  UserRatingBox({this.rating});
 
   @override
   Widget build(BuildContext context) {
+    var formatter = new DateFormat.yMMMMd("de_DE");
     return Container(
       margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
       decoration: BoxDecoration(
@@ -18,7 +24,7 @@ class UserRatingBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Titel der Beschreibung',
+              rating.headline,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 18.0,
@@ -27,32 +33,34 @@ class UserRatingBox extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                RatingBarIndicator(
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Colors.purple,
+                  ),
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  rating: rating.rating.toDouble(),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-              Row(children: [
-                  Icon(
-                  Icons.star,
-                  color: Theme.of(context).accentColor,
-                ),
-                  Icon(
-                  Icons.star,
-                  color: Theme.of(context).accentColor,
-                ),
-                  Icon(
-                  Icons.star,
-                  color: Theme.of(context).accentColor,
-                ),
-                  Icon(
-                  Icons.star,
-                  color: Theme.of(context).accentColor,
-                ),
-                  Icon(
-                  Icons.star,
-                  color: Theme.of(context).accentColor,
-                ),
-              ],),
                 Text(
-                  '01.01.1999',
+                  //user wird noch von der api später gegeben
+                  "USER",
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 16.0,
+                    height: 1.35,
+                  ),
+                ),
+                Text(
+                  formatter.format(rating.createdAt),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 12.0,
@@ -64,16 +72,7 @@ class UserRatingBox extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Text(
-              'Hans Peter',
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 16.0,
-                height: 1.35,
-              ),
-            ),
-            SizedBox(height: 10.0),
-            Text(
-              'Hier kommt die Beschreibung hin',
+              rating.ratingText,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 14.0,
@@ -84,7 +83,7 @@ class UserRatingBox extends StatelessWidget {
             SizedBox(height: 10.0),
             GestureDetector(
               child: Text(
-                'Erzähle mir mehr',
+                'Mehr anzeigen',
                 style: TextStyle(
                   color: Theme.of(context).accentColor,
                   fontSize: 14.0,
@@ -95,9 +94,9 @@ class UserRatingBox extends StatelessWidget {
             ),
             SizedBox(height: 10.0),
             Divider(
-                height: 20.0,
-                color: Theme.of(context).primaryColor,
-              ),
+              height: 20.0,
+              color: Theme.of(context).primaryColor,
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
