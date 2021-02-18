@@ -61,6 +61,7 @@ dependencies:
   filesize: ^1.0.4
   carousel_slider: ^2.3.1
   photo_view: ^0.10.3
+  flutter_rating_bar: ^3.2.0+1
 
 dev_dependencies:
   flutter_test:
