@@ -19,7 +19,7 @@ class UserRating extends Equatable {
       this.rating,
       this.headline,
       this.ratingText,
-      this.createdAt});
+      this.createdAt, String text});
 
   factory UserRating.fromJson(Map<String, dynamic> json) =>
       _$UserRatingFromJson(json);
