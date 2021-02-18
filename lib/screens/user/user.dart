@@ -28,7 +28,7 @@ class _UserScreenState extends State<UserScreen> {
   @override
   void initState() {
     super.initState();
-    offers = ApiOfferService().getOfferbyLessor(lessor: widget.user);
+    offers = ApiOfferService().getOfferbyUser(user: widget.user);
   }
 
   @override
