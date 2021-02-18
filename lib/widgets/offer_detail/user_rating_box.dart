@@ -43,6 +43,7 @@ class UserRatingBox extends StatelessWidget {
                   direction: Axis.horizontal,
                   itemCount: 5,
                   rating: rating.rating.toDouble(),
+                  itemSize: 30.0,
                 ),
               ],
             ),
