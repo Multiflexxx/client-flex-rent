@@ -145,23 +145,46 @@ class BookingLessor extends StatelessWidget {
               ],
             ),
 
-            SizedBox(
-              height: 20.0,
-            ),
             offerRequest.statusId == 5
-                ? PurpleButton(
-                    text: Text('Bewerte den Vermieter'),
-                    onPressed: () {
-                      pushNewScreenWithRouteSettings(
-                        context,
-                        screen: RatingScreen(
-                          ratedUser: offerRequest.offer.lessor,
-                          ratingType: 'lessor',
-                        ),
-                        withNavBar: true,
-                        settings: RouteSettings(name: RatingScreen.routeName),
-                      );
-                    },
+                ? Column(
+                    children: [
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      PurpleButton(
+                        text: Text('Bewerte den Vermieter'),
+                        onPressed: () {
+                          pushNewScreenWithRouteSettings(
+                            context,
+                            screen: RatingScreen(
+                              ratedUser: offerRequest.offer.lessor,
+                              ratingType: 'lessor',
+                            ),
+                            withNavBar: true,
+                            settings:
+                                RouteSettings(name: RatingScreen.routeName),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      PurpleButton(
+                        text: Text('Bewerte das Produkt'),
+                        onPressed: () {
+                          pushNewScreenWithRouteSettings(
+                            context,
+                            screen: RatingScreen(
+                              offer: offerRequest.offer,
+                              ratingType: 'offer',
+                            ),
+                            withNavBar: true,
+                            settings:
+                                RouteSettings(name: RatingScreen.routeName),
+                          );
+                        },
+                      ),
+                    ],
                   )
                 : SizedBox(
                     height: 0.0,

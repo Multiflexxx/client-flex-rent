@@ -212,7 +212,9 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                           fontWeight: FontWeight.w500,
                                         ),
                                       ),
-                                      SizedBox(height: 10.0,),
+                                      SizedBox(
+                                        height: 10.0,
+                                      ),
                                       PurpleButton(
                                         text: Text('Bewerte den Vermieter'),
                                         onPressed: () {
@@ -222,6 +224,23 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                               ratedUser:
                                                   _offerRequest.offer.lessor,
                                               ratingType: 'lessor',
+                                            ),
+                                            withNavBar: true,
+                                            settings: RouteSettings(
+                                                name: RatingScreen.routeName),
+                                          );
+                                        },
+                                      ),
+                                       SizedBox(height: 10.0,),
+                                      PurpleButton(
+                                        text: Text('Bewerte das Produkt'),
+                                        onPressed: () {
+                                          pushNewScreenWithRouteSettings(
+                                            context,
+                                            screen: RatingScreen(
+                                              offer:
+                                                  _offerRequest.offer,
+                                              ratingType: 'offer',
                                             ),
                                             withNavBar: true,
                                             settings: RouteSettings(

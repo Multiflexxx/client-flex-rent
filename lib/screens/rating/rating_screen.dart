@@ -15,33 +15,47 @@ import 'package:http/http.dart' as http;
 
 class RatingScreen extends StatelessWidget {
   final User ratedUser;
+  final Offer offer;
   final String ratingType;
   final VoidCallback updateParentFunction;
 
   static String routeName = 'ratingScreen';
 
   RatingScreen(
-      {Key key, this.updateParentFunction, this.ratedUser, this.ratingType})
+      {Key key,
+      this.updateParentFunction,
+      this.ratedUser,
+      this.offer,
+      this.ratingType})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
       title: ratingType == 'lessor' || ratingType == 'lessee'
-          ? ratedUser.firstName + ratedUser.lastName
-          : 'Bewerte das Produkt',
+          ? ratedUser.firstName + ' ' + ratedUser.lastName
+          : offer.title,
       bodyWidget: _RatingBody(
-          updateParentFunction: updateParentFunction, ratedUser: ratedUser, ratingType: ratingType,),
+        offer: offer,
+        updateParentFunction: updateParentFunction,
+        ratedUser: ratedUser,
+        ratingType: ratingType,
+      ),
     );
   }
 }
 
 class _RatingBody extends StatefulWidget {
   final User ratedUser;
+  final Offer offer;
   final String ratingType;
   final VoidCallback updateParentFunction;
   const _RatingBody(
-      {Key key, this.updateParentFunction, this.ratedUser, this.ratingType})
+      {Key key,
+      this.updateParentFunction,
+      this.ratedUser,
+      this.offer,
+      this.ratingType})
       : super(key: key);
   @override
   _RatingBodyState createState() => _RatingBodyState();
@@ -70,6 +84,8 @@ class _RatingBodyState extends State<_RatingBody> {
 
     if (_key.currentState.validate() && _rating > 0 && _rating < 6) {
       if (widget.ratingType == 'lessor' || widget.ratingType == 'lessee') {
+
+       
         try {
           UserRating newRating = await ApiUserService().createUserRating(
             ratedUser: widget.ratedUser,
@@ -84,8 +100,20 @@ class _RatingBodyState extends State<_RatingBody> {
           showFlushbar(context: context, message: e.message);
         }
       } else if (widget.ratingType == 'offer') {
-// _ratingType = 'offer';
-        print('Offer');
+         inspect(widget.offer);
+        try {
+          OfferRating newOfferRating =
+              await ApiOfferService().createOfferRating(
+            offer: widget.offer,
+            rating: _rating,
+            headline: _headlineController.text,
+            ratingText: _textController.text,
+          );
+          inspect(newOfferRating);
+          Navigator.of(context).pop();
+        } on OfferRatingException catch (e) {
+          showFlushbar(context: context, message: e.message);
+        }
       } else {
         print('Exception');
       }
