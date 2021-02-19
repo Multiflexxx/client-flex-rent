@@ -18,15 +18,15 @@ class UserReviews extends StatefulWidget {
 
 class _UserReviewsState extends State<UserReviews> {
   final List<String> _tabs = <String>["Mieter", "Vermieter"];
-  Future<List<UserRating>> leseeratings;
-  Future<List<UserRating>> lessorratings;
+  Future<UserRatingResponse> leseeratings;
+  Future<UserRatingResponse> lessorratings;
 
   @override
   void initState() {
     leseeratings = ApiUserService()
-        .getUserRatingById(user: widget.user, lessorRating: false);
+        .getUserRatingById(user: widget.user, lessorRating: false, page: 1);
     lessorratings = ApiUserService()
-        .getUserRatingById(user: widget.user, lessorRating: true);
+        .getUserRatingById(user: widget.user, lessorRating: true, page: 1);
     super.initState();
   }
 
@@ -92,14 +92,14 @@ class _UserReviewsState extends State<UserReviews> {
                               future: leseeratings,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  return SliverList(
-                                      delegate: SliverChildListDelegate(snapshot
-                                          .data
+                                  UserRatingResponse response = snapshot.data;
+                                  return Column(
+                                      children: response.userRatings
                                           .map((UserRating rating) =>
                                               UserRatingBox(
                                                 rating: rating,
                                               ))
-                                          .toList));
+                                          .toList());
                                 } else {
                                   return StandardBox(
                                     content: Text("Noch keine Bewertungen"),
@@ -112,14 +112,14 @@ class _UserReviewsState extends State<UserReviews> {
                               future: lessorratings,
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
-                                  return SliverList(
-                                      delegate: SliverChildListDelegate(snapshot
-                                          .data
+                                  UserRatingResponse response = snapshot.data;
+                                  return Column(
+                                      children: response.userRatings
                                           .map((UserRating rating) =>
                                               UserRatingBox(
                                                 rating: rating,
                                               ))
-                                          .toList));
+                                          .toList());
                                 } else {
                                   return StandardBox(
                                     content: Text("Noch keine Bewertungen"),
