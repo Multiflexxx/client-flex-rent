@@ -4,6 +4,7 @@ import 'package:flexrent/logic/models/offer/offer.dart';
 import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/screens/user/user_reviews.dart';
 import 'package:flexrent/widgets/boxes/standard_box.dart';
 import 'package:flexrent/widgets/discovery_carousel.dart';
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
@@ -11,6 +12,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class UserScreen extends StatefulWidget {
   /// User to be shown
@@ -257,454 +259,474 @@ class _UserScreenState extends State<UserScreen> {
                 children: [
                   Flexible(
                     flex: 1,
-                    child: StandardBox(
-                      margin: false,
-                      content: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "Mieterbewertung",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.2,
+                    child: GestureDetector(
+                      onTap: () {
+                        pushNewScreen(context,
+                            screen: UserReviews(
+                              user: user,
+                              startTab: "Mieter",
+                            ));
+                      },
+                      child: StandardBox(
+                        margin: false,
+                        content: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  "Mieterbewertung",
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.2,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          user.lesseeRating == null ||
-                                  user.numberOfLesseeRatings == 0
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      "Keine Bewertungen",
-                                      overflow: TextOverflow.fade,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w300,
-                                        letterSpacing: 1.2,
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            user.lesseeRating == null ||
+                                    user.numberOfLesseeRatings == 0
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        "Keine Bewertungen",
+                                        overflow: TextOverflow.fade,
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w300,
+                                          letterSpacing: 1.2,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          user.lesseeRating.toString(),
-                                          style: TextStyle(
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Text(
+                                            user.lesseeRating.toString(),
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 1.0,
+                                            ),
+                                          ),
+                                          Icon(
+                                            Icons.star,
                                             color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 1.0,
+                                                Theme.of(context).accentColor,
                                           ),
-                                        ),
-                                        Icon(
-                                          Icons.star,
-                                          color: Theme.of(context).accentColor,
-                                        ),
-                                        Text(
-                                          "(" +
-                                              user.numberOfLesseeRatings
-                                                  .toString() +
-                                              ")",
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 1.2,
+                                          Text(
+                                            "(" +
+                                                user.numberOfLesseeRatings
+                                                    .toString() +
+                                                ")",
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 1.2,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                  ],
-                                )
-                        ],
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                    ],
+                                  )
+                          ],
+                        ),
                       ),
                     ),
                   ),
                   Flexible(
                     flex: 1,
-                    child: StandardBox(
-                      margin: false,
-                      content: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "Vermieterbewertung",
-                                style: TextStyle(
-                                  color: Theme.of(context).primaryColor,
-                                  fontSize: 14.0,
-                                  fontWeight: FontWeight.w500,
-                                  letterSpacing: 1.0,
+                    child: GestureDetector(
+                      onTap: () {
+                        pushNewScreen(context,
+                            screen: UserReviews(
+                              user: user,
+                              startTab: "Vermieter",
+                            ));
+                      },
+                      child: StandardBox(
+                        margin: false,
+                        content: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  "Vermieterbewertung",
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 14.0,
+                                    fontWeight: FontWeight.w500,
+                                    letterSpacing: 1.0,
+                                  ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5,
-                          ),
-                          user.lessorRating == null ||
-                                  user.numberOfLessorRatings == 0
-                              ? Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Text(
-                                      "Keine Bewertungen",
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 14.0,
-                                        fontWeight: FontWeight.w300,
-                                        letterSpacing: 1.0,
+                              ],
+                            ),
+                            SizedBox(
+                              height: 5,
+                            ),
+                            user.lessorRating == null ||
+                                    user.numberOfLessorRatings == 0
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceEvenly,
+                                    children: [
+                                      Text(
+                                        "Keine Bewertungen",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 14.0,
+                                          fontWeight: FontWeight.w300,
+                                          letterSpacing: 1.0,
+                                        ),
                                       ),
-                                    ),
-                                  ],
-                                )
-                              : Column(
-                                  children: [
-                                    Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Icon(
-                                          Icons.star,
-                                          color: Theme.of(context).accentColor,
-                                        ),
-                                        Text(
-                                          user.lessorRating.toString(),
-                                          style: TextStyle(
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceEvenly,
+                                        children: [
+                                          Icon(
+                                            Icons.star,
                                             color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 1.2,
+                                                Theme.of(context).accentColor,
                                           ),
-                                        ),
-                                        Text(
-                                          "(" +
-                                              user.numberOfLessorRatings
-                                                  .toString() +
-                                              ")",
-                                          style: TextStyle(
-                                            color:
-                                                Theme.of(context).primaryColor,
-                                            fontSize: 18.0,
-                                            fontWeight: FontWeight.w400,
-                                            letterSpacing: 1.2,
+                                          Text(
+                                            user.lessorRating.toString(),
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 1.2,
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
+                                          Text(
+                                            "(" +
+                                                user.numberOfLessorRatings
+                                                    .toString() +
+                                                ")",
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 18.0,
+                                              fontWeight: FontWeight.w400,
+                                              letterSpacing: 1.2,
+                                            ),
                                           ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                    Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                              Icon(
-                                                Icons.star,
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                size: 15,
-                                              ),
-                                            ],
-                                          ),
-                                          Text("1")
-                                        ]),
-                                  ],
-                                )
-                        ],
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                      Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                                Icon(
+                                                  Icons.star,
+                                                  color: Theme.of(context)
+                                                      .accentColor,
+                                                  size: 15,
+                                                ),
+                                              ],
+                                            ),
+                                            Text("1")
+                                          ]),
+                                    ],
+                                  )
+                          ],
+                        ),
                       ),
                     ),
                   ),
