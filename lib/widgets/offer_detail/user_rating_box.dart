@@ -6,8 +6,9 @@ import 'package:intl/intl.dart';
 
 class UserRatingBox extends StatelessWidget {
   final UserRating rating;
+  final OfferRating offerRating;
 
-  UserRatingBox({this.rating});
+  UserRatingBox({this.rating, this.offerRating});
 
   @override
   Widget build(BuildContext context) {
@@ -23,14 +24,14 @@ class UserRatingBox extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            rating.headline != null ? Text(
               rating.headline,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
                 fontSize: 18.0,
                 height: 1.35,
               ),
-            ),
+            ): SizedBox(),
             SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -53,7 +54,7 @@ class UserRatingBox extends StatelessWidget {
               children: [
                 Text(
                   //user wird noch von der api später gegeben
-                  "USER",
+                  rating.ratedUser.firstName + ' ' + rating.ratedUser.lastName,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 16.0,
@@ -82,6 +83,7 @@ class UserRatingBox extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.0),
+            //should only be shown if the text is to long. 
             GestureDetector(
               child: Text(
                 'Mehr anzeigen',
@@ -101,6 +103,7 @@ class UserRatingBox extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                // feature isn't implemented
                 Text('Hat dir das geholfen'),
                 Row(
                   children: [
