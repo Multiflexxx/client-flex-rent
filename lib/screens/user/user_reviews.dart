@@ -5,6 +5,7 @@ import 'package:flexrent/widgets/offer_detail/user_rating_box.dart';
 import 'package:flexrent/widgets/styles/circle_tab_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
 class UserReviews extends StatefulWidget {
   final User user;
@@ -23,10 +24,18 @@ class _UserReviewsState extends State<UserReviews> {
 
   @override
   void initState() {
-    leseeratings = ApiUserService()
-        .getUserRatingById(user: widget.user, lessorRating: false, page: 1);
-    lessorratings = ApiUserService()
-        .getUserRatingById(user: widget.user, lessorRating: true, page: 1);
+    try {
+      leseeratings = ApiUserService()
+          .getUserRatingById(user: widget.user, lessorRating: false, page: 1);
+    } catch (e) {
+      leseeratings = null;
+    }
+    try {
+      lessorratings = ApiUserService()
+          .getUserRatingById(user: widget.user, lessorRating: true, page: 1);
+    } catch (e) {
+      lessorratings = null;
+    }
     super.initState();
   }
 
@@ -93,17 +102,40 @@ class _UserReviewsState extends State<UserReviews> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   UserRatingResponse response = snapshot.data;
-                                  return Column(
-                                      children: response.userRatings
-                                          .map((UserRating rating) =>
-                                              UserRatingBox(
-                                                rating: rating,
-                                              ))
-                                          .toList());
+                                  return CustomScrollView(
+                                      key: PageStorageKey<String>(name),
+                                      slivers: <Widget>[
+                                        SliverOverlapInjector(
+                                          handle: NestedScrollView
+                                              .sliverOverlapAbsorberHandleFor(
+                                                  context),
+                                        ),
+                                        SliverList(
+                                            delegate: SliverChildListDelegate(
+                                                response.userRatings
+                                                    .map((UserRating rating) =>
+                                                        UserRatingBox(
+                                                          rating: rating,
+                                                        ))
+                                                    .toList()))
+                                      ]);
                                 } else {
-                                  return StandardBox(
-                                    content: Text("Noch keine Bewertungen"),
-                                  );
+                                  return CustomScrollView(
+                                      key: PageStorageKey<String>(name),
+                                      slivers: <Widget>[
+                                        SliverOverlapInjector(
+                                          handle: NestedScrollView
+                                              .sliverOverlapAbsorberHandleFor(
+                                                  context),
+                                        ),
+                                        SliverList(
+                                            delegate: SliverChildListDelegate([
+                                          StandardBox(
+                                            content:
+                                                Text("Noch keine Bewertungen"),
+                                          )
+                                        ]))
+                                      ]);
                                 }
                               });
                         } else {
@@ -113,17 +145,40 @@ class _UserReviewsState extends State<UserReviews> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   UserRatingResponse response = snapshot.data;
-                                  return Column(
-                                      children: response.userRatings
-                                          .map((UserRating rating) =>
-                                              UserRatingBox(
-                                                rating: rating,
-                                              ))
-                                          .toList());
+                                  return CustomScrollView(
+                                      key: PageStorageKey<String>(name),
+                                      slivers: <Widget>[
+                                        SliverOverlapInjector(
+                                          handle: NestedScrollView
+                                              .sliverOverlapAbsorberHandleFor(
+                                                  context),
+                                        ),
+                                        SliverList(
+                                            delegate: SliverChildListDelegate(
+                                                response.userRatings
+                                                    .map((UserRating rating) =>
+                                                        UserRatingBox(
+                                                          rating: rating,
+                                                        ))
+                                                    .toList()))
+                                      ]);
                                 } else {
-                                  return StandardBox(
-                                    content: Text("Noch keine Bewertungen"),
-                                  );
+                                  return CustomScrollView(
+                                      key: PageStorageKey<String>(name),
+                                      slivers: <Widget>[
+                                        SliverOverlapInjector(
+                                          handle: NestedScrollView
+                                              .sliverOverlapAbsorberHandleFor(
+                                                  context),
+                                        ),
+                                        SliverList(
+                                            delegate: SliverChildListDelegate([
+                                          StandardBox(
+                                            content:
+                                                Text("Noch keine Bewertungen"),
+                                          )
+                                        ]))
+                                      ]);
                                 }
                               });
                         }

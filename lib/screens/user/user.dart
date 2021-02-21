@@ -150,7 +150,7 @@ class _UserScreenState extends State<UserScreen> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  user.firstName + user.lastName,
+                  user.firstName + " " + user.lastName,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
@@ -258,7 +258,7 @@ class _UserScreenState extends State<UserScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Flexible(
-                    flex: 1,
+                    flex: 15,
                     child: GestureDetector(
                       onTap: () {
                         pushNewScreen(context,
@@ -496,6 +496,10 @@ class _UserScreenState extends State<UserScreen> {
                   ),
                   Flexible(
                     flex: 1,
+                    child: Container(),
+                  ),
+                  Flexible(
+                    flex: 15,
                     child: GestureDetector(
                       onTap: () {
                         pushNewScreen(context,

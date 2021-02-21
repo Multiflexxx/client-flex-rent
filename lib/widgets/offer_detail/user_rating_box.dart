@@ -53,8 +53,9 @@ class UserRatingBox extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  //user wird noch von der api später gegeben
-                  rating.ratedUser.firstName + ' ' + rating.ratedUser.lastName,
+                  rating.ratingOwner.firstName +
+                      " " +
+                      rating.ratingOwner.lastName,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
                     fontSize: 16.0,
@@ -83,7 +84,7 @@ class UserRatingBox extends StatelessWidget {
               ),
             ),
             SizedBox(height: 10.0),
-            //should only be shown if the text is to long. 
+            //should only be shown if the text is to long.
             GestureDetector(
               child: Text(
                 'Mehr anzeigen',
