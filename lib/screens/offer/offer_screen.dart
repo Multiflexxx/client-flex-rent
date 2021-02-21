@@ -513,6 +513,7 @@ class _OfferScreenState extends State<OfferScreen> {
                       UserBox(lessor: offer.lessor),
 
                       //Product Rating
+                      offer.numberOfRatings == 0 ? Container() :
                       GestureDetector(
                         onTap: () {
                           pushNewScreen(context, screen: OfferRatingsList());
@@ -526,44 +527,54 @@ class _OfferScreenState extends State<OfferScreen> {
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(16.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  'Bewertungen von anderen FLEXXERN',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Bewertungen von anderen FLEXXERN',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 1.2,
+                                      ),
+                                    ),
+                                    SizedBox(height: 20.0),
+                                    RatingBarIndicator(
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.star,
+                                        color: Colors.purple,
+                                      ),
+                                      direction: Axis.horizontal,
+                                      itemCount: 5,
+                                      rating: offer.rating.toDouble(),
+                                      itemSize: 40.0,
+                                    ),
+                                    SizedBox(height: 10.0),
+                                    Text(
+                                      offer.numberOfRatings == 1
+                                          ? 'Dieses Produkt hat ' +
+                                              offer.numberOfRatings.toString() +
+                                              " Bewertung"
+                                          : 'Dieses Produkt hat ' +
+                                              offer.numberOfRatings.toString() +
+                                              " Bewertungen",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 16.0,
+                                        letterSpacing: 1.2,
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                                SizedBox(height: 20.0),
-                                RatingBarIndicator(
-                                  itemBuilder: (context, _) => Icon(
-                                    Icons.star,
-                                    color: Colors.purple,
-                                  ),
-                                  direction: Axis.horizontal,
-                                  itemCount: 5,
-                                  rating: offer.rating.toDouble(),
-                                  itemSize: 40.0,
-                                ),
-                                SizedBox(height: 10.0),
-                                Text(
-                                  offer.numberOfRatings == 1
-                                      ? 'Dieses Produkt hat ' +
-                                          offer.numberOfRatings.toString() +
-                                          " Bewertung"
-                                      : 'Dieses Produkt hat ' +
-                                          offer.numberOfRatings.toString() +
-                                          " Bewertungen",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16.0,
-                                    letterSpacing: 1.2,
-                                  ),
-                                ),
+                                Icon(
+                                          Ionicons.ios_arrow_forward,
+                                          size: 30.0,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
                               ],
                             ),
                           ),
@@ -587,7 +598,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                   );
                                 } else {
                                   return StandardBox(
-                                    content: Text("Noch keine Bewertungen"),
+                                    content: Text("Das Produkt hat leider noch keine Bewertungen."),
                                   );
                                 }
                               }),
