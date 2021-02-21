@@ -1,7 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RatingBox extends StatelessWidget {
   final dynamic rating;
@@ -25,13 +28,13 @@ class RatingBox extends StatelessWidget {
             rating.headline == null || rating.headline == ""
                 ? Container()
                 : Text(
-                    rating.headline,
-                    style: TextStyle(
-                      color: Theme.of(context).primaryColor,
-                      fontSize: 18.0,
-                      height: 1.35,
-                    ),
-                  ),
+              rating.headline,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 18.0,
+                height: 1.35,
+              ),
+            ),
             SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -77,8 +80,8 @@ class RatingBox extends StatelessWidget {
             rating.ratingText == null || rating.ratingText == ""
                 ? Container()
                 : Column(
-                    children: [
-                      Text(
+              children: [
+                AutoSizeText(
                         rating.ratingText,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
@@ -86,22 +89,82 @@ class RatingBox extends StatelessWidget {
                           height: 1.35,
                           fontWeight: FontWeight.w300,
                         ),
-                      ),
-                      SizedBox(height: 10.0),
-                      //should only be shown if the text is to long.
-                      GestureDetector(
-                        child: Text(
-                          'Mehr anzeigen',
-                          style: TextStyle(
-                            color: Theme.of(context).accentColor,
-                            fontSize: 14.0,
-                            height: 1.35,
-                            decoration: TextDecoration.underline,
-                          ),
+                        minFontSize: 16.0,
+                        maxLines: 4,
+                        overflowReplacement: Column(
+                          children: [
+                            Text(
+                              rating.ratingText,
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 14.0,
+                                height: 1.35,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                            SizedBox(height: 10.0),
+                            //should only be shown if the text is to long.
+                            GestureDetector(
+                              onTap: () => showCupertinoModalBottomSheet(
+                                  expand: false,
+                                  context: context,
+                                  barrierColor: Colors.black45,
+                                  builder: (context, scrollController) =>
+                                      SlideIn(
+                                        top: false,
+                                        widgetList: [
+                                          SizedBox(
+                                            height: 10.0,
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.all(16.0),
+                                            child: Column(
+                                              children: [
+                                                Text(
+                                                  rating.headline,
+                                                  style: TextStyle(
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
+                                                      fontSize: 18.0,
+                                                      height: 1.35,
+                                                      decoration: TextDecoration
+                                                          .underline),
+                                                ),
+                                                SizedBox(height: 10.0),
+                                                Text(
+                                                  rating.ratingText,
+                                                  style: TextStyle(
+                                                    color: Theme.of(context)
+                                                        .primaryColor,
+                                                    fontSize: 16.0,
+                                                    height: 1.35,
+                                                    fontWeight: FontWeight.w300,
+                                                  ),
+                                                  textAlign: TextAlign.justify,
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 10.0,
+                                          ),
+                                        ],
+                                      )),
+                              child: Text(
+                                'Mehr anzeigen',
+                                style: TextStyle(
+                                  color: Theme.of(context).accentColor,
+                                  fontSize: 14.0,
+                                  height: 1.35,
+                                  decoration: TextDecoration.underline,
+                                ),
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ],
-                  ),
+            ),
             SizedBox(height: 10.0),
             Divider(
               height: 20.0,

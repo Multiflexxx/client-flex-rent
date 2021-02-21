@@ -51,6 +51,8 @@ class _UserReviewsState extends State<UserReviews> {
                 handle:
                     NestedScrollView.sliverOverlapAbsorberHandleFor(context),
                 sliver: SliverAppBar(
+                  iconTheme:
+                      IconThemeData(color: Theme.of(context).primaryColor),
                   centerTitle: true,
                   title: Text(
                     'Bewertungen',
@@ -66,7 +68,7 @@ class _UserReviewsState extends State<UserReviews> {
                   snap: false,
                   primary: true,
                   forceElevated: innerBoxIsScrolled,
-                  toolbarHeight: 0.3 * MediaQuery.of(context).size.height,
+                  toolbarHeight: 0.1 * MediaQuery.of(context).size.height,
                   bottom: TabBar(
                     indicator: CircleTabIndicator(
                         color: Theme.of(context).accentColor, radius: 3.0),
@@ -81,7 +83,7 @@ class _UserReviewsState extends State<UserReviews> {
                               ),
                             ),
                           ),
-                        )
+                    )
                         .toList(),
                   ),
                 ),
