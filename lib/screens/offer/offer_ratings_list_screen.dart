@@ -1,44 +1,75 @@
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/offer_service.dart';
+import 'package:flexrent/widgets/boxes/standard_box.dart';
+import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OfferRatingsList extends StatefulWidget {
+  final Offer offer;
+
+  OfferRatingsList({this.offer});
+
   @override
   _OfferRatingsListState createState() => _OfferRatingsListState();
 }
 
 class _OfferRatingsListState extends State<OfferRatingsList> {
+  Future<OfferRatingResponse> offerRatings;
+
+  @override
+  void initState() {
+    try {
+      offerRatings = ApiOfferService().getOfferRatingsById(offer: widget.offer);
+    } catch (e) {
+      print(e);
+      offerRatings = null;
+    }
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: NestedScrollView(
-        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
-          return <Widget>[
-            SliverOverlapAbsorber(
-              handle: NestedScrollView.sliverOverlapAbsorberHandleFor(context),
-              sliver: SliverAppBar(
-                iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-                centerTitle: true,
-                title: Text(
-                  'Bewertungen',
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 21.0,
-                    letterSpacing: 1.2,
-                  ),
-                ),
-                backgroundColor: Colors.transparent,
-                floating: true,
-                pinned: true,
-                snap: false,
-                primary: true,
-                forceElevated: innerBoxIsScrolled,
-                toolbarHeight: 0.1 * MediaQuery.of(context).size.height,
-              ),
+        appBar: AppBar(
+          iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+          centerTitle: true,
+          title: Text(
+            'Bewertungen',
+            style: TextStyle(
+              color: Theme.of(context).primaryColor,
+              fontSize: 21.0,
+              letterSpacing: 1.2,
             ),
-          ];
-        },
-        body: Container(),
-      ),
-    );
+          ),
+          backgroundColor: Colors.transparent,
+          toolbarHeight: 0.1 * MediaQuery.of(context).size.height,
+        ),
+        body: ListView(
+          children: [
+            offerRatings == null
+                ? StandardBox(
+                    content: Text("Hier ist etwas schiefgelaufen"),
+                  )
+                : FutureBuilder(
+                    future: offerRatings,
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        OfferRatingResponse response = snapshot.data;
+                        return Column(
+                          children: response.offerRatings
+                              .map((rating) => RatingBox(
+                                    rating: rating,
+                                  ))
+                              .toList(),
+                        );
+                      } else {
+                        return StandardBox(
+                          content: Text("Noch keine Bewertungen"),
+                        );
+                      }
+                    }),
+          ],
+        ));
   }
 }

@@ -516,19 +516,22 @@ class _OfferScreenState extends State<OfferScreen> {
                       offer.numberOfRatings == 0 ? Container() :
                       GestureDetector(
                         onTap: () {
-                          pushNewScreen(context, screen: OfferRatingsList());
-                        },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(
-                              vertical: 12.0, horizontal: 18.0),
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).cardColor,
-                            borderRadius: BorderRadius.circular(10.0),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(16.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                pushNewScreen(context,
+                                    screen: OfferRatingsList(
+                                      offer: offer,
+                                    ));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 18.0),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).cardColor,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
