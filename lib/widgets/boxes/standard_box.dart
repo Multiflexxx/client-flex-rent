@@ -4,8 +4,10 @@ import 'package:flutter/material.dart';
 class StandardBox extends StatelessWidget {
   final Widget content;
   final bool margin;
+  final double height;
+  final double width;
 
-  StandardBox({this.content, this.margin = true});
+  StandardBox({this.content, this.margin = true, this.height, this.width});
 
   @override
   Widget build(BuildContext context) {
@@ -17,6 +19,8 @@ class StandardBox extends StatelessWidget {
           color: Theme.of(context).cardColor,
           borderRadius: BorderRadius.circular(10.0),
         ),
+        height: height,
+        width: width,
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: content,

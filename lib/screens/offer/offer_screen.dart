@@ -497,7 +497,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    "Show more",
+                                    "Mehr anzeigen",
                                     style: TextStyle(
                                       color: Theme.of(context).accentColor,
                                       fontSize: 16.0,
