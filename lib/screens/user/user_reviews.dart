@@ -1,7 +1,7 @@
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/boxes/standard_box.dart';
-import 'package:flexrent/widgets/offer_detail/user_rating_box.dart';
+import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flexrent/widgets/styles/circle_tab_indicator.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -114,7 +114,7 @@ class _UserReviewsState extends State<UserReviews> {
                                             delegate: SliverChildListDelegate(
                                                 response.userRatings
                                                     .map((UserRating rating) =>
-                                                        UserRatingBox(
+                                                    RatingBox(
                                                           rating: rating,
                                                         ))
                                                     .toList()))
@@ -157,7 +157,7 @@ class _UserReviewsState extends State<UserReviews> {
                                             delegate: SliverChildListDelegate(
                                                 response.userRatings
                                                     .map((UserRating rating) =>
-                                                        UserRatingBox(
+                                                    RatingBox(
                                                           rating: rating,
                                                         ))
                                                     .toList()))
