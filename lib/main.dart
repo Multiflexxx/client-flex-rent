@@ -1,3 +1,5 @@
+import 'package:flexrent/logic/blocs/offer/bloc/offer_bloc.dart';
+import 'package:flexrent/logic/blocs/offer/ticker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/app.dart';
@@ -39,11 +41,20 @@ void main() => runApp(
                   )..add(AppLoaded());
                 },
               ),
-              BlocProvider<UserBloc>(create: (context) {
-                final userService = RepositoryProvider.of<UserService>(context);
-                return UserBloc(
-                    BlocProvider.of<AuthenticationBloc>(context), userService);
-              }),
+              BlocProvider<UserBloc>(
+                create: (context) {
+                  final userService =
+                      RepositoryProvider.of<UserService>(context);
+                  return UserBloc(BlocProvider.of<AuthenticationBloc>(context),
+                      userService);
+                },
+              ),
+              BlocProvider<OfferBloc>(
+                lazy: false,
+                create: (context) {
+                  return OfferBloc(Ticker());
+                },
+              ),
             ],
             child: MyApp(),
           )),
@@ -81,12 +92,19 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: BlocBuilder<AuthenticationBloc, AuthenticationState>(
-        builder: (context, state) {
-          return App(
-            key: appKey,
-          );
+      home: BlocListener<AuthenticationBloc, AuthenticationState>(
+        listener: (context, state) {
+          if (state is AuthenticationAuthenticated) {
+            BlocProvider.of<OfferBloc>(context).add(OfferTickerStarted());
+          }
         },
+        child: BlocBuilder<AuthenticationBloc, AuthenticationState>(
+          builder: (context, state) {
+            return App(
+              key: appKey,
+            );
+          },
+        ),
       ),
     );
   }

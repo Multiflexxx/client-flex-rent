@@ -1,9 +1,13 @@
 import 'dart:async';
 
+import 'package:badges/badges.dart';
+import 'package:flexrent/logic/blocs/offer/offer.dart';
+import 'package:flexrent/logic/blocs/user/user.dart';
 import 'package:flexrent/screens/booking/lessee/lessee_finish_rent.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/models/models.dart';
