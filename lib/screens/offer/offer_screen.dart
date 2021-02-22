@@ -55,13 +55,10 @@ class _OfferScreenState extends State<OfferScreen> {
     _dateRange = DateRange(fromDate: null, toDate: null);
     initializeDateFormatting('de_DE', null);
     offer = ApiOfferService().getOfferById(offerId: widget.offer.offerId);
-    try {
-      offerratings =
-          ApiOfferService().getOfferRatingsById(offer: widget.offer, page: 1);
-    } catch (e) {
-      print(e);
-      offerratings = null;
-    }
+
+    offerratings =
+        ApiOfferService().getOfferRatingsById(offer: widget.offer, page: 1);
+
     _user = HelperService.getUser(context: context);
   }
 
@@ -622,29 +619,30 @@ class _OfferScreenState extends State<OfferScreen> {
                                 ),
                               ),
                             ),
-                      offerratings == null
-                          ? StandardBox(
-                              content: Text("Hier ist etwas schiefgelaufen"),
-                            )
-                          : FutureBuilder(
-                              future: offerratings,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  OfferRatingResponse response = snapshot.data;
-                                  return Column(
-                                    children: response.offerRatings
-                                        .map((rating) => RatingBox(
-                                              rating: rating,
-                                            ))
-                                        .toList(),
-                                  );
-                                } else {
-                                  return StandardBox(
-                                    content: Text(
-                                        "Das Produkt hat leider noch keine Bewertungen."),
-                                  );
-                                }
-                              }),
+
+                      FutureBuilder(
+                        future: offerratings,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            OfferRatingResponse response = snapshot.data;
+                            return Column(
+                              children: response.offerRatings
+                                  .map((rating) => RatingBox(
+                                        rating: rating,
+                                      ))
+                                  .toList(),
+                            );
+                          } else if (snapshot.hasError) {
+                            OfferRatingException e = snapshot.error;
+                            return StandardBox(
+                              content: Text(e.message),
+                            );
+                          }
+                          return StandardBox(
+                            content: Text("Hier ist etwas schiefgelaufen"),
+                          );
+                        },
+                      ),
                     ],
                   ),
                 ),

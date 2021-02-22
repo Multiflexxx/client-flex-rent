@@ -101,7 +101,7 @@ class _MyItemsState extends State<MyItems> {
                             );
                           }
                           return Icon(
-                            Feather.mail,
+                            Feather.bell,
                             size: 30.0,
                             color: Theme.of(context).primaryColor,
                           );

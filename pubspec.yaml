@@ -64,6 +64,7 @@ dependencies:
   flutter_rating_bar: ^3.2.0+1
   badges: ^1.1.6
   rxdart: ^0.25.0
+  flutter_spinkit: ^4.1.2+1
 
 
 dev_dependencies:

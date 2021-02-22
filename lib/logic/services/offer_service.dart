@@ -485,14 +485,19 @@ class ApiOfferService extends OfferService {
         inspect(offerRatingResponse);
         return offerRatingResponse;
       } else {
-        throw OfferRatingException(
-            message: 'Das Offer ${offer.title} hat noch keine Bewertung.');
+        return Future.error(
+          OfferRatingException(
+              message:
+                  'Der Mietgegenstand ${offer.title} hat noch keine Bewertung.'),
+        );
       }
     } else {
       inspect(response);
-      throw UserRatingException(
-          message:
-              'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.');
+      return Future.error(
+        OfferRatingException(
+            message:
+                'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.'),
+      );
     }
   }
 
