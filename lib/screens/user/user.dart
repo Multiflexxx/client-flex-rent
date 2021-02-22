@@ -340,12 +340,15 @@ class _UserScreenState extends State<UserScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
+                                AutoSizeText(
                                   user.numberOfLesseeRatings == 1
                                       ? user.numberOfLesseeRatings.toString() +
                                           " Bewertung"
                                       : user.numberOfLesseeRatings.toString() +
                                           " Bewertungen",
+                                  maxLines: 1,
+                                  minFontSize: 12,
+                                  maxFontSize: 18,
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 20.0,
@@ -439,12 +442,15 @@ class _UserScreenState extends State<UserScreen> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text(
+                                AutoSizeText(
                                   user.numberOfLessorRatings == 1
                                       ? user.numberOfLessorRatings.toString() +
                                           " Bewertung"
                                       : user.numberOfLessorRatings.toString() +
                                           " Bewertungen",
+                                  maxLines: 1,
+                                  maxFontSize: 18,
+                                  minFontSize: 12,
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
                                     fontSize: 20.0,

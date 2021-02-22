@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
+import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/booking/confirmation_payment_screen.dart';
 import 'package:flexrent/screens/offer/offer_ratings_list_screen.dart';
 import 'package:flexrent/widgets/boxes/standard_box.dart';
@@ -46,6 +47,7 @@ class _OfferScreenState extends State<OfferScreen> {
   Future<Offer> offer;
   Future<OfferRatingResponse> offerratings;
   DateRange _dateRange;
+  User _user;
 
   @override
   void initState() {
@@ -60,6 +62,7 @@ class _OfferScreenState extends State<OfferScreen> {
       print(e);
       offerratings = null;
     }
+    _user = HelperService.getUser(context: context);
   }
 
   List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {
@@ -264,59 +267,87 @@ class _OfferScreenState extends State<OfferScreen> {
                                       ),
                                     ],
                                   ),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      if (_dateRange.fromDate != null) {
-                                        _onReservation(offer);
-                                      } else {
-                                        final range =
-                                            await showCupertinoModalBottomSheet<
-                                                dynamic>(
-                                          expand: true,
-                                          context: context,
-                                          barrierColor: Colors.black45,
-                                          builder:
-                                              (context, scrollController) =>
-                                                  DateRangePicker(
-                                            scrollController: scrollController,
-                                            date: null,
-                                            range: _picker.PickerDateRange(
-                                              _dateRange.fromDate,
-                                              _dateRange.toDate,
+                                  _user.userId == offer.lessor.userId
+                                      ? Container(
+                                          width: 0.4 *
+                                              MediaQuery.of(context).size.width,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                              color: Colors.purple[200],
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                          child: Center(
+                                            child: Text(
+                                              'Reservieren',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.w300),
                                             ),
-                                            minDate: DateTime.now(),
-                                            maxDate: DateTime.now().add(
-                                              Duration(days: 90),
-                                            ),
-                                            displayDate: _dateRange.fromDate,
-                                            blockedDates: offer.blockedDates,
                                           ),
-                                        );
-                                        if (range != null) {
-                                          _onSelectedRangeChanged(range);
-                                          _onReservation(offer);
-                                        }
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 0.4 *
-                                          MediaQuery.of(context).size.width,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).accentColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      child: Center(
-                                        child: Text(
-                                          'Reservieren',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w300),
+                                        )
+                                      : GestureDetector(
+                                          onTap: () async {
+                                            if (_dateRange.fromDate != null) {
+                                              _onReservation(offer);
+                                            } else {
+                                              final range =
+                                                  await showCupertinoModalBottomSheet<
+                                                      dynamic>(
+                                                expand: true,
+                                                context: context,
+                                                barrierColor: Colors.black45,
+                                                builder: (context,
+                                                        scrollController) =>
+                                                    DateRangePicker(
+                                                  scrollController:
+                                                      scrollController,
+                                                  date: null,
+                                                  range:
+                                                      _picker.PickerDateRange(
+                                                    _dateRange.fromDate,
+                                                    _dateRange.toDate,
+                                                  ),
+                                                  minDate: DateTime.now(),
+                                                  maxDate: DateTime.now().add(
+                                                    Duration(days: 90),
+                                                  ),
+                                                  displayDate:
+                                                      _dateRange.fromDate,
+                                                  blockedDates:
+                                                      offer.blockedDates,
+                                                ),
+                                              );
+                                              if (range != null) {
+                                                _onSelectedRangeChanged(range);
+                                                _onReservation(offer);
+                                              }
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 0.4 *
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                            height: 50.0,
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            child: Center(
+                                              child: Text(
+                                                'Reservieren',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ],
