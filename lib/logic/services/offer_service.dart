@@ -31,7 +31,7 @@ abstract class OfferService {
   Future<OfferRating> createOfferRating(
       {Offer offer, int rating, String headline, String ratingText});
   Future<NewRequestNumbers> getNumberOfNewRequests();
-
+}
 
 class ApiOfferService extends OfferService {
   final _storage = FlutterSecureStorage();
@@ -537,6 +537,7 @@ class ApiOfferService extends OfferService {
           message:
               'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
     }
+  }
 
   Future<NewRequestNumbers> getNumberOfNewRequests() async {
     final String sessionId = await _storage.read(key: 'sessionId');
@@ -561,6 +562,5 @@ class ApiOfferService extends OfferService {
       inspect(response);
     }
     return null;
-
   }
 }
