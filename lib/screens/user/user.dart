@@ -12,6 +12,7 @@ import 'package:flexrent/widgets/slideIns/slideIn.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
@@ -78,25 +79,25 @@ class _UserScreenState extends State<UserScreen> {
 
     return Scaffold(
         body: DefaultTabController(
-          length: _tabs.length,
-          child:
+      length: _tabs.length,
+      child:
           CustomScrollView(physics: BouncingScrollPhysics(), slivers: <Widget>[
-            SliverAppBar(
-              stretch: true,
-              onStretchTrigger: () {
-                return;
-              },
-              floating: false,
-              pinned: true,
-              leading: IconButton(
-                icon: Icon(Feather.arrow_left),
-                iconSize: 30.0,
-                color: Theme.of(context).primaryColor,
-                onPressed: () => Navigator.pop(context),
-              ),
-              actions: <Widget>[
-                IconButton(
-                    onPressed: () => showCupertinoModalBottomSheet(
+        SliverAppBar(
+          stretch: true,
+          onStretchTrigger: () {
+            return;
+          },
+          floating: false,
+          pinned: true,
+          leading: IconButton(
+            icon: Icon(Feather.arrow_left),
+            iconSize: 30.0,
+            color: Theme.of(context).primaryColor,
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: <Widget>[
+            IconButton(
+                onPressed: () => showCupertinoModalBottomSheet(
                       expand: false,
                       context: context,
                       barrierColor: Colors.black45,
@@ -128,297 +129,279 @@ class _UserScreenState extends State<UserScreen> {
                         ],
                       ),
                     ),
-                    icon: Icon(
-                      Icons.more_horiz,
-                      color: Theme.of(context).primaryColor,
-                    )),
-              ],
-              backgroundColor: Theme.of(context).backgroundColor,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(20),
-                  bottomRight: Radius.circular(20),
+                icon: Icon(
+                  Icons.more_horiz,
+                  color: Theme.of(context).primaryColor,
+                )),
+          ],
+          backgroundColor: Theme.of(context).backgroundColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.only(
+              bottomLeft: Radius.circular(20),
+              bottomRight: Radius.circular(20),
+            ),
+          ),
+          expandedHeight: MediaQuery.of(context).size.width,
+          flexibleSpace: FlexibleSpaceBar(
+            stretchModes: <StretchMode>[
+              StretchMode.zoomBackground,
+              StretchMode.fadeTitle,
+            ],
+            centerTitle: true,
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  user.firstName + " " + user.lastName,
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.w500,
+                    letterSpacing: 1.2,
+                  ),
                 ),
-              ),
-              expandedHeight: MediaQuery.of(context).size.width,
-              flexibleSpace: FlexibleSpaceBar(
-                stretchModes: <StretchMode>[
-                  StretchMode.zoomBackground,
-                  StretchMode.fadeTitle,
-                ],
-                centerTitle: true,
-                title: Row(
+                user.verified
+                    ? Icon(
+                        Feather.user_check,
+                        color: Theme.of(context).accentColor,
+                      )
+                    : Text("")
+              ],
+            ),
+            background: Stack(
+              fit: StackFit.expand,
+              children: <Widget>[
+                Hero(
+                  tag: "test",
+                  transitionOnUserGestures: true,
+                  child: GestureDetector(
+                    onTap: () {},
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(20.0),
+                        bottomRight: Radius.circular(20.0),
+                      ),
+                      child: user.profilePicture.length == 0
+                          ? Image(
+                              image: AssetImage('assets/images/noimage.png'),
+                              height: 180.0,
+                              width: 180.0,
+                              fit: BoxFit.cover,
+                            )
+                          : CachedNetworkImage(
+                              imageUrl: user.profilePicture,
+                              height: 180.0,
+                              width: 180.0,
+                              fit: BoxFit.cover,
+                              placeholder: (context, url) => Icon(
+                                Icons.error,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                              errorWidget: (context, url, error) => Icon(
+                                Icons.error,
+                                color: Theme.of(context).primaryColor,
+                              ),
+                            ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SliverList(
+            delegate: SliverChildListDelegate(<Widget>[
+          StandardBox(
+              content: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      user.firstName + " " + user.lastName,
+                      user.city,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 18.0,
-                        fontWeight: FontWeight.w500,
+                        fontWeight: FontWeight.w400,
                         letterSpacing: 1.2,
                       ),
                     ),
-                    user.verified
-                        ? Icon(
-                      Feather.user_check,
-                      color: Theme.of(context).accentColor,
-                    )
-                        : Text("")
-                  ],
-                ),
-                background: Stack(
-                  fit: StackFit.expand,
-                  children: <Widget>[
-                    Hero(
-                      tag: "test",
-                      transitionOnUserGestures: true,
-                      child: GestureDetector(
-                        onTap: () {},
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.only(
-                            bottomLeft: Radius.circular(20.0),
-                            bottomRight: Radius.circular(20.0),
-                          ),
-                          child: user.profilePicture.length == 0
-                              ? Image(
-                            image: AssetImage('assets/images/noimage.png'),
-                            height: 180.0,
-                            width: 180.0,
-                            fit: BoxFit.cover,
-                          )
-                              : CachedNetworkImage(
-                            imageUrl: user.profilePicture,
-                            height: 180.0,
-                            width: 180.0,
-                            fit: BoxFit.cover,
-                            placeholder: (context, url) => Icon(
-                              Icons.error,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                            errorWidget: (context, url, error) => Icon(
-                              Icons.error,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                          ),
-                        ),
+                    Text(
+                      " (" + user.postCode + ")",
+                      style: TextStyle(
+                        color: Theme.of(context).primaryColor,
+                        fontSize: 18.0,
+                        fontWeight: FontWeight.w400,
+                        letterSpacing: 1.2,
                       ),
                     ),
                   ],
                 ),
+              ])),
+          FutureBuilder(
+              future: offers,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return DiscoveryCarousel(
+                    carouselTitle: 'Angebote von ' + user.firstName,
+                    offerList: snapshot.data,
+                    hideNavBarFunction: () {},
+                    user: user,
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+          Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20.0),
+            child: Text(
+              'Bewertungen als',
+              style: TextStyle(
+                fontSize: 22.0,
+                fontWeight: FontWeight.bold,
+                letterSpacing: 1.2,
               ),
             ),
-            SliverList(
-                delegate: SliverChildListDelegate(<Widget>[
-                  StandardBox(
-                      content: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Flexible(
+                    flex: 15,
+                    child: GestureDetector(
+                      onTap: () {
+                        pushNewScreen(context,
+                            screen: UserReviews(
+                              user: user,
+                              startTab: 0,
+                            ));
+                      },
+                      child: StandardBox(
+                        height: 0.4 * MediaQuery.of(context).size.width,
+                        margin: false,
+                        content: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
+                            Text(
+                              "Mieter",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                            user.lesseeRating == null ||
+                                    user.numberOfLesseeRatings == 0
+                                ? Text(
+                                    "Keine Bewertungen",
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w300,
+                                      letterSpacing: 1.2,
+                                    ),
+                                  )
+                                : Row(
+                                    children: [
+                                      Text(
+                                        user.lesseeRating.toString(),
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 20.0,
+                                          fontWeight: FontWeight.w400,
+                                          letterSpacing: 1.0,
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 10.0,
+                                      ),
+                                      RatingBarIndicator(
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                        direction: Axis.horizontal,
+                                        itemCount: 5,
+                                        rating: user.lesseeRating.toDouble(),
+                                        itemSize: 25.0,
+                                      ),
+                                    ],
+                                  ),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 Text(
-                                  user.city,
+                                  user.numberOfLesseeRatings == 1
+                                      ? user.numberOfLesseeRatings.toString() +
+                                          " Bewertung"
+                                      : user.numberOfLesseeRatings.toString() +
+                                          " Bewertungen",
                                   style: TextStyle(
                                     color: Theme.of(context).primaryColor,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w400,
-                                    letterSpacing: 1.2,
-                                  ),
-                                ),
-                                Text(
-                                  " (" + user.postCode + ")",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.w400,
+                                    fontSize: 20.0,
                                     letterSpacing: 1.2,
                                   ),
                                 ),
                               ],
                             ),
-                          ])),
-                  FutureBuilder(
-                      future: offers,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          return DiscoveryCarousel(
-                            carouselTitle: 'Angebote von ' + user.firstName,
-                    offerList: snapshot.data,
-                    hideNavBarFunction: () {},
-                    user: user,
-                  );
-                        } else {
-                          return Container();
-                        }
-                      }),
-                  Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Flexible(
-                            flex: 15,
-                            child: GestureDetector(
-                              onTap: () {
-                                pushNewScreen(context,
-                                    screen: UserReviews(
-                                      user: user,
-                              startTab: 0,
-                            ));
-                              },
-                              child: StandardBox(
-                                height: 0.4 * MediaQuery.of(context).size.width,
-                        margin: false,
-                        content: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  "Mieterbewertung",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    user.lesseeRating == null ||
-                                        user.numberOfLesseeRatings == 0
-                                        ? Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                      children: [
-                                        Text(
-                                          "Keine Bewertungen",
-                                          overflow: TextOverflow.fade,
-                                          style: TextStyle(
-                                            color: Theme.of(context).primaryColor,
-                                            fontSize: 14.0,
-                                            fontWeight: FontWeight.w300,
-                                            letterSpacing: 1.2,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                        : Column(
-                                      children: [
-                                        Row(
-                                          mainAxisAlignment:
-                                          MainAxisAlignment.spaceEvenly,
-                                          children: [
-                                            Text(
-                                              user.lesseeRating.toString(),
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 25.0,
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: 1.0,
-                                            ),
-                                            ),
-                                            Icon(
-                                              Icons.star,
-                                            color:
-                                                Theme.of(context).accentColor,
-                                            size: 30,
-                                          ),
-                                            Text(
-                                              "(" +
-                                                  user.numberOfLesseeRatings
-                                                      .toString() +
-                                                  ")",
-                                              style: TextStyle(
-                                                color: Theme.of(context)
-                                                  .primaryColor,
-                                              fontSize: 22.0,
-                                              fontWeight: FontWeight.w400,
-                                              letterSpacing: 1.2,
-                                            ),
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                    ],
-                                    )
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 1,
-                            child: Container(),
-                          ),
-                          Flexible(
-                            flex: 15,
-                            child: GestureDetector(
-                              onTap: () {
-                                pushNewScreen(context,
-                                    screen: UserReviews(
-                                      user: user,
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                  Flexible(
+                    flex: 1,
+                    child: Container(),
+                  ),
+                  Flexible(
+                    flex: 15,
+                    child: GestureDetector(
+                      onTap: () {
+                        pushNewScreen(context,
+                            screen: UserReviews(
+                              user: user,
                               startTab: 1,
                             ));
-                              },
-                              child: StandardBox(
-                                height: 0.4 * MediaQuery.of(context).size.width,
+                      },
+                      child: StandardBox(
+                        height: 0.4 * MediaQuery.of(context).size.width,
                         margin: false,
                         content: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                Text(
-                                  "Vermieterbewertung",
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontSize: 16.0,
-                                    fontWeight: FontWeight.w500,
-                                    letterSpacing: 1.2,
-                                  ),
-                                        ),
-                                      ],
+                            Text(
+                              "Vermieter",
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.w500,
+                                letterSpacing: 1.2,
+                              ),
+                            ),
+                            user.lessorRating == null ||
+                                    user.numberOfLessorRatings == 0
+                                ? Text(
+                                    "Keine Bewertungen",
+                                    overflow: TextOverflow.fade,
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 20.0,
+                                      fontWeight: FontWeight.w300,
+                                      letterSpacing: 1.2,
                                     ),
-                                    SizedBox(
-                                      height: 5,
-                                    ),
-                                    user.lessorRating == null ||
-                                        user.numberOfLessorRatings == 0
-                                ? Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Text(
-                                        "Keine Bewertungen",
-                                        overflow: TextOverflow.fade,
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 14.0,
-                                          fontWeight: FontWeight.w300,
-                                          letterSpacing: 1.2,
-                                        ),
-                                      ),
-                                    ],
                                   )
                                 : Column(
                                     children: [
                                       Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Text(
                                             user.lessorRating.toString(),
@@ -430,42 +413,56 @@ class _UserScreenState extends State<UserScreen> {
                                               letterSpacing: 1.0,
                                             ),
                                           ),
-                                          Icon(
-                                            Icons.star,
-                                            color:
-                                                Theme.of(context).accentColor,
-                                            size: 30,
+                                          SizedBox(
+                                            width: 10.0,
                                           ),
+                                          RatingBarIndicator(
+                                            itemBuilder: (context, _) => Icon(
+                                              Icons.star,
+                                              color:
+                                                  Theme.of(context).accentColor,
+                                            ),
+                                            direction: Axis.horizontal,
+                                            itemCount: 5,
+                                            rating:
+                                                user.lesseeRating.toDouble(),
+                                            itemSize: 25.0,
+                                          ),
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
                                           Text(
-                                            "(" +
-                                                user.numberOfLessorRatings
-                                                    .toString() +
-                                                ")",
+                                            user.numberOfLesseeRatings == 1
+                                                ? user.numberOfLesseeRatings
+                                                        .toString() +
+                                                    " Bewertung"
+                                                : user.numberOfLesseeRatings
+                                                        .toString() +
+                                                    " Bewertungen",
                                             style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryColor,
-                                              fontSize: 22.0,
-                                              fontWeight: FontWeight.w400,
+                                              fontSize: 20.0,
                                               letterSpacing: 1.2,
                                             ),
                                           ),
                                         ],
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
                                     ],
                                   )
                           ],
-                                ),
-                              ),
-                            ),
-                          ),
-                        ]),
+                        ),
+                      ),
+                    ),
                   ),
+                ]),
+          ),
 
-                  //User Ratingbox falls rating da ist, sonst nichts
-                  /*
+          //User Ratingbox falls rating da ist, sonst nichts
+          /*
                 TabBar(
                       indicator: CircleTabIndicator(
                           color: Theme.of(context).accentColor, radius: 3.0),
@@ -494,7 +491,7 @@ class _UserScreenState extends State<UserScreen> {
                    ],
                 ),
               ),*/
-                  /*
+          /*
               Container(
                 child: FutureBuilder(
                         future: lesseeratings,
@@ -513,8 +510,8 @@ class _UserScreenState extends State<UserScreen> {
                         }),
                 ),
               ),*/
-                ]))
-          ]),
-        ));
+        ]))
+      ]),
+    ));
   }
 }
