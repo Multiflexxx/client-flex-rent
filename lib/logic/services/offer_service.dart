@@ -285,7 +285,6 @@ class ApiOfferService extends OfferService {
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
-      print(response.statusCode);
       return null;
     }
   }

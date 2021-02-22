@@ -10,9 +10,9 @@ class AuthScreen extends StatelessWidget {
   static String routeName = 'authScreen';
 
   final VoidCallback hideNavBarFunction;
-  final String rootName;
+  final String realScreenName;
 
-  const AuthScreen({Key key, this.hideNavBarFunction, this.rootName})
+  const AuthScreen({Key key, this.hideNavBarFunction, this.realScreenName})
       : super(key: key);
 
   @override
@@ -43,7 +43,7 @@ class AuthScreen extends StatelessWidget {
               ],
               centerTitle: true,
               title: Text(
-                rootName == 'account' ? 'Profil' : 'Mietgegenstände',
+                realScreenName == 'account' ? 'Profil' : 'Mietgegenstände',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 18.0,
@@ -54,21 +54,17 @@ class AuthScreen extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Hero(
-                    tag: 'Mietgegensände',
-                    transitionOnUserGestures: true,
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20.0),
-                        bottomRight: Radius.circular(20.0),
-                      ),
-                      child: Icon(
-                        rootName == 'account'
-                            ? Feather.user
-                            : Feather.shopping_bag,
-                        size: 175,
-                        color: Theme.of(context).accentColor,
-                      ),
+                  ClipRRect(
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20.0),
+                      bottomRight: Radius.circular(20.0),
+                    ),
+                    child: Icon(
+                      realScreenName == 'accountScreen'
+                          ? Feather.user
+                          : Feather.shopping_bag,
+                      size: 175,
+                      color: Theme.of(context).accentColor,
                     ),
                   )
                 ],
@@ -94,7 +90,7 @@ class AuthScreen extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      rootName == 'account'
+                      realScreenName == 'accountScreen'
                           ? 'Melde dich an, um dein Profil zu sehen. Mit einem Profil kannst du Gegenstände ausleihen und verleihen.'
                           : 'Melde dich an, um deine Mietgegenstände zu sehen!',
                       style: TextStyle(fontSize: 20, letterSpacing: 1.25),
@@ -105,7 +101,7 @@ class AuthScreen extends StatelessWidget {
                         hideNavBarFunction();
                         pushNewScreen(
                           context,
-                          screen: rootName == 'account'
+                          screen: realScreenName == 'accountScreen'
                               ? AuthenticationScreen(
                                   popRouteName: AccountScreen.routeName,
                                   targetScreen: AccountScreen(
