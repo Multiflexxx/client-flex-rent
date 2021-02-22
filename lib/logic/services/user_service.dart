@@ -127,6 +127,8 @@ class ApiUserService extends UserService {
             message:
                 'Beim löschen deines Accounts ist etwas schief gelaufen. Probiere es später nochmals.');
       }
+    }
+  }
 
   Future<UserRatingResponse> getUserRatingById(
       {User user, bool lessorRating, int page}) async {
