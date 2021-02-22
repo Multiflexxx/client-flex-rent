@@ -28,13 +28,13 @@ class RatingBox extends StatelessWidget {
             rating.headline == null || rating.headline == ""
                 ? Container()
                 : Text(
-              rating.headline,
-              style: TextStyle(
-                color: Theme.of(context).primaryColor,
-                fontSize: 18.0,
-                height: 1.35,
-              ),
-            ),
+                    rating.headline,
+                    style: TextStyle(
+                      color: Theme.of(context).primaryColor,
+                      fontSize: 18.0,
+                      height: 1.35,
+                    ),
+                  ),
             SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
@@ -42,7 +42,7 @@ class RatingBox extends StatelessWidget {
                 RatingBarIndicator(
                   itemBuilder: (context, _) => Icon(
                     Icons.star,
-                    color: Colors.purple,
+                    color: Theme.of(context).accentColor,
                   ),
                   direction: Axis.horizontal,
                   itemCount: 5,
@@ -80,8 +80,8 @@ class RatingBox extends StatelessWidget {
             rating.ratingText == null || rating.ratingText == ""
                 ? Container()
                 : Column(
-              children: [
-                AutoSizeText(
+                    children: [
+                      AutoSizeText(
                         rating.ratingText,
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
@@ -164,7 +164,7 @@ class RatingBox extends StatelessWidget {
                         ),
                       ),
                     ],
-            ),
+                  ),
             SizedBox(height: 10.0),
             Divider(
               height: 20.0,
