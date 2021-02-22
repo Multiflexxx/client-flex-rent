@@ -11,15 +11,24 @@ class OfferRequest {
   final DateRange dateRange;
   final String message;
   final String qrCodeId;
+  final UserRating lessorRating;
+  final UserRating lesseeRating;
+  final OfferRating offerRating;
+  final bool newUpdate;
 
-  OfferRequest(
-      {this.requestId,
-      this.user,
-      this.offer,
-      this.statusId,
-      this.dateRange,
-      this.message,
-      this.qrCodeId});
+  OfferRequest({
+    this.requestId,
+    this.user,
+    this.offer,
+    this.statusId,
+    this.dateRange,
+    this.message,
+    this.qrCodeId,
+    this.lessorRating,
+    this.lesseeRating,
+    this.offerRating,
+    this.newUpdate,
+  });
 
   factory OfferRequest.fromJson(Map<String, dynamic> json) =>
       _$OfferRequestFromJson(json);

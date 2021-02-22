@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:badges/badges.dart';
 import 'package:flexrent/screens/booking/lessor/lessor_finish_rent.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
@@ -138,12 +139,14 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                       delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index) {
                                           return GestureDetector(
-                                            onTap: () => pushNewScreen(context,
-                                                screen: LessorResponseScreen(
-                                                    offerRequest:
-                                                        openOfferRequestList[
-                                                            index]),
-                                                withNavBar: false),
+                                            onTap: () => pushNewScreen(
+                                              context,
+                                              screen: LessorResponseScreen(
+                                                  offerRequest:
+                                                      openOfferRequestList[
+                                                          index]),
+                                              withNavBar: false,
+                                            ),
                                             child: OfferRequestCard(
                                               offerRequest:
                                                   openOfferRequestList[index],
