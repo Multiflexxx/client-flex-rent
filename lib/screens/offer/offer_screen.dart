@@ -3,10 +3,14 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
 import 'package:flexrent/screens/booking/confirmation_payment_screen.dart';
+import 'package:flexrent/screens/offer/offer_ratings_list_screen.dart';
+import 'package:flexrent/widgets/boxes/standard_box.dart';
+import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -40,6 +44,7 @@ class OfferScreen extends StatefulWidget {
 
 class _OfferScreenState extends State<OfferScreen> {
   Future<Offer> offer;
+  Future<OfferRatingResponse> offerratings;
   DateRange _dateRange;
 
   @override
@@ -48,6 +53,23 @@ class _OfferScreenState extends State<OfferScreen> {
     _dateRange = DateRange(fromDate: null, toDate: null);
     initializeDateFormatting('de_DE', null);
     offer = ApiOfferService().getOfferById(offerId: widget.offer.offerId);
+    try {
+      offerratings =
+          ApiOfferService().getOfferRatingsById(offer: widget.offer, page: 1);
+    } catch (e) {
+      print(e);
+      offerratings = null;
+    }
+  }
+
+  List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {
+    List<Widget> _offerList = List<Widget>();
+    for (Offer offer in offerList) {
+      _offerList.add(
+        RatingBox(),
+      );
+    }
+    return _offerList;
   }
 
   void _onSelectedRangeChanged(_picker.PickerDateRange dateRange) {
@@ -475,7 +497,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                     ),
                                   ),
                                   child: Text(
-                                    "Show more",
+                                    "Mehr anzeigen",
                                     style: TextStyle(
                                       color: Theme.of(context).accentColor,
                                       fontSize: 16.0,
@@ -489,6 +511,100 @@ class _OfferScreenState extends State<OfferScreen> {
                       ),
                       // User
                       UserBox(lessor: offer.lessor),
+
+                      //Product Rating
+                      offer.numberOfRatings == 0 ? Container() :
+                      GestureDetector(
+                        onTap: () {
+                                pushNewScreen(context,
+                                    screen: OfferRatingsList(
+                                      offer: offer,
+                                    ));
+                              },
+                              child: Container(
+                                margin: EdgeInsets.symmetric(
+                                    vertical: 12.0, horizontal: 18.0),
+                                decoration: BoxDecoration(
+                                  color: Theme.of(context).cardColor,
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      'Bewertungen von anderen FLEXXERN',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 18.0,
+                                        fontWeight: FontWeight.w500,
+                                        letterSpacing: 1.2,
+                                      ),
+                                    ),
+                                    SizedBox(height: 20.0),
+                                    RatingBarIndicator(
+                                      itemBuilder: (context, _) => Icon(
+                                        Icons.star,
+                                        color: Colors.purple,
+                                      ),
+                                      direction: Axis.horizontal,
+                                      itemCount: 5,
+                                      rating: offer.rating.toDouble(),
+                                      itemSize: 40.0,
+                                    ),
+                                    SizedBox(height: 10.0),
+                                    Text(
+                                      offer.numberOfRatings == 1
+                                          ? 'Dieses Produkt hat ' +
+                                              offer.numberOfRatings.toString() +
+                                              " Bewertung"
+                                          : 'Dieses Produkt hat ' +
+                                              offer.numberOfRatings.toString() +
+                                              " Bewertungen",
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontSize: 16.0,
+                                        letterSpacing: 1.2,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Icon(
+                                          Ionicons.ios_arrow_forward,
+                                          size: 30.0,
+                                          color: Theme.of(context).primaryColor,
+                                        ),
+                              ],
+                            ),
+                          ),
+                        ),
+                      ),
+                      offerratings == null
+                          ? StandardBox(
+                              content: Text("Hier ist etwas schiefgelaufen"),
+                            )
+                          : FutureBuilder(
+                              future: offerratings,
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  OfferRatingResponse response = snapshot.data;
+                                  return Column(
+                                    children: response.offerRatings
+                                        .map((rating) => RatingBox(
+                                              rating: rating,
+                                            ))
+                                        .toList(),
+                                  );
+                                } else {
+                                  return StandardBox(
+                                    content: Text("Das Produkt hat leider noch keine Bewertungen."),
+                                  );
+                                }
+                              }),
                     ],
                   ),
                 ),

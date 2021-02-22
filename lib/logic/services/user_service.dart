@@ -11,6 +11,14 @@ abstract class UserService {
   Future<User> updateUser({User user, Password password});
   Future<User> updateProfileImage({String imagePath});
   Future<void> deleteUser({User user});
+  Future<UserRatingResponse> getUserRatingById(
+      {User user, bool lessorRating, int page});
+  Future<UserRating> createUserRating(
+      {User ratedUser,
+      String ratingType,
+      int rating,
+      String headline,
+      String text});
 }
 
 class ApiUserService extends UserService {
@@ -78,9 +86,6 @@ class ApiUserService extends UserService {
 
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
-      // jsonBody['profile_picture'] = jsonBody['profile_picture'] +
-      //     '?refresh=' +
-      //     DateTime.now().millisecondsSinceEpoch.toString();
       final User user = User.fromJson(jsonBody);
       return user;
     } else {
@@ -122,6 +127,85 @@ class ApiUserService extends UserService {
             message:
                 'Beim löschen deines Accounts ist etwas schief gelaufen. Probiere es später nochmals.');
       }
+
+  Future<UserRatingResponse> getUserRatingById(
+      {User user, bool lessorRating, int page}) async {
+    String ratingType = 'lessee';
+    String userType = 'Mieter';
+    if (lessorRating) {
+      ratingType = 'lessor';
+      userType = 'Vermieter';
+    }
+
+    String url =
+        '${CONFIG.url}/user/rating/${user.userId}?rating_type=$ratingType&page=${page ?? 1}';
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBody = json.decode(response.body);
+      final UserRatingResponse userRatingResponse =
+          UserRatingResponse.fromJson(jsonBody);
+
+      if (userRatingResponse.userRatings.isNotEmpty) {
+        return userRatingResponse;
+      } else {
+        throw UserRatingException(
+            message:
+                'Der Flexer ${user.firstName} ${user.lastName} hat noch keine Bewertung als $userType.');
+      }
+    } else {
+      inspect(response);
+      throw UserRatingException(
+          message:
+              'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.');
+    }
+  }
+
+  @override
+  Future<UserRating> createUserRating(
+      {User ratedUser,
+      String ratingType,
+      int rating,
+      String headline,
+      String text}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    final Auth auth =
+        Auth.session(session: Session(sessionId: sessionId, userId: userId));
+
+    UserRatingRequest _userRatingRequest = UserRatingRequest(
+      userId: ratedUser.userId,
+      ratingType: ratingType,
+      rating: rating,
+      headline: headline ?? '',
+      text: text ?? '',
+    );
+
+    Map<String, dynamic> _body = {
+      'auth': auth.toJson(),
+      'rating': _userRatingRequest.toJson()
+    };
+
+    final response = await http.post(
+      '${CONFIG.url}/user/rating',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(_body),
+    );
+
+    if (response.statusCode == 201) {
+      final dynamic jsonBody = json.decode(response.body);
+      final UserRating userRating = UserRating.fromJson(jsonBody);
+      return userRating;
+    } else {
+      inspect(response);
+      // 400 Invalid input or user = ratedUser
+      // 409 Already rated
+      // TODO: Change Exceptions
+      throw UserRatingException(
+          message:
+              'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
     }
   }
 }

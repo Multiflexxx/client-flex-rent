@@ -16,8 +16,9 @@ class _forgotPasswordState extends State<forgotPassword> {
   void _resetPassword() async {
     if (_key.currentState.validate()) {
       final String _email = emailController.text;
-      //BlocProvider.of<UserBloc>(context).add();
+      //BlocProvider.of<UserBloc>(context).add(); 
       setState(() {
+        
         email_sent = true;
       });
     } else {
