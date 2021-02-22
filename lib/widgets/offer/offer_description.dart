@@ -25,7 +25,7 @@ class ProductDescription extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                     fontSize: 18.0,
                     height: 1.35,
-                    decoration: TextDecoration.underline),
+                    fontWeight: FontWeight.w500),
               ),
               SizedBox(height: 10.0),
               Text(

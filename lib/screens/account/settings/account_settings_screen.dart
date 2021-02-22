@@ -1,3 +1,4 @@
+import 'package:flexrent/logic/blocs/offer/bloc/offer_bloc.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
 import 'package:flutter/material.dart';
@@ -118,7 +119,9 @@ class _AccountSettingsBody extends StatelessWidget {
             hideNavBarFunction: hideNavBarFunction,
           );
         } else {
+          BlocProvider.of<OfferBloc>(context).add(OfferTickerStopped());
           BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
+
           // TODO: Nice load indicator missing
           // Navigator.of(context).pop();
         }

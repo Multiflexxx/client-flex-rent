@@ -27,6 +27,10 @@ abstract class OfferService {
   Future<OfferRequest> getOfferRequestbyRequest();
   Future<OfferRequest> updateOfferRequest();
   Future<Offer> deleteOffer();
+  Future<OfferRatingResponse> getOfferRatingsById({Offer offer, int page});
+  Future<OfferRating> createOfferRating(
+      {Offer offer, int rating, String headline, String ratingText});
+  Future<NewRequestNumbers> getNumberOfNewRequests();
 }
 
 class ApiOfferService extends OfferService {
@@ -155,8 +159,9 @@ class ApiOfferService extends OfferService {
   }
 
   @override
-  Future<List<Offer>> getOfferbyUser() async {
-    final String userId = await _storage.read(key: 'userId');
+  Future<List<Offer>> getOfferbyUser({User user}) async {
+    final String userId =
+        user != null ? user.userId : await _storage.read(key: 'userId');
 
     final response = await http.get('${CONFIG.url}/offer/user-offers/$userId');
 
@@ -168,6 +173,7 @@ class ApiOfferService extends OfferService {
             (jsonBody).map((i) => Offer.fromJson(i)).toList();
         return offerList;
       } else {
+        // TODO: Dynamic error
         return Future.error(
             OfferException(message: 'Fange jetzt an zu vermieten!'));
       }
@@ -279,7 +285,6 @@ class ApiOfferService extends OfferService {
       final Offer offer = Offer.fromJson(jsonBody);
       return offer;
     } else {
-      print(response.statusCode);
       return null;
     }
   }
@@ -461,5 +466,100 @@ class ApiOfferService extends OfferService {
       throw OfferException(
           message: 'Dein Produkt konnte nicht gelöscht werden.');
     }
+  }
+
+  @override
+  Future<OfferRatingResponse> getOfferRatingsById(
+      {Offer offer, int page}) async {
+    String url =
+        '${CONFIG.url}/offer/rating/${offer.offerId}?page=${page ?? 1}';
+
+    final response = await http.get(url);
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBody = json.decode(response.body);
+      final OfferRatingResponse offerRatingResponse =
+          OfferRatingResponse.fromJson(jsonBody);
+
+      if (offerRatingResponse.offerRatings.isNotEmpty) {
+        inspect(offerRatingResponse);
+        return offerRatingResponse;
+      } else {
+        throw OfferRatingException(
+            message: 'Das Offer ${offer.title} hat noch keine Bewertung.');
+      }
+    } else {
+      inspect(response);
+      throw UserRatingException(
+          message:
+              'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.');
+    }
+  }
+
+  @override
+  Future<OfferRating> createOfferRating(
+      {Offer offer, int rating, String headline, String ratingText}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    final Session session = Session(sessionId: sessionId, userId: userId);
+
+    OfferRatingRequest _offerRatingRequest = OfferRatingRequest(
+      offer: offer ?? Offer(offerId: '618c58ea-d7e4-41df-8d52-2dcd74b04f87'),
+      rating: rating,
+      headline: headline ?? '',
+      ratingText: ratingText ?? '',
+    );
+
+    Map<String, dynamic> _body = {
+      'session': session.toJson(),
+      'rating': _offerRatingRequest.toJson()
+    };
+
+    final response = await http.put(
+      '${CONFIG.url}/offer/rating',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(_body),
+    );
+
+    if (response.statusCode == 200) {
+      final dynamic jsonBody = json.decode(response.body);
+      final OfferRating offerRating = OfferRating.fromJson(jsonBody);
+      inspect(offerRating);
+      return offerRating;
+    } else if (response.statusCode == 403) {
+      throw OfferRatingException(
+          message: 'Du darfst das Offer ${offer.title} nicht bewerten.');
+    } else {
+      inspect(response);
+      throw UserRatingException(
+          message:
+              'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
+    }
+  }
+
+  Future<NewRequestNumbers> getNumberOfNewRequests() async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+
+    final response = await http.post(
+      '${CONFIG.url}/offer/get-number-of-new-offer-requests',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(<String, dynamic>{
+        'session': session.toJson(),
+      }),
+    );
+
+    if (response.statusCode == 201) {
+      final dynamic jsonBody = json.decode(response.body);
+      final NewRequestNumbers newRequestNumbers =
+          NewRequestNumbers.fromJson(jsonBody);
+      return newRequestNumbers;
+    } else {
+      inspect(response);
+    }
+    return null;
   }
 }

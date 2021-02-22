@@ -3,12 +3,12 @@ import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart
 import 'package:flexrent/widgets/styles/formfield_styled.dart';
 import 'package:flutter/material.dart';
 
-class forgotPassword extends StatefulWidget {
+class ForgotPassword extends StatefulWidget {
   @override
-  _forgotPasswordState createState() => _forgotPasswordState();
+  _ForgotPasswordState createState() => _ForgotPasswordState();
 }
 
-class _forgotPasswordState extends State<forgotPassword> {
+class _ForgotPasswordState extends State<ForgotPassword> {
   final GlobalKey<FormState> _key = GlobalKey<FormState>();
   final emailController = TextEditingController();
   var email_sent = false;

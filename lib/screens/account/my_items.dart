@@ -1,4 +1,6 @@
+import 'package:badges/badges.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
+import 'package:flexrent/logic/blocs/offer/offer.dart';
 import 'package:flexrent/screens/account/account_screen.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/cupertino.dart';
@@ -80,10 +82,30 @@ class _MyItemsState extends State<MyItems> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      Icon(
-                        Feather.mail,
-                        size: 30.0,
-                        color: Theme.of(context).primaryColor,
+                      BlocBuilder<OfferBloc, OfferState>(
+                        builder: (context, state) {
+                          if (state.count != null) {
+                            return Badge(
+                              showBadge:
+                                  state.count.lessorsNumberOfNewRequests > 0
+                                      ? true
+                                      : false,
+                              position: BadgePosition.topEnd(),
+                              padding: EdgeInsets.all(5),
+                              badgeColor: Theme.of(context).accentColor,
+                              badgeContent: Text(
+                                '${state.count.lessorsNumberOfNewRequests}',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                              child: Icon(Feather.bell),
+                            );
+                          }
+                          return Icon(
+                            Feather.mail,
+                            size: 30.0,
+                            color: Theme.of(context).primaryColor,
+                          );
+                        },
                       ),
                       SizedBox(
                         width: 25.0,

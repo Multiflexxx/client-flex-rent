@@ -1,7 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/screens/rating/rating_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/offer_request/offer_request.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BookingLessor extends StatelessWidget {
   final OfferRequest offerRequest;
@@ -129,37 +131,64 @@ class BookingLessor extends StatelessWidget {
                 SizedBox(
                   width: 10.0,
                 ),
-                offerRequest.user.verified
-                    ? Text(
-                        'Identität verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
-                    : Text(
-                        'Identität nicht verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
+                Text(
+                  offerRequest.user.verified
+                      ? 'Identität verifiziert'
+                      : 'Identität nicht verifiziert',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    height: 1.35,
+                    fontWeight: FontWeight.w300,
+                  ),
+                )
               ],
             ),
-            SizedBox(
-              height: 20.0,
-            ),
 
-            PurpleButton(
-              text: Text('Bewerte den Vermieter'),
-              onPressed: () {
-                print('Missing function');
-              },
-            ),
+            offerRequest.statusId == 5
+                ? Column(
+                    children: [
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      PurpleButton(
+                        text: Text('Bewerte den Vermieter'),
+                        onPressed: () {
+                          pushNewScreenWithRouteSettings(
+                            context,
+                            screen: RatingScreen(
+                              ratedUser: offerRequest.offer.lessor,
+                              ratingType: 'lessor',
+                            ),
+                            withNavBar: true,
+                            settings:
+                                RouteSettings(name: RatingScreen.routeName),
+                          );
+                        },
+                      ),
+                      SizedBox(
+                        height: 20.0,
+                      ),
+                      PurpleButton(
+                        text: Text('Bewerte das Produkt'),
+                        onPressed: () {
+                          pushNewScreenWithRouteSettings(
+                            context,
+                            screen: RatingScreen(
+                              offer: offerRequest.offer,
+                              ratingType: 'offer',
+                            ),
+                            withNavBar: true,
+                            settings:
+                                RouteSettings(name: RatingScreen.routeName),
+                          );
+                        },
+                      ),
+                    ],
+                  )
+                : SizedBox(
+                    height: 0.0,
+                  ),
           ],
         ),
       ),

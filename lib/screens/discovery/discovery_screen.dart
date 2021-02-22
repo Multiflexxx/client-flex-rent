@@ -1,4 +1,5 @@
 import 'package:flexrent/screens/offer/offer_list_screen.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -30,10 +31,6 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   @override
   initState() {
-    final state = BlocProvider.of<AuthenticationBloc>(context).state;
-    if (state != null) {
-      user = state.user;
-    }
     _fetchDiscoveryOffer();
     _fetchTopCategories();
     super.initState();
@@ -114,129 +111,145 @@ class _DiscoveryScreen extends State<DiscoveryScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return RefreshIndicator(
-              onRefresh: () => _fetchDiscoveryOffer(),
-              backgroundColor: Theme.of(context).accentColor,
-              color: Colors.white,
-              child: SingleChildScrollView(
-                child: ConstrainedBox(
-                  constraints: BoxConstraints(
-                    minHeight: constraints.maxHeight,
-                  ),
-                  child: IntrinsicHeight(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        SearchBar(
-                          hideNavBarFunction: widget.hideNavBarFunction,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 20.0, left: 20.0),
-                          child: Text(
-                            'Hallo ${_buildName()}',
-                            style: TextStyle(
-                              fontSize: 30.0,
-                              fontWeight: FontWeight.bold,
+    return BlocListener<AuthenticationBloc, AuthenticationState>(
+      listener: (context, state) {
+        if (state is AuthenticationAuthenticated) {
+          setState(() {
+            user = state.user;
+          });
+        }
+        if (state is AuthenticationNotAuthenticated) {
+          setState(() {
+            user = null;
+          });
+        }
+      },
+      child: Scaffold(
+        body: SafeArea(
+          child: LayoutBuilder(
+            builder: (context, constraints) {
+              return RefreshIndicator(
+                onRefresh: () => _fetchDiscoveryOffer(),
+                backgroundColor: Theme.of(context).accentColor,
+                color: Colors.white,
+                child: SingleChildScrollView(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(
+                      minHeight: constraints.maxHeight,
+                    ),
+                    child: IntrinsicHeight(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          SearchBar(
+                            hideNavBarFunction: widget.hideNavBarFunction,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 20.0, left: 20.0),
+                            child: Text(
+                              'Hallo ${_buildName()}',
+                              style: TextStyle(
+                                fontSize: 30.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          height: 10.0,
-                        ),
-                        FutureBuilder<Map<String, List<Offer>>>(
-                          future: discoveryOffer,
-                          builder: (context, snapshot) {
-                            if (snapshot.hasData) {
-                              return Column(
-                                children: <Widget>[
-                                  SizedBox(height: 20.0),
-                                  DiscoveryCarousel(
-                                    carouselTitle: 'Topseller',
-                                    offerList: snapshot.data['bestOffer'],
-                                    hideNavBarFunction:
-                                        widget.hideNavBarFunction,
-                                  ),
-                                  SizedBox(height: 20.0),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 20.0),
-                                        child: Text(
-                                          'Top Kategorien',
-                                          style: TextStyle(
-                                            fontSize: 22.0,
-                                            fontWeight: FontWeight.bold,
-                                            letterSpacing: 1.2,
+                          SizedBox(
+                            height: 10.0,
+                          ),
+                          FutureBuilder<Map<String, List<Offer>>>(
+                            future: discoveryOffer,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return Column(
+                                  children: <Widget>[
+                                    SizedBox(height: 20.0),
+                                    DiscoveryCarousel(
+                                      carouselTitle: 'Topseller',
+                                      offerList: snapshot.data['bestOffer'],
+                                      hideNavBarFunction:
+                                          widget.hideNavBarFunction,
+                                    ),
+                                    SizedBox(height: 20.0),
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding:
+                                              const EdgeInsets.only(left: 20.0),
+                                          child: Text(
+                                            'Top Kategorien',
+                                            style: TextStyle(
+                                              fontSize: 22.0,
+                                              fontWeight: FontWeight.bold,
+                                              letterSpacing: 1.2,
+                                            ),
                                           ),
                                         ),
+                                      ],
+                                    ),
+                                    Container(
+                                      margin: EdgeInsets.symmetric(
+                                          vertical: 12.0, horizontal: 8.0),
+                                      padding: EdgeInsets.symmetric(
+                                          vertical: 16.0, horizontal: 10.0),
+                                      decoration: new BoxDecoration(
+                                        color: Theme.of(context).cardColor,
+                                        borderRadius:
+                                            BorderRadius.circular(20.0),
                                       ),
-                                    ],
-                                  ),
-                                  Container(
-                                    margin: EdgeInsets.symmetric(
-                                        vertical: 12.0, horizontal: 8.0),
-                                    padding: EdgeInsets.symmetric(
-                                        vertical: 16.0, horizontal: 10.0),
-                                    decoration: new BoxDecoration(
-                                      color: Theme.of(context).cardColor,
-                                      borderRadius: BorderRadius.circular(20.0),
+                                      child: FutureBuilder<List<Category>>(
+                                        future: topCategories,
+                                        builder: (context, snapshot) {
+                                          if (snapshot.hasData) {
+                                            List<Category> categories =
+                                                snapshot.data;
+                                            return _buildIconRow(
+                                                categories: categories);
+                                          }
+                                          return Center(
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2,
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
-                                    child: FutureBuilder<List<Category>>(
-                                      future: topCategories,
-                                      builder: (context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          List<Category> categories =
-                                              snapshot.data;
-                                          return _buildIconRow(
-                                              categories: categories);
-                                        }
-                                        return Center(
-                                          child: CircularProgressIndicator(
-                                            strokeWidth: 2,
-                                          ),
-                                        );
-                                      },
+                                    SizedBox(height: 20.0),
+                                    DiscoveryCarousel(
+                                      carouselTitle: 'Neuste',
+                                      offerList: snapshot.data['latestOffers'],
+                                      hideNavBarFunction:
+                                          widget.hideNavBarFunction,
                                     ),
+                                    SizedBox(height: 20.0),
+                                    DiscoveryCarousel(
+                                      carouselTitle: 'Beste Vermieter',
+                                      offerList: snapshot.data['bestLessors'],
+                                      hideNavBarFunction:
+                                          widget.hideNavBarFunction,
+                                    ),
+                                  ],
+                                );
+                              }
+                              return Expanded(
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
                                   ),
-                                  SizedBox(height: 20.0),
-                                  DiscoveryCarousel(
-                                    carouselTitle: 'Neuste',
-                                    offerList: snapshot.data['latestOffers'],
-                                    hideNavBarFunction:
-                                        widget.hideNavBarFunction,
-                                  ),
-                                  SizedBox(height: 20.0),
-                                  DiscoveryCarousel(
-                                    carouselTitle: 'Beste Vermieter',
-                                    offerList: snapshot.data['bestLessors'],
-                                    hideNavBarFunction:
-                                        widget.hideNavBarFunction,
-                                  ),
-                                ],
-                              );
-                            }
-                            return Expanded(
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  strokeWidth: 2,
                                 ),
-                              ),
-                            );
-                          },
-                        ),
-                      ],
+                              );
+                            },
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-            );
-          },
+              );
+            },
+          ),
         ),
       ),
     );

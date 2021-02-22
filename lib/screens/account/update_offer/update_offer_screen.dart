@@ -1,5 +1,6 @@
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/screens/account/offer_delete.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -50,18 +51,20 @@ class UpdateOfferScreen extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () async {
-            final response = await showCupertinoModalBottomSheet(
+            final error = await showCupertinoModalBottomSheet(
               expand: false,
               useRootNavigator: true,
               context: context,
               barrierColor: Colors.black45,
-              builder: (context, scrollController) => DelteModal(
+              builder: (context, scrollController) => DeleteModal(
                 offer: this.offer,
                 updateParentFunction: updateParentFunction,
               ),
             );
-            if (response != null) {
+            if (error == null) {
               Navigator.of(context).pop();
+            } else {
+              showFlushbar(context: context, message: error.message);
             }
           },
           //   onPressed: () => showCupertinoModalBottomSheet(
