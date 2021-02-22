@@ -13,9 +13,10 @@ class DiscoveryOfferListScreen extends StatelessWidget {
 
   final String carouselTitle;
   final VoidCallback hideNavBarFunction;
+  final User userOffers;
 
   const DiscoveryOfferListScreen(
-      {Key key, this.carouselTitle, this.hideNavBarFunction})
+      {Key key, this.carouselTitle, this.hideNavBarFunction, this.userOffers})
       : super(key: key);
 
   @override
@@ -25,6 +26,7 @@ class DiscoveryOfferListScreen extends StatelessWidget {
       bodyWidget: DiscoveryOfferListBody(
         carouselTitle: carouselTitle,
         hideNavBarFunction: hideNavBarFunction,
+        useroffers: userOffers,
       ),
     );
   }
@@ -33,9 +35,10 @@ class DiscoveryOfferListScreen extends StatelessWidget {
 class DiscoveryOfferListBody extends StatefulWidget {
   final String carouselTitle;
   final VoidCallback hideNavBarFunction;
+  final User useroffers;
 
   const DiscoveryOfferListBody(
-      {Key key, this.carouselTitle, this.hideNavBarFunction})
+      {Key key, this.carouselTitle, this.hideNavBarFunction, this.useroffers})
       : super(key: key);
 
   @override
@@ -53,9 +56,13 @@ class _DiscoveryOfferListBodyState extends State<DiscoveryOfferListBody> {
     if (state != null) {
       user = state.user;
     }
-    offerList = ApiOfferService().getAllDiscoveryOffers(
-        postCode: user != null ? user.postCode : '68165',
-        discoveryTitle: widget.carouselTitle);
+    if (widget.useroffers == null) {
+      offerList = ApiOfferService().getAllDiscoveryOffers(
+          postCode: user != null ? user.postCode : '68165',
+          discoveryTitle: widget.carouselTitle);
+    } else {
+      offerList = ApiOfferService().getOfferbyUser(user: widget.useroffers);
+    }
   }
 
   List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {

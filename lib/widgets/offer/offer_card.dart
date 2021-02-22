@@ -43,7 +43,7 @@ class OfferCard extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    '${offer.title}',
+                                    offer.title,
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 20.0,
@@ -54,7 +54,7 @@ class OfferCard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   Text(
-                                    '${offer.description}',
+                                    offer.description,
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 16.0,
@@ -65,17 +65,33 @@ class OfferCard extends StatelessWidget {
                                     overflow: TextOverflow.ellipsis,
                                   ),
                                   PriceTag(offer.price),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        '4.9',
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 16.0,
-                                          fontWeight: FontWeight.w300,
-                                          letterSpacing: 1.2,
-                                        ),
-                                      ),
+                                  offer.rating == 0.0
+                                      ? Row(
+                                          children: [
+                                            Text(
+                                              "Keine Bewertung",
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w300,
+                                                letterSpacing: 1.2,
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Row(
+                                          children: [
+                                            Text(
+                                              offer.rating.toString(),
+                                              style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontSize: 16.0,
+                                                fontWeight: FontWeight.w300,
+                                                letterSpacing: 1.2,
+                                              ),
+                                            ),
                                       SizedBox(
                                         width: 5.0,
                                       ),

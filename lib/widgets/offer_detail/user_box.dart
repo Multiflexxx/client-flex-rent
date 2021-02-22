@@ -1,9 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/screens/user/user.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flexrent/logic/models/models.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class UserBox extends StatelessWidget {
   final User lessor;
@@ -108,34 +109,29 @@ class UserBox extends StatelessWidget {
                 SizedBox(
                   width: 10.0,
                 ),
-                lessor.verified
-                    ? Text(
-                        'Identität verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      )
-                    : Text(
-                        'Identität nicht verifiziert',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 18.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
-                      ),
+                Text(
+                  lessor.verified
+                      ? 'Identität verifiziert'
+                      : 'Identität nicht verifiziert',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    height: 1.35,
+                    fontWeight: FontWeight.w300,
+                  ),
+                )
               ],
             ),
             SizedBox(
               height: 20.0,
             ),
             PurpleButton(
-              text: Text('Vermieter eine Nachricht schicken'),
-              onPressed: () => print('kontaktieren'),
-            ),           
+                text: Text('Mehr Informatioenen'),
+                onPressed: () => pushNewScreenWithRouteSettings(context,
+                    screen: UserScreen(
+                      user: lessor,
+                    ),
+                    settings: RouteSettings(name: UserScreen.routeName))),
           ],
         ),
       ),
