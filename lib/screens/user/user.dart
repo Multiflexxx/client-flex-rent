@@ -245,9 +245,10 @@ class _UserScreenState extends State<UserScreen> {
                         if (snapshot.hasData) {
                           return DiscoveryCarousel(
                             carouselTitle: 'Angebote von ' + user.firstName,
-                            offerList: snapshot.data,
-                            hideNavBarFunction: () {},
-                          );
+                    offerList: snapshot.data,
+                    hideNavBarFunction: () {},
+                    user: user,
+                  );
                         } else {
                           return Container();
                         }

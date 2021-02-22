@@ -1,5 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/screens/discovery/discovery_offer_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,8 +14,15 @@ class DiscoveryCarousel extends StatefulWidget {
   final String carouselTitle;
   final VoidCallback hideNavBarFunction;
 
+  /// If the Carousel is for Offers of a specific user, this needs to be defined
+  final User user;
+
   const DiscoveryCarousel(
-      {Key key, this.offerList, this.carouselTitle, this.hideNavBarFunction})
+      {Key key,
+      this.offerList,
+      this.carouselTitle,
+      this.hideNavBarFunction,
+      this.user})
       : super(key: key);
 
   @override
@@ -34,6 +42,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                     screen: DiscoveryOfferListScreen(
                       carouselTitle: widget.carouselTitle,
                       hideNavBarFunction: widget.hideNavBarFunction,
+                      userOffers: widget.user,
                     ),
                     settings:
                         RouteSettings(name: DiscoveryOfferListScreen.routeName),
