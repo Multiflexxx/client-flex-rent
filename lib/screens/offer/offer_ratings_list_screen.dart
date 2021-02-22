@@ -1,20 +1,39 @@
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/boxes/standard_box.dart';
+import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OfferRatingsList extends StatefulWidget {
+class OfferRatingsList extends StatelessWidget {
   final Offer offer;
 
   OfferRatingsList({this.offer});
 
   @override
-  _OfferRatingsListState createState() => _OfferRatingsListState();
+  Widget build(BuildContext context) {
+    return StandardSliverAppBarList(
+      title: 'Bewertungen',
+      bodyWidget: OfferRatingListBody(
+        offer: offer,
+      ),
+    );
+  }
 }
 
-class _OfferRatingsListState extends State<OfferRatingsList> {
+class OfferRatingListBody extends StatefulWidget {
+  final Offer offer;
+  final VoidCallback hideNavBarFunction;
+
+  const OfferRatingListBody({Key key, this.hideNavBarFunction, this.offer})
+      : super(key: key);
+
+  @override
+  _OfferRatingListBodyState createState() => _OfferRatingListBodyState();
+}
+
+class _OfferRatingListBodyState extends State<OfferRatingListBody> {
   Future<OfferRatingResponse> offerRatings;
 
   @override
@@ -30,46 +49,23 @@ class _OfferRatingsListState extends State<OfferRatingsList> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
-          centerTitle: true,
-          title: Text(
-            'Bewertungen',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 21.0,
-              letterSpacing: 1.2,
-            ),
-          ),
-          backgroundColor: Colors.transparent,
-          toolbarHeight: 0.1 * MediaQuery.of(context).size.height,
-        ),
-        body: ListView(
-          children: [
-            offerRatings == null
-                ? StandardBox(
-                    content: Text("Hier ist etwas schiefgelaufen"),
-                  )
-                : FutureBuilder(
-                    future: offerRatings,
-                    builder: (context, snapshot) {
-                      if (snapshot.hasData) {
-                        OfferRatingResponse response = snapshot.data;
-                        return Column(
-                          children: response.offerRatings
-                              .map((rating) => RatingBox(
-                                    rating: rating,
-                                  ))
-                              .toList(),
-                        );
-                      } else {
-                        return StandardBox(
-                          content: Text("Noch keine Bewertungen"),
-                        );
-                      }
-                    }),
-          ],
-        ));
+    return FutureBuilder<OfferRatingResponse>(
+        future: offerRatings,
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            OfferRatingResponse response = snapshot.data;
+            return Column(
+              children: response.offerRatings
+                  .map((rating) => RatingBox(
+                        rating: rating,
+                      ))
+                  .toList(),
+            );
+          } else {
+            return StandardBox(
+              content: Text("Noch keine Bewertungen"),
+            );
+          }
+        });
   }
 }

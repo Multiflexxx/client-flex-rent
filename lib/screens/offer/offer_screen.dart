@@ -540,7 +540,7 @@ class _OfferScreenState extends State<OfferScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Text(
-                                            'Bewertungen von anderen FLEXXERN',
+                                            'Bewertungen von anderen',
                                             style: TextStyle(
                                               color: Theme.of(context)
                                                   .primaryColor,
