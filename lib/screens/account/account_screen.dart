@@ -178,66 +178,6 @@ class _AccountScreenState extends State<AccountScreen> {
     );
   }
 
-  // Widget loggedOutUserCard({BuildContext context}) {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //     children: <Widget>[
-  //       Expanded(
-  //         flex: 9,
-  //         child: Padding(
-  //           padding: const EdgeInsets.only(left: 10.0),
-  //           child: Column(
-  //             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               Row(
-  //                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //                 children: [
-  //                   Flexible(
-  //                     flex: 2,
-  //                     child: AutoSizeText(
-  //                       'Mein Kundenkonto',
-  //                       style: TextStyle(
-  //                         color: Theme.of(context).primaryColor,
-  //                         fontSize: 20.0,
-  //                         letterSpacing: 1.2,
-  //                       ),
-  //                       maxLines: 2,
-  //                       minFontSize: 16.0,
-  //                       overflow: TextOverflow.ellipsis,
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               SizedBox(
-  //                 height: 5,
-  //               ),
-  //               TransparentButton(
-  //                 text: Text('Anmelden'),
-  //                 onPressed: () {
-  //                   widget.hideNavBarFunction();
-  //                   pushNewScreen(
-  //                     context,
-  //                     screen: AuthenticationScreen(
-  //                       popRouteName: AccountScreen.routeName,
-  //                       targetScreen: AccountScreen(
-  //                         hideNavBarFunction: widget.hideNavBarFunction,
-  //                       ),
-  //                       hideNavBarFunction: widget.hideNavBarFunction,
-  //                     ),
-  //                     pageTransitionAnimation: PageTransitionAnimation.scale,
-  //                   );
-  //                 },
-  //               ),
-  //             ],
-  //           ),
-  //         ),
-  //       ),
-  //       _buildSettingsIcon()
-  //     ],
-  //   );
-  // }
-
   Widget _buildSettingsIcon() {
     return Expanded(
       flex: 3,

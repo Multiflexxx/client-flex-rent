@@ -10,8 +10,6 @@ import 'package:flexrent/screens/account/settings/personal_info_screen.dart';
 import 'package:flexrent/screens/account/settings/app_settings_screen.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
-import '../account_screen.dart';
-
 class AccountSettingsScreen extends StatefulWidget {
   static String routeName = 'accountSettingScreen';
 
@@ -123,7 +121,7 @@ class _AccountSettingsBody extends StatelessWidget {
         } else {
           BlocProvider.of<OfferBloc>(context).add(OfferTickerStopped());
           BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
-          
+
           // TODO: Nice load indicator missing
           // Navigator.of(context).pop();
         }

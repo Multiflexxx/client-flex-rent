@@ -129,64 +129,6 @@ class AuthScreen extends StatelessWidget {
       ),
     );
   }
-  // @override
-  // Widget build(BuildContext context) {
-  //   return StandardSliverAppBarList(
-  //     title: 'Mietgegenstände',
-  //     leading: Container(),
-  //     bodyWidget: _RentalItemsAuthScreen(
-  //       hideNavBarFunction: hideNavBarFunction,
-  //     ),
-  //   );
-  // }
 }
 
-// class _RentalItemsAuthScreen extends StatelessWidget {
-//   final VoidCallback hideNavBarFunction;
 
-//   const _RentalItemsAuthScreen({Key key, this.hideNavBarFunction})
-//       : super(key: key);
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Container(
-//       height: 0.618 * MediaQuery.of(context).size.height,
-//       child: Stack(
-//         children: [
-//           Background(top: 0),
-//           SafeArea(
-//             child: Padding(
-//               padding: const EdgeInsets.all(20.0),
-//               child: Column(
-//                 mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                 children: <Widget>[
-//                   Text(
-//                     'Melde dich an, um deine Mietgegenstände zu sehen!',
-//                     style: TextStyle(fontSize: 24, letterSpacing: 1.25),
-//                   ),
-//                   PurpleButton(
-//                     text: Text('Anmelden'),
-//                     onPressed: () {
-//                       hideNavBarFunction();
-//                       pushNewScreen(
-//                         context,
-//                         screen: AuthenticationScreen(
-//                           popRouteName: RentalItemsRootScreen.routeName,
-//                           targetScreen: RentalItemsRootScreen(
-//                             hideNavBarFunction: hideNavBarFunction,
-//                           ),
-//                           hideNavBarFunction: hideNavBarFunction,
-//                         ),
-//                         pageTransitionAnimation: PageTransitionAnimation.scale,
-//                       );
-//                     },
-//                   ),
-//                 ],
-//               ),
-//             ),
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
