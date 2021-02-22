@@ -51,7 +51,7 @@ class UpdateOfferScreen extends StatelessWidget {
       actions: [
         IconButton(
           onPressed: () async {
-            final error = await showCupertinoModalBottomSheet(
+            final response = await showCupertinoModalBottomSheet(
               expand: false,
               useRootNavigator: true,
               context: context,
@@ -61,10 +61,10 @@ class UpdateOfferScreen extends StatelessWidget {
                 updateParentFunction: updateParentFunction,
               ),
             );
-            if (error == null) {
+            if (response == 'deleted') {
               Navigator.of(context).pop();
-            } else {
-              showFlushbar(context: context, message: error.message);
+            } else if (response != null) {
+              showFlushbar(context: context, message: response.message);
             }
           },
           //   onPressed: () => showCupertinoModalBottomSheet(

@@ -93,7 +93,7 @@ class AuthScreen extends StatelessWidget {
                       realScreenName == 'accountScreen'
                           ? 'Melde dich an, um dein Profil zu sehen. Mit einem Profil kannst du Gegenstände ausleihen und verleihen.'
                           : 'Melde dich an, um deine Mietgegenstände zu sehen!',
-                      style: TextStyle(fontSize: 12, letterSpacing: 1.25),
+                      style: TextStyle(fontSize: 14, letterSpacing: 1.25),
                     ),
                     PurpleButton(
                       text: Text('Anmelden'),
