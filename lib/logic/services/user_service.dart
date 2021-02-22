@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 abstract class UserService {
   Future<User> updateUser({User user, Password password});
   Future<User> updateProfileImage({String imagePath});
+  Future<void> deleteUser({User user});
   Future<UserRatingResponse> getUserRatingById(
       {User user, bool lessorRating, int page});
   Future<UserRating> createUserRating(
@@ -93,6 +94,40 @@ class ApiUserService extends UserService {
   }
 
   @override
+  Future<void> deleteUser({User user}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    if (sessionId != null && userId != null) {
+      final Auth auth =
+          Auth.session(session: Session(sessionId: sessionId, userId: userId));
+
+      Map<String, dynamic> _body = {
+        'auth': auth.toJson(),
+      };
+
+      print(json.encode(_body));
+
+      final response = await http.patch(
+        '${CONFIG.url}/user/delete/${user.userId}',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(_body),
+      );
+
+      inspect(response);
+
+      if (response.statusCode == 200) {
+        inspect(response);
+      } else if (response.statusCode == 409) {
+        throw UserException(
+            message:
+                'Bevor du deinen Account löschen kannst, musst du alle offenen Miet- oder Vermietporzesse abschließen!');
+      } else {
+        throw UserException(
+            message:
+                'Beim löschen deines Accounts ist etwas schief gelaufen. Probiere es später nochmals.');
+      }
+
   Future<UserRatingResponse> getUserRatingById(
       {User user, bool lessorRating, int page}) async {
     String ratingType = 'lessee';

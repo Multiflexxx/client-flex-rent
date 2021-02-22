@@ -2,6 +2,8 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/blocs/offer/offer.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
@@ -75,10 +77,8 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
   }
 
   void _fetchUser() {
-    final state = BlocProvider.of<AuthenticationBloc>(context).state
-        as AuthenticationAuthenticated;
     setState(() {
-      _user = state.user;
+      _user = HelperService.getUser(context: context);
     });
   }
 
@@ -138,6 +138,19 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
       BlocProvider.of<UserBloc>(context).add(UserUpdate(user: _updatedUser));
     } else {
       print('falsch');
+    }
+  }
+
+  void _deleteUser() async {
+    try {
+      await ApiUserService().deleteUser(user: _user);
+      BlocProvider.of<OfferBloc>(context).add(OfferTickerStopped());
+      BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
+      Navigator.of(context).pop();
+    } on UserException catch (e) {
+      showFlushbar(context: context, message: e.message);
+    } catch (e) {
+      print('Ok');
     }
   }
 
@@ -491,9 +504,60 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
                         context,
                         screen: UpdatePasswordScreen(),
                       ),
-                      // _updatePassword(),
                     ),
                   ],
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () => _deleteUser(),
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
+                padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),
+                decoration: new BoxDecoration(
+                  // color: Theme.of(context).cardColor,
+                  color: Colors.redAccent,
+                  borderRadius: BorderRadius.circular(20.0),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(4.0),
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Icon(
+                                  Feather.trash,
+                                  color: Theme.of(context).primaryColor,
+                                ),
+                                SizedBox(
+                                  width: 10.0,
+                                ),
+                                Text(
+                                  'Account löschen',
+                                  style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 18.0,
+                                    height: 1.35,
+                                  ),
+                                  maxLines: 6,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Icon(
+                        Ionicons.ios_arrow_forward,
+                        size: 30.0,
+                        color: Theme.of(context).primaryColor,
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),
