@@ -84,7 +84,10 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
             )
-          : AuthScreen(hideNavBarFunction: widget.hideNavBarFunction, rootName: 'account'),
+          : AuthScreen(
+              hideNavBarFunction: widget.hideNavBarFunction,
+              rootName: 'account',
+            ),
     );
   }
 

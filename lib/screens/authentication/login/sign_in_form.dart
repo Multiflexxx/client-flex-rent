@@ -89,7 +89,7 @@ class _SignInFormState extends State<SignInForm> {
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
                         onTap: () {
-                          pushNewScreen(context, screen: forgotPassword());
+                          pushNewScreen(context, screen: ForgotPassword());
                         },
                         child: Text(
                           "Passwort vergessen?",

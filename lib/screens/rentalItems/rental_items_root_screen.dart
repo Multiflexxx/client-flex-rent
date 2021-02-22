@@ -21,7 +21,7 @@ class RentalItemsRootScreen extends StatelessWidget {
         }
         return AuthScreen(
           hideNavBarFunction: hideNavBarFunction,
-          rootName: 'rentallItems'
+          rootName: RentalItemsRootScreen.routeName,
         );
       },
     );

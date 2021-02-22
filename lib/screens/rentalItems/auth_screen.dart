@@ -7,6 +7,8 @@ import 'package:flutter_icons/flutter_icons.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class AuthScreen extends StatelessWidget {
+  static String routeName = 'authScreen';
+
   final VoidCallback hideNavBarFunction;
   final String rootName;
 
@@ -41,8 +43,7 @@ class AuthScreen extends StatelessWidget {
               ],
               centerTitle: true,
               title: Text(
-                rootName == 'account' ?
-               'Profil' : 'Mietgegenstände',
+                rootName == 'account' ? 'Profil' : 'Mietgegenstände',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
                   fontSize: 18.0,
@@ -62,8 +63,9 @@ class AuthScreen extends StatelessWidget {
                         bottomRight: Radius.circular(20.0),
                       ),
                       child: Icon(
-                        rootName == 'account' ? Feather.user
-                       : Feather.shopping_bag,
+                        rootName == 'account'
+                            ? Feather.user
+                            : Feather.shopping_bag,
                         size: 175,
                         color: Theme.of(context).accentColor,
                       ),
@@ -91,8 +93,10 @@ class AuthScreen extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text(rootName == 'account' ?
-                     'Melde dich an, um dein Profil zu sehen. Mit einem Profil kannst du Gegenstände ausleihen und verleihen.': 'Melde dich an, um deine Mietgegenstände zu sehen!',
+                    Text(
+                      rootName == 'account'
+                          ? 'Melde dich an, um dein Profil zu sehen. Mit einem Profil kannst du Gegenstände ausleihen und verleihen.'
+                          : 'Melde dich an, um deine Mietgegenstände zu sehen!',
                       style: TextStyle(fontSize: 20, letterSpacing: 1.25),
                     ),
                     PurpleButton(
@@ -101,20 +105,21 @@ class AuthScreen extends StatelessWidget {
                         hideNavBarFunction();
                         pushNewScreen(
                           context,
-                          screen: rootName == 'account' ? AuthenticationScreen(
-                            popRouteName: AccountScreen.routeName,
-                            targetScreen: AccountScreen(
-                              hideNavBarFunction: hideNavBarFunction,
-                            ),
-                            hideNavBarFunction: hideNavBarFunction,
-                          ):
-                           AuthenticationScreen(
-                            popRouteName: RentalItemsRootScreen.routeName,
-                            targetScreen: RentalItemsRootScreen(
-                              hideNavBarFunction: hideNavBarFunction,
-                            ),
-                            hideNavBarFunction: hideNavBarFunction,
-                          ),
+                          screen: rootName == 'account'
+                              ? AuthenticationScreen(
+                                  popRouteName: AccountScreen.routeName,
+                                  targetScreen: AccountScreen(
+                                    hideNavBarFunction: hideNavBarFunction,
+                                  ),
+                                  hideNavBarFunction: hideNavBarFunction,
+                                )
+                              : AuthenticationScreen(
+                                  popRouteName: RentalItemsRootScreen.routeName,
+                                  targetScreen: RentalItemsRootScreen(
+                                    hideNavBarFunction: hideNavBarFunction,
+                                  ),
+                                  hideNavBarFunction: hideNavBarFunction,
+                                ),
                           pageTransitionAnimation:
                               PageTransitionAnimation.scale,
                         );
@@ -130,5 +135,3 @@ class AuthScreen extends StatelessWidget {
     );
   }
 }
-
-
