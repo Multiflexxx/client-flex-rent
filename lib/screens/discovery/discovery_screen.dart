@@ -1,5 +1,4 @@
 import 'package:flexrent/screens/offer/offer_list_screen.dart';
-import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,6 +10,7 @@ import 'package:flexrent/widgets/discovery_carousel.dart';
 import 'package:flexrent/widgets/styles/search_bar.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:pin_code_fields/pin_code_fields.dart';
 
 class DiscoveryScreen extends StatefulWidget {
   static String routeName = 'rootTabScreen';

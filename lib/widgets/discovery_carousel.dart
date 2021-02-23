@@ -4,7 +4,6 @@ import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/screens/discovery/discovery_offer_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:flexrent/logic/models/offer/offer.dart';

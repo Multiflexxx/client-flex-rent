@@ -1,4 +1,4 @@
-import 'package:flexrent/screens/authentication/login/forgot_password.dart';
+import 'package:flexrent/screens/authentication/password_reset/password_reset.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/divider_with_text.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';
@@ -89,7 +89,7 @@ class _SignInFormState extends State<SignInForm> {
                       alignment: Alignment.centerLeft,
                       child: GestureDetector(
                         onTap: () {
-                          pushNewScreen(context, screen: ForgotPassword());
+                          pushNewScreen(context, screen: PasswordReset());
                         },
                         child: Text(
                           "Passwort vergessen?",
