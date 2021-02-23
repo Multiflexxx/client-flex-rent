@@ -60,6 +60,9 @@ class _OfferScreenState extends State<OfferScreen> {
         ApiOfferService().getOfferRatingsById(offer: widget.offer, page: 1);
 
     _user = HelperService.getUser(context: context);
+    if (_user == null) {
+      _user = User(userId: "");
+    }
   }
 
   List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {
