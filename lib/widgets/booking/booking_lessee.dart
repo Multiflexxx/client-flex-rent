@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/rating/rating_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +8,8 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BookingLessee extends StatelessWidget {
   final OfferRequest offerRequest;
-  BookingLessee({this.offerRequest});
+  final VoidCallback updateFinishScreen;
+  BookingLessee({this.offerRequest, this.updateFinishScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -48,10 +50,6 @@ class BookingLessee extends StatelessWidget {
                         ),
                         maxLines: 2,
                       ),
-                      // missing in backend
-                      // Text(
-                      //   'Flexer seit ' + offerRequest.user.cakeday,
-                      // )
                       SizedBox(
                         height: 10,
                       ),
@@ -155,24 +153,33 @@ class BookingLessee extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-
-            PurpleButton(
-              text: Text('Bewerte den Mieter'),
-              onPressed: () {
-                pushNewScreenWithRouteSettings(
-                  context,
-                  screen: RatingScreen(
-                    ratedUser: offerRequest.user,
-                    ratingType: 'lessee',
-                  ),
-                  withNavBar: true,
-                  settings: RouteSettings(name: RatingScreen.routeName),
-                );
-              },
-            ),
+            _buildRatingWidget(context: context),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildRatingWidget({BuildContext context}) {
+    if (offerRequest.statusId == 5 && offerRequest.lesseeRating == null) {
+      return PurpleButton(
+        text: Text('Bewerte den Mieter'),
+        onPressed: () async {
+          var response = await pushNewScreenWithRouteSettings(
+            context,
+            screen: RatingScreen(
+              ratedUser: offerRequest.user,
+              ratingType: 'lessee',
+            ),
+            withNavBar: true,
+            settings: RouteSettings(name: RatingScreen.routeName),
+          );
+          if (response != null) {
+            updateFinishScreen();
+          }
+        },
+      );
+    }
+    return Container();
   }
 }

@@ -1,21 +1,72 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/helper_service.dart';
+import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/screens/rating/rating_screen.dart';
 import 'package:flexrent/widgets/slideIns/slideIn.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:intl/intl.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class RatingBox extends StatelessWidget {
-  final dynamic rating;
+  final OfferRequest offerRequest;
+  final Rating rating;
+  final VoidCallback updateFinishScreen;
 
-  RatingBox({this.rating});
+  RatingBox({this.offerRequest, this.rating, this.updateFinishScreen});
+
+  void _deleteRating({BuildContext context}) {
+    try {
+      if (rating is UserRating) {
+        ApiUserService().deleteUserRating(ratingId: rating.ratingId);
+      }
+      if (rating is OfferRating) {
+        print('Lösch dich!');
+      }
+
+      showFlushbar(
+          context: context, message: 'Dein Rating wurde erfolgreich gelöscht.');
+      updateFinishScreen();
+    } catch (err) {}
+  }
+
+  void _updateRating({BuildContext context}) async {
+    if (rating is UserRating) {
+      UserRating _rating = rating;
+      await pushNewScreen(
+        context,
+        screen: RatingScreen(
+          ratedUser: _rating.ratedUser,
+          ratingType: _rating.ratingType,
+          rating: _rating,
+        ),
+      );
+    } else if (rating is OfferRating) {
+      OfferRating _rating = rating;
+      pushNewScreen(
+        context,
+        screen: RatingScreen(
+          offer: offerRequest.offer,
+          ratingType: _rating.ratingType,
+        ),
+      );
+    }
+    showFlushbar(
+        context: context,
+        message: 'Dein Rating wurde erfolgreich aktualisiert.');
+    updateFinishScreen();
+  }
 
   @override
   Widget build(BuildContext context) {
     var formatter = new DateFormat.yMMMMd("de_DE");
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
+      margin: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10.0),
@@ -170,42 +221,73 @@ class RatingBox extends StatelessWidget {
               height: 20.0,
               color: Theme.of(context).primaryColor,
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                // feature isn't implemented
-                Text('Hat dir das geholfen'),
-                Row(
-                  children: [
-                    GestureDetector(
-                      child: Text(
-                        'Ja',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
+            rating.ratingOwner.userId !=
+                    HelperService.getUser(context: context).userId
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      // feature isn't implemented
+                      Text('Hat dir das geholfen'),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            child: Text(
+                              'Ja',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12.0,
+                                height: 1.35,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30.0,
+                          ),
+                          GestureDetector(
+                            child: Text(
+                              'Nein',
+                              style: TextStyle(
+                                color: Theme.of(context).primaryColor,
+                                fontSize: 12.0,
+                                height: 1.35,
+                                fontWeight: FontWeight.w300,
+                              ),
+                            ),
+                          )
+                        ],
                       ),
-                    ),
-                    SizedBox(
-                      width: 20.0,
-                    ),
-                    GestureDetector(
-                      child: Text(
-                        'Nein',
-                        style: TextStyle(
-                          color: Theme.of(context).primaryColor,
-                          fontSize: 12.0,
-                          height: 1.35,
-                          fontWeight: FontWeight.w300,
-                        ),
+                    ],
+                  )
+                : Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text('Deine Bewertung'),
+                      Row(
+                        children: [
+                          GestureDetector(
+                            onTap: () => _updateRating(context: context),
+                            child: Icon(
+                              Feather.edit_2,
+                              color: Theme.of(context).primaryColor,
+                              size: 16.0,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 30.0,
+                          ),
+                          GestureDetector(
+                            onTap: () => _deleteRating(context: context),
+                            child: Icon(
+                              Feather.trash,
+                              color: Theme.of(context).primaryColor,
+                              size: 16.0,
+                            ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
-              ],
-            ),
+                    ],
+                  ),
           ],
         ),
       ),

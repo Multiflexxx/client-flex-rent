@@ -8,6 +8,7 @@ export 'new_request_numbers/new_request_numbers.dart';
 export 'password/password.dart';
 export 'profile_option/profile.option.dart';
 export 'user/user.dart';
+export 'rating/rating.dart';
 export 'rating/user/rating/user_rating.dart';
 export 'rating/user/rating_response/user_rating_response.dart';
 export 'rating/user/rating_request/user_rating_request.dart';

@@ -4,6 +4,7 @@ import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/booking/booking_lessee.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
+import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexrent/logic/models/models.dart';
@@ -60,7 +61,20 @@ class _LessorFinishBodyState extends State<LessorFinishBody> {
               children: <Widget>[
                 BookingInfo(offerRequest: _offerRequest, lessor: true),
                 BookingOverview(offerRequest: _offerRequest),
-                BookingLessee(offerRequest: _offerRequest),
+                BookingLessee(
+                  offerRequest: _offerRequest,
+                  updateFinishScreen: _getOfferRequestUpdate,
+                ),
+                _offerRequest.lesseeRating != null
+                    ? RatingBox(
+                        offerRequest: _offerRequest,
+                        rating: _offerRequest.lesseeRating,
+                        updateFinishScreen: _getOfferRequestUpdate,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 75.0,
+                ),
               ],
             );
           }

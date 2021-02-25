@@ -11,23 +11,24 @@ import 'package:flexrent/widgets/styles/formfield_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:http/http.dart' as http;
 
 class RatingScreen extends StatelessWidget {
   final User ratedUser;
   final Offer offer;
   final String ratingType;
+  final Rating rating;
   final VoidCallback updateParentFunction;
 
   static String routeName = 'ratingScreen';
 
-  RatingScreen(
-      {Key key,
-      this.updateParentFunction,
-      this.ratedUser,
-      this.offer,
-      this.ratingType})
-      : super(key: key);
+  RatingScreen({
+    Key key,
+    this.updateParentFunction,
+    this.ratedUser,
+    this.offer,
+    this.ratingType,
+    this.rating,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +41,7 @@ class RatingScreen extends StatelessWidget {
         updateParentFunction: updateParentFunction,
         ratedUser: ratedUser,
         ratingType: ratingType,
+        rating: rating,
       ),
     );
   }
@@ -50,31 +52,42 @@ class _RatingBody extends StatefulWidget {
   final Offer offer;
   final String ratingType;
   final VoidCallback updateParentFunction;
-  const _RatingBody(
-      {Key key,
-      this.updateParentFunction,
-      this.ratedUser,
-      this.offer,
-      this.ratingType})
-      : super(key: key);
+  final Rating rating;
+
+  const _RatingBody({
+    Key key,
+    this.updateParentFunction,
+    this.ratedUser,
+    this.offer,
+    this.ratingType,
+    this.rating,
+  }) : super(key: key);
+
   @override
   _RatingBodyState createState() => _RatingBodyState();
 }
-
-http.Response apiResult;
 
 class _RatingBodyState extends State<_RatingBody> {
   final _key = GlobalKey<FormState>();
   final _headlineController = TextEditingController();
   final _textController = TextEditingController();
-  int _rating;
+  int _starRating;
 
   AutovalidateMode _validateMode;
   @override
   void initState() {
     super.initState();
     _validateMode = AutovalidateMode.disabled;
-    _rating = 0;
+    _starRating = 0;
+    if (widget.rating != null) {
+      initFormFields();
+    }
+  }
+
+  void initFormFields() {
+    _headlineController.text = widget.rating.headline;
+    _textController.text = widget.rating.ratingText;
+    _starRating = widget.rating.rating;
   }
 
   void _createRating() async {
@@ -82,30 +95,39 @@ class _RatingBodyState extends State<_RatingBody> {
       _validateMode = AutovalidateMode.always;
     });
 
-    if (_key.currentState.validate() && _rating > 0 && _rating < 6) {
+    if (_key.currentState.validate() && _starRating > 0 && _starRating < 6) {
       if (widget.ratingType == 'lessor' || widget.ratingType == 'lessee') {
-
-       
         try {
-          UserRating newRating = await ApiUserService().createUserRating(
-            ratedUser: widget.ratedUser,
-            ratingType: widget.ratingType,
-            headline: _headlineController.text,
-            text: _textController.text,
-            rating: _rating,
-          );
-          inspect(newRating);
-          Navigator.of(context).pop();
-        } on RatingException catch (e) {
+          UserRating newRating;
+          if (widget.rating == null) {
+            newRating = await ApiUserService().createUserRating(
+              ratedUser: widget.ratedUser,
+              ratingType: widget.ratingType,
+              headline: _headlineController.text,
+              text: _textController.text,
+              rating: _starRating,
+            );
+          } else {
+            newRating = await ApiUserService().updateUserRating(
+              ratingId: widget.rating.ratingId,
+              ratedUser: widget.ratedUser,
+              ratingType: widget.ratingType,
+              headline: _headlineController.text,
+              text: _textController.text,
+              rating: _starRating,
+            );
+          }
+          Navigator.of(context).pop(newRating);
+        } on UserRatingException catch (e) {
           showFlushbar(context: context, message: e.message);
         }
       } else if (widget.ratingType == 'offer') {
-         inspect(widget.offer);
+        inspect(widget.offer);
         try {
           OfferRating newOfferRating =
               await ApiOfferService().createOfferRating(
             offer: widget.offer,
-            rating: _rating,
+            rating: _starRating,
             headline: _headlineController.text,
             ratingText: _textController.text,
           );
@@ -153,7 +175,7 @@ class _RatingBodyState extends State<_RatingBody> {
           SizedBox(height: 10.0),
           Row(mainAxisAlignment: MainAxisAlignment.center, children: [
             RatingBar.builder(
-              initialRating: 0,
+              initialRating: _starRating.toDouble(),
               minRating: 1,
               direction: Axis.horizontal,
               allowHalfRating: false,
@@ -163,7 +185,7 @@ class _RatingBodyState extends State<_RatingBody> {
                   Icon(Icons.star, color: Theme.of(context).accentColor),
               onRatingUpdate: (rating) {
                 setState(() {
-                  _rating = rating.toInt();
+                  _starRating = rating.toInt();
                 });
               },
             ),
@@ -191,7 +213,7 @@ class _RatingBodyState extends State<_RatingBody> {
           ),
           SizedBox(height: 16.0),
           Text(
-            'Schreibe deine Bewertung so ausführlich wie du möchtest. Du kannst den Kontakt und die Qulität des Produktes beschreiben.',
+            'Schreibe deine Bewertung so ausführlich wie du möchtest.',
             style: TextStyle(
               color: Theme.of(context).primaryColor,
               fontSize: 18.0,
@@ -218,13 +240,6 @@ class _RatingBodyState extends State<_RatingBody> {
               _createRating();
             },
           ),
-          // SizedBox(height: 10.0),
-          // TransparentButton(
-          //   text: Text('Abbrechen'),
-          //   onPressed: () {
-          //     return;
-          //   },
-          // ),
         ]),
       ),
     );
