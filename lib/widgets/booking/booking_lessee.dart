@@ -8,8 +8,8 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BookingLessee extends StatelessWidget {
   final OfferRequest offerRequest;
-  final VoidCallback updateFinishScreen;
-  BookingLessee({this.offerRequest, this.updateFinishScreen});
+  final VoidCallback updateParentScreen;
+  BookingLessee({this.offerRequest, this.updateParentScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -175,7 +175,7 @@ class BookingLessee extends StatelessWidget {
             settings: RouteSettings(name: RatingScreen.routeName),
           );
           if (response != null) {
-            updateFinishScreen();
+            updateParentScreen();
           }
         },
       );

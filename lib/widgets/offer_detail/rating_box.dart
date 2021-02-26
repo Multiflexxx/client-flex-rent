@@ -1,4 +1,5 @@
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
 import 'package:flexrent/logic/services/services.dart';
@@ -16,23 +17,34 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 class RatingBox extends StatelessWidget {
   final OfferRequest offerRequest;
   final Rating rating;
-  final VoidCallback updateFinishScreen;
+  final VoidCallback updateParentScreen;
 
-  RatingBox({this.offerRequest, this.rating, this.updateFinishScreen});
+  RatingBox({this.offerRequest, this.rating, this.updateParentScreen});
 
-  void _deleteRating({BuildContext context}) {
+  void _deleteRating({BuildContext context}) async {
+    print('start');
     try {
+      Rating _rating;
       if (rating is UserRating) {
-        ApiUserService().deleteUserRating(ratingId: rating.ratingId);
+        _rating =
+            await ApiUserService().deleteUserRating(ratingId: rating.ratingId);
       }
       if (rating is OfferRating) {
         print('Lösch dich!');
       }
 
-      showFlushbar(
-          context: context, message: 'Dein Rating wurde erfolgreich gelöscht.');
-      updateFinishScreen();
-    } catch (err) {}
+      if (_rating != null) {
+        print('reload?');
+        updateParentScreen();
+        showFlushbar(
+            context: context,
+            message: 'Dein Rating wurde erfolgreich gelöscht.');
+      } else {
+        print('nein');
+      }
+    } on UserRatingException catch (err) {
+      showFlushbar(context: context, message: err.message);
+    }
   }
 
   void _updateRating({BuildContext context}) async {
@@ -59,7 +71,7 @@ class RatingBox extends StatelessWidget {
     showFlushbar(
         context: context,
         message: 'Dein Rating wurde erfolgreich aktualisiert.');
-    updateFinishScreen();
+    updateParentScreen();
   }
 
   @override

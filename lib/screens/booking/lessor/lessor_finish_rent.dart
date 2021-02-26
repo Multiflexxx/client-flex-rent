@@ -63,13 +63,13 @@ class _LessorFinishBodyState extends State<LessorFinishBody> {
                 BookingOverview(offerRequest: _offerRequest),
                 BookingLessee(
                   offerRequest: _offerRequest,
-                  updateFinishScreen: _getOfferRequestUpdate,
+                  updateParentScreen: _getOfferRequestUpdate,
                 ),
                 _offerRequest.lesseeRating != null
                     ? RatingBox(
                         offerRequest: _offerRequest,
                         rating: _offerRequest.lesseeRating,
-                        updateFinishScreen: _getOfferRequestUpdate,
+                        updateParentScreen: _getOfferRequestUpdate,
                       )
                     : Container(),
                 SizedBox(

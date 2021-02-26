@@ -4,16 +4,17 @@ import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
 import 'package:flexrent/widgets/booking/booking_lessor.dart';
+import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexrent/logic/models/models.dart';
 
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
 
-class LeseeFinishScreen extends StatelessWidget {
+class LesseeFinishScreen extends StatelessWidget {
   final OfferRequest offerRequest;
 
-  LeseeFinishScreen({this.offerRequest});
+  LesseeFinishScreen({this.offerRequest});
   @override
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
@@ -63,7 +64,20 @@ class _LeseeFinishBodyState extends State<LeseeFinishBody> {
                   lessor: false,
                 ),
                 BookingOverview(offerRequest: _offerRequest),
-                BookingLessor(offerRequest: _offerRequest),
+                BookingLessor(
+                  offerRequest: _offerRequest,
+                  updateParentScreen: _getOfferRequestUpdate,
+                ),
+                _offerRequest.lessorRating != null
+                    ? RatingBox(
+                        offerRequest: _offerRequest,
+                        rating: _offerRequest.lessorRating,
+                        updateParentScreen: _getOfferRequestUpdate,
+                      )
+                    : Container(),
+                SizedBox(
+                  height: 75.0,
+                ),
               ],
             );
           }

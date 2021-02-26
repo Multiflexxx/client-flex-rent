@@ -232,6 +232,8 @@ class ApiUserService extends UserService {
         body: jsonEncode(_body),
       );
 
+      inspect(response);
+
       if (response.statusCode == 200) {
         final dynamic jsonBody = json.decode(response.body);
         final UserRating userRating = UserRating.fromJson(jsonBody);

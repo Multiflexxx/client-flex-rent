@@ -7,7 +7,8 @@ import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class BookingLessor extends StatelessWidget {
   final OfferRequest offerRequest;
-  BookingLessor({this.offerRequest});
+  final VoidCallback updateParentScreen;
+  BookingLessor({this.offerRequest, this.updateParentScreen});
 
   @override
   Widget build(BuildContext context) {
@@ -144,28 +145,13 @@ class BookingLessor extends StatelessWidget {
                 )
               ],
             ),
-
+            SizedBox(
+              height: 20.0,
+            ),
+            _buildUserRatingWidget(context: context),
             offerRequest.statusId == 5
                 ? Column(
                     children: [
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      PurpleButton(
-                        text: Text('Bewerte den Vermieter'),
-                        onPressed: () {
-                          pushNewScreenWithRouteSettings(
-                            context,
-                            screen: RatingScreen(
-                              ratedUser: offerRequest.offer.lessor,
-                              ratingType: 'lessor',
-                            ),
-                            withNavBar: true,
-                            settings:
-                                RouteSettings(name: RatingScreen.routeName),
-                          );
-                        },
-                      ),
                       SizedBox(
                         height: 20.0,
                       ),
@@ -193,5 +179,29 @@ class BookingLessor extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  Widget _buildUserRatingWidget({BuildContext context}) {
+    if (offerRequest.statusId == 5 && offerRequest.lessorRating == null) {
+      return PurpleButton(
+        text: Text('Bewerte den Vermieter'),
+        onPressed: () async {
+          var response = await pushNewScreenWithRouteSettings(
+            context,
+            screen: RatingScreen(
+              ratedUser: offerRequest.offer.lessor,
+              ratingType: 'lessor',
+            ),
+            withNavBar: true,
+            settings: RouteSettings(name: RatingScreen.routeName),
+          );
+
+          if (response != null) {
+            updateParentScreen();
+          }
+        },
+      );
+    }
+    return Container();
   }
 }
