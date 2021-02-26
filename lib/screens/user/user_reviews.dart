@@ -11,8 +11,9 @@ import 'package:flutter/rendering.dart';
 class UserReviews extends StatefulWidget {
   final User user;
   final int startTab;
+  final VoidCallback updateParentScreen;
 
-  UserReviews({this.user, this.startTab = 0});
+  UserReviews({this.user, this.startTab = 0, this.updateParentScreen});
 
   @override
   _UserReviewsState createState() => _UserReviewsState();
@@ -22,6 +23,7 @@ class _UserReviewsState extends State<UserReviews> {
   final List<String> _tabs = <String>["Mieter", "Vermieter"];
   Future<UserRatingResponse> leseeratings;
   Future<UserRatingResponse> lessorratings;
+  bool firstGetUserRatings = true;
 
   @override
   void initState() {
@@ -36,6 +38,11 @@ class _UserReviewsState extends State<UserReviews> {
       lessorratings = ApiUserService()
           .getUserRatingById(user: widget.user, lessorRating: true, page: 1);
     });
+    if (firstGetUserRatings) {
+      firstGetUserRatings = false;
+    } else {
+      widget.updateParentScreen();
+    }
   }
 
   @override

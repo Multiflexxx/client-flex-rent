@@ -22,7 +22,6 @@ class RatingBox extends StatelessWidget {
   RatingBox({this.offerRequest, this.rating, this.updateParentScreen});
 
   void _deleteRating({BuildContext context}) async {
-    print('start');
     try {
       Rating _rating;
       if (rating is UserRating) {
@@ -34,7 +33,6 @@ class RatingBox extends StatelessWidget {
       }
 
       if (_rating != null) {
-        print('reload?');
         updateParentScreen();
         showFlushbar(
             context: context,

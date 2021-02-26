@@ -8,6 +8,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:http/http.dart' as http;
 
 abstract class UserService {
+  Future<User> getUserById({String userId});
   Future<User> updateUser({User user, Password password});
   Future<User> updateProfileImage({String imagePath});
   Future<void> deleteUser({User user});
@@ -25,6 +26,25 @@ abstract class UserService {
 
 class ApiUserService extends UserService {
   final _storage = FlutterSecureStorage();
+
+  @override
+  Future<User> getUserById({String userId}) async {
+    print('neu');
+    final response = await http.get(
+      '${CONFIG.url}/user/$userId',
+    );
+
+    if (response.statusCode == 200) {
+      dynamic jsonBody = jsonDecode(response.body);
+      User user = User.fromJson(jsonBody);
+      inspect(user);
+      return user;
+    } else {
+      return Future.error(
+        UserException(message: 'Der User konnte nicht gefunden werden.'),
+      );
+    }
+  }
 
   @override
   Future<User> updateUser({User user, Password password}) async {
@@ -116,10 +136,8 @@ class ApiUserService extends UserService {
         body: jsonEncode(_body),
       );
 
-      inspect(response);
-
       if (response.statusCode == 200) {
-        inspect(response);
+        // inspect(response);
       } else if (response.statusCode == 409) {
         throw UserException(
             message:
