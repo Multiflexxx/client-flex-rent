@@ -1,5 +1,7 @@
 export 'authorization/authorization.dart';
 export 'category/category.dart';
+export 'chat/chat/chat.dart';
+export 'chat/chat_message/chat_message.dart';
 export 'date_range/date_range.dart';
 export 'offer/offer.dart';
 export 'offer_request/offer_request.dart';
