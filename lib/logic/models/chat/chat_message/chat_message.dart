@@ -15,7 +15,7 @@ class ChatMessage extends Equatable {
   final String messageId;
 
   ChatMessage(
-      {this.chatId,
+      {@required this.chatId,
       @required this.fromUserId,
       @required this.toUserId,
       @required this.messageContent,
