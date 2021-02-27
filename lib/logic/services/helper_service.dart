@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/authentication/no_access_screen.dart';
+import 'package:flexrent/screens/authentication/no_access_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
@@ -60,6 +61,7 @@ class HelperService {
           popRouteName: popRouteName,
           targetScreen: targetScreen,
           hideNavBarFunction: hideNavBarFunction,
+          realScreenName: 'reservationScreen',
         ),
         pageTransitionAnimation: PageTransitionAnimation.scale,
       );
