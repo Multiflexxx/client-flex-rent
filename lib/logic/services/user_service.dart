@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flexrent/logic/config/config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -37,7 +36,6 @@ class ApiUserService extends UserService {
     if (response.statusCode == 200) {
       dynamic jsonBody = jsonDecode(response.body);
       User user = User.fromJson(jsonBody);
-      inspect(user);
       return user;
     } else {
       return Future.error(
@@ -177,7 +175,6 @@ class ApiUserService extends UserService {
                 'Der Flexer ${user.firstName} ${user.lastName} hat noch keine Bewertung als $userType.');
       }
     } else {
-      inspect(response);
       throw UserRatingException(
           message:
               'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.');
@@ -250,8 +247,6 @@ class ApiUserService extends UserService {
         body: jsonEncode(_body),
       );
 
-      inspect(response);
-
       if (response.statusCode == 200) {
         final dynamic jsonBody = json.decode(response.body);
         final UserRating userRating = UserRating.fromJson(jsonBody);
@@ -305,12 +300,9 @@ class ApiUserService extends UserService {
         body: jsonEncode(_body),
       );
 
-      inspect(response);
-
       if (response.statusCode == 200) {
         final dynamic jsonBody = json.decode(response.body);
         final UserRating userRating = UserRating.fromJson(jsonBody);
-        inspect(userRating);
         return userRating;
       } else {
         return Future.error(

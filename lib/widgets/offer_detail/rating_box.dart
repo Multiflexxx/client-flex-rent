@@ -15,11 +15,11 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class RatingBox extends StatelessWidget {
-  final OfferRequest offerRequest;
+  final Offer offer;
   final Rating rating;
   final VoidCallback updateParentScreen;
 
-  RatingBox({this.offerRequest, this.rating, this.updateParentScreen});
+  RatingBox({this.offer, this.rating, this.updateParentScreen});
 
   void _deleteRating({BuildContext context}) async {
     try {
@@ -29,7 +29,9 @@ class RatingBox extends StatelessWidget {
             await ApiUserService().deleteUserRating(ratingId: rating.ratingId);
       }
       if (rating is OfferRating) {
-        print('Lösch dich!');
+        OfferRating _castedRating = rating;
+        _rating =
+            await ApiOfferService().deleteOfferRating(rating: _castedRating);
       }
 
       if (_rating != null) {
@@ -46,9 +48,10 @@ class RatingBox extends StatelessWidget {
   }
 
   void _updateRating({BuildContext context}) async {
+    var response;
     if (rating is UserRating) {
       UserRating _rating = rating;
-      await pushNewScreen(
+      response = await pushNewScreen(
         context,
         screen: RatingScreen(
           ratedUser: _rating.ratedUser,
@@ -58,18 +61,22 @@ class RatingBox extends StatelessWidget {
       );
     } else if (rating is OfferRating) {
       OfferRating _rating = rating;
-      pushNewScreen(
+      response = await pushNewScreen(
         context,
         screen: RatingScreen(
-          offer: offerRequest.offer,
+          offer: offer,
           ratingType: _rating.ratingType,
+          rating: _rating,
         ),
       );
     }
-    showFlushbar(
-        context: context,
-        message: 'Dein Rating wurde erfolgreich aktualisiert.');
-    updateParentScreen();
+
+    if (response != null) {
+      updateParentScreen();
+      showFlushbar(
+          context: context,
+          message: 'Dein Rating wurde erfolgreich aktualisiert.');
+    }
   }
 
   @override
@@ -96,23 +103,7 @@ class RatingBox extends StatelessWidget {
                       height: 1.35,
                     ),
                   ),
-            SizedBox(height: 10.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                RatingBarIndicator(
-                  itemBuilder: (context, _) => Icon(
-                    Icons.star,
-                    color: Theme.of(context).accentColor,
-                  ),
-                  direction: Axis.horizontal,
-                  itemCount: 5,
-                  rating: rating.rating.toDouble(),
-                  itemSize: 30.0,
-                ),
-              ],
-            ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 5.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -122,18 +113,48 @@ class RatingBox extends StatelessWidget {
                       rating.ratingOwner.lastName,
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                     height: 1.35,
+                    fontWeight: FontWeight.w300,
                   ),
                 ),
                 Text(
                   formatter.format(rating.updatedAt),
                   style: TextStyle(
                     color: Theme.of(context).primaryColor,
-                    fontSize: 12.0,
+                    fontSize: 14.0,
                     height: 1.35,
                     fontWeight: FontWeight.w300,
                   ),
+                ),
+              ],
+            ),
+            SizedBox(height: 10.0),
+            Divider(
+              height: 20.0,
+              color: Theme.of(context).primaryColor,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Flexer Rating:',
+                  style: TextStyle(
+                    color: Theme.of(context).primaryColor,
+                    fontSize: 18.0,
+                    height: 1.35,
+                    // fontWeight: FontWeight.w300,
+                  ),
+                ),
+                RatingBarIndicator(
+                  itemBuilder: (context, _) => Icon(
+                    Icons.star,
+                    color: Theme.of(context).accentColor,
+                  ),
+                  direction: Axis.horizontal,
+                  itemCount: 5,
+                  rating: rating.rating.toDouble(),
+                  itemSize: 27.5,
                 ),
               ],
             ),
@@ -167,50 +188,50 @@ class RatingBox extends StatelessWidget {
                             //should only be shown if the text is to long.
                             GestureDetector(
                               onTap: () => showCupertinoModalBottomSheet(
-                                  expand: false,
-                                  context: context,
-                                  barrierColor: Colors.black45,
-                                  builder: (context, scrollController) =>
-                                      SlideIn(
-                                        top: false,
-                                        widgetList: [
-                                          SizedBox(
-                                            height: 10.0,
+                                expand: false,
+                                context: context,
+                                barrierColor: Colors.black45,
+                                builder: (context, scrollController) => SlideIn(
+                                  top: false,
+                                  widgetList: [
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Column(
+                                        children: [
+                                          Text(
+                                            rating.headline,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .primaryColor,
+                                                fontSize: 18.0,
+                                                height: 1.35,
+                                                decoration:
+                                                    TextDecoration.underline),
                                           ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(16.0),
-                                            child: Column(
-                                              children: [
-                                                Text(
-                                                  rating.headline,
-                                                  style: TextStyle(
-                                                      color: Theme.of(context)
-                                                          .primaryColor,
-                                                      fontSize: 18.0,
-                                                      height: 1.35,
-                                                      decoration: TextDecoration
-                                                          .underline),
-                                                ),
-                                                SizedBox(height: 10.0),
-                                                Text(
-                                                  rating.ratingText,
-                                                  style: TextStyle(
-                                                    color: Theme.of(context)
-                                                        .primaryColor,
-                                                    fontSize: 16.0,
-                                                    height: 1.35,
-                                                    fontWeight: FontWeight.w300,
-                                                  ),
-                                                  textAlign: TextAlign.justify,
-                                                ),
-                                              ],
+                                          SizedBox(height: 10.0),
+                                          Text(
+                                            rating.ratingText,
+                                            style: TextStyle(
+                                              color: Theme.of(context)
+                                                  .primaryColor,
+                                              fontSize: 16.0,
+                                              height: 1.35,
+                                              fontWeight: FontWeight.w300,
                                             ),
-                                          ),
-                                          SizedBox(
-                                            height: 10.0,
+                                            textAlign: TextAlign.justify,
                                           ),
                                         ],
-                                      )),
+                                      ),
+                                    ),
+                                    SizedBox(
+                                      height: 10.0,
+                                    ),
+                                  ],
+                                ),
+                              ),
                               child: Text(
                                 'Mehr anzeigen',
                                 style: TextStyle(

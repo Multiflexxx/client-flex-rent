@@ -68,13 +68,50 @@ class _LeseeFinishBodyState extends State<LeseeFinishBody> {
                   offerRequest: _offerRequest,
                   updateParentScreen: _getOfferRequestUpdate,
                 ),
-                _offerRequest.lessorRating != null
-                    ? RatingBox(
-                        offerRequest: _offerRequest,
+                if (_offerRequest.lessorRating != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          'Vermieter/in Bewertung',
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ),
+                      RatingBox(
+                        offer: _offerRequest.offer,
                         rating: _offerRequest.lessorRating,
                         updateParentScreen: _getOfferRequestUpdate,
                       )
-                    : Container(),
+                    ],
+                  ),
+                if (_offerRequest.offerRating != null)
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Text(
+                          'Produkt Bewertung',
+                          style: TextStyle(
+                            fontSize: 22.0,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: 1.2,
+                          ),
+                        ),
+                      ),
+                      RatingBox(
+                        offer: _offerRequest.offer,
+                        rating: _offerRequest.offerRating,
+                        updateParentScreen: _getOfferRequestUpdate,
+                      ),
+                    ],
+                  ),
                 SizedBox(
                   height: 75.0,
                 ),

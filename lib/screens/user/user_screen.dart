@@ -16,8 +16,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
-import 'dart:developer';
-
 class UserScreen extends StatefulWidget {
   static String routeName = "userPage";
 
@@ -52,7 +50,6 @@ class _UserScreenState extends State<UserScreen> {
 
   @override
   Widget build(BuildContext context) {
-    inspect(widget.user);
     return Scaffold(
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/models/user/user.dart';
@@ -122,17 +120,25 @@ class _RatingBodyState extends State<_RatingBody> {
           showFlushbar(context: context, message: e.message);
         }
       } else if (widget.ratingType == 'offer') {
-        inspect(widget.offer);
         try {
-          OfferRating newOfferRating =
-              await ApiOfferService().createOfferRating(
-            offer: widget.offer,
-            rating: _starRating,
-            headline: _headlineController.text,
-            ratingText: _textController.text,
-          );
-          inspect(newOfferRating);
-          Navigator.of(context).pop();
+          OfferRating newRating;
+          if (widget.rating == null) {
+            newRating = await ApiOfferService().createOfferRating(
+              offer: widget.offer,
+              rating: _starRating,
+              headline: _headlineController.text,
+              ratingText: _textController.text,
+            );
+          } else {
+            newRating = await ApiOfferService().updateOfferRating(
+              offer: widget.offer,
+              rating: _starRating,
+              headline: _headlineController.text,
+              ratingText: _textController.text,
+            );
+          }
+
+          Navigator.of(context).pop(newRating);
         } on OfferRatingException catch (e) {
           showFlushbar(context: context, message: e.message);
         }

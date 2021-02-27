@@ -148,40 +148,15 @@ class BookingLessor extends StatelessWidget {
             SizedBox(
               height: 20.0,
             ),
-            _buildUserRatingWidget(context: context),
-            offerRequest.statusId == 5
-                ? Column(
-                    children: [
-                      SizedBox(
-                        height: 20.0,
-                      ),
-                      PurpleButton(
-                        text: Text('Bewerte das Produkt'),
-                        onPressed: () {
-                          pushNewScreenWithRouteSettings(
-                            context,
-                            screen: RatingScreen(
-                              offer: offerRequest.offer,
-                              ratingType: 'offer',
-                            ),
-                            withNavBar: true,
-                            settings:
-                                RouteSettings(name: RatingScreen.routeName),
-                          );
-                        },
-                      ),
-                    ],
-                  )
-                : SizedBox(
-                    height: 0.0,
-                  ),
+            _buildUserRatingButton(context: context),
+            _buildOfferRatingButton(context: context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildUserRatingWidget({BuildContext context}) {
+  Widget _buildUserRatingButton({BuildContext context}) {
     if (offerRequest.statusId == 5 && offerRequest.lessorRating == null) {
       return PurpleButton(
         text: Text('Bewerte den Vermieter'),
@@ -203,5 +178,37 @@ class BookingLessor extends StatelessWidget {
       );
     }
     return Container();
+  }
+
+  Widget _buildOfferRatingButton({BuildContext context}) {
+    if (offerRequest.statusId == 5 && offerRequest.offerRating == null) {
+      return Column(
+        children: [
+          SizedBox(
+            height: 20.0,
+          ),
+          PurpleButton(
+            text: Text('Bewerte das Produkt'),
+            onPressed: () async {
+              var response = await pushNewScreenWithRouteSettings(
+                context,
+                screen: RatingScreen(
+                  offer: offerRequest.offer,
+                  ratingType: 'offer',
+                ),
+                withNavBar: true,
+                settings: RouteSettings(name: RatingScreen.routeName),
+              );
+
+              if (response != null) {
+                updateParentScreen();
+              }
+            },
+          ),
+        ],
+      );
+    } else {
+      return Container();
+    }
   }
 }

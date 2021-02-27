@@ -67,7 +67,7 @@ class _LessorFinishBodyState extends State<LessorFinishBody> {
                 ),
                 _offerRequest.lesseeRating != null
                     ? RatingBox(
-                        offerRequest: _offerRequest,
+                        offer: _offerRequest.offer,
                         rating: _offerRequest.lesseeRating,
                         updateParentScreen: _getOfferRequestUpdate,
                       )
