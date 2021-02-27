@@ -6,11 +6,11 @@ part 'chat.g.dart';
 @JsonSerializable(fieldRename: FieldRename.snake)
 class Chat extends Equatable {
   final String chatId;
-  final User chatParner;
+  final User chatPartner;
   final ChatMessage lastMessage;
   final bool unreadMessages;
 
-  Chat({this.chatId, this.chatParner, this.lastMessage, this.unreadMessages});
+  Chat({this.chatId, this.chatPartner, this.lastMessage, this.unreadMessages});
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
   Map<String, dynamic> toJson() => _$ChatToJson(this);
@@ -18,7 +18,7 @@ class Chat extends Equatable {
   @override
   List<Object> get props => [
         chatId,
-        chatParner,
+        chatPartner,
         lastMessage,
         unreadMessages,
       ];
