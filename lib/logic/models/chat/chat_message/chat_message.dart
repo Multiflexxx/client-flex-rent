@@ -9,8 +9,8 @@ class ChatMessage extends Equatable {
   final String fromUserId;
   final String toUserId;
   final String messageContent;
-  final String messageType;
-  final String statusId;
+  final int messageType;
+  final int statusId;
   final DateTime createdAt;
   final String messageId;
 

@@ -12,8 +12,8 @@ ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) {
     fromUserId: json['from_user_id'] as String,
     toUserId: json['to_user_id'] as String,
     messageContent: json['message_content'] as String,
-    messageType: json['message_type'] as String,
-    statusId: json['status_id'] as String,
+    messageType: json['message_type'] as int,
+    statusId: json['status_id'] as int,
     createdAt: json['created_at'] == null
         ? null
         : DateTime.parse(json['created_at'] as String),

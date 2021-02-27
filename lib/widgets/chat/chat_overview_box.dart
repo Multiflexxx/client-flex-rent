@@ -1,21 +1,16 @@
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flexrent/logic/models/chat/chat_message/chat_message.dart';
-import 'package:flexrent/logic/models/user/user.dart';
+import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/chat/chat_overview_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class ChatOverviewBox extends StatefulWidget {
-  final User chatPartner;
-  final ChatMessage lastMessage;
-  final bool unreadMessages;
+  final Chat chat;
 
   ChatOverviewBox({
-    this.chatPartner,
-    this.lastMessage,
-    this.unreadMessages,
+    this.chat,
   });
 
   @override
@@ -39,15 +34,15 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
                 color: Theme.of(context).accentColor,
               ),
             ),
-            borderRadius: BorderRadius.circular(10.0),
+            // borderRadius: BorderRadius.circular(10.0),
           ),
           child: Row(
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(20.0),
-                child: widget.chatPartner.profilePicture != ''
+                child: widget.chat.chatPartner.profilePicture != ''
                     ? CachedNetworkImage(
-                        imageUrl: widget.chatPartner.profilePicture,
+                        imageUrl: widget.chat.chatPartner.profilePicture,
                         width: 100,
                         height: 100,
                         fit: BoxFit.cover,
@@ -71,7 +66,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
               Column(
                 children: [
                   Text(
-                    "$widget.chatPartner.firstName $widget.chatPartner.lastName",
+                    "${widget.chat.chatPartner.firstName} ${widget.chat.chatPartner.lastName}",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 18.0,
@@ -79,7 +74,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
                     ),
                   ),
                   Text(
-                    widget.lastMessage.messageContent,
+                    widget.chat.lastMessage.messageContent,
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14.0,
@@ -94,7 +89,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
               Column(
                 children: [
                   Text(
-                    widget.lastMessage.createdAt.toString(),
+                    widget.chat.lastMessage.createdAt.toString(),
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 14.0,
@@ -105,7 +100,8 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
                     overflow: TextOverflow.ellipsis,
                   ),
                   Badge(
-                    showBadge: (widget.unreadMessages == true) ? true : false,
+                    showBadge:
+                        (widget.chat.unreadMessages == true) ? true : false,
                   ),
                 ],
               ),

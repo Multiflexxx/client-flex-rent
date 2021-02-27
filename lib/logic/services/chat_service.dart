@@ -33,13 +33,17 @@ class ApiChatService extends ChatService {
       ),
     );
 
-    inspect(response);
-
-    if (response.statusCode == 200) {
-      final jsonBody = json.decode(response.body);
-      ChatResponse chatResponse = ChatResponse.fromJson(jsonBody);
-      inspect(chatResponse);
-      return chatResponse;
+    if (response.statusCode == 201) {
+      final dynamic jsonBody = json.decode(response.body);
+      inspect(jsonBody);
+      final ChatResponse chatResponse = ChatResponse.fromJson(jsonBody);
+      if (chatResponse.chats.isNotEmpty) {
+        inspect(chatResponse);
+        return chatResponse;
+      }
+      return Future.error(
+        ChatException(message: 'Du hast keine offenen Chats.'),
+      );
     } else {
       inspect(response);
       return Future.error(

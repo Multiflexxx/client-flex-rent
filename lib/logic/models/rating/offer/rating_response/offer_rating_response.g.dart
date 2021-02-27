@@ -14,7 +14,7 @@ OfferRatingResponse _$OfferRatingResponseFromJson(Map<String, dynamic> json) {
         ?.toList(),
     currentPage: json['current_page'] as int,
     maxPage: json['max_page'] as int,
-    elementsPerPage: json['elements_per_page'],
+    elementsPerPage: json['elements_per_page'] as int,
   );
 }
 

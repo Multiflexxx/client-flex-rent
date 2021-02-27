@@ -1,5 +1,12 @@
-import 'package:flexrent/logic/services/helper_service.dart';
+import 'dart:developer';
+
+import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/logic/models/chat/chat/chat_response/chat_response.dart';
+import 'package:flexrent/logic/models/models.dart';
+import 'package:flexrent/logic/services/chat_service.dart';
+import 'package:flexrent/widgets/chat/chat_overview_box.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
 
 class ChatOverviewScreen extends StatelessWidget {
@@ -8,9 +15,61 @@ class ChatOverviewScreen extends StatelessWidget {
     return StandardSliverAppBarList(
       title: 'Chats',
       leading: Container(),
-      bodyWidget: Container(
-        child: Text('Test'),
-      ),
+      bodyWidget: _ChatOverviewBody(),
+    );
+  }
+}
+
+class _ChatOverviewBody extends StatefulWidget {
+  @override
+  __ChatOverviewBodyState createState() => __ChatOverviewBodyState();
+}
+
+class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
+  Future<ChatResponse> chatResponse;
+
+  @override
+  void initState() {
+    super.initState();
+    _getChatResponse();
+  }
+
+  void _getChatResponse() {
+    setState(() {
+      chatResponse = ApiChatService().getAllChatsByLoggedInUser(page: 1);
+    });
+  }
+
+  List<Widget> _buildChats({ChatResponse chatResponse}) {
+    List<Widget> chats = [];
+    for (Chat chat in chatResponse.chats) {
+      chats.add(
+        ChatOverviewBox(
+          chat: chat,
+        ),
+      );
+    }
+    return chats;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder(
+      future: chatResponse,
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          ChatResponse _chatResponse = snapshot.data;
+          return Column(
+            children: _buildChats(chatResponse: _chatResponse),
+          );
+        } else if (snapshot.hasError) {
+          ChatException e = snapshot.error;
+          return ErrorBox(errorText: e.message);
+        }
+        return Center(
+          child: CircularProgressIndicator(),
+        );
+      },
     );
   }
 }
