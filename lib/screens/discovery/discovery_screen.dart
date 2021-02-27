@@ -1,5 +1,4 @@
 import 'package:flexrent/screens/offer/offer_list_screen.dart';
-import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

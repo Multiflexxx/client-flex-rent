@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
+import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/booking/confirmation_payment_screen.dart';
 import 'package:flexrent/screens/offer/offer_ratings_list_screen.dart';
 import 'package:flexrent/widgets/boxes/standard_box.dart';
@@ -46,30 +47,25 @@ class _OfferScreenState extends State<OfferScreen> {
   Future<Offer> offer;
   Future<OfferRatingResponse> offerratings;
   DateRange _dateRange;
+  User _user;
 
   @override
   void initState() {
     super.initState();
     _dateRange = DateRange(fromDate: null, toDate: null);
     initializeDateFormatting('de_DE', null);
-    offer = ApiOfferService().getOfferById(offerId: widget.offer.offerId);
-    try {
-      offerratings =
-          ApiOfferService().getOfferRatingsById(offer: widget.offer, page: 1);
-    } catch (e) {
-      print(e);
-      offerratings = null;
-    }
+
+    _getOfferAndRatings();
+    _user = HelperService.getUser(context: context);
   }
 
-  List<Widget> _getWidgetList({BuildContext context, List<Offer> offerList}) {
-    List<Widget> _offerList = List<Widget>();
-    for (Offer offer in offerList) {
-      _offerList.add(
-        RatingBox(),
-      );
-    }
-    return _offerList;
+  _getOfferAndRatings() {
+    setState(() {
+      offer = ApiOfferService().getOfferById(offerId: widget.offer.offerId);
+
+      offerratings =
+          ApiOfferService().getOfferRatingsById(offer: widget.offer, page: 1);
+    });
   }
 
   void _onSelectedRangeChanged(_picker.PickerDateRange dateRange) {
@@ -264,59 +260,87 @@ class _OfferScreenState extends State<OfferScreen> {
                                       ),
                                     ],
                                   ),
-                                  GestureDetector(
-                                    onTap: () async {
-                                      if (_dateRange.fromDate != null) {
-                                        _onReservation(offer);
-                                      } else {
-                                        final range =
-                                            await showCupertinoModalBottomSheet<
-                                                dynamic>(
-                                          expand: true,
-                                          context: context,
-                                          barrierColor: Colors.black45,
-                                          builder:
-                                              (context, scrollController) =>
-                                                  DateRangePicker(
-                                            scrollController: scrollController,
-                                            date: null,
-                                            range: _picker.PickerDateRange(
-                                              _dateRange.fromDate,
-                                              _dateRange.toDate,
+                                  _user.userId == offer.lessor.userId
+                                      ? Container(
+                                          width: 0.4 *
+                                              MediaQuery.of(context).size.width,
+                                          height: 50.0,
+                                          decoration: BoxDecoration(
+                                              color: Colors.purple[200],
+                                              borderRadius:
+                                                  BorderRadius.circular(10.0)),
+                                          child: Center(
+                                            child: Text(
+                                              'Reservieren',
+                                              style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: 20.0,
+                                                  fontWeight: FontWeight.w300),
                                             ),
-                                            minDate: DateTime.now(),
-                                            maxDate: DateTime.now().add(
-                                              Duration(days: 90),
-                                            ),
-                                            displayDate: _dateRange.fromDate,
-                                            blockedDates: offer.blockedDates,
                                           ),
-                                        );
-                                        if (range != null) {
-                                          _onSelectedRangeChanged(range);
-                                          _onReservation(offer);
-                                        }
-                                      }
-                                    },
-                                    child: Container(
-                                      width: 0.4 *
-                                          MediaQuery.of(context).size.width,
-                                      height: 50.0,
-                                      decoration: BoxDecoration(
-                                          color: Theme.of(context).accentColor,
-                                          borderRadius:
-                                              BorderRadius.circular(10.0)),
-                                      child: Center(
-                                        child: Text(
-                                          'Reservieren',
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontSize: 20.0,
-                                              fontWeight: FontWeight.w300),
+                                        )
+                                      : GestureDetector(
+                                          onTap: () async {
+                                            if (_dateRange.fromDate != null) {
+                                              _onReservation(offer);
+                                            } else {
+                                              final range =
+                                                  await showCupertinoModalBottomSheet<
+                                                      dynamic>(
+                                                expand: true,
+                                                context: context,
+                                                barrierColor: Colors.black45,
+                                                builder: (context,
+                                                        scrollController) =>
+                                                    DateRangePicker(
+                                                  scrollController:
+                                                      scrollController,
+                                                  date: null,
+                                                  range:
+                                                      _picker.PickerDateRange(
+                                                    _dateRange.fromDate,
+                                                    _dateRange.toDate,
+                                                  ),
+                                                  minDate: DateTime.now(),
+                                                  maxDate: DateTime.now().add(
+                                                    Duration(days: 90),
+                                                  ),
+                                                  displayDate:
+                                                      _dateRange.fromDate,
+                                                  blockedDates:
+                                                      offer.blockedDates,
+                                                ),
+                                              );
+                                              if (range != null) {
+                                                _onSelectedRangeChanged(range);
+                                                _onReservation(offer);
+                                              }
+                                            }
+                                          },
+                                          child: Container(
+                                            width: 0.4 *
+                                                MediaQuery.of(context)
+                                                    .size
+                                                    .width,
+                                            height: 50.0,
+                                            decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .accentColor,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        10.0)),
+                                            child: Center(
+                                              child: Text(
+                                                'Reservieren',
+                                                style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: 20.0,
+                                                    fontWeight:
+                                                        FontWeight.w300),
+                                              ),
+                                            ),
+                                          ),
                                         ),
-                                      ),
-                                    ),
-                                  ),
                                 ],
                               ),
                             ],
@@ -513,98 +537,106 @@ class _OfferScreenState extends State<OfferScreen> {
                       UserBox(lessor: offer.lessor),
 
                       //Product Rating
-                      offer.numberOfRatings == 0 ? Container() :
-                      GestureDetector(
-                        onTap: () {
-                                pushNewScreen(context,
-                                    screen: OfferRatingsList(
-                                      offer: offer,
-                                    ));
-                              },
-                              child: Container(
-                                margin: EdgeInsets.symmetric(
-                                    vertical: 12.0, horizontal: 18.0),
-                                decoration: BoxDecoration(
-                                  color: Theme.of(context).cardColor,
-                                  borderRadius: BorderRadius.circular(10.0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(16.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Bewertungen von anderen FLEXXERN',
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 18.0,
-                                        fontWeight: FontWeight.w500,
-                                        letterSpacing: 1.2,
-                                      ),
-                                    ),
-                                    SizedBox(height: 20.0),
-                                    RatingBarIndicator(
-                                      itemBuilder: (context, _) => Icon(
-                                        Icons.star,
-                                        color: Colors.purple,
-                                      ),
-                                      direction: Axis.horizontal,
-                                      itemCount: 5,
-                                      rating: offer.rating.toDouble(),
-                                      itemSize: 40.0,
-                                    ),
-                                    SizedBox(height: 10.0),
-                                    Text(
-                                      offer.numberOfRatings == 1
-                                          ? 'Dieses Produkt hat ' +
-                                              offer.numberOfRatings.toString() +
-                                              " Bewertung"
-                                          : 'Dieses Produkt hat ' +
-                                              offer.numberOfRatings.toString() +
-                                              " Bewertungen",
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 16.0,
-                                        letterSpacing: 1.2,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Icon(
-                                          Ionicons.ios_arrow_forward,
-                                          size: 30.0,
+                      if (offer.numberOfRatings > 0)
+                        GestureDetector(
+                          onTap: () {
+                            pushNewScreen(context,
+                                screen: OfferRatingsList(
+                                  offer: offer,
+                                ));
+                          },
+                          child: Container(
+                            margin: EdgeInsets.symmetric(
+                                vertical: 12.0, horizontal: 18.0),
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).cardColor,
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Bewertungen von anderen',
+                                        style: TextStyle(
                                           color: Theme.of(context).primaryColor,
+                                          fontSize: 18.0,
+                                          fontWeight: FontWeight.w500,
+                                          letterSpacing: 1.2,
                                         ),
-                              ],
+                                      ),
+                                      SizedBox(height: 20.0),
+                                      RatingBarIndicator(
+                                        itemBuilder: (context, _) => Icon(
+                                          Icons.star,
+                                          color: Theme.of(context).accentColor,
+                                        ),
+                                        direction: Axis.horizontal,
+                                        itemCount: 5,
+                                        rating: offer.rating.toDouble(),
+                                        itemSize: 30.0,
+                                      ),
+                                      SizedBox(height: 10.0),
+                                      Text(
+                                        offer.numberOfRatings == 1
+                                            ? 'Dieses Produkt hat ' +
+                                                offer.numberOfRatings
+                                                    .toString() +
+                                                " Bewertung"
+                                            : 'Dieses Produkt hat ' +
+                                                offer.numberOfRatings
+                                                    .toString() +
+                                                " Bewertungen",
+                                        style: TextStyle(
+                                          color: Theme.of(context).primaryColor,
+                                          fontSize: 16.0,
+                                          letterSpacing: 1.2,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Icon(
+                                    Ionicons.ios_arrow_forward,
+                                    size: 30.0,
+                                    color: Theme.of(context).primaryColor,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
                         ),
+
+                      FutureBuilder(
+                        future: offerratings,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            OfferRatingResponse response = snapshot.data;
+                            return Column(
+                              children: response.offerRatings
+                                  .map((rating) => RatingBox(
+                                        rating: rating,
+                                        offer: offer,
+                                        updateParentScreen: _getOfferAndRatings,
+                                      ))
+                                  .toList(),
+                            );
+                          } else if (snapshot.hasError) {
+                            OfferRatingException e = snapshot.error;
+                            return StandardBox(
+                              content: Text(e.message),
+                            );
+                          }
+                          return StandardBox(
+                            content: Text("Hier ist etwas schiefgelaufen"),
+                          );
+                        },
                       ),
-                      offerratings == null
-                          ? StandardBox(
-                              content: Text("Hier ist etwas schiefgelaufen"),
-                            )
-                          : FutureBuilder(
-                              future: offerratings,
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  OfferRatingResponse response = snapshot.data;
-                                  return Column(
-                                    children: response.offerRatings
-                                        .map((rating) => RatingBox(
-                                              rating: rating,
-                                            ))
-                                        .toList(),
-                                  );
-                                } else {
-                                  return StandardBox(
-                                    content: Text("Das Produkt hat leider noch keine Bewertungen."),
-                                  );
-                                }
-                              }),
                     ],
                   ),
                 ),

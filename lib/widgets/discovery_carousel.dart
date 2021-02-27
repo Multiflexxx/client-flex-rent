@@ -4,7 +4,7 @@ import 'package:flexrent/logic/models/user/user.dart';
 import 'package:flexrent/screens/discovery/discovery_offer_list_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_icons/flutter_icons.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 import 'package:flexrent/logic/models/offer/offer.dart';
 import 'package:flexrent/screens/offer/offer_screen.dart';
@@ -59,7 +59,7 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                       ),
                     ),
                     Text(
-                      'See all',
+                      'Alle',
                       style: TextStyle(
                         color: Theme.of(context).accentColor,
                         fontSize: 16.0,
@@ -121,10 +121,13 @@ class _DiscoveryCarouselState extends State<DiscoveryCarousel> {
                                 ),
                                 Row(
                                   children: [
-                                    Icon(
-                                      Feather.activity,
-                                      size: 14.0,
-                                      color: Theme.of(context).accentColor,
+                                    Container(
+                                      height: 16.0,
+                                      width: 16.0,
+                                      child: SvgPicture.network(
+                                        offer.category.pictureLink,
+                                        color: Theme.of(context).accentColor,
+                                      ),
                                     ),
                                     SizedBox(
                                       width: 5.0,

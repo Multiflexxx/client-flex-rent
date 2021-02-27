@@ -138,12 +138,14 @@ class _LessorRentalItemScreenState extends State<LessorRentalItemScreen> {
                                       delegate: SliverChildBuilderDelegate(
                                         (BuildContext context, int index) {
                                           return GestureDetector(
-                                            onTap: () => pushNewScreen(context,
-                                                screen: LessorResponseScreen(
-                                                    offerRequest:
-                                                        openOfferRequestList[
-                                                            index]),
-                                                withNavBar: false),
+                                            onTap: () => pushNewScreen(
+                                              context,
+                                              screen: LessorResponseScreen(
+                                                  offerRequest:
+                                                      openOfferRequestList[
+                                                          index]),
+                                              withNavBar: false,
+                                            ),
                                             child: OfferRequestCard(
                                               offerRequest:
                                                   openOfferRequestList[index],

@@ -16,7 +16,7 @@ class DeleteModal extends StatelessWidget {
     try {
       await ApiOfferService().deleteOffer(offer: this.offer);
       updateParentFunction();
-      Navigator.pop(context);
+      Navigator.pop(context, 'deleted');
     } on OfferException catch (e) {
       Navigator.pop(context, e);
     }
@@ -137,7 +137,6 @@ class DeleteModal extends StatelessWidget {
                                                 ),
                                                 Expanded(
                                                   child: GestureDetector(
-                                                    // onTap: goon,
                                                     onTap: () => deleteOffer(
                                                         context: rootContext),
                                                     child: Container(

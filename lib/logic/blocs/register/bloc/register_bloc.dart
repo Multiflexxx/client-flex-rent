@@ -105,11 +105,6 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
 
   Stream<RegisterState> _mapRegisterToState(
       RegisterSubmitPressed event) async* {
-    // yield RegisterPersonalLoading(
-    //   phoneNumber: event.user.phoneNumber,
-    //   signUpOption: event.signUpOption,
-    //   thirdPartyUser: event.user,
-    // );
     try {
       final user = await _registerService.registerUser(
           user: event.user, signInOption: event.signUpOption);

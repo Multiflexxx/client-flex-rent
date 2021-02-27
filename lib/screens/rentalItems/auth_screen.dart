@@ -46,7 +46,7 @@ class AuthScreen extends StatelessWidget {
                 realScreenName == 'account' ? 'Profil' : 'Mietgegenstände',
                 style: TextStyle(
                   color: Theme.of(context).primaryColor,
-                  fontSize: 18.0,
+                  fontSize: 16.0,
                   fontWeight: FontWeight.w500,
                   letterSpacing: 1.2,
                 ),
@@ -63,7 +63,7 @@ class AuthScreen extends StatelessWidget {
                       realScreenName == 'accountScreen'
                           ? Feather.user
                           : Feather.shopping_bag,
-                      size: 175,
+                      size: 150,
                       color: Theme.of(context).accentColor,
                     ),
                   )
@@ -93,7 +93,7 @@ class AuthScreen extends StatelessWidget {
                       realScreenName == 'accountScreen'
                           ? 'Melde dich an, um dein Profil zu sehen. Mit einem Profil kannst du Gegenstände ausleihen und verleihen.'
                           : 'Melde dich an, um deine Mietgegenstände zu sehen!',
-                      style: TextStyle(fontSize: 20, letterSpacing: 1.25),
+                      style: TextStyle(fontSize: 14, letterSpacing: 1.25),
                     ),
                     PurpleButton(
                       text: Text('Anmelden'),

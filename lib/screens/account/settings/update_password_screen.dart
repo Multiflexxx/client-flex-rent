@@ -1,4 +1,4 @@
- import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
+import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
@@ -14,7 +14,6 @@ class UpdatePasswordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return StandardSliverAppBarList(
       title: 'Passwort ändern',
-      // bodyWidget: Container(),
       bodyWidget: _UpdatePasswordBody(),
     );
   }
@@ -133,7 +132,7 @@ class _UpdatePasswordBodyState extends State<_UpdatePasswordBody> {
               SizedBox(
                 height: 16,
               ),
-              PurpleButton(          
+              PurpleButton(
                 text: Text('Speichern'),
                 onPressed: () => _changePassword(),
               ),

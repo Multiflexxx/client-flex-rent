@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/blocs/offer/offer.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/widgets/popups/alert_popup.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_transparent_styled.dart';
 import 'package:flutter/cupertino.dart';
@@ -510,7 +511,16 @@ class _PersonalInfoBodyState extends State<_PersonalInfoBody> {
               ),
             ),
             GestureDetector(
-              onTap: () => _deleteUser(),
+              onTap: () => showDialog(
+                context: context,
+                child: AlertPopup(
+                    title: "Account löschen",
+                    message:
+                        "Bist du sicher, dass du deinen Account löschen willst? Diese Aktion kann nicht rückgängig gemacht werden.",
+                    goon: () {
+                      _deleteUser();
+                    }),
+              ),
               child: Container(
                 margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 8.0),
                 padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 10.0),

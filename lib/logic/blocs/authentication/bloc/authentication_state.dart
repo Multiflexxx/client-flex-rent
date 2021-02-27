@@ -39,6 +39,8 @@ class AuthenticationSignUp extends AuthenticationState {}
 
 class AuthenticationCanceld extends AuthenticationState {}
 
+class AuthenticationStartLogOut extends AuthenticationState {}
+
 class AuthenticationFailure extends AuthenticationState {
   final String message;
 

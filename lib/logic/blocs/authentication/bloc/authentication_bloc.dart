@@ -90,8 +90,10 @@ class AuthenticationBloc
 
   Stream<AuthenticationState> _mapUserLoggedOutToState(
       UserSignOut event) async* {
+    yield AuthenticationStartLogOut();
     _googleService.signOut();
     await _authenticationService.signOut();
+    await Future.delayed(Duration(milliseconds: 1500));
     yield AuthenticationNotAuthenticated();
   }
 }
