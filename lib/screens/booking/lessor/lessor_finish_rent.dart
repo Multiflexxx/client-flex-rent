@@ -4,12 +4,14 @@ import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/booking/booking_lessee.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
+import 'package:flexrent/widgets/boxes/headline.dart';
 import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexrent/logic/models/models.dart';
 
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class LessorFinishScreen extends StatelessWidget {
   final OfferRequest offerRequest;
@@ -60,17 +62,30 @@ class _LessorFinishBodyState extends State<LessorFinishBody> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 BookingInfo(offerRequest: _offerRequest, lessor: true),
+                
                 BookingOverview(offerRequest: _offerRequest),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Headline(headline: 'Mieter',),
+                  ],
+                ),
                 BookingLessee(
                   offerRequest: _offerRequest,
                   updateParentScreen: _getOfferRequestUpdate,
                 ),
                 _offerRequest.lesseeRating != null
-                    ? RatingBox(
+                    ?  Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Headline(headline: 'Deine Bewertung des Mieters',),
+                    RatingBox(
                         offer: _offerRequest.offer,
                         rating: _offerRequest.lesseeRating,
                         updateParentScreen: _getOfferRequestUpdate,
                       )
+                  ],
+                )
                     : Container(),
                 SizedBox(
                   height: 75.0,
