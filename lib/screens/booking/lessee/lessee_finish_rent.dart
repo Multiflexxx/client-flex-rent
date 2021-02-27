@@ -4,6 +4,7 @@ import 'package:flexrent/logic/services/offer_service.dart';
 import 'package:flexrent/widgets/booking/booking_info.dart';
 import 'package:flexrent/widgets/booking/booking_overview.dart';
 import 'package:flexrent/widgets/booking/booking_lessor.dart';
+import 'package:flexrent/widgets/boxes/headline.dart';
 import 'package:flexrent/widgets/offer_detail/rating_box.dart';
 import 'package:flutter/material.dart';
 
@@ -64,6 +65,12 @@ class _LeseeFinishBodyState extends State<LeseeFinishBody> {
                   lessor: false,
                 ),
                 BookingOverview(offerRequest: _offerRequest),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Headline(headline: 'Vermiter',),
+                  ],
+                ),
                 BookingLessor(
                   offerRequest: _offerRequest,
                   updateParentScreen: _getOfferRequestUpdate,
@@ -72,6 +79,7 @@ class _LeseeFinishBodyState extends State<LeseeFinishBody> {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                       Headline(headline: 'Deine Bewertung des Vermieters',),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(
@@ -92,8 +100,10 @@ class _LeseeFinishBodyState extends State<LeseeFinishBody> {
                   ),
                 if (_offerRequest.offerRating != null)
                   Column(
+                   
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                       Headline(headline: 'Deine Bewertung des Produkts',),
                       Padding(
                         padding: const EdgeInsets.all(10.0),
                         child: Text(

@@ -83,7 +83,7 @@ class RatingBox extends StatelessWidget {
   Widget build(BuildContext context) {
     var formatter = new DateFormat.yMMMMd("de_DE");
     return Container(
-      margin: EdgeInsets.all(10.0),
+      margin: EdgeInsets.all(18.0),
       decoration: BoxDecoration(
         color: Theme.of(context).cardColor,
         borderRadius: BorderRadius.circular(10.0),
