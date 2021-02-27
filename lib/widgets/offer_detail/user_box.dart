@@ -1,5 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flexrent/screens/user/user.dart';
+import 'package:flexrent/screens/user/user_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';

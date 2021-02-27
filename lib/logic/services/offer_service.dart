@@ -30,6 +30,8 @@ abstract class OfferService {
   Future<OfferRatingResponse> getOfferRatingsById({Offer offer, int page});
   Future<OfferRating> createOfferRating(
       {Offer offer, int rating, String headline, String ratingText});
+  Future<OfferRating> deleteOfferRating();
+  Future<OfferRating> updateOfferRating();
   Future<NewRequestNumbers> getNumberOfNewRequests();
 }
 
@@ -482,7 +484,6 @@ class ApiOfferService extends OfferService {
           OfferRatingResponse.fromJson(jsonBody);
 
       if (offerRatingResponse.offerRatings.isNotEmpty) {
-        inspect(offerRatingResponse);
         return offerRatingResponse;
       } else {
         return Future.error(
@@ -492,7 +493,6 @@ class ApiOfferService extends OfferService {
         );
       }
     } else {
-      inspect(response);
       return Future.error(
         OfferRatingException(
             message:
@@ -510,7 +510,7 @@ class ApiOfferService extends OfferService {
     final Session session = Session(sessionId: sessionId, userId: userId);
 
     OfferRatingRequest _offerRatingRequest = OfferRatingRequest(
-      offer: offer ?? Offer(offerId: '618c58ea-d7e4-41df-8d52-2dcd74b04f87'),
+      offer: offer,
       rating: rating,
       headline: headline ?? '',
       ratingText: ratingText ?? '',
@@ -530,17 +530,93 @@ class ApiOfferService extends OfferService {
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
       final OfferRating offerRating = OfferRating.fromJson(jsonBody);
-      inspect(offerRating);
       return offerRating;
     } else if (response.statusCode == 403) {
       throw OfferRatingException(
           message: 'Du darfst das Offer ${offer.title} nicht bewerten.');
     } else {
-      inspect(response);
       throw UserRatingException(
           message:
               'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
     }
+  }
+
+  @override
+  Future<OfferRating> deleteOfferRating({OfferRating rating}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    if (sessionId != null && userId != null) {
+      final Session session = Session(sessionId: sessionId, userId: userId);
+
+      Map<String, dynamic> _body = {
+        'session': session.toJson(),
+        'rating': rating.toJson()
+      };
+
+      final response = await http.patch(
+        '${CONFIG.url}/offer/delete-rating',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(_body),
+      );
+
+      if (response.statusCode == 200) {
+        final dynamic jsonBody = json.decode(response.body);
+        OfferRating offerRating = OfferRating.fromJson(jsonBody);
+        return offerRating;
+      } else {
+        throw Future.error(
+          OfferRatingException(
+              message: 'Dein Rating konnte nicht gelöscht werden.'),
+        );
+      }
+    }
+    throw Future.error(
+      OfferRatingException(message: 'Hier ist etas schief gelaufen'),
+    );
+  }
+
+  @override
+  Future<OfferRating> updateOfferRating(
+      {Offer offer, int rating, String headline, String ratingText}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    if (sessionId != null && userId != null) {
+      final Session session = Session(sessionId: sessionId, userId: userId);
+
+      OfferRatingRequest _offerRatingRequest = OfferRatingRequest(
+        offer: offer,
+        rating: rating,
+        headline: headline ?? '',
+        ratingText: ratingText ?? '',
+      );
+
+      Map<String, dynamic> _body = {
+        'session': session.toJson(),
+        'rating': _offerRatingRequest.toJson()
+      };
+
+      final response = await http.patch(
+        '${CONFIG.url}/offer/rating',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(_body),
+      );
+
+      if (response.statusCode == 200) {
+        final dynamic jsonBody = json.decode(response.body);
+        OfferRating offerRating = OfferRating.fromJson(jsonBody);
+        return offerRating;
+      } else {
+        throw Future.error(
+          OfferRatingException(
+              message: 'Dein Rating konnte nicht geupdated werden.'),
+        );
+      }
+    }
+    throw Future.error(
+      OfferRatingException(message: 'Hier ist etas schief gelaufen'),
+    );
   }
 
   Future<NewRequestNumbers> getNumberOfNewRequests() async {

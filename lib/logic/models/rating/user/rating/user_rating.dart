@@ -4,7 +4,7 @@ import 'package:json_annotation/json_annotation.dart';
 part 'user_rating.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class UserRating extends Equatable {
+class UserRating extends Equatable implements Rating {
   final String ratingId;
   final String ratingType;
   final int rating;

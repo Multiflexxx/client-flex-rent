@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flexrent/logic/config/config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -8,6 +7,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:http/http.dart' as http;
 
 abstract class UserService {
+  Future<User> getUserById({String userId});
   Future<User> updateUser({User user, Password password});
   Future<User> updateProfileImage({String imagePath});
   Future<void> deleteUser({User user});
@@ -19,10 +19,30 @@ abstract class UserService {
       int rating,
       String headline,
       String text});
+  Future<UserRating> deleteUserRating({String ratingId});
+  Future<UserRating> updateUserRating({String ratingId});
 }
 
 class ApiUserService extends UserService {
   final _storage = FlutterSecureStorage();
+
+  @override
+  Future<User> getUserById({String userId}) async {
+    print('neu');
+    final response = await http.get(
+      '${CONFIG.url}/user/$userId',
+    );
+
+    if (response.statusCode == 200) {
+      dynamic jsonBody = jsonDecode(response.body);
+      User user = User.fromJson(jsonBody);
+      return user;
+    } else {
+      return Future.error(
+        UserException(message: 'Der User konnte nicht gefunden werden.'),
+      );
+    }
+  }
 
   @override
   Future<User> updateUser({User user, Password password}) async {
@@ -114,10 +134,8 @@ class ApiUserService extends UserService {
         body: jsonEncode(_body),
       );
 
-      inspect(response);
-
       if (response.statusCode == 200) {
-        inspect(response);
+        // inspect(response);
       } else if (response.statusCode == 409) {
         throw UserException(
             message:
@@ -157,7 +175,6 @@ class ApiUserService extends UserService {
                 'Der Flexer ${user.firstName} ${user.lastName} hat noch keine Bewertung als $userType.');
       }
     } else {
-      inspect(response);
       throw UserRatingException(
           message:
               'Hier ist etwas schief gelaufen. Versuche es später nocheinmal.');
@@ -201,13 +218,101 @@ class ApiUserService extends UserService {
       final UserRating userRating = UserRating.fromJson(jsonBody);
       return userRating;
     } else {
-      inspect(response);
-      // 400 Invalid input or user = ratedUser
-      // 409 Already rated
-      // TODO: Change Exceptions
+      if (response.statusCode == 409) {
+        throw UserRatingException(
+            message: 'Du hast bereits den User bewertet.');
+      }
       throw UserRatingException(
           message:
               'Deine Bewertung konnte nicht erstellt werden. Versuche es später noch einmal.');
     }
+  }
+
+  @override
+  Future<UserRating> deleteUserRating({String ratingId}) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    if (sessionId != null && userId != null) {
+      final Auth auth =
+          Auth.session(session: Session(sessionId: sessionId, userId: userId));
+
+      Map<String, dynamic> _body = {
+        'auth': auth.toJson(),
+      };
+
+      final response = await http.patch(
+        '${CONFIG.url}/user/rating/delete/$ratingId',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(_body),
+      );
+
+      if (response.statusCode == 200) {
+        final dynamic jsonBody = json.decode(response.body);
+        final UserRating userRating = UserRating.fromJson(jsonBody);
+        return userRating;
+      } else {
+        throw Future.error(
+          UserRatingException(
+              message: 'Dein Rating konnte nicht gelöscht werden.'),
+        );
+      }
+    }
+    throw Future.error(
+      UserRatingException(message: 'Hier ist etas schief gelaufen'),
+    );
+  }
+
+  @override
+  Future<UserRating> updateUserRating({
+    String ratingId,
+    User ratedUser,
+    String ratingType,
+    int rating,
+    String headline,
+    String text,
+  }) async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    if (sessionId != null && userId != null) {
+      final Auth auth =
+          Auth.session(session: Session(sessionId: sessionId, userId: userId));
+
+      UserRatingRequest _userRatingRequest = UserRatingRequest(
+        userId: ratedUser.userId,
+        ratingType: ratingType,
+        rating: rating,
+        headline: headline ?? '',
+        text: text ?? '',
+      );
+
+      Map<String, dynamic> _body = {
+        'auth': auth.toJson(),
+        'rating': _userRatingRequest.toJson()
+      };
+
+      print(ratingId);
+
+      final response = await http.patch(
+        '${CONFIG.url}/user/rating/$ratingId',
+        headers: {"Content-Type": "application/json"},
+        body: jsonEncode(_body),
+      );
+
+      if (response.statusCode == 200) {
+        final dynamic jsonBody = json.decode(response.body);
+        final UserRating userRating = UserRating.fromJson(jsonBody);
+        return userRating;
+      } else {
+        return Future.error(
+          UserRatingException(
+              message: 'Dein Rating konnte nicht geupdated werden.'),
+        );
+      }
+    }
+    return Future.error(
+      UserRatingException(message: 'Hier ist etas schief gelaufen'),
+    );
   }
 }
