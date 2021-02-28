@@ -28,6 +28,15 @@ class _ChatScreenState extends State<ChatScreen> {
     });
   }
 
+  Widget _buildMessageInput() {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 10.0),
+      height: 60.0,
+      color: Colors.purple,
+      child: Text('Hello'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,16 +50,24 @@ class _ChatScreenState extends State<ChatScreen> {
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         elevation: 0.0,
       ),
-      body: Container(
-        color: Theme.of(context).cardColor,
-        child: Column(
-          children: [
-            FutureBuilder(
+      body: Column(
+        children: [
+          Expanded(
+            child: FutureBuilder(
               future: chatMessageResponse,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  ChatMessageResponse chatMessageResponse = snapshot.data;
                   return ListView.builder(
-                    itemBuilder: (context, index) {},
+                    itemCount: chatMessageResponse.messages.length,
+                    itemBuilder: (context, index) {
+                      ChatMessage message = chatMessageResponse.messages[index];
+                      return Text(
+                        message.messageContent,
+                        style: TextStyle(color: Colors.white),
+                      );
+                      // return MessageBox(message);
+                    },
                   );
                 } else if (snapshot.hasError) {
                   ChatException e = snapshot.error;
@@ -61,8 +78,9 @@ class _ChatScreenState extends State<ChatScreen> {
                 );
               },
             ),
-          ],
-        ),
+          ),
+          _buildMessageInput(),
+        ],
       ),
     );
   }

@@ -29,15 +29,15 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => pushNewScreen(
-        context,
-        screen: ChatScreen(
-          chat: widget.chat,
-        ),
-      ),
+      onTap: () => pushNewScreen(context,
+          screen: ChatScreen(
+            chat: widget.chat,
+          ),
+          withNavBar: false),
       child: Container(
         margin: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 0, top: 0),
         padding: EdgeInsets.only(left: 5, right: 5, bottom: 5),
+        color: Colors.transparent,
         child: Row(
           children: [
             ClipRRect(
@@ -113,7 +113,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),                    
+                      ),
                       Badge(
                         toAnimate: false,
                         shape: BadgeShape.square,

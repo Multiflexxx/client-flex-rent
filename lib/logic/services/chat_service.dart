@@ -81,9 +81,7 @@ class ApiChatService extends ChatService {
       ),
     );
 
-    inspect(response);
-
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final jsonBody = json.decode(response.body);
       ChatMessageResponse chatMessageResponse =
           ChatMessageResponse.fromJson(jsonBody);
