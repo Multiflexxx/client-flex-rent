@@ -3,6 +3,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/chat_service.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 
 class ChatScreen extends StatefulWidget {
   final Chat chat;
@@ -32,8 +33,73 @@ class _ChatScreenState extends State<ChatScreen> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 10.0),
       height: 60.0,
-      color: Colors.purple,
-      child: Text('Hello'),
+      child: Row(
+        children: <Widget>[
+          Ink(
+            width: 45.0,
+            decoration: ShapeDecoration(
+              color: Theme.of(context).accentColor,
+              shape: CircleBorder(),
+            ),
+            child: IconButton(
+              icon: Icon(
+                Feather.image,
+                color: Theme.of(context).primaryColor,
+                size: 22.5,
+              ),
+              onPressed: () => print('send'),
+            ),
+          ),
+          SizedBox(
+            width: 10.0,
+          ),
+          Expanded(
+            child: TextField(
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+              ),
+              decoration: InputDecoration(
+                hintText: 'Nachricht',
+                hintStyle: TextStyle(
+                  color: Theme.of(context).primaryColor,
+                ),
+                fillColor: Theme.of(context).cardColor,
+                filled: true,
+                isDense: true,
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+                disabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                ),
+              ),
+              textCapitalization: TextCapitalization.sentences,
+            ),
+          ),
+          SizedBox(
+            width: 10.0,
+          ),
+          Ink(
+            width: 45.0,
+            decoration: ShapeDecoration(
+                color: Theme.of(context).accentColor, shape: CircleBorder()),
+            child: IconButton(
+              icon: Icon(
+                Icons.send_rounded,
+                color: Theme.of(context).primaryColor,
+                size: 22.5,
+              ),
+              onPressed: () => print('send'),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -50,37 +116,41 @@ class _ChatScreenState extends State<ChatScreen> {
         iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
         elevation: 0.0,
       ),
-      body: Column(
-        children: [
-          Expanded(
-            child: FutureBuilder(
-              future: chatMessageResponse,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  ChatMessageResponse chatMessageResponse = snapshot.data;
-                  return ListView.builder(
-                    itemCount: chatMessageResponse.messages.length,
-                    itemBuilder: (context, index) {
-                      ChatMessage message = chatMessageResponse.messages[index];
-                      return Text(
-                        message.messageContent,
-                        style: TextStyle(color: Colors.white),
-                      );
-                      // return MessageBox(message);
-                    },
+      body: GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        child: Column(
+          children: [
+            Expanded(
+              child: FutureBuilder(
+                future: chatMessageResponse,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    ChatMessageResponse chatMessageResponse = snapshot.data;
+                    return ListView.builder(
+                      itemCount: chatMessageResponse.messages.length,
+                      itemBuilder: (context, index) {
+                        ChatMessage message =
+                            chatMessageResponse.messages[index];
+                        return Text(
+                          message.messageContent,
+                          style: TextStyle(color: Colors.white),
+                        );
+                        // return MessageBox(message);
+                      },
+                    );
+                  } else if (snapshot.hasError) {
+                    ChatException e = snapshot.error;
+                    return ErrorBox(errorText: e.message);
+                  }
+                  return Center(
+                    child: CircularProgressIndicator(),
                   );
-                } else if (snapshot.hasError) {
-                  ChatException e = snapshot.error;
-                  return ErrorBox(errorText: e.message);
-                }
-                return Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                },
+              ),
             ),
-          ),
-          _buildMessageInput(),
-        ],
+            _buildMessageInput(),
+          ],
+        ),
       ),
     );
   }
