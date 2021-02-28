@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/exceptions/exceptions.dart';
 import 'package:flexrent/logic/models/chat/chat/chat_response/chat_response.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -48,6 +46,17 @@ class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
           chat: chat,
         ),
       );
+      if (chat != chatResponse.chats.last) {
+        chats.add(
+          Padding(
+            padding: EdgeInsets.only(left: 23, right: 23, bottom: 5),
+            child: Divider(
+              height: 20.0,
+              color: Theme.of(context).accentColor,
+            ),
+          ),
+        );
+      }
     }
     return chats;
   }
