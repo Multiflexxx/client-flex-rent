@@ -57,6 +57,17 @@ class ApiChatService extends ChatService {
       {String chatId, int page}) async {
     Session session = await HelperService.getSession();
 
+    print(
+      jsonEncode(
+        <String, dynamic>{
+          'session': session.toJson(),
+          'query': {
+            'page': page ?? 1,
+          }
+        },
+      ),
+    );
+
     final response = await http.post(
       '${CONFIG.url}/chat/$chatId',
       headers: {"Content-Type": "application/json"},
