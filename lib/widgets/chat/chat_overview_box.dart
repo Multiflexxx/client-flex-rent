@@ -36,16 +36,8 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
         ),
       ),
       child: Container(
-        margin: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 5),
-        padding: EdgeInsets.all(5),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              width: 0.25,
-              color: Theme.of(context).accentColor,
-            ),
-          ),
-        ),
+        margin: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 0, top: 0),
+        padding: EdgeInsets.only(left: 5, right: 5, bottom: 5),
         child: Row(
           children: [
             ClipRRect(
@@ -121,12 +113,13 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
                         ),
-                      ),
+                      ),                    
                       Badge(
                         toAnimate: false,
                         shape: BadgeShape.square,
                         badgeColor: Theme.of(context).accentColor,
                         borderRadius: BorderRadius.circular(10),
+                        showBadge: widget.chat.unreadMessages,
                         badgeContent: Text(
                           'Neu',
                           style: TextStyle(color: Colors.white),
