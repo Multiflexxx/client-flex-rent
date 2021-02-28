@@ -110,9 +110,12 @@ class ApiChatService extends ChatService {
       ),
     );
 
-    if (response.statusCode == 201) {
+    inspect(response);
+
+    if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
       ChatMessage _chatMessage = ChatMessage.fromJson(jsonBody);
+      inspect(_chatMessage);
       return _chatMessage;
     } else {
       inspect(response);

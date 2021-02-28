@@ -1,7 +1,7 @@
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/models/models.dart';
-import 'package:flexrent/widgets/chat/chat_screen.dart';
+import 'package:flexrent/screens/chat/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';

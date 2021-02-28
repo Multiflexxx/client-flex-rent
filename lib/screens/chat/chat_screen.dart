@@ -1,6 +1,7 @@
 import 'package:flexrent/logic/exceptions/chat_exception.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/chat_service.dart';
+import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -17,11 +18,15 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   Future<ChatMessageResponse> chatMessageResponse;
+  String messageText;
+  User user;
 
   @override
   void initState() {
     super.initState();
     _getAllChatMessages();
+    messageText = '';
+    user = HelperService.getUser(context: context);
   }
 
   void _getAllChatMessages() async {
@@ -29,6 +34,18 @@ class _ChatScreenState extends State<ChatScreen> {
       chatMessageResponse = ApiChatService()
           .getAllMessagesByChatId(chatId: widget.chat.chatId, page: 1);
     });
+  }
+
+  void _sendMessage() async {
+    if (messageText != null || messageText != '') {
+      ChatMessage chatMessage = ChatMessage(
+          chatId: widget.chat.chatId,
+          fromUserId: user.userId,
+          toUserId: widget.chat.chatPartner.userId,
+          messageContent: messageText,
+          messageType: 2);
+      ApiChatService().sendMessage(chatMessage: chatMessage);
+    }
   }
 
   Widget _buildMessageInput() {
@@ -49,7 +66,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Theme.of(context).primaryColor,
                 size: 22.5,
               ),
-              onPressed: () => print('send'),
+              onPressed: () => print('bild'),
             ),
           ),
           SizedBox(
@@ -57,6 +74,12 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           Expanded(
             child: TextField(
+              onChanged: (value) {
+                setState(() {
+                  messageText = value;
+                });
+              },
+              onSubmitted: (value) => _sendMessage(),
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
               ),
@@ -97,7 +120,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 color: Theme.of(context).primaryColor,
                 size: 22.5,
               ),
-              onPressed: () => print('send'),
+              onPressed: () => _sendMessage(),
             ),
           ),
         ],
@@ -129,6 +152,7 @@ class _ChatScreenState extends State<ChatScreen> {
                   if (snapshot.hasData) {
                     ChatMessageResponse chatMessageResponse = snapshot.data;
                     return ListView.builder(
+                      reverse: true,
                       itemCount: chatMessageResponse.messages.length,
                       itemBuilder: (context, index) {
                         ChatMessage message =
