@@ -5,6 +5,8 @@ import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
+import 'message_box.dart';
+
 class ChatScreen extends StatefulWidget {
   final Chat chat;
 
@@ -131,11 +133,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       itemBuilder: (context, index) {
                         ChatMessage message =
                             chatMessageResponse.messages[index];
-                        return Text(
-                          message.messageContent,
-                          style: TextStyle(color: Colors.white),
-                        );
-                        // return MessageBox(message);
+                        return MessageBox(message: message);
                       },
                     );
                   } else if (snapshot.hasError) {
