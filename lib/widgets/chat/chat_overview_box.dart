@@ -34,10 +34,9 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
         screen: ChatOverviewScreen(),
       ),
       child: Container(
-        margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 18.0),
+        margin: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 5),
         padding: EdgeInsets.all(5),
         decoration: BoxDecoration(
-          color: Colors.red,
           border: Border(
             bottom: BorderSide(
               width: 0.25,
@@ -46,87 +45,95 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
           ),
         ),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Row(
-              children: [
-                ClipRRect(
-                  borderRadius: BorderRadius.circular(20.0),
-                  child: widget.chat.chatPartner.profilePicture != ''
-                      ? CachedNetworkImage(
-                          imageUrl: widget.chat.chatPartner.profilePicture,
-                          width: 100,
-                          height: 100,
-                          fit: BoxFit.cover,
-                          placeholder: (context, url) => Image(
-                            width: 100,
-                            height: 100,
-                            image: AssetImage('assets/images/jett.jpg'),
-                          ),
-                          errorWidget: (context, url, error) => Image(
-                            width: 100,
-                            height: 100,
-                            image: AssetImage('assets/images/jett.jpg'),
-                          ),
-                        )
-                      : Image(
-                          width: 100,
-                          height: 100,
-                          image: AssetImage('assets/images/jett.jpg'),
-                        ),
-                ),
-                SizedBox(
-                  width: 10.0,
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "${widget.chat.chatPartner.firstName} ${widget.chat.chatPartner.lastName}",
-                      style: TextStyle(
-                        color: Theme.of(context).primaryColor,
-                        fontSize: 18.0,
-                        height: 1.35,
+            ClipRRect(
+              borderRadius: BorderRadius.circular(20.0),
+              child: widget.chat.chatPartner.profilePicture != ''
+                  ? CachedNetworkImage(
+                      imageUrl: widget.chat.chatPartner.profilePicture,
+                      width: 75,
+                      height: 75,
+                      fit: BoxFit.cover,
+                      placeholder: (context, url) => Image(
+                        width: 75,
+                        height: 75,
+                        image: AssetImage('assets/images/jett.jpg'),
                       ),
+                      errorWidget: (context, url, error) => Image(
+                        width: 75,
+                        height: 75,
+                        image: AssetImage('assets/images/jett.jpg'),
+                      ),
+                    )
+                  : Image(
+                      width: 75,
+                      height: 75,
+                      image: AssetImage('assets/images/jett.jpg'),
                     ),
-                    Container(
-                      width: 0.45 * MediaQuery.of(context).size.width,
-                      child: Text(
-                        widget.chat.lastMessage.messageContent,
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "${widget.chat.chatPartner.firstName} ${widget.chat.chatPartner.lastName}",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                          fontSize: 18.0,
+                          height: 1.35,
+                        ),
+                      ),
+                      Text(
+                        _getFormattedDate(),
                         style: TextStyle(
                           color: Theme.of(context).primaryColor,
                           fontSize: 14.0,
                           height: 1.35,
                           fontWeight: FontWeight.w300,
                         ),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
                       ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-            Column(
-              children: [
-                Text(
-                  _getFormattedDate(),
-                  style: TextStyle(
-                    color: Theme.of(context).primaryColor,
-                    fontSize: 14.0,
-                    height: 1.35,
-                    fontWeight: FontWeight.w300,
+                    ],
                   ),
-                  maxLines: 2,
-                  overflow: TextOverflow.ellipsis,
-                ),
-                Text('Test'),
-                Badge(
-                  showBadge:
-                      (widget.chat.unreadMessages == true) ? true : false,
-                ),
-              ],
+                  SizedBox(
+                    height: 5.0,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Container(
+                        width: 0.45 * MediaQuery.of(context).size.width,
+                        child: Text(
+                          widget.chat.lastMessage.messageContent,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            fontSize: 14.0,
+                            height: 1.35,
+                            fontWeight: FontWeight.w300,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                      Badge(
+                        toAnimate: false,
+                        shape: BadgeShape.square,
+                        badgeColor: Theme.of(context).accentColor,
+                        borderRadius: BorderRadius.circular(10),
+                        badgeContent: Text(
+                          'Neu',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ],
         ),
