@@ -1,10 +1,11 @@
 import 'package:flexrent/logic/blocs/offer/bloc/offer_bloc.dart';
-import 'package:flexrent/logic/blocs/offer/ticker.dart';
+import 'package:flexrent/logic/ticker/ticker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flexrent/app.dart';
 import 'package:flexrent/logic/blocs/authentication/bloc/authentication_bloc.dart';
 import 'package:flexrent/logic/blocs/user/bloc/user_bloc.dart';
+import 'package:flexrent/logic/blocs/chat/chat.dart';
 
 import 'logic/services/services.dart';
 
@@ -55,6 +56,10 @@ void main() => runApp(
                   return OfferBloc(Ticker());
                 },
               ),
+              BlocProvider<ChatBloc>(
+                lazy: false,
+                create: (context) => ChatBloc(Ticker()),
+              )
             ],
             child: MyApp(),
           )),
@@ -96,6 +101,8 @@ class MyApp extends StatelessWidget {
         listener: (context, state) {
           if (state is AuthenticationAuthenticated) {
             BlocProvider.of<OfferBloc>(context).add(OfferTickerStarted());
+            BlocProvider.of<ChatBloc>(context)
+                .add(ChatOverviewTickerStarted(page: 1));
           }
         },
         child: BlocBuilder<AuthenticationBloc, AuthenticationState>(

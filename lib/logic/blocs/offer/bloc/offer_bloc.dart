@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:flexrent/logic/blocs/offer/ticker.dart';
+import 'package:flexrent/logic/ticker/ticker.dart';
 import 'package:flexrent/logic/models/models.dart';
 
 part 'offer_event.dart';
