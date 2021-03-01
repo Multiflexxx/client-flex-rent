@@ -58,7 +58,7 @@ class MessageBox extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
             Container(
-                margin: EdgeInsets.only(right: 20.0),
+              margin: EdgeInsets.only(right: 20.0),
               child: Text(
                 message.messageContent,
                 style: TextStyle(
@@ -75,8 +75,6 @@ class MessageBox extends StatelessWidget {
                 color: Colors.grey,
                 fontSize: 13.0,
                 height: 1,
-                // fontWeight: FontWeight.w300,
-              
               ),
             ),
           ],

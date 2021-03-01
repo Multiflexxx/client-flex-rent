@@ -1,6 +1,5 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/blocs/chat/chat.dart';
+import 'package:flexrent/logic/config/static_consts.dart';
 import 'package:flexrent/logic/exceptions/chat_exception.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/chat_service.dart';
@@ -128,6 +127,24 @@ class _ChatScreenState extends State<ChatScreen> {
     Navigator.of(context).pop();
   }
 
+  Future<Widget> _getMessageContentBox({ChatMessage message}) async {
+    if (message.messageType == MessageType.OFFER_REQUEST) {
+      OfferRequest offerRequest = await ApiOfferService()
+          .getOfferRequestbyRequest(
+              offerRequest: OfferRequest(requestId: message.messageContent));
+      return Container(
+        child: Text(offerRequest.offer.title),
+      );
+    }
+
+    if (message.messageType == MessageType.IMAGE) {
+      // TODO: Image Box!
+      return MessageBox(message: message);
+    }
+
+    return MessageBox(message: message);
+  }
+
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -176,7 +193,16 @@ class _ChatScreenState extends State<ChatScreen> {
                               itemBuilder: (context, index) {
                                 ChatMessage message =
                                     chatMessageResponse.messages[index];
-                                return MessageBox(message: message);
+                                return FutureBuilder(
+                                  future:
+                                      _getMessageContentBox(message: message),
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      return snapshot.data;
+                                    }
+                                    return Container();
+                                  },
+                                );
                               },
                             );
                           } else if (snapshot.hasError) {

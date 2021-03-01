@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:flexrent/logic/blocs/chat/chat.dart';
+import 'package:flexrent/logic/config/static_consts.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/chat/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -45,6 +45,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
+              // TODO: Change to != '' of != null
               child: widget.chat.chatPartner.profilePicture == 'penis'
                   ? CachedNetworkImage(
                       imageUrl: widget.chat.chatPartner.profilePicture,
@@ -106,7 +107,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
                       Container(
                         width: 0.45 * MediaQuery.of(context).size.width,
                         child: Text(
-                          widget.chat.lastMessage.messageContent,
+                          _getMessageContent(),
                           style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 14.0,
@@ -154,5 +155,21 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
     } else {
       return '${DateFormat('yMd', 'de').format(widget.chat.lastMessage.createdAt)}';
     }
+  }
+
+  String _getMessageContent() {
+    if (widget.chat.lastMessage.messageType == MessageType.OFFER_REQUEST) {
+      return 'Anfrage';
+    }
+
+    if (widget.chat.lastMessage.messageType == MessageType.TEXT) {
+      return widget.chat.lastMessage.messageContent;
+    }
+
+    if (widget.chat.lastMessage.messageType == MessageType.IMAGE) {
+      return 'Bild';
+    }
+
+    return 'Hier ist etwas schief gelaufen.';
   }
 }
