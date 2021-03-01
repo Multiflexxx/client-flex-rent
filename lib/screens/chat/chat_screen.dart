@@ -1,9 +1,13 @@
+import 'dart:developer';
+
+import 'package:flexrent/logic/blocs/chat/chat.dart';
 import 'package:flexrent/logic/exceptions/chat_exception.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/chat_service.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 
 import '../../widgets/chat/message_box.dart';
@@ -18,32 +22,27 @@ class ChatScreen extends StatefulWidget {
 
 class _ChatScreenState extends State<ChatScreen> {
   Future<ChatMessageResponse> chatMessageResponse;
-  String messageText;
+  final _messageController = TextEditingController();
   User user;
 
   @override
   void initState() {
     super.initState();
-    _getAllChatMessages();
-    messageText = '';
+    BlocProvider.of<ChatBloc>(context).add(
+      ChatMessageTickerStarted(chatId: widget.chat.chatId, page: 1),
+    );
     user = HelperService.getUser(context: context);
   }
 
-  void _getAllChatMessages() async {
-    setState(() {
-      chatMessageResponse = ApiChatService()
-          .getAllMessagesByChatId(chatId: widget.chat.chatId, page: 1);
-    });
-  }
-
   void _sendMessage() async {
-    if (messageText != null || messageText != '') {
+    if (_messageController.text != null || _messageController.text != '') {
       ChatMessage chatMessage = ChatMessage(
           chatId: widget.chat.chatId,
           fromUserId: user.userId,
           toUserId: widget.chat.chatPartner.userId,
-          messageContent: messageText,
+          messageContent: _messageController.text,
           messageType: 2);
+      _messageController.clear();
       ApiChatService().sendMessage(chatMessage: chatMessage);
     }
   }
@@ -74,11 +73,7 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
           Expanded(
             child: TextField(
-              onChanged: (value) {
-                setState(() {
-                  messageText = value;
-                });
-              },
+              controller: _messageController,
               onSubmitted: (value) => _sendMessage(),
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
@@ -105,6 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               textCapitalization: TextCapitalization.sentences,
+              maxLines: null,
             ),
           ),
           SizedBox(
@@ -138,7 +134,17 @@ class _ChatScreenState extends State<ChatScreen> {
         ),
         centerTitle: true,
         backgroundColor: Colors.transparent,
-        iconTheme: IconThemeData(color: Theme.of(context).primaryColor),
+        leading: IconButton(
+          icon: Icon(
+            Feather.arrow_left,
+            color: Theme.of(context).primaryColor,
+          ),
+          onPressed: () {
+            BlocProvider.of<ChatBloc>(context)
+                .add(ChatOverviewTickerStarted(page: 1));
+            Navigator.of(context).pop();
+          },
+        ),
         elevation: 0.0,
       ),
       body: GestureDetector(
@@ -146,23 +152,35 @@ class _ChatScreenState extends State<ChatScreen> {
         child: Column(
           children: [
             Expanded(
-              child: FutureBuilder(
-                future: chatMessageResponse,
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    ChatMessageResponse chatMessageResponse = snapshot.data;
-                    return ListView.builder(
-                      reverse: true,
-                      itemCount: chatMessageResponse.messages.length,
-                      itemBuilder: (context, index) {
-                        ChatMessage message =
-                            chatMessageResponse.messages[index];
-                        return MessageBox(message: message);
+              child: BlocBuilder<ChatBloc, ChatState>(
+                builder: (context, state) {
+                  if (state.chatMessageResponse != null) {
+                    Stream<ChatMessageResponse> chatMessageResponse =
+                        state.chatMessageResponse;
+                    return StreamBuilder(
+                      stream: chatMessageResponse,
+                      builder: (context, snapshot) {
+                        if (snapshot.hasData) {
+                          ChatMessageResponse chatMessageResponse =
+                              snapshot.data;
+                          return ListView.builder(
+                            reverse: true,
+                            itemCount: chatMessageResponse.messages.length,
+                            itemBuilder: (context, index) {
+                              ChatMessage message =
+                                  chatMessageResponse.messages[index];
+                              return MessageBox(message: message);
+                            },
+                          );
+                        } else if (snapshot.hasError) {
+                          ChatException e = snapshot.error;
+                          return ErrorBox(errorText: e.message);
+                        }
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
                       },
                     );
-                  } else if (snapshot.hasError) {
-                    ChatException e = snapshot.error;
-                    return ErrorBox(errorText: e.message);
                   }
                   return Center(
                     child: CircularProgressIndicator(),

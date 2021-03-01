@@ -1,4 +1,5 @@
 export 'authentication_service.dart';
+export 'chat_service.dart';
 export 'offer_service.dart';
 export 'register_service.dart';
 export 'user_service.dart';

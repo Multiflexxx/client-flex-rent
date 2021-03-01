@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flexrent/logic/blocs/chat/chat.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/chat/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
@@ -29,11 +30,13 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => pushNewScreen(context,
-          screen: ChatScreen(
-            chat: widget.chat,
-          ),
-          withNavBar: false),
+      onTap: () {
+        pushNewScreen(context,
+            screen: ChatScreen(
+              chat: widget.chat,
+            ),
+            withNavBar: false);
+      },
       child: Container(
         margin: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 0, top: 0),
         padding: EdgeInsets.only(left: 5, right: 5, bottom: 5),
@@ -42,7 +45,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              child: widget.chat.chatPartner.profilePicture != ''
+              child: widget.chat.chatPartner.profilePicture == 'penis'
                   ? CachedNetworkImage(
                       imageUrl: widget.chat.chatPartner.profilePicture,
                       width: 75,
