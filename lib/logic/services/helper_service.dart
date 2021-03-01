@@ -2,13 +2,23 @@ import 'dart:io';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/authentication/no_access_screen.dart';
-import 'package:flexrent/screens/authentication/no_access_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
 
 class HelperService {
+  static const _storage = FlutterSecureStorage();
+
+  static Future<Session> getSession() async {
+    final String sessionId = await _storage.read(key: 'sessionId');
+    final String userId = await _storage.read(key: 'userId');
+
+    Session session = Session(sessionId: sessionId, userId: userId);
+    return session;
+  }
+
   static Future<File> compressFile(File file) async {
     final String filePath = file.absolute.path;
 

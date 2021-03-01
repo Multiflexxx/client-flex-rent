@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flexrent/logic/blocs/offer/bloc/offer_bloc.dart';
+import 'package:flexrent/screens/chat/chat_overview_screen.dart';
 import 'package:flexrent/screens/rentalItems/rental_items_root_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +13,7 @@ import 'screens/category/category_screen.dart';
 import 'screens/discovery/discovery_screen.dart';
 
 class App extends StatefulWidget {
-  final titles = ['Home', 'Category', 'Cart', 'Account'];
+  final titles = ['Home', 'Category', 'Cart', 'Chat', 'Account'];
 
   App({Key key}) : super(key: key);
 
@@ -34,6 +35,10 @@ class AppState extends State<App> {
     ),
     Icon(
       Feather.shopping_bag,
+      size: 22,
+    ),
+    Icon(
+      Feather.message_circle,
       size: 22,
     ),
     Icon(
@@ -66,6 +71,7 @@ class AppState extends State<App> {
           _hideNavBar = !_hideNavBar;
         });
       }),
+      ChatOverviewScreen(),
       AccountScreen(hideNavBarFunction: () {
         setState(() {
           _hideNavBar = !_hideNavBar;
@@ -113,6 +119,10 @@ class AppState extends State<App> {
                 size: 22,
               ),
             ),
+            Icon(
+              Feather.message_circle,
+              size: 22,
+            ),
             Badge(
               showBadge: (state.count != null &&
                       state.count.lessorsNumberOfNewRequests > 0)
@@ -138,6 +148,10 @@ class AppState extends State<App> {
             ),
             Icon(
               Feather.shopping_bag,
+              size: 22,
+            ),
+            Icon(
+              Feather.message_circle,
               size: 22,
             ),
             Icon(
