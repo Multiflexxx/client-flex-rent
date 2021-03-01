@@ -5,6 +5,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/chat_service.dart';
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/widgets/chat/message_box.dart';
+import 'package:flexrent/widgets/offer/offer_request_card.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -127,13 +128,28 @@ class _ChatScreenState extends State<ChatScreen> {
     Navigator.of(context).pop();
   }
 
+  Future<List<Widget>> _getMessageWidgets(
+      {ChatMessageResponse chatMessageResponse}) async {
+    List<ChatMessage> chatMessageList = chatMessageResponse.messages;
+    List<Widget> messageWidgetsList = [];
+    for (ChatMessage chatMessage in chatMessageList) {
+      messageWidgetsList.add(
+        await _getMessageContentBox(message: chatMessage),
+      );
+    }
+    return messageWidgetsList;
+  }
+
   Future<Widget> _getMessageContentBox({ChatMessage message}) async {
     if (message.messageType == MessageType.OFFER_REQUEST) {
       OfferRequest offerRequest = await ApiOfferService()
           .getOfferRequestbyRequest(
               offerRequest: OfferRequest(requestId: message.messageContent));
       return Container(
-        child: Text(offerRequest.offer.title),
+        child: OfferRequestCard(
+          offerRequest: offerRequest,
+          lessor: false,
+        ),
       );
     }
 
@@ -187,21 +203,18 @@ class _ChatScreenState extends State<ChatScreen> {
                           if (snapshot.hasData) {
                             ChatMessageResponse chatMessageResponse =
                                 snapshot.data;
-                            return ListView.builder(
-                              reverse: true,
-                              itemCount: chatMessageResponse.messages.length,
-                              itemBuilder: (context, index) {
-                                ChatMessage message =
-                                    chatMessageResponse.messages[index];
-                                return FutureBuilder(
-                                  future:
-                                      _getMessageContentBox(message: message),
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      return snapshot.data;
-                                    }
-                                    return Container();
-                                  },
+                            return FutureBuilder(
+                              future: _getMessageWidgets(
+                                  chatMessageResponse: chatMessageResponse),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return ListView(
+                                    reverse: true,
+                                    children: snapshot.data,
+                                  );
+                                }
+                                return Center(
+                                  child: CircularProgressIndicator(),
                                 );
                               },
                             );
