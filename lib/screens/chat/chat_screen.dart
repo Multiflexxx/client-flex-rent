@@ -5,12 +5,11 @@ import 'package:flexrent/logic/exceptions/chat_exception.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/chat_service.dart';
 import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/widgets/chat/message_box.dart';
 import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-
-import '../../widgets/chat/message_box.dart';
 
 class ChatScreen extends StatefulWidget {
   final Chat chat;
@@ -124,72 +123,81 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
+  void _popScreen() {
+    BlocProvider.of<ChatBloc>(context).add(ChatOverviewTickerStarted(page: 1));
+    Navigator.of(context).pop();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          '${widget.chat.chatPartner.firstName} ${widget.chat.chatPartner.lastName}',
-          style: TextStyle(color: Theme.of(context).primaryColor),
-        ),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-        leading: IconButton(
-          icon: Icon(
-            Feather.arrow_left,
-            color: Theme.of(context).primaryColor,
+    return WillPopScope(
+      onWillPop: () async {
+        _popScreen();
+        return true;
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            '${widget.chat.chatPartner.firstName} ${widget.chat.chatPartner.lastName}',
+            style: TextStyle(color: Theme.of(context).primaryColor),
           ),
-          onPressed: () {
-            BlocProvider.of<ChatBloc>(context)
-                .add(ChatOverviewTickerStarted(page: 1));
-            Navigator.of(context).pop();
-          },
-        ),
-        elevation: 0.0,
-      ),
-      body: GestureDetector(
-        onTap: () => FocusScope.of(context).unfocus(),
-        child: Column(
-          children: [
-            Expanded(
-              child: BlocBuilder<ChatBloc, ChatState>(
-                builder: (context, state) {
-                  if (state.chatMessageResponse != null) {
-                    Stream<ChatMessageResponse> chatMessageResponse =
-                        state.chatMessageResponse;
-                    return StreamBuilder(
-                      stream: chatMessageResponse,
-                      builder: (context, snapshot) {
-                        if (snapshot.hasData) {
-                          ChatMessageResponse chatMessageResponse =
-                              snapshot.data;
-                          return ListView.builder(
-                            reverse: true,
-                            itemCount: chatMessageResponse.messages.length,
-                            itemBuilder: (context, index) {
-                              ChatMessage message =
-                                  chatMessageResponse.messages[index];
-                              return MessageBox(message: message);
-                            },
-                          );
-                        } else if (snapshot.hasError) {
-                          ChatException e = snapshot.error;
-                          return ErrorBox(errorText: e.message);
-                        }
-                        return Center(
-                          child: CircularProgressIndicator(),
-                        );
-                      },
-                    );
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                },
-              ),
+          centerTitle: true,
+          backgroundColor: Colors.transparent,
+          leading: IconButton(
+            icon: Icon(
+              Feather.arrow_left,
+              color: Theme.of(context).primaryColor,
             ),
-            _buildMessageInput(),
-          ],
+            onPressed: () {
+              _popScreen();
+            },
+          ),
+          elevation: 0.0,
+        ),
+        body: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          child: Column(
+            children: [
+              Expanded(
+                child: BlocBuilder<ChatBloc, ChatState>(
+                  builder: (context, state) {
+                    if (state.chatMessageResponse != null) {
+                      Stream<ChatMessageResponse> chatMessageResponse =
+                          state.chatMessageResponse;
+                      return StreamBuilder(
+                        stream: chatMessageResponse,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            ChatMessageResponse chatMessageResponse =
+                                snapshot.data;
+                            return ListView.builder(
+                              reverse: true,
+                              itemCount: chatMessageResponse.messages.length,
+                              itemBuilder: (context, index) {
+                                ChatMessage message =
+                                    chatMessageResponse.messages[index];
+                                return MessageBox(message: message);
+                              },
+                            );
+                          } else if (snapshot.hasError) {
+                            ChatException e = snapshot.error;
+                            return ErrorBox(errorText: e.message);
+                          }
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        },
+                      );
+                    }
+                    return Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  },
+                ),
+              ),
+              _buildMessageInput(),
+            ],
+          ),
         ),
       ),
     );
