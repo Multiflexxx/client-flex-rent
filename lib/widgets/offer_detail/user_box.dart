@@ -126,7 +126,7 @@ class UserBox extends StatelessWidget {
               height: 20.0,
             ),
             PurpleButton(
-                text: Text('Mehr Informatioenen'),
+                text: Text('Mehr Informationen'),
                 onPressed: () => pushNewScreenWithRouteSettings(context,
                     screen: UserScreen(
                       user: lessor,

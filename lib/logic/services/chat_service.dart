@@ -35,17 +35,18 @@ class ApiChatService extends ChatService {
 
     if (response.statusCode == 201) {
       final dynamic jsonBody = json.decode(response.body);
-      inspect(jsonBody);
       final ChatResponse chatResponse = ChatResponse.fromJson(jsonBody);
       if (chatResponse.chats.isNotEmpty) {
-        inspect(chatResponse);
         return chatResponse;
       }
       return Future.error(
-        ChatException(message: 'Du hast keine offenen Chats.'),
+        ChatException(message: 'Du hast keine Chats.'),
+      );
+    } else if (response.statusCode == 400) {
+      return Future.error(
+        ChatException(message: 'Das waren alle deine Chats'),
       );
     } else {
-      inspect(response);
       return Future.error(
         ChatException(message: 'Hier ist etwas schief gelaufen.'),
       );
@@ -56,17 +57,6 @@ class ApiChatService extends ChatService {
   Future<ChatMessageResponse> getAllMessagesByChatId(
       {String chatId, int page}) async {
     Session session = await HelperService.getSession();
-
-    print(
-      jsonEncode(
-        <String, dynamic>{
-          'session': session.toJson(),
-          'query': {
-            'page': page ?? 1,
-          }
-        },
-      ),
-    );
 
     final response = await http.post(
       '${CONFIG.url}/chat/$chatId',
@@ -85,10 +75,8 @@ class ApiChatService extends ChatService {
       final jsonBody = json.decode(response.body);
       ChatMessageResponse chatMessageResponse =
           ChatMessageResponse.fromJson(jsonBody);
-      inspect(chatMessageResponse);
       return chatMessageResponse;
     } else {
-      inspect(response);
       return Future.error(
         ChatException(message: 'Hier ist etwas schief gelaufen.'),
       );
@@ -98,6 +86,15 @@ class ApiChatService extends ChatService {
   @override
   Future<ChatMessage> sendMessage({ChatMessage chatMessage}) async {
     Session session = await HelperService.getSession();
+
+    print(
+      jsonEncode(
+        <String, dynamic>{
+          'session': session.toJson(),
+          'message': chatMessage.toJson(),
+        },
+      ),
+    );
 
     final response = await http.put(
       '${CONFIG.url}/chat',
@@ -115,10 +112,8 @@ class ApiChatService extends ChatService {
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);
       ChatMessage _chatMessage = ChatMessage.fromJson(jsonBody);
-      inspect(_chatMessage);
       return _chatMessage;
     } else {
-      inspect(response);
       return Future.error(
         ChatException(message: 'Hier ist etwas schief gelaufen.'),
       );
