@@ -100,6 +100,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 ),
               ),
               textCapitalization: TextCapitalization.sentences,
+              maxLines: null,
             ),
           ),
           SizedBox(
@@ -176,7 +177,7 @@ class _ChatScreenState extends State<ChatScreen> {
                           return ErrorBox(errorText: e.message);
                         }
                         return Center(
-                          child: Text('Scheiße'),
+                          child: CircularProgressIndicator(),
                         );
                       },
                     );
