@@ -170,16 +170,6 @@ class ApiAuthenticationService extends AuthenticationService {
   @override
   Future<User> resetPassword(
       {String email, String token, String password}) async {
-    print(
-      jsonEncode(
-        <String, dynamic>{
-          'email': '$email',
-          'token': '$token',
-          'new_password': '$password',
-        },
-      ),
-    );
-
     final response = await http.post(
       '${CONFIG.url}/user/password-reset/reset',
       headers: {"Content-Type": "application/json"},

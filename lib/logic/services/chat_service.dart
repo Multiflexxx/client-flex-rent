@@ -87,15 +87,6 @@ class ApiChatService extends ChatService {
   Future<ChatMessage> sendMessage({ChatMessage chatMessage}) async {
     Session session = await HelperService.getSession();
 
-    print(
-      jsonEncode(
-        <String, dynamic>{
-          'session': session.toJson(),
-          'message': chatMessage.toJson(),
-        },
-      ),
-    );
-
     final response = await http.put(
       '${CONFIG.url}/chat',
       headers: {"Content-Type": "application/json"},
