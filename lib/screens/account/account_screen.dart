@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/blocs/authentication/authentication.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
 
-import 'package:flexrent/screens/rentalItems/auth_screen.dart';
+import 'package:flexrent/screens/authentication/no_access_screen.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,7 +84,11 @@ class _AccountScreenState extends State<AccountScreen> {
                 ),
               ),
             )
-          : AuthScreen(
+          : NoAccessScreen(
+              popRouteName: AccountScreen.routeName,
+              targetScreen: AccountScreen(
+                hideNavBarFunction: widget.hideNavBarFunction,
+              ),
               hideNavBarFunction: widget.hideNavBarFunction,
               realScreenName: 'accountScreen',
             ),

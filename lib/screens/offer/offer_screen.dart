@@ -54,9 +54,8 @@ class _OfferScreenState extends State<OfferScreen> {
     super.initState();
     _dateRange = DateRange(fromDate: null, toDate: null);
     initializeDateFormatting('de_DE', null);
-
-    _getOfferAndRatings();
     _user = HelperService.getUser(context: context);
+    _getOfferAndRatings();
   }
 
   _getOfferAndRatings() {
@@ -260,87 +259,82 @@ class _OfferScreenState extends State<OfferScreen> {
                                       ),
                                     ],
                                   ),
-                                  _user.userId == offer.lessor.userId
-                                      ? Container(
-                                          width: 0.4 *
-                                              MediaQuery.of(context).size.width,
-                                          height: 50.0,
-                                          decoration: BoxDecoration(
-                                              color: Colors.purple[200],
-                                              borderRadius:
-                                                  BorderRadius.circular(10.0)),
-                                          child: Center(
-                                            child: Text(
-                                              'Reservieren',
-                                              style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: 20.0,
-                                                  fontWeight: FontWeight.w300),
-                                            ),
-                                          ),
-                                        )
-                                      : GestureDetector(
-                                          onTap: () async {
-                                            if (_dateRange.fromDate != null) {
-                                              _onReservation(offer);
-                                            } else {
-                                              final range =
-                                                  await showCupertinoModalBottomSheet<
-                                                      dynamic>(
-                                                expand: true,
-                                                context: context,
-                                                barrierColor: Colors.black45,
-                                                builder: (context,
-                                                        scrollController) =>
+                                  if (_user != null &&
+                                      _user.userId == offer.lessor.userId)
+                                    Container(
+                                      width: 0.4 *
+                                          MediaQuery.of(context).size.width,
+                                      height: 50.0,
+                                      decoration: BoxDecoration(
+                                          color: Colors.purple[200],
+                                          borderRadius:
+                                              BorderRadius.circular(10.0)),
+                                      child: Center(
+                                        child: Text(
+                                          'Reservieren',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                      ),
+                                    )
+                                  else
+                                    GestureDetector(
+                                      onTap: () async {
+                                        if (_dateRange.fromDate != null) {
+                                          _onReservation(offer);
+                                        } else {
+                                          final range =
+                                              await showCupertinoModalBottomSheet<
+                                                  dynamic>(
+                                            expand: true,
+                                            context: context,
+                                            barrierColor: Colors.black45,
+                                            builder:
+                                                (context, scrollController) =>
                                                     DateRangePicker(
-                                                  scrollController:
-                                                      scrollController,
-                                                  date: null,
-                                                  range:
-                                                      _picker.PickerDateRange(
-                                                    _dateRange.fromDate,
-                                                    _dateRange.toDate,
-                                                  ),
-                                                  minDate: DateTime.now(),
-                                                  maxDate: DateTime.now().add(
-                                                    Duration(days: 90),
-                                                  ),
-                                                  displayDate:
-                                                      _dateRange.fromDate,
-                                                  blockedDates:
-                                                      offer.blockedDates,
-                                                ),
-                                              );
-                                              if (range != null) {
-                                                _onSelectedRangeChanged(range);
-                                                _onReservation(offer);
-                                              }
-                                            }
-                                          },
-                                          child: Container(
-                                            width: 0.4 *
-                                                MediaQuery.of(context)
-                                                    .size
-                                                    .width,
-                                            height: 50.0,
-                                            decoration: BoxDecoration(
-                                                color: Theme.of(context)
-                                                    .accentColor,
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        10.0)),
-                                            child: Center(
-                                              child: Text(
-                                                'Reservieren',
-                                                style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: 20.0,
-                                                    fontWeight:
-                                                        FontWeight.w300),
+                                              scrollController:
+                                                  scrollController,
+                                              date: null,
+                                              range: _picker.PickerDateRange(
+                                                _dateRange.fromDate,
+                                                _dateRange.toDate,
                                               ),
+                                              minDate: DateTime.now(),
+                                              maxDate: DateTime.now().add(
+                                                Duration(days: 90),
+                                              ),
+                                              displayDate: _dateRange.fromDate,
+                                              blockedDates: offer.blockedDates,
                                             ),
+                                          );
+                                          if (range != null) {
+                                            _onSelectedRangeChanged(range);
+                                            _onReservation(offer);
+                                          }
+                                        }
+                                      },
+                                      child: Container(
+                                        width: 0.4 *
+                                            MediaQuery.of(context).size.width,
+                                        height: 50.0,
+                                        decoration: BoxDecoration(
+                                            color:
+                                                Theme.of(context).accentColor,
+                                            borderRadius:
+                                                BorderRadius.circular(10.0)),
+                                        child: Center(
+                                          child: Text(
+                                            'Reservieren',
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: 20.0,
+                                                fontWeight: FontWeight.w300),
                                           ),
                                         ),
+                                      ),
+                                    ),
                                 ],
                               ),
                             ],

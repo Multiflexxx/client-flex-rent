@@ -70,7 +70,7 @@ class BookingLessee extends StatelessWidget {
                   borderRadius: BorderRadius.circular(20.0),
                   child: offerRequest.offer.lessor.profilePicture != ''
                       ? CachedNetworkImage(
-                          imageUrl: offerRequest.offer.lessor.profilePicture,
+                          imageUrl: offerRequest.user.profilePicture,
                           width: 70,
                           height: 70,
                           fit: BoxFit.cover,

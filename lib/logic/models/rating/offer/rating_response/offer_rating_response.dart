@@ -8,7 +8,7 @@ class OfferRatingResponse extends Equatable {
   final List<OfferRating> offerRatings;
   final int currentPage;
   final int maxPage;
-  final elementsPerPage;
+  final int elementsPerPage;
 
   OfferRatingResponse({
     this.offerRatings,

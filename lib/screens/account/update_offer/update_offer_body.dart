@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
+import 'package:flexrent/widgets/boxes/headline.dart';
 import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
@@ -139,16 +140,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
-        Padding(
-          padding: EdgeInsets.only(left: 28.0),
-          child: Text(
-            'Bilder',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 21.0,
-              letterSpacing: 1.2,
-            ),
-          ),
+        Headline(
+          headline: 'Bilder',
         ),
         Container(
           margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
@@ -232,16 +225,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
           ),
         ),
         SizedBox(height: 20.0),
-        Padding(
-          padding: EdgeInsets.only(left: 28.0),
-          child: Text(
-            'Verfügbarkeit',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 21.0,
-              letterSpacing: 1.2,
-            ),
-          ),
+        Headline(
+          headline: 'Verfügbarkeit',
         ),
         GestureDetector(
           onTap: () => showCupertinoModalBottomSheet<dynamic>(
@@ -296,16 +281,8 @@ class _UpdateOfferBodyState extends State<UpdateOfferBody> {
           ),
         ),
         SizedBox(height: 20.0),
-        Padding(
-          padding: EdgeInsets.only(left: 28.0),
-          child: Text(
-            'Beschreibung',
-            style: TextStyle(
-              color: Theme.of(context).primaryColor,
-              fontSize: 21.0,
-              letterSpacing: 1.2,
-            ),
-          ),
+        Headline(
+          headline: 'Beschereibung',
         ),
         Container(
           margin: EdgeInsets.symmetric(vertical: 12.0, horizontal: 16.0),
