@@ -1,3 +1,4 @@
+import 'package:flexrent/logic/blocs/chat/chat.dart';
 import 'package:flexrent/logic/blocs/offer/bloc/offer_bloc.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/helper_service.dart';
@@ -108,6 +109,7 @@ class _AccountSettingsBody extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         BlocProvider.of<OfferBloc>(context).add(OfferTickerStopped());
+        BlocProvider.of<ChatBloc>(context).add(ChatTickerStopped());
         BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
       },
       child: Container(

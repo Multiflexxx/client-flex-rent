@@ -29,18 +29,16 @@ class Ticker {
     );
   }
 
-  Stream<ChatMessageResponse> getChatMessageResponseAsStream(
-      {String chatId, int page}) {
-    return MergeStream(
-      [
-        Stream.fromFuture(ApiChatService()
-            .getAllMessagesByChatId(chatId: chatId, page: page)),
-        Stream.periodic(
-            const Duration(milliseconds: 500),
-            (_) => ApiChatService().getAllMessagesByChatId(
-                chatId: chatId,
-                page: page)).asyncMap((event) async => await event),
-      ],
-    );
+  Stream<ChatMessageResponse> getNewChatMessageResponseAsStream({
+    String chatId,
+    int lastMessageCount,
+  }) {
+    return Stream.periodic(
+        const Duration(milliseconds: 500),
+        (_) => ApiChatService().getAllMessagesByChatId(
+              chatId: chatId,
+              lastMessageCount: lastMessageCount,
+              newer: true,
+            )).asyncMap((event) async => await event);
   }
 }
