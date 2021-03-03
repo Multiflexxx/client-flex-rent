@@ -11,7 +11,8 @@ import 'package:http/http.dart' as http;
 
 abstract class ChatService {
   Future<ChatResponse> getAllChatsByLoggedInUser({int page});
-  Future<ChatMessageResponse> getAllMessagesByChatId({String chatId, int page});
+  Future<ChatMessageResponse> getAllMessagesByChatId(
+      {String chatId, int lastMessageCount, bool newer});
   Future<ChatMessage> sendMessage({ChatMessage chatMessage});
 }
 
@@ -55,7 +56,7 @@ class ApiChatService extends ChatService {
 
   @override
   Future<ChatMessageResponse> getAllMessagesByChatId(
-      {String chatId, int page}) async {
+      {String chatId, int lastMessageCount, bool newer}) async {
     Session session = await HelperService.getSession();
 
     final response = await http.post(
@@ -65,7 +66,8 @@ class ApiChatService extends ChatService {
         <String, dynamic>{
           'session': session.toJson(),
           'query': {
-            'page': page ?? 1,
+            'message_count': lastMessageCount,
+            'newer': newer ?? false,
           }
         },
       ),
@@ -97,8 +99,6 @@ class ApiChatService extends ChatService {
         },
       ),
     );
-
-    inspect(response);
 
     if (response.statusCode == 200) {
       final dynamic jsonBody = json.decode(response.body);

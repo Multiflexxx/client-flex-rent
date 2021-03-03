@@ -18,6 +18,7 @@ ChatMessage _$ChatMessageFromJson(Map<String, dynamic> json) {
         ? null
         : DateTime.parse(json['created_at'] as String),
     messageId: json['message_id'] as String,
+    messageCount: json['message_count'] as int,
   );
 }
 
@@ -38,5 +39,6 @@ Map<String, dynamic> _$ChatMessageToJson(ChatMessage instance) {
   writeNotNull('status_id', instance.statusId);
   writeNotNull('created_at', instance.createdAt?.toIso8601String());
   writeNotNull('message_id', instance.messageId);
+  writeNotNull('message_count', instance.messageCount);
   return val;
 }

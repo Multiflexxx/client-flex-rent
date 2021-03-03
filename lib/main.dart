@@ -27,6 +27,9 @@ void main() => runApp(
             RepositoryProvider<FacebookService>(
               create: (context) => ApiFacebookService(),
             ),
+            RepositoryProvider<ChatService>(
+              create: (context) => ApiChatService(),
+            ),
           ],
           child: MultiBlocProvider(
             providers: [
@@ -57,9 +60,12 @@ void main() => runApp(
                 },
               ),
               BlocProvider<ChatBloc>(
-                lazy: false,
-                create: (context) => ChatBloc(Ticker()),
-              )
+                  lazy: false,
+                  create: (context) {
+                    final chatService =
+                        RepositoryProvider.of<ChatService>(context);
+                    return ChatBloc(Ticker(), chatService);
+                  })
             ],
             child: MyApp(),
           )),
