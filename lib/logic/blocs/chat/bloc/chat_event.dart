@@ -23,8 +23,6 @@ class _ChatOverviewTickerSuccess extends ChatEvent {
   _ChatOverviewTickerSuccess({this.chatResponse});
 }
 
-class ChatOverviewTickerStopped extends ChatEvent {}
-
 // First message
 class ChatMessageFirstMessages extends ChatEvent {
   final String chatId;
@@ -51,8 +49,6 @@ class _ChatMessageTickerSuccess extends ChatEvent {
   _ChatMessageTickerSuccess({this.chatMessageResponse});
 }
 
-class ChatMessageTickerStopped extends ChatEvent {}
-
 // Old message
 class ChatMessageOldMessages extends ChatEvent {
   final String chatId;
@@ -60,3 +56,5 @@ class ChatMessageOldMessages extends ChatEvent {
 
   ChatMessageOldMessages({this.chatId, this.firstMessageCount});
 }
+
+class ChatTickerStopped extends ChatEvent {}

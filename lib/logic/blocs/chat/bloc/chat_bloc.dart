@@ -33,8 +33,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       yield* _map_ChatOverviewTickerSuccessToState(event);
     }
 
-    if (event is ChatOverviewTickerStopped) {
+    if (event is ChatTickerStopped) {
       await _subscription?.cancel();
+      await _messageSubscription?.cancel();
       yield ChatOverviewInitial();
     }
 
@@ -121,6 +122,7 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
   @override
   Future<void> close() {
     _subscription?.cancel();
+    _messageSubscription?.cancel();
     return super.close();
   }
 }

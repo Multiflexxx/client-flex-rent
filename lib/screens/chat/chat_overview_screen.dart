@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flexrent/logic/models/chat/chat/chat_response/chat_response.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/widgets/chat/chat_overview_box.dart';
@@ -23,6 +25,8 @@ class _ChatOverviewBody extends StatefulWidget {
 }
 
 class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
+  ChatResponse chatResponse;
+
   @override
   void initState() {
     super.initState();
@@ -30,22 +34,26 @@ class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
 
   List<Widget> _buildChats({ChatResponse chatResponse}) {
     List<Widget> chats = [];
-    for (Chat chat in chatResponse.chats) {
-      chats.add(
-        ChatOverviewBox(
-          chat: chat,
-        ),
-      );
-      if (chat != chatResponse.chats.last) {
+
+    if (chatResponse != null) {
+      for (Chat chat in chatResponse.chats) {
+        inspect(chat);
         chats.add(
-          Padding(
-            padding: EdgeInsets.only(left: 23, right: 23, bottom: 5),
-            child: Divider(
-              height: 20.0,
-              color: Theme.of(context).accentColor,
-            ),
+          ChatOverviewBox(
+            chat: chat,
           ),
         );
+        if (chat != chatResponse.chats.last) {
+          chats.add(
+            Padding(
+              padding: EdgeInsets.only(left: 23, right: 23, bottom: 5),
+              child: Divider(
+                height: 20.0,
+                color: Theme.of(context).accentColor,
+              ),
+            ),
+          );
+        }
       }
     }
     return chats;
@@ -53,18 +61,17 @@ class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ChatBloc, ChatState>(
-      builder: (context, state) {
-        if (state.chatResponse != null) {
-          ChatResponse chatResponse = state.chatResponse;
-          return Column(
-            children: _buildChats(chatResponse: chatResponse),
-          );
+    return BlocListener<ChatBloc, ChatState>(
+      listener: (context, state) {
+        if (state is ChatOverviewSuccess) {
+          setState(() {
+            chatResponse = state.chatResponse;
+          });
         }
-        return Center(
-          child: CircularProgressIndicator(),
-        );
       },
+      child: Column(
+        children: _buildChats(chatResponse: chatResponse),
+      ),
     );
   }
 }

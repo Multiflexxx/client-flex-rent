@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/blocs/chat/chat.dart';
 import 'package:flexrent/logic/config/static_consts.dart';
 import 'package:flexrent/logic/models/models.dart';
@@ -128,8 +126,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _popScreen() {
-    BlocProvider.of<ChatBloc>(context).add(ChatMessageTickerStopped());
-    BlocProvider.of<ChatBloc>(context).add(ChatOverviewTickerStopped());
+    BlocProvider.of<ChatBloc>(context).add(ChatTickerStopped());
     BlocProvider.of<ChatBloc>(context).add(ChatOverviewTickerStarted(page: 1));
     Navigator.of(context).pop();
   }

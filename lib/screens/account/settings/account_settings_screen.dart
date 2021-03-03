@@ -109,7 +109,7 @@ class _AccountSettingsBody extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         BlocProvider.of<OfferBloc>(context).add(OfferTickerStopped());
-        BlocProvider.of<ChatBloc>(context).add(ChatOverviewTickerStopped());
+        BlocProvider.of<ChatBloc>(context).add(ChatTickerStopped());
         BlocProvider.of<AuthenticationBloc>(context).add(UserSignOut());
       },
       child: Container(
