@@ -128,13 +128,14 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _popScreen() {
+    BlocProvider.of<ChatBloc>(context).add(ChatMessageTickerStopped());
+    BlocProvider.of<ChatBloc>(context).add(ChatOverviewTickerStopped());
     BlocProvider.of<ChatBloc>(context).add(ChatOverviewTickerStarted(page: 1));
     Navigator.of(context).pop();
   }
 
   Future<List<Widget>> _getMessageWidgets(
       {List<ChatMessage> chatMessages}) async {
-    inspect(chatMessages);
     List<Widget> messageWidgetsList = [];
     for (ChatMessage chatMessage in chatMessages) {
       messageWidgetsList.add(
@@ -198,7 +199,7 @@ class _ChatScreenState extends State<ChatScreen> {
               Expanded(
                 child: BlocListener<ChatBloc, ChatState>(
                   listener: (context, state) {
-                    if (state is ChatMessageInitalSuccess) {
+                    if (state is ChatMessageFirstSuccess) {
                       setState(() {
                         chatMessageResponse = state.chatMessageResponse;
                         chatMessages = chatMessageResponse.messages;
@@ -213,7 +214,6 @@ class _ChatScreenState extends State<ChatScreen> {
                     }
 
                     if (state is ChatMessageSuccess) {
-                      inspect(state.chatMessageResponse);
                       setState(() {
                         chatMessageResponse = state.chatMessageResponse;
                         chatMessages.insertAll(
@@ -227,18 +227,42 @@ class _ChatScreenState extends State<ChatScreen> {
                         ),
                       );
                     }
+
+                    if (state is ChatMessageOldSuccess) {
+                      setState(() {
+                        chatMessages.addAll(state.chatMessageResponse.messages);
+                      });
+                    }
                   },
                   child: FutureBuilder(
                     future: _getMessageWidgets(chatMessages: chatMessages),
                     builder: (context, snapshot) {
                       if (snapshot.hasData) {
-                        return ListView(
-                          reverse: true,
-                          children: snapshot.data,
+                        return NotificationListener<ScrollEndNotification>(
+                          onNotification: (notification) {
+                            var metrics = notification.metrics;
+                            if (metrics.atEdge) {
+                              if (metrics.pixels != 0) {
+                                BlocProvider.of<ChatBloc>(context).add(
+                                  ChatMessageOldMessages(
+                                    chatId: widget.chat.chatId,
+                                    firstMessageCount:
+                                        chatMessages.last.messageCount,
+                                  ),
+                                );
+                              }
+                            }
+
+                            return true;
+                          },
+                          child: ListView(
+                            reverse: true,
+                            children: snapshot.data,
+                          ),
                         );
                       }
                       return Center(
-                        child: Text('Scheiße'),
+                        child: CircularProgressIndicator(),
                       );
                     },
                   ),

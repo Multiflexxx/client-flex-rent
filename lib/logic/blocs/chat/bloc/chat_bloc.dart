@@ -49,8 +49,13 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
     if (event is _ChatMessageTickerSuccess) {
       yield* _map_ChatMessageTickerSuccessToState(event);
     }
+
+    if (event is ChatMessageOldMessages) {
+      yield* _mapChatMessageOldMessagesToState(event);
+    }
   }
 
+  // Overview
   Stream<ChatState> _mapChatOverviewTickerStartedToState(
       ChatOverviewTickerStarted event) async* {
     await _subscription?.cancel();
@@ -66,14 +71,16 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
 
   // stop missing
 
+  // First messages
   Stream<ChatState> _mapChatMessageFirstMessagesToState(
       ChatMessageFirstMessages event) async* {
     final ChatMessageResponse chatMessageResponse =
         await _chatService.getAllMessagesByChatId(
             chatId: event.chatId, lastMessageCount: -1, newer: false);
-    yield ChatMessageInitalSuccess(chatMessageResponse: chatMessageResponse);
+    yield ChatMessageFirstSuccess(chatMessageResponse: chatMessageResponse);
   }
 
+  // New messages
   Stream<ChatState> _mapChatMessageTickerStartedToState(
       ChatMessageTickerStarted event) async* {
     _messageSubscription?.cancel();
@@ -98,6 +105,17 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       );
     }
     yield ChatMessageNewInitial();
+  }
+
+  Stream<ChatState> _mapChatMessageOldMessagesToState(
+      ChatMessageOldMessages event) async* {
+    final ChatMessageResponse chatMessageResponse =
+        await _chatService.getAllMessagesByChatId(
+            chatId: event.chatId,
+            lastMessageCount: event.firstMessageCount,
+            newer: false);
+    yield ChatMessageOldSuccess(chatMessageResponse: chatMessageResponse);
+    yield ChatMessageOldInitial();
   }
 
   @override

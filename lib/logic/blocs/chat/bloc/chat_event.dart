@@ -7,6 +7,7 @@ abstract class ChatEvent extends Equatable {
   List<Object> get props => [];
 }
 
+// Overview
 class ChatOverviewTickerStarted extends ChatEvent {
   final int page;
 
@@ -24,6 +25,7 @@ class _ChatOverviewTickerSuccess extends ChatEvent {
 
 class ChatOverviewTickerStopped extends ChatEvent {}
 
+// First message
 class ChatMessageFirstMessages extends ChatEvent {
   final String chatId;
 
@@ -32,6 +34,7 @@ class ChatMessageFirstMessages extends ChatEvent {
   });
 }
 
+// New message
 class ChatMessageTickerStarted extends ChatEvent {
   final String chatId;
   final int lastMessageCount;
@@ -49,3 +52,11 @@ class _ChatMessageTickerSuccess extends ChatEvent {
 }
 
 class ChatMessageTickerStopped extends ChatEvent {}
+
+// Old message
+class ChatMessageOldMessages extends ChatEvent {
+  final String chatId;
+  final int firstMessageCount;
+
+  ChatMessageOldMessages({this.chatId, this.firstMessageCount});
+}

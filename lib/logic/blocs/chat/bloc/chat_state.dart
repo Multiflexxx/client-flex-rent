@@ -21,9 +21,8 @@ class ChatOverviewSuccess extends ChatState {
   ChatOverviewSuccess({chatResponse}) : super(chatResponse: chatResponse);
 }
 
-class ChatMessageInitalSuccess extends ChatState {
-  ChatMessageInitalSuccess(
-      {chatMessageResponse, chatMessages, lastMessageCount})
+class ChatMessageFirstSuccess extends ChatState {
+  ChatMessageFirstSuccess({chatMessageResponse})
       : super(
           chatMessageResponse: chatMessageResponse,
         );
@@ -37,3 +36,12 @@ class ChatMessageSuccess extends ChatState {
 }
 
 class ChatMessageNewInitial extends ChatState {}
+
+class ChatMessageOldSuccess extends ChatState {
+  ChatMessageOldSuccess({chatMessageResponse})
+      : super(
+          chatMessageResponse: chatMessageResponse,
+        );
+}
+
+class ChatMessageOldInitial extends ChatState {}
