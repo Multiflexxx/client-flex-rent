@@ -20,6 +20,7 @@ class ChatScreen extends StatefulWidget {
 class _ChatScreenState extends State<ChatScreen> {
   final _messageController = TextEditingController();
   User user;
+  List<Widget> messageWidgetsList = [];
 
   ChatMessageResponse chatMessageResponse;
   List<ChatMessage> chatMessages;
@@ -133,7 +134,6 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Future<List<Widget>> _getMessageWidgets(
       {List<ChatMessage> chatMessages}) async {
-    List<Widget> messageWidgetsList = [];
     for (ChatMessage chatMessage in chatMessages) {
       messageWidgetsList.add(
         await _getMessageContentBox(message: chatMessage),

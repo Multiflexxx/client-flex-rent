@@ -37,7 +37,6 @@ class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
 
     if (chatResponse != null) {
       for (Chat chat in chatResponse.chats) {
-        inspect(chat);
         chats.add(
           ChatOverviewBox(
             chat: chat,
