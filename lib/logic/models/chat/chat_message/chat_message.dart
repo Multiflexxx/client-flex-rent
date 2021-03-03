@@ -13,6 +13,7 @@ class ChatMessage extends Equatable {
   final int statusId;
   final DateTime createdAt;
   final String messageId;
+  final int messageCount;
 
   ChatMessage(
       {@required this.chatId,
@@ -22,7 +23,8 @@ class ChatMessage extends Equatable {
       @required this.messageType,
       this.statusId,
       this.createdAt,
-      this.messageId});
+      this.messageId,
+      this.messageCount});
 
   factory ChatMessage.fromJson(Map<String, dynamic> json) =>
       _$ChatMessageFromJson(json);

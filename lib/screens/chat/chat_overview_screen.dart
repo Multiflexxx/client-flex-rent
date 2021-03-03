@@ -26,18 +26,9 @@ class _ChatOverviewBody extends StatefulWidget {
 }
 
 class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
-  Future<ChatResponse> chatResponse;
-
   @override
   void initState() {
     super.initState();
-    _getChatResponse();
-  }
-
-  void _getChatResponse() {
-    setState(() {
-      chatResponse = ApiChatService().getAllChatsByLoggedInUser(page: 1);
-    });
   }
 
   List<Widget> _buildChats({ChatResponse chatResponse}) {
@@ -68,23 +59,9 @@ class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
     return BlocBuilder<ChatBloc, ChatState>(
       builder: (context, state) {
         if (state.chatResponse != null) {
-          Stream<ChatResponse> _chatResponse = state.chatResponse;
-          return StreamBuilder(
-            stream: _chatResponse,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                ChatResponse __chatResponse = snapshot.data;
-                return Column(
-                  children: _buildChats(chatResponse: __chatResponse),
-                );
-              } else if (snapshot.hasError) {
-                ChatException e = snapshot.error;
-                return ErrorBox(errorText: e.message);
-              }
-              return Center(
-                child: CircularProgressIndicator(),
-              );
-            },
+          ChatResponse chatResponse = state.chatResponse;
+          return Column(
+            children: _buildChats(chatResponse: chatResponse),
           );
         }
         return Center(

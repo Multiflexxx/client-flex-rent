@@ -16,9 +16,36 @@ class ChatOverviewTickerStarted extends ChatEvent {
   List<Object> get props => [page];
 }
 
+class _ChatOverviewTickerSuccess extends ChatEvent {
+  final ChatResponse chatResponse;
+
+  _ChatOverviewTickerSuccess({this.chatResponse});
+}
+
+class ChatOverviewTickerStopped extends ChatEvent {}
+
+class ChatMessageFirstMessages extends ChatEvent {
+  final String chatId;
+
+  ChatMessageFirstMessages({
+    this.chatId,
+  });
+}
+
 class ChatMessageTickerStarted extends ChatEvent {
   final String chatId;
-  final int page;
+  final int lastMessageCount;
 
-  ChatMessageTickerStarted({this.chatId, this.page});
+  ChatMessageTickerStarted({
+    this.chatId,
+    this.lastMessageCount,
+  });
 }
+
+class _ChatMessageTickerSuccess extends ChatEvent {
+  final ChatMessageResponse chatMessageResponse;
+
+  _ChatMessageTickerSuccess({this.chatMessageResponse});
+}
+
+class ChatMessageTickerStopped extends ChatEvent {}
