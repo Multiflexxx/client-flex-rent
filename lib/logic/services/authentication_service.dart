@@ -11,6 +11,7 @@ abstract class AuthenticationService {
   Future<User> signInWithEmailAndPassword(String email, String password);
   Future<User> signInWithGoogle(String token);
   Future<User> signInWithFacebook(String token);
+
   Future<void> requestPasswordReset({String email});
   Future<String> getPasswordResetToken({String email, String code});
   Future<User> resetPassword({String email, String token, String password});

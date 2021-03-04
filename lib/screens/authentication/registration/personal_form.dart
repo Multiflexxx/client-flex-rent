@@ -214,8 +214,8 @@ class _PersonalFormState extends State<PersonalForm> {
       );
 
       if (_key.currentState.validate()) {
-        BlocProvider.of<RegisterBloc>(context)
-            .add(RegisterSubmitPressed(signUpOption: signInOption, user: user));
+        BlocProvider.of<RegisterBloc>(context).add(
+            RegisterPersonalPressed(signUpOption: signInOption, user: user));
       }
     }
 
@@ -295,9 +295,9 @@ class _PersonalFormState extends State<PersonalForm> {
                       height: 10,
                     ),
                     PurpleButton(
-                      text: Text('Register'),
+                      text: Text('Weiter'),
                       onPressed: () {
-                        if (state is RegisterPhoneSuccess) {
+                        if (state is RegisterEnteredPersonalSuccess) {
                           _onRegisterSubmitPressed(
                             signInOption: state.signUpOption,
                           );

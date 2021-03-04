@@ -29,7 +29,7 @@ class _PhoneFormState extends State<PhoneForm> {
     _onNextPressed({String signInOption, User thirdPartyUser}) {
       if (_key.currentState.validate() && _agbCheckBox == true) {
         BlocProvider.of<RegisterBloc>(context).add(
-          RegisterNextPressed(
+          RegisterPhonePressed(
             signUpOption: signInOption,
             phoneNumber: _phoneController.text,
             thirdPartyUser: thirdPartyUser,
