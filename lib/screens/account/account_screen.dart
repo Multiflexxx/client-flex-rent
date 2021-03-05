@@ -90,7 +90,7 @@ class _AccountScreenState extends State<AccountScreen> {
                 hideNavBarFunction: widget.hideNavBarFunction,
               ),
               hideNavBarFunction: widget.hideNavBarFunction,
-              realScreenName: 'accountScreen',
+              realScreenName: 'chatScreen',
             ),
     );
   }
