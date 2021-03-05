@@ -2,6 +2,7 @@ import 'package:flexrent/screens/authentication/authentication_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:lottie/lottie.dart';
 
 class NoAccessScreen extends StatelessWidget {
   static String routeName = 'noAccessScreen';
@@ -51,13 +52,9 @@ class NoAccessScreen extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0),
-                    ),
+                  Expanded(
                     child: _buildIcon(context: context),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -147,19 +144,24 @@ class NoAccessScreen extends StatelessWidget {
 
   Widget _buildIcon({BuildContext context}) {
     IconData _icon = Feather.shopping_bag;
+    String _lottie = '';
     if (realScreenName == 'accountScreen') {
       _icon = Feather.user;
     } else if (realScreenName == 'reservationScreen') {
       _icon = Feather.dollar_sign;
     } else if (realScreenName == 'chatOverviewScreen') {
-      _icon = Feather.message_circle;
+      _lottie = 'assets/lottie/chat.json';
     }
-
-    return Icon(
-      _icon,
-      size: 150,
-      color: Theme.of(context).accentColor,
-    );
+    return _lottie != ''
+        ? Lottie.asset(
+            _lottie,
+            height: 400,
+          )
+        : Icon(
+            _icon,
+            size: 150,
+            color: Theme.of(context).accentColor,
+          );
   }
 
   Widget _buildText({BuildContext context}) {
@@ -170,7 +172,8 @@ class NoAccessScreen extends StatelessWidget {
     } else if (realScreenName == 'reservationScreen') {
       _text = 'Melde dich an, um Gegenstände ausleihen zu können!';
     } else if (realScreenName == 'chatOverviewScreen') {
-      _text = 'Melde dich an, um den Chat nutzen zu können!';
+      _text =
+          'Melde dich an, um mit anderen Nutzern zu Chatten und Gegenstände ausleihen zu können!';
     }
     return Text(
       _text,
