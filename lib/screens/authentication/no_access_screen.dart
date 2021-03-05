@@ -131,6 +131,8 @@ class NoAccessScreen extends StatelessWidget {
       _title = 'Profil';
     } else if (realScreenName == 'reservationScreen') {
       _title = 'Reservieren';
+    } else if (realScreenName == 'chatOverviewScreen') {
+      _title = 'Chat';
     }
     return Text(
       _title,
@@ -149,6 +151,8 @@ class NoAccessScreen extends StatelessWidget {
       _icon = Feather.user;
     } else if (realScreenName == 'reservationScreen') {
       _icon = Feather.dollar_sign;
+    } else if (realScreenName == 'chatOverviewScreen') {
+      _icon = Feather.message_circle;
     }
 
     return Icon(
@@ -165,6 +169,8 @@ class NoAccessScreen extends StatelessWidget {
           'Melde dich an, um dein Profil zu sehen. Mit einem Profil kannst du Gegenstände ausleihen und verleihen.';
     } else if (realScreenName == 'reservationScreen') {
       _text = 'Melde dich an, um Gegenstände ausleihen zu können!';
+    } else if (realScreenName == 'chatOverviewScreen') {
+      _text = 'Melde dich an, um den Chat nutzen zu können!';
     }
     return Text(
       _text,

@@ -1,6 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:flexrent/logic/blocs/offer/bloc/offer_bloc.dart';
-import 'package:flexrent/screens/chat/chat_overview_screen.dart';
+import 'package:flexrent/screens/chat/chat_overview_root_screen.dart';
 import 'package:flexrent/screens/rentalItems/rental_items_root_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,7 +71,11 @@ class AppState extends State<App> {
           _hideNavBar = !_hideNavBar;
         });
       }),
-      ChatOverviewScreen(),
+      ChatOverviewRootScreen(hideNavBarFunction: () {
+        setState(() {
+          _hideNavBar = !_hideNavBar;
+        });
+      }),
       AccountScreen(hideNavBarFunction: () {
         setState(() {
           _hideNavBar = !_hideNavBar;

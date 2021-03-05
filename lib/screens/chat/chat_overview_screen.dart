@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flexrent/logic/models/chat/chat/chat_response/chat_response.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/widgets/chat/chat_overview_box.dart';
