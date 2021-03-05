@@ -2,6 +2,7 @@ import 'package:flexrent/screens/authentication/authentication_screen.dart';
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:lottie/lottie.dart';
 
 class NoAccessScreen extends StatelessWidget {
   static String routeName = 'noAccessScreen';
@@ -51,13 +52,9 @@ class NoAccessScreen extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20.0),
-                      bottomRight: Radius.circular(20.0),
-                    ),
+                  Expanded(
                     child: _buildIcon(context: context),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -131,6 +128,8 @@ class NoAccessScreen extends StatelessWidget {
       _title = 'Profil';
     } else if (realScreenName == 'reservationScreen') {
       _title = 'Reservieren';
+    } else if (realScreenName == 'chatScreen') {
+      _title = 'Chat';
     }
     return Text(
       _title,
@@ -145,17 +144,24 @@ class NoAccessScreen extends StatelessWidget {
 
   Widget _buildIcon({BuildContext context}) {
     IconData _icon = Feather.shopping_bag;
+    String _lottie = '';
     if (realScreenName == 'accountScreen') {
       _icon = Feather.user;
     } else if (realScreenName == 'reservationScreen') {
       _icon = Feather.dollar_sign;
+    } else if (realScreenName == 'chatScreen') {
+      _lottie = 'assets/lottie/chat.json';
     }
-
-    return Icon(
-      _icon,
-      size: 150,
-      color: Theme.of(context).accentColor,
-    );
+    return _lottie != ''
+        ? Lottie.asset(
+            _lottie,
+            height: 400,
+          )
+        : Icon(
+            _icon,
+            size: 150,
+            color: Theme.of(context).accentColor,
+          );
   }
 
   Widget _buildText({BuildContext context}) {
@@ -165,6 +171,9 @@ class NoAccessScreen extends StatelessWidget {
           'Melde dich an, um dein Profil zu sehen. Mit einem Profil kannst du Gegenstände ausleihen und verleihen.';
     } else if (realScreenName == 'reservationScreen') {
       _text = 'Melde dich an, um Gegenstände ausleihen zu können!';
+    } else if (realScreenName == 'chatScreen') {
+      _text =
+          'Melde dich an, um mit anderen Nutzern zu Chatten und Gegenstände ausleihen zu können!';
     }
     return Text(
       _text,
