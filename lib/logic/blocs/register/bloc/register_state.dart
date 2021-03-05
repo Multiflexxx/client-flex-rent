@@ -68,6 +68,15 @@ class RegisterEnteredPersonalSuccess extends RegisterState {
 class RegisterPhoneVerificationSuccess extends RegisterState {}
 
 // Failure
+class RegisterPhoneVerificationFailure extends RegisterState {
+  final String error;
+
+  RegisterPhoneVerificationFailure({@required this.error});
+
+  @override
+  List<Object> get props => [error];
+}
+
 class RegisterFailure extends RegisterState {
   final String error;
 

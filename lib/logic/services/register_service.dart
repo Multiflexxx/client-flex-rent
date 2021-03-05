@@ -31,8 +31,6 @@ class ApiRegisterService extends RegisterService {
       ),
     );
 
-    inspect(response);
-
     if (response.statusCode == 200) {
       final Map<String, dynamic> jsonBody = json.decode(response.body);
       final User user = User.fromJson(jsonBody);
@@ -40,7 +38,7 @@ class ApiRegisterService extends RegisterService {
       return user;
     } else {
       throw RegisterException(
-          message: 'Dein Account konnte nicht festgelegt werden.');
+          message: 'Dein Account konnte nicht erstellt werden.');
     }
   }
 
@@ -58,10 +56,6 @@ class ApiRegisterService extends RegisterService {
       ),
     );
 
-    inspect(response);
-
-    // 404 invallid token / userId
-
     final Map<String, dynamic> jsonBody = json.decode(response.body);
 
     if (response.statusCode == 201) {
@@ -72,9 +66,8 @@ class ApiRegisterService extends RegisterService {
       await _storage.write(key: 'userId', value: user.userId);
       return user;
     } else if (response.statusCode == 404) {
-      throw RegisterException(message: 'Der Code ist falsch.');
+      throw RegisterException(message: 'Der Code ist falsch.', statusCode: 404);
     } else {
-      inspect(response);
       throw RegisterException(message: 'Hier ist etwas schief gelaufen');
     }
   }

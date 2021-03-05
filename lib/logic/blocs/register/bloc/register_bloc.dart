@@ -146,12 +146,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
           error: 'Dein Account konnte nicht angelegt werden.',
         );
       }
-      }
-      on RegisterException catch (e) {
+    } on RegisterException catch (e) {
+      if (e.statusCode == 404) {
+        yield RegisterPhoneVerificationFailure(error: e.message);
+        yield RegisterEnteredPersonalSuccess(tempUser: event.user);
+      } else {
         _googleService.signOut();
         yield RegisterFailure(
           error: e.message,
         );
+      }
     } catch (err) {
       _googleService.signOut();
       yield RegisterFailure(

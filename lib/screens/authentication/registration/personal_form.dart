@@ -1,4 +1,5 @@
 import 'package:flexrent/widgets/styles/buttons_styles/button_purple_styled.dart';
+import 'package:flexrent/widgets/styles/flushbar_styled.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -222,7 +223,7 @@ class _PersonalFormState extends State<PersonalForm> {
     return BlocListener<RegisterBloc, RegisterState>(
       listener: (context, state) {
         if (state is RegisterFailure) {
-          _showError(state.error);
+          showFlushbar(context: context, message: state.error);
         }
       },
       child: BlocBuilder<RegisterBloc, RegisterState>(
@@ -338,12 +339,5 @@ class _PersonalFormState extends State<PersonalForm> {
         },
       ),
     );
-  }
-
-  void _showError(String error) {
-    Scaffold.of(context).showSnackBar(SnackBar(
-      content: Text(error),
-      backgroundColor: Theme.of(context).errorColor,
-    ));
   }
 }
