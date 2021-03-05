@@ -1,5 +1,6 @@
 import 'package:flexrent/logic/services/services.dart';
 import 'package:flexrent/screens/authentication/registration/phone_form.dart';
+import 'package:flexrent/screens/authentication/registration/phone_verification_form.dart';
 import 'package:flexrent/screens/authentication/registration/register_start_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -84,10 +85,16 @@ class _AuthForm extends StatelessWidget {
               if (state is RegisterPhoneLoading) {
                 return PhoneForm();
               }
-              if (state is RegisterPhoneSuccess) {
+              if (state is RegisterEnteredPhoneSuccess) {
                 return PersonalForm(
                   phoneNumber: state.phoneNumber,
                   thirdPartyUser: state.thirdPartyUser,
+                );
+              }
+              if (state is RegisterEnteredPersonalSuccess) {
+                // TODO: add paramters
+                return PhoneVerificationForm(
+                  user: state.tempUser,
                 );
               }
               return RegisterStartScreen();

@@ -5,6 +5,7 @@ import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/screens/chat/chat_screen.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
@@ -45,8 +46,7 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(20.0),
-              // TODO: Change to != '' of != null
-              child: widget.chat.chatPartner.profilePicture == 'penis'
+              child: widget.chat.chatPartner.profilePicture != null
                   ? CachedNetworkImage(
                       imageUrl: widget.chat.chatPartner.profilePicture,
                       width: 75,
@@ -128,6 +128,14 @@ class _ChatOverviewBoxState extends State<ChatOverviewBox> {
                           'Neu',
                           style: TextStyle(color: Colors.white),
                         ),
+                      ),
+                      Badge(
+                        toAnimate: false,
+                        shape: BadgeShape.square,
+                        badgeColor: Theme.of(context).accentColor,
+                        borderRadius: BorderRadius.circular(10),
+                        showBadge: !widget.chat.isAllowedToChat,
+                        badgeContent: Icon(Feather.archive),
                       ),
                     ],
                   ),

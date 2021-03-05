@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -54,12 +55,16 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
       yield* _mapRegisterWithFacebookToState(event);
     }
 
-    if (event is RegisterNextPressed) {
-      yield* _mapPersonalFormToState(event);
+    if (event is RegisterPhonePressed) {
+      yield* _mapRegisterPhonePressedToState(event);
     }
 
-    if (event is RegisterSubmitPressed) {
-      yield* _mapRegisterToState(event);
+    if (event is RegisterPersonalPressed) {
+      yield* _mapRegisterPersonalPressedToState(event);
+    }
+
+    if (event is RegisterCodeVerificationPressed) {
+      yield* _mapRegisterCodeVerificationPressedToState(event);
     }
   }
 
@@ -90,43 +95,71 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
     }
   }
 
+  // 1. registration: phone number
   Stream<RegisterState> _mapPhoneFormToState(RegisterPhoneForm event) async* {
     yield RegisterPhoneLoading(signUpOption: event.signUpOption);
   }
 
-  Stream<RegisterState> _mapPersonalFormToState(
-      RegisterNextPressed event) async* {
-    yield RegisterPhoneSuccess(
+  // 2. registration: phone form to personal form
+  Stream<RegisterState> _mapRegisterPhonePressedToState(
+      RegisterPhonePressed event) async* {
+    yield RegisterEnteredPhoneSuccess(
       signUpOption: event.signUpOption,
       phoneNumber: event.phoneNumber,
       thirdPartyUser: event.thirdPartyUser,
     );
   }
 
-  Stream<RegisterState> _mapRegisterToState(
-      RegisterSubmitPressed event) async* {
+  // 3. registration: personal to phone verification
+  Stream<RegisterState> _mapRegisterPersonalPressedToState(
+      RegisterPersonalPressed event) async* {
     try {
       final user = await _registerService.registerUser(
           user: event.user, signInOption: event.signUpOption);
       if (user != null) {
-        _authenticationBloc.add(UserLoggedIn(user: user));
-        yield RegisterSuccess();
-        yield RegisterInitial();
+        yield RegisterEnteredPersonalSuccess(tempUser: user);
       } else {
-        _googleService.signOut();
         yield RegisterFailure(
           error: 'Das war ein Schuss in den ...',
         );
       }
-    } on RegisterException catch (e) {
-      _googleService.signOut();
+    } catch (err) {
       yield RegisterFailure(
-        error: e.message,
+        error: err.message ?? 'An unknown error occured',
       );
+    }
+  }
+
+  // 3. registration: submit
+  Stream<RegisterState> _mapRegisterCodeVerificationPressedToState(
+      RegisterCodeVerificationPressed event) async* {
+    try {
+      final user = await _registerService.validatePhoneAndRegisterUser(
+          userId: event.user.userId, token: event.verificationCode);
+      if (user != null) {
+        _authenticationBloc.add(UserLoggedIn(user: user));
+        yield RegisterPhoneVerificationSuccess();
+        yield RegisterInitial();
+      } else {
+        _googleService.signOut();
+        yield RegisterFailure(
+          error: 'Dein Account konnte nicht angelegt werden.',
+        );
+      }
+    } on RegisterException catch (e) {
+      if (e.statusCode == 404) {
+        yield RegisterPhoneVerificationFailure(error: e.message);
+        yield RegisterEnteredPersonalSuccess(tempUser: event.user);
+      } else {
+        _googleService.signOut();
+        yield RegisterFailure(
+          error: e.message,
+        );
+      }
     } catch (err) {
       _googleService.signOut();
       yield RegisterFailure(
-        error: err.message ?? 'An unknown error occured',
+        error: 'An unknown error occured',
       );
     }
   }

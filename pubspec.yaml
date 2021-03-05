@@ -66,6 +66,7 @@ dependencies:
   rxdart: ^0.25.0
   flutter_spinkit: ^4.1.2+1
   pin_code_fields: ^6.1.0
+  lottie: ^0.6.0
 
 
 dev_dependencies:
@@ -94,6 +95,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/lottie/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
