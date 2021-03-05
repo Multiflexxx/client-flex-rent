@@ -75,7 +75,7 @@ class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
             )
           else
             ErrorBox(
-              errorText: 'Du hast noch keine Chats mit anderen Flexeren.',
+              errorText: 'Du hast noch keine Chats mit anderen Flexren.',
             )
         ],
       ),

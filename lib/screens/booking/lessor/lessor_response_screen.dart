@@ -202,53 +202,39 @@ class _LessorResponseBodyState extends State<LessorResponseBody> {
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(16.0),
-                                    child: Column(children: <Widget>[
-                                      Text(
-                                        'Wir hoffen es hat alles geklappt!',
-                                        style: TextStyle(
-                                          color: Theme.of(context).primaryColor,
-                                          fontSize: 18.0,
-                                          height: 1.15,
-                                          fontWeight: FontWeight.w500,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          'Wir hoffen es hat alles geklappt!',
+                                          style: TextStyle(
+                                            color:
+                                                Theme.of(context).primaryColor,
+                                            fontSize: 18.0,
+                                            height: 1.15,
+                                            fontWeight: FontWeight.w500,
+                                          ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        height: 10.0,
-                                      ),
-                                      PurpleButton(
-                                        text: Text('Bewerte den Vermieter'),
-                                        onPressed: () {
-                                          pushNewScreenWithRouteSettings(
-                                            context,
-                                            screen: RatingScreen(
-                                              ratedUser:
-                                                  _offerRequest.offer.lessor,
-                                              ratingType: 'lessor',
-                                            ),
-                                            withNavBar: true,
-                                            settings: RouteSettings(
-                                                name: RatingScreen.routeName),
-                                          );
-                                        },
-                                      ),
-                                       SizedBox(height: 10.0,),
-                                      PurpleButton(
-                                        text: Text('Bewerte das Produkt'),
-                                        onPressed: () {
-                                          pushNewScreenWithRouteSettings(
-                                            context,
-                                            screen: RatingScreen(
-                                              offer:
-                                                  _offerRequest.offer,
-                                              ratingType: 'offer',
-                                            ),
-                                            withNavBar: true,
-                                            settings: RouteSettings(
-                                                name: RatingScreen.routeName),
-                                          );
-                                        },
-                                      ),
-                                    ]),
+                                        SizedBox(
+                                          height: 10.0,
+                                        ),
+                                        PurpleButton(
+                                          text: Text('Bewerte den Mieter'),
+                                          onPressed: () {
+                                            pushNewScreenWithRouteSettings(
+                                              context,
+                                              screen: RatingScreen(
+                                                ratedUser:
+                                                    _offerRequest.offer.lessor,
+                                                ratingType: 'lessee',
+                                              ),
+                                              withNavBar: true,
+                                              settings: RouteSettings(
+                                                  name: RatingScreen.routeName),
+                                            );
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 )
                               : Container(),
