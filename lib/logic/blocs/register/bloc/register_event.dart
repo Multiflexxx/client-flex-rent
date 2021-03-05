@@ -33,21 +33,31 @@ class RegisterPhoneForm extends RegisterEvent {
   });
 }
 
-class RegisterNextPressed extends RegisterEvent {
+class RegisterPhonePressed extends RegisterEvent {
   final String signUpOption;
   final String phoneNumber;
   final User thirdPartyUser;
 
-  RegisterNextPressed({
+  RegisterPhonePressed({
     this.signUpOption,
     @required this.phoneNumber,
     this.thirdPartyUser,
   });
 }
 
-class RegisterSubmitPressed extends RegisterEvent {
+class RegisterPersonalPressed extends RegisterEvent {
   final String signUpOption;
   final User user;
 
-  RegisterSubmitPressed({@required this.signUpOption, @required this.user});
+  RegisterPersonalPressed({@required this.signUpOption, @required this.user});
+}
+
+class RegisterCodeVerificationPressed extends RegisterEvent {
+  final User user;
+  final String verificationCode;
+
+  RegisterCodeVerificationPressed({
+    this.user,
+    this.verificationCode,
+  });
 }

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:core';
+import 'dart:developer';
 import 'package:flexrent/logic/config/config.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flexrent/logic/exceptions/exceptions.dart';
@@ -10,6 +11,7 @@ import 'package:http/http.dart' as http;
 
 abstract class RegisterService {
   Future<User> registerUser({User user, String signInOption});
+  Future<User> validatePhoneAndRegisterUser({String userId, String token});
 }
 
 class ApiRegisterService extends RegisterService {
@@ -29,17 +31,44 @@ class ApiRegisterService extends RegisterService {
       ),
     );
 
+    if (response.statusCode == 200) {
+      final Map<String, dynamic> jsonBody = json.decode(response.body);
+      final User user = User.fromJson(jsonBody);
+
+      return user;
+    } else {
+      throw RegisterException(
+          message: 'Dein Account konnte nicht erstellt werden.');
+    }
+  }
+
+  @override
+  Future<User> validatePhoneAndRegisterUser(
+      {String userId, String token}) async {
+    final response = await http.post(
+      '$url/validate-phone',
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode(
+        <String, dynamic>{
+          'user_id': userId,
+          'token': token,
+        },
+      ),
+    );
+
     final Map<String, dynamic> jsonBody = json.decode(response.body);
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 201) {
       final Map<String, dynamic> jsonUser = jsonBody['user'];
       final sessionId = jsonBody['session_id'];
       final User user = User.fromJson(jsonUser);
       await _storage.write(key: 'sessionId', value: sessionId);
       await _storage.write(key: 'userId', value: user.userId);
       return user;
+    } else if (response.statusCode == 404) {
+      throw RegisterException(message: 'Der Code ist falsch.', statusCode: 404);
     } else {
-      throw RegisterException(message: jsonBody['message']);
+      throw RegisterException(message: 'Hier ist etwas schief gelaufen');
     }
   }
 }
