@@ -297,7 +297,7 @@ class _PersonalFormState extends State<PersonalForm> {
                     PurpleButton(
                       text: Text('Weiter'),
                       onPressed: () {
-                        if (state is RegisterEnteredPersonalSuccess) {
+                        if (state is RegisterEnteredPhoneSuccess) {
                           _onRegisterSubmitPressed(
                             signInOption: state.signUpOption,
                           );

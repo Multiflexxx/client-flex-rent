@@ -56,13 +56,12 @@ class RegisterEnteredPhoneSuccess extends RegisterState {
 
 // Success
 class RegisterEnteredPersonalSuccess extends RegisterState {
-  final String signUpOption;
   final User tempUser;
 
-  RegisterEnteredPersonalSuccess({this.signUpOption, this.tempUser});
+  RegisterEnteredPersonalSuccess({this.tempUser});
 
   @override
-  List<Object> get props => [signUpOption, tempUser];
+  List<Object> get props => [tempUser];
 }
 
 // Success

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -113,46 +114,49 @@ class RegisterBloc extends Bloc<RegisterEvent, RegisterState> {
   Stream<RegisterState> _mapRegisterPersonalPressedToState(
       RegisterPersonalPressed event) async* {
     try {
-      final user = null;
-      yield RegisterEnteredPersonalSuccess(
-          signUpOption: event.signUpOption, tempUser: user);
+      final user = await _registerService.registerUser(
+          user: event.user, signInOption: event.signUpOption);
+      if (user != null) {
+        yield RegisterEnteredPersonalSuccess(tempUser: user);
+      } else {
+        yield RegisterFailure(
+          error: 'Das war ein Schuss in den ...',
+        );
+      }
     } catch (err) {
-      _googleService.signOut();
       yield RegisterFailure(
         error: err.message ?? 'An unknown error occured',
       );
     }
-
-    // try {
-    //   final user = await _registerService.registerUser(
-    //       user: event.user, signInOption: event.signUpOption);
-    //   if (user != null) {
-    //     _authenticationBloc.add(UserLoggedIn(user: user));
-    //     yield RegisterSuccess();
-    //     yield RegisterInitial();
-    //   } else {
-    //     _googleService.signOut();
-    //     yield RegisterFailure(
-    //       error: 'Das war ein Schuss in den ...',
-    //     );
-    //   }
-    // } on RegisterException catch (e) {
-    //   _googleService.signOut();
-    //   yield RegisterFailure(
-    //     error: e.message,
-    //   );
-    // } catch (err) {
-    //   _googleService.signOut();
-    //   yield RegisterFailure(
-    //     error: err.message ?? 'An unknown error occured',
-    //   );
-    // }
   }
 
   // 3. registration: submit
   Stream<RegisterState> _mapRegisterCodeVerificationPressedToState(
       RegisterCodeVerificationPressed event) async* {
-    // api call
-    yield RegisterPhoneVerificationSuccess();
+    try {
+      final user = await _registerService.validatePhoneAndRegisterUser(
+          userId: event.user.userId, token: event.verificationCode);
+      if (user != null) {
+        _authenticationBloc.add(UserLoggedIn(user: user));
+        yield RegisterPhoneVerificationSuccess();
+        yield RegisterInitial();
+      } else {
+        _googleService.signOut();
+        yield RegisterFailure(
+          error: 'Dein Account konnte nicht angelegt werden.',
+        );
+      }
+      }
+      on RegisterException catch (e) {
+        _googleService.signOut();
+        yield RegisterFailure(
+          error: e.message,
+        );
+    } catch (err) {
+      _googleService.signOut();
+      yield RegisterFailure(
+        error: 'An unknown error occured',
+      );
+    }
   }
 }

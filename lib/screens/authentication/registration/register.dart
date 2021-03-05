@@ -93,7 +93,9 @@ class _AuthForm extends StatelessWidget {
               }
               if (state is RegisterEnteredPersonalSuccess) {
                 // TODO: add paramters
-                return PhoneVerificationForm();
+                return PhoneVerificationForm(
+                  user: state.tempUser,
+                );
               }
               return RegisterStartScreen();
             },
