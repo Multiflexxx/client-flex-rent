@@ -2,6 +2,7 @@ import 'package:flexrent/logic/models/chat/chat/chat_response/chat_response.dart
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/widgets/chat/chat_overview_box.dart';
 import 'package:flexrent/widgets/layout/standard_sliver_appbar_list.dart';
+import 'package:flexrent/widgets/styles/error_box.dart';
 import 'package:flutter/material.dart';
 import 'package:flexrent/logic/blocs/chat/chat.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -67,7 +68,16 @@ class __ChatOverviewBodyState extends State<_ChatOverviewBody> {
         }
       },
       child: Column(
-        children: _buildChats(chatResponse: chatResponse),
+        children: [
+          if (chatResponse != null)
+            Column(
+              children: _buildChats(chatResponse: chatResponse),
+            )
+          else
+            ErrorBox(
+              errorText: 'Du hast noch keine Chats mit anderen Flexeren.',
+            )
+        ],
       ),
     );
   }

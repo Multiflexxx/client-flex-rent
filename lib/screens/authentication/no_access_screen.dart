@@ -52,9 +52,7 @@ class NoAccessScreen extends StatelessWidget {
               background: Stack(
                 fit: StackFit.expand,
                 children: <Widget>[
-                  Expanded(
-                    child: _buildIcon(context: context),
-                  ),
+                  _buildIcon(context: context),
                 ],
               ),
             ),

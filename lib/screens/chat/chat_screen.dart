@@ -3,6 +3,7 @@ import 'package:flexrent/logic/config/static_consts.dart';
 import 'package:flexrent/logic/models/models.dart';
 import 'package:flexrent/logic/services/chat_service.dart';
 import 'package:flexrent/logic/services/services.dart';
+import 'package:flexrent/widgets/boxes/standard_box.dart';
 import 'package:flexrent/widgets/chat/message_box.dart';
 import 'package:flexrent/widgets/offer/offer_request_card.dart';
 import 'package:flutter/material.dart';
@@ -122,6 +123,12 @@ class _ChatScreenState extends State<ChatScreen> {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildChatDisabled() {
+    return StandardBox(
+      content: Text('Der Chat ist deaktiviert.'),
     );
   }
 
@@ -265,7 +272,10 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                 ),
               ),
-              _buildMessageInput(),
+              if (widget.chat.isAllowedToChat)
+                _buildMessageInput()
+              else
+                _buildChatDisabled(),
             ],
           ),
         ),

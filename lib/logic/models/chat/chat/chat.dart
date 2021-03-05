@@ -9,8 +9,14 @@ class Chat extends Equatable {
   final User chatPartner;
   final ChatMessage lastMessage;
   final bool unreadMessages;
+  final bool isAllowedToChat;
 
-  Chat({this.chatId, this.chatPartner, this.lastMessage, this.unreadMessages});
+  Chat(
+      {this.chatId,
+      this.chatPartner,
+      this.lastMessage,
+      this.unreadMessages,
+      this.isAllowedToChat});
 
   factory Chat.fromJson(Map<String, dynamic> json) => _$ChatFromJson(json);
   Map<String, dynamic> toJson() => _$ChatToJson(this);
